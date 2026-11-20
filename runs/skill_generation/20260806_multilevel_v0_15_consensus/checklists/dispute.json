@@ -1,0 +1,52 @@
+{
+ "MULTILEVEL-IDENT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MULTILEVEL-IDENT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MULTILEVEL-INFER-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MULTILEVEL-INFER-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MULTILEVEL-INFER-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MULTILEVEL-ROBUST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MULTILEVEL-ROBUST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MULTILEVEL-REPORT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "MULTILEVEL-REPORT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MULTILEVEL-REPORT-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ }
+}

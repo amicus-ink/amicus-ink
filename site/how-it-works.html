@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How AMICUS reads a paper</title>
+<script src="./theme.js"></script>
+<link rel="stylesheet" href="./fonts/newsreader.css">
+<link rel="stylesheet" href="./style.css">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<nav class="topnav"><div class="navwrap"><a class="wordmark" href="./index.html"><svg class="mark" viewBox="0 0 64 64" width="26" height="26" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="14"/><path d="M32 15H25.5a10.5 10.5 0 0 0 0 21H32V49h5.5V20.5H41.5V49H47V20.5h2.5V15z"/></svg>AMICUS</a><div class="navlinks"><a href="./how-it-works.html" class="active">How it works</a><a href="./checklists.html">Checklists</a><a href="./run.html">Run it</a><a href="./faq.html">Questions</a><a href="./next.html">Next</a><a href="{{REPO_URL}}">Source</a><button type="button" class="themetoggle" id="theme-toggle" aria-label="Switch to dark mode" title="Switch light or dark"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div></div></nav>
+
+<main>
+<header class="pagehead wrap narrow">
+  <h1>How it works</h1>
+  <p class="lede">AMICUS reads the text of your paper and does three things.</p>
+</header>
+
+<section class="wrap narrow">
+  <h3>It decides which methods your paper uses</h3>
+  <p>A first pass reads the whole paper and names the methods it relies on, quoting the sentence where the paper says so. </p>
+
+  <h3>It works through every check for those methods</h3>
+  <p>Each method has its own checklist. A check is one specific requirement from the methods literature. The lists specify when it applies, what to look for, and what counts as meeting or missing it. Every check gets a verdict:</p>
+  <p><em>Met</em>: the paper does what the check asks. <em>Flag</em>: it does not. <em>Does not apply</em>: your paper uses the method, but this particular check does not apply to it.</p>
+
+  <p>Most checks are about what a paper explicitly reports. If the paper says nothing about something a check requires, for most checks this results in a flag. (If the answer is in an appendix, attach the appendix!)</p>
+
+  <h3>It writes to you</h3>
+  <p>The report is for you and addressed to you. It starts with what the paper does well and the few issues that matter most for your main result. A table then lists every flag, grouped into issues and ranked by importance, with where each one sits in your paper. The main issues each get a short paragraph with the evidence and a methods source. If any part of the audit could not be completed, the report says so.</p>
+</section>
+
+<div class="band">
+  <div class="wrap narrow">
+    <h2>What it cannot do</h2>
+    <p>AMICUS does not aim to say whether your main results are right, whether the paper should be published, or how it compares with other papers. It does not open your data or code (yet!). The verdicts are a language model’s assessments, made against a written checklist, and they can be wrong. Every flag carries its evidence so you can decide how best to fix it, if at all.</p>
+    <p style="margin:0">It is also limited to the methods it has checklists for. A paper whose main method is not yet covered gets a reading only for the methods we cover.</p>
+  </div>
+</div>
+
+</main>
+
+<footer><div class="wrap"><span>Tak-Huen Chau and Andrew T. Little. <a href="{{REPO_URL}}/issues">Open an issue</a> to reach us.</span><span class="footer-links"><span>Code: GPL-3.0. Checklists and documentation: CC BY-SA 4.0.</span><a href="{{REPO_URL}}">Source</a><a href="./faq.html#cite">Cite</a></span></div></footer>
+</body>
+</html>

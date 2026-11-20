@@ -1,0 +1,195 @@
+{
+ "module": "measurement",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-5",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "measurement_adcock_2001",
+   "sha256_pdf": "05398b1318e231bf4b7af86c0450c5ed7c76db948718c6e2a80d93dbe853673c",
+   "claims": 102,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_flake_2020",
+   "sha256_pdf": "088011f9e13f3696dac31d4c388c6e76ba7640c1f6fe68548babc45682f2cd29",
+   "claims": 93,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_mcneish_2020",
+   "sha256_pdf": "4368099efd41626e66d24aa87bae1b4429c5ef6a4bb57cd800efe5dfbab76d92",
+   "claims": 77,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_benoit_2016",
+   "sha256_pdf": "0b3466dab4d5385b4dd7b8f27872b2c19a99330b8715a4b90de68aa782f5d958",
+   "claims": 0,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_treier_2008",
+   "sha256_pdf": "6b1047b87d99ab7aff57c01fbdc20dd2fd9116db0f88a3a798b0b576d21fa766",
+   "claims": 0,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_krippendorff_2019",
+   "sha256_pdf": "c1563ba8075a80adf04d4d887eef6d438c83560a835dfcb8a6ea20d95393dfc0",
+   "claims": 42,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_hayes_2007",
+   "sha256_pdf": "80fabf7495ee17baecb8bfa46906dcbb7c9d88b99706bdb53a8b8074cf9368c2",
+   "claims": 61,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_mcneish_2018",
+   "sha256_pdf": "25a314405e39eb4225f9c0ddc0f69a3cfe263fb3539852bb3fe9da7726584d70",
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_grimmer_2013",
+   "sha256_pdf": "24018dd0ad1dd6fa11d6ee2fb501222dc34cde53a8fa02f9cd37f53fb3d724e0",
+   "claims": 99,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_loken_2017",
+   "sha256_pdf": "1b722d115e62b97ccb93bac21d44b569e533ed68f12af61134aa1cf0a963d799",
+   "claims": 36,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_clinton_2004",
+   "sha256_pdf": "23069b6b64767d6e7c5c3d9f4e8bede25c14f268c7d5f6ed33ac77784b9f4635",
+   "claims": 64,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_ansolabehere_2008",
+   "sha256_pdf": "361ed66ab045919e165dd58b6722459c5c37b7ff59f7aba695431f5bc6d6c47b",
+   "claims": 76,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_wuttke_2020",
+   "sha256_pdf": "bce24a637f505507635f54e5edb42f4e95597e627d42a8c5dd353e1620d15f8e",
+   "claims": 99,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_marquardt_2018",
+   "sha256_pdf": "88863a1bebaccdc5a6936158e03af4271d8927c50e49878e25aa26a33a846b8d",
+   "claims": 88,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_seawright_2014",
+   "sha256_pdf": "6b67cdcdf16a6bb5b825382981ac6f6c21340947a082af40745877d3da35d48b",
+   "claims": 87,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_knox_2022",
+   "sha256_pdf": "f2be238e140b7033baf3233d40ba6715d15e35c5dfea64de08a6778c11c102bd",
+   "claims": 99,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_carmines_1979",
+   "sha256_pdf": "3db3b52a64f13ad4e421b990cf50a7ceb29e72fc579c3c64b2db5e4e673bb661",
+   "claims": 39,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "measurement_bollen_1989",
+   "sha256_pdf": "232ac654ff1c98f08ba1a93234801001f28808540f0fa1668b9be553e552d848",
+   "claims": 127,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 62,
+ "categories": {
+  "IDENT": 16,
+  "EST": 14,
+  "INFER": 4,
+  "ROBUST": 5,
+  "REPORT": 10,
+  "DATA": 13
+ },
+ "single_source_checks": 37,
+ "sha256_checklist": "fca154efcc81fac4b2531804e6740b90f21916ce603a983ee729463d48280706",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 62,
+  "categories": {
+   "IDENT": 16,
+   "EST": 14,
+   "INFER": 4,
+   "ROBUST": 5,
+   "REPORT": 10,
+   "DATA": 13
+  },
+  "single_source_checks": 37,
+  "sha256_checklist": "87d3d441420b2309e8e98458f7cc455f88d8cf4b2219a4908ba3d81dbeea75c4"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release, October 2026",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 85.5,
+   "pilot_pairwise_agreement_pct": 92.7
+  },
+  "meets_95pct_diagnostic_bar": false,
+  "reason": "Shipped as one of the 14 modules of the first public release. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 4,
+   "codings_per_paper": 2,
+   "core_stability": "230/248 = 92.7%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 4,
+   "codings_per_paper": 5,
+   "core_stability": "212/248 = 85.5%",
+   "judgment_call_bucket": null
+  }
+ }
+}

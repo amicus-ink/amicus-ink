@@ -1,0 +1,87 @@
+{
+ "TEXT-EST-01": {
+  "disputed": true,
+  "basis": "Gr\u00fcn (2011) recommends choosing the topic count in a data-driven way, using held-out perplexity, which treats statistical fit alone as sufficient.",
+  "n_attached": 12
+ },
+ "TEXT-INFER-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "TEXT-INFER-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "TEXT-INFER-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "TEXT-ROBUST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "TEXT-ROBUST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "TEXT-ROBUST-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "TEXT-ROBUST-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "TEXT-ROBUST-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 7
+ },
+ "TEXT-ROBUST-06": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 6
+ },
+ "TEXT-ROBUST-07": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 8
+ },
+ "TEXT-ROBUST-08": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "TEXT-ROBUST-09": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "TEXT-ROBUST-10": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 4
+ },
+ "TEXT-ROBUST-11": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 5
+ },
+ "TEXT-ROBUST-12": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "TEXT-REPORT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ }
+}

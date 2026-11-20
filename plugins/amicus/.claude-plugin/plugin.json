@@ -1,0 +1,12 @@
+{
+  "name": "amicus",
+  "displayName": "AMICUS",
+  "version": "0.1.0",
+  "description": "Audit a quantitative social-science paper against 14 methods checklists (iv, did, rdd, conjoint, survey_exp, field_exp, text, matching, mediation, multilevel, panel, synth, measurement, hte) and a universal checklist, and write AMICUS_REPORT.md",
+  "author": {
+    "name": "Tak-Huen Chau and Andrew T. Little"
+  },
+  "repository": "https://github.com/amicus-ink/amicus-ink",
+  "license": "GPL-3.0-only AND CC-BY-SA-4.0",
+  "keywords": ["methods", "audit", "causal-inference", "social-science", "checklist"]
+}

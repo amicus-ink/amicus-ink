@@ -1,0 +1,594 @@
+{
+ "module": "field_exp",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-4-8",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "field_exp_list_2002",
+   "sha256_pdf": "02682ae33a67f22c6a9ecb0e2f2ded0a136fb9fbe3a220ab0e1d087254dda015",
+   "claims": 11,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_wantchekon_2003b",
+   "sha256_pdf": "96f109a7e718e63dfd8e3908341c2d581fe85e25cce7ce74b4fa760c20c88465",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_wantchekon_2003a",
+   "sha256_pdf": "96f109a7e718e63dfd8e3908341c2d581fe85e25cce7ce74b4fa760c20c88465",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_gerber_2003",
+   "sha256_pdf": "c7c63c1e599058e7e76914807bd5ff0f415381b363a24cafe65ce7a20a8fc6fb",
+   "claims": 13,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_bertrand_2004",
+   "sha256_pdf": "96be1aa03a6aa902bd8eef4cce06045b9640eebbe866ce16615d146b666f149d",
+   "claims": 18,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_harrison_2004",
+   "sha256_pdf": "687b2d2924f3658b34afa84dfcfed502bed17d32135c49db83ea73851728675d",
+   "claims": 50,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_olken_2005",
+   "sha256_pdf": "e8f39db7b012a384cee6abdadb674103047196c3c9169a7419d7b197e1e84012",
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_niven_2006",
+   "sha256_pdf": "abfb3265e7fa37525791b62604c4aebcd2ac39c47935498d4c47568db27ed318",
+   "claims": 11,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_nickerson_2006",
+   "sha256_pdf": "e6449f3d7f56de198623f9843362c60f035e1d115610cff29a97ba6991cf7cbc",
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_gneezy_2006",
+   "sha256_pdf": "ece0a23228e48696a12035265b89d07b0279425c5748aa50a77accd26033f4a3",
+   "claims": 15,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_humphreys_2006",
+   "sha256_pdf": "731538377dcb7d3c8a7acc4c7e229ab1be38e7e820d6481603200a8c53bc0e25",
+   "claims": 31,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_fehr_2007",
+   "sha256_pdf": "c8e7a814ab64062fae3fdd9b3245055412d0e8da1a37f70cc7f8532d0a469832",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_karlan_2007",
+   "sha256_pdf": "e91d987349bb36493ef379807c5d9f30e610e6339e6603a9fffe22f5cb23514c",
+   "claims": 16,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_olken_2007a",
+   "sha256_pdf": "b1a1d537dfb3f85cc314e922c4d348428e12343ffc56136b78c88561df479904",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_olken_2007b",
+   "sha256_pdf": "b1a1d537dfb3f85cc314e922c4d348428e12343ffc56136b78c88561df479904",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_levitt_2008",
+   "sha256_pdf": "b6c67eb5440ed5d3a9d5d937e59808ef4a103d7fbe48d81bc03b0dffdd823d68",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_nickerson_2008",
+   "sha256_pdf": "3e835fdcd0f4f186c735f3e93e44f870519974a28070e19d0987489fb73bd72e",
+   "claims": 19,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_mel_2008",
+   "sha256_pdf": "f40a8f1d52a02b2815b0c2139297d41f06e1678b282c52dab7765eedb74c0b96",
+   "claims": 31,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_gerber_2008a",
+   "sha256_pdf": "2142c8fee8f2a8650f564ac3818b7e3a5c5e49b209051f1261b7540c6db2d0ef",
+   "claims": 29,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_gerber_2008b",
+   "sha256_pdf": "2142c8fee8f2a8650f564ac3818b7e3a5c5e49b209051f1261b7540c6db2d0ef",
+   "claims": 16,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_arceneaux_2008",
+   "sha256_pdf": "c761355d97ab979b34a2136764d4ddfda4f7a544cd51f3b17a321cf58164f17f",
+   "claims": 30,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_shang_2009",
+   "sha256_pdf": "6168dc3543834c07051a1ea7641998df76d8ad53eb4402c316a7eb03274e6fc8",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_fearon_2009",
+   "sha256_pdf": "515efae59ab98017cd2e6575397be8333de953d7b123f65644d6f14ca759e65d",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_bruhn_2009",
+   "sha256_pdf": "86da3734e1820fff5c3c77aa43755ca71b8672195297661a961720bf43753d98",
+   "claims": 32,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_karlan_2009a",
+   "sha256_pdf": "98f56f45f2861c857def0b78c66c8080820cabd3c2e8e6454c2ccd02e830963f",
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_karlan_2009b",
+   "sha256_pdf": "98f56f45f2861c857def0b78c66c8080820cabd3c2e8e6454c2ccd02e830963f",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_bj_rkman_2009",
+   "sha256_pdf": "f4c923933f6e3115e7aaefe9a45856b9f7fde9828a505c2d0b669ad54ad4711f",
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_paluck_2009",
+   "sha256_pdf": "25a5508be707fe86179f465ecd5ae278423a22739c7496d00470a30383548920",
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_ashraf_2010",
+   "sha256_pdf": "cda5ea09b6eaec55da6b921dd90ac567a80442f7702a78e5c5849c2e993a3085",
+   "claims": 29,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_list_2010",
+   "sha256_pdf": "27b060908dd991295af536f298f36f86d3f88cb6c2530c44a74a7fdd8326579d",
+   "claims": 71,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_gerber_2010",
+   "sha256_pdf": "618322d88eee6ecfb8ffa03fee0f84a4919272256821fd6c6de4cf3d007e151f",
+   "claims": 19,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_butler_2011b",
+   "sha256_pdf": "a450ec97a6188ef7d644c623dfd47c55aed6ba6f2201c77ac2fc147da006189e",
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_butler_2011a",
+   "sha256_pdf": "06855970f81090c1c87be7dc84e9fedab3730869175e86319808a8dfc6bbbf44",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_gerber_2011",
+   "sha256_pdf": "dcd3a93fddd129231efa3bcf1063ab1db5d470498bb57ddd4cf0e242b5b14bdb",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_ludwig_2011",
+   "sha256_pdf": "52bbc0c09ed774a67d2bb604bed8f1ea0b56c45b1194f6bff24a6234951fe0fc",
+   "claims": 17,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_kleven_2011",
+   "sha256_pdf": "9d28c7609972fc41934a8c6da7a2c4612009a67ccb3b50503a8017a116e1b362",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_oreopoulos_2011",
+   "sha256_pdf": "f0d7ac211051ff64c8e111783efe79ee5837cb4a790981881f1642e529ece509",
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_butler_2012",
+   "sha256_pdf": "00d16ca55e5daa09018aba10dff09e06edc5d3229295f1d9a15d6ceac4da5f15",
+   "claims": 16,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_green_2012",
+   "sha256_pdf": "af450d1c6a2023e8f0837771562702d0005897f3b30f092fa229d219f338f0db",
+   "claims": 19,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_moore_2012",
+   "sha256_pdf": "9a14af358be2663910361f62df52e211a4dff84979dd9ebf6f970e427689e8ec",
+   "claims": 30,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_alatas_2012",
+   "sha256_pdf": "878c872484078e2c72b4c9f3f6e605b4fa95d87218d9f50ccbcf8816e90121c4",
+   "claims": 13,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_malesky_2012",
+   "sha256_pdf": "97d641be606d52972ce10df322b9110acd3be80a32d8c7f735ce0217c13e9c25",
+   "claims": 30,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_broockman_2013",
+   "sha256_pdf": "eaf18bc7d952cc74cec2b9950a259904fa764fa1b4352b46c80c1da53acab26f",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_sahni_2013",
+   "sha256_pdf": "ab98f431e5bb47335a03b8c33aa9313d8bca34800c3fdaf49e7fc9c8ce2248b3",
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_findley_2013",
+   "sha256_pdf": "d0b9e5843c6d6ea3fb25100ac99d73e84c420ba579eb35c8dee392eff4437fbc",
+   "claims": 33,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_ashraf_2014b",
+   "sha256_pdf": "e8d8657f33aef1a7eb5d243d09108a3520642f20400a38154e2e5ee81c26f151",
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_blake_2014",
+   "sha256_pdf": "4402a9219f049624f9d328f065a129891e44532a26e41ae7784c21e82d8255c2",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_distelhorst_2014",
+   "sha256_pdf": "9125aa4d1d1b863ff30291b4c03c3b34745e527086aa0007aa40a2eacd7dbafc",
+   "claims": 17,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_tarozzi_2014",
+   "sha256_pdf": "f2f3ec2bdfabf8c85520fee6b5e458c20e0485499f6c1b178b1ed1840eb0248f",
+   "claims": 15,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_ashraf_2014a",
+   "sha256_pdf": "787b83bc43c8dcb9a71e071dc3f64883ad52ab8188398930f4c250c8b5ba0c75",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_ashraf_2014c",
+   "sha256_pdf": "314e1405b45596ce59dc319d51c245d87a3c4a0264077827b199934ee5045188",
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_attanasio_2014",
+   "sha256_pdf": "13f7471fc5a292a85487c648a38ba682ab00492a2ebe655cb00c61e3280ead18",
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_blake_2015",
+   "sha256_pdf": "4402a9219f049624f9d328f065a129891e44532a26e41ae7784c21e82d8255c2",
+   "claims": 17,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_cohen_2015",
+   "sha256_pdf": "72939f2dfa44dafa9323430518810a84b70ecbeaf9b3d2ec35db4214837b2e9c",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_johri_2015",
+   "sha256_pdf": "a7ab41dbbf327dee6d786e9bc75d154257ab76789c0b4dd4db9f6827c1270c40",
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_bertrand_2016",
+   "sha256_pdf": "a644135add97c1321bf60242616d97cdb7f410570c9728de10398e797178110c",
+   "claims": 56,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_alatas_2016",
+   "sha256_pdf": "c309461a4a0356dfc3f696ef2cf9eb37a979be360de6ab0fb9703803f319b6a6",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_domek_2016",
+   "sha256_pdf": "0cf25a6d4c012f57f8020ebd967bddf5288b1355475e3ae2cfae6375d1726aea",
+   "claims": 12,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_heller_2016",
+   "sha256_pdf": "17c2596f531e522cc798d061f00cf04f5331011399b780257395b582e54c332f",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_dellavigna_2016",
+   "sha256_pdf": "73c2ad10c3dfcb5acc539e1cfdbc0f8813c6b456726c7135559ba128ce929119",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_finseraas_2017",
+   "sha256_pdf": "687e3d1dad61d9a1c877333bbe59328f6ddd43f3c42f04b72e1e5b4e21983497",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_gibson_2017",
+   "sha256_pdf": "546aeabe340329810f8c09946a67ffbcd4be54f156c569562d956104fb750077",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_regan_2017",
+   "sha256_pdf": "525b961a43c318b1f0d52d055c982ff4ca979d106aa2b5abddf24a8cd180bf64",
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_broockman_2017",
+   "sha256_pdf": "753bc56cfb16b6a4fb2c9212833ec02a5fa2c7c935510e82037e2f0a34a5c8f5",
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_kalla_2017",
+   "sha256_pdf": "6d8979fa35e3e4bd3182fd42736573044f3c25e57672a6b52c3eab3c2631d0c6",
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_bertrand_2018",
+   "sha256_pdf": "78cdbd37a0292327c34ce10d2352af471b21cc578ff19eef9eac62d160a03892",
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_coppock_2018",
+   "sha256_pdf": "59897f7fb69a7e2c139e1fd14d66d924402851d2308b19119320f21e6f3f046f",
+   "claims": 8,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_scacco_2018",
+   "sha256_pdf": "0675c8eacebf312d58760c741b9f0ae8b4d9f479a1c064f1805c1ad470f54a45",
+   "claims": 30,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_andrew_2018",
+   "sha256_pdf": "b4be88f7d244c2a90e8e6893cfb5cb0d2aaba5d672ebcc87429c02caff0c2c3f",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_grossman_2018",
+   "sha256_pdf": "fb76d8bd0ec6d174de99722f1aed71894e6cdc01ac43b91f1064439891b3f823",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_bohren_2019",
+   "sha256_pdf": "51145954d42f2a2bce7b778a61b2a9a8d4db1cee39438b1e0c37436ba1fa28df",
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_grossman_2020",
+   "sha256_pdf": "4a983d813f9f0b0aa1df43e4d59ebe39e6fb39cd7919cb620ec15abec5bc6000",
+   "claims": 16,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_kalla_2020",
+   "sha256_pdf": "fa2ac37b813c396831f4e9b02beead53d5d2fd1984ef65bdbb578d58e6df4a18",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_lowe_2021",
+   "sha256_pdf": "116659a0e03ae40b8101225cdccca4f033770a923416116fcada9738a30ea5a4",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "field_exp_cheema_2022",
+   "sha256_pdf": "9372ccb9f539a7a36d9cef070a007f160c692b91459d4c8ea7d6f9c428bcdff4",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 23,
+ "categories": {
+  "IDENT": 13,
+  "EST": 2,
+  "INFER": 3,
+  "ROBUST": 1,
+  "REPORT": 2,
+  "DATA": 2
+ },
+ "single_source_checks": 1,
+ "sha256_checklist": "a87e2074791de95e40ce1c16e322f1a37c6315e036938e8b4ee6d63ea4fd42ec",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 23,
+  "categories": {
+   "IDENT": 13,
+   "EST": 2,
+   "INFER": 3,
+   "ROBUST": 1,
+   "REPORT": 2,
+   "DATA": 2
+  },
+  "single_source_checks": 1,
+  "sha256_checklist": "c85d6355137db382f92e1af101b0cc76db9441389fdf2eaf3a057b624426ab86"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release (v0.1)",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 92.4,
+   "pilot_pairwise_agreement_pct": 98.9
+  },
+  "meets_95pct_diagnostic_bar": false,
+  "reason": "Ships since 2026-11-11 in place of this module's single-draw artifact, so that every module of the release is a three-draw consensus build. Figures are this artifact's own decidability block below. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 4,
+   "codings_per_paper": 2,
+   "core_stability": "91/92 = 98.9%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 4,
+   "codings_per_paper": 5,
+   "core_stability": "85/92 = 92.4%",
+   "judgment_call_bucket": null
+  }
+ }
+}

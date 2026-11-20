@@ -1,0 +1,10 @@
+# Audit outputs, virtual environments, caches, secrets, and papers.
+runs/paper_audits/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.*
+*.pdf

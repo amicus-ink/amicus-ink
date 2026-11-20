@@ -1,0 +1,156 @@
+{
+ "module": "text",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-4-8",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "text_blei_2007",
+   "sha256_pdf": "e7dbd7a98d35d2910596a123e906a6381d069e334f2105aa815192fddedc7d29",
+   "claims": 12,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_gr_n_2011",
+   "sha256_pdf": "b7c6b470cac50f9c62fba1545770f7be4fb57918465be428694510133c5d9149",
+   "claims": 18,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_hoffman_2013",
+   "sha256_pdf": "a483f73549205c1928474f517cc1286e233410837c8be0e916e6befc89e9b14d",
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_grimmer_2013b",
+   "sha256_pdf": "24018dd0ad1dd6fa11d6ee2fb501222dc34cde53a8fa02f9cd37f53fb3d724e0",
+   "claims": 37,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_grimmer_2013a",
+   "sha256_pdf": "24018dd0ad1dd6fa11d6ee2fb501222dc34cde53a8fa02f9cd37f53fb3d724e0",
+   "claims": 43,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_grimmer_2013c",
+   "sha256_pdf": "24018dd0ad1dd6fa11d6ee2fb501222dc34cde53a8fa02f9cd37f53fb3d724e0",
+   "claims": 41,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_roberts_2013",
+   "sha256_pdf": "6d21dc10ddeaafd628304f464e1a03cf0fbb18c5444c37e5c089a78f8ca78afb",
+   "claims": 8,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_roberts_2014a",
+   "sha256_pdf": "bc773ec3a48c2ccd4c912aaaba4ee0a89d26919584dbd4019f1bbff596bc24a3",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_roberts_2014b",
+   "sha256_pdf": "bc773ec3a48c2ccd4c912aaaba4ee0a89d26919584dbd4019f1bbff596bc24a3",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_lucas_2015",
+   "sha256_pdf": "bd2f6eb7b832d085f70dbb5d79cee0247ba7dbc231a1a41882b0ce255cafec71",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_roberts_2019",
+   "sha256_pdf": "a182d86f22d9b10280d1dad1719409766b59e11b5de820db4482a6ad2aea0ab9",
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_rodr_guez_2021",
+   "sha256_pdf": "2601a3035dce8a335badeb0921e217482f6924d90dfb33e6337463111e34f08c",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "text_bisbee_2024",
+   "sha256_pdf": "068ae717db925b8045a0ef83ad14471919374eab2324d149a23cade549c01cbd",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 17,
+ "categories": {
+  "EST": 1,
+  "INFER": 3,
+  "ROBUST": 12,
+  "REPORT": 1
+ },
+ "single_source_checks": 5,
+ "sha256_checklist": "7f676f8143425ef45b116d175898b39c3eb397799665709ca045d616646b4ad9",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 17,
+  "categories": {
+   "EST": 1,
+   "INFER": 3,
+   "ROBUST": 12,
+   "REPORT": 1
+  },
+  "single_source_checks": 9,
+  "sha256_checklist": "11b412440c173c5054a2fb8526aa9a1be4b95f7323b77fee09c799938bd4b4f4"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release (v0.1)",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 88.2,
+   "pilot_pairwise_agreement_pct": 100.0
+  },
+  "meets_95pct_diagnostic_bar": false,
+  "reason": "Ships since 2026-11-11 in place of this module's single-draw artifact, so that every module of the release is a three-draw consensus build. Figures are this artifact's own decidability block below. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 2,
+   "codings_per_paper": 2,
+   "core_stability": "34/34 = 100.0%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 2,
+   "codings_per_paper": 5,
+   "core_stability": "30/34 = 88.2%",
+   "judgment_call_bucket": null
+  }
+ }
+}

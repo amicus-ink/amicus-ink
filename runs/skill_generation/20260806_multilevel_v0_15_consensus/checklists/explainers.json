@@ -1,0 +1,70 @@
+{
+ "module": "multilevel",
+ "run": "20260806_multilevel_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-10-07",
+ "explainers": [
+  {
+   "check_id": "MULTILEVEL-IDENT-01",
+   "plain": "A model of the same units observed over several time periods should include a component for time periods, such as year indicators, a period-level random effect, or a modeled common time trend.",
+   "why": "Without it, shocks that hit all units in the same period are left in the error term instead of being captured by the model.",
+   "done": "includes year indicators, a period-level random effect, or a common time trend in its model"
+  },
+  {
+   "check_id": "MULTILEVEL-IDENT-02",
+   "plain": "A survey of whether a species is present, or how many individuals there are, should model the chance of detecting it separately from whether it is actually there, and should visit each site more than once.",
+   "why": "Something present can be missed on a visit, and only repeat visits let the model tell missed detections apart from true absence.",
+   "done": "models detection separately from presence and visits each site more than once"
+  },
+  {
+   "check_id": "MULTILEVEL-INFER-01",
+   "plain": "A Bayesian model fit by simulation (MCMC) should report a convergence diagnostic called Rhat for all parameters and show that it is at or below about 1.1; values above 1.05 are borderline.",
+   "why": "Rhat shows whether the simulation has settled on a stable answer; values well above 1 signal that it has not converged.",
+   "done": "reports Rhat at or below 1.1 for all parameters"
+  },
+  {
+   "check_id": "MULTILEVEL-INFER-02",
+   "plain": "A Bayesian model fit by simulation (MCMC) should run at least two independent simulation runs, called chains, and state how many it ran.",
+   "why": "Checking convergence means seeing whether separate chains agree, and a single chain cannot reveal that it has missed part of the range of plausible parameter values.",
+   "done": "states that it ran at least two independent chains"
+  },
+  {
+   "check_id": "MULTILEVEL-INFER-03",
+   "plain": "A study of units observed repeatedly over time should report at least one correction for errors that are correlated over time or across units or that vary in size, such as a lagged outcome, a serial-correlation model, panel-corrected standard errors, or period indicators.",
+   "why": "Such data usually have these error patterns, and leaving them unaddressed gives incorrect standard errors; fitting a multilevel model does not fix this on its own.",
+   "done": "reports at least one correction for its error structure, such as panel-corrected standard errors or period indicators"
+  },
+  {
+   "check_id": "MULTILEVEL-ROBUST-01",
+   "plain": "A paper that fits a multilevel model should report at least one check of how well the model fits the data, such as comparing the observed data with data simulated from the model, or plotting residuals.",
+   "why": "A fitted model should not be accepted unexamined; comparing the real data with data the model generates shows whether the model describes the data well.",
+   "done": "reports a check of model fit, such as comparing observed data with data simulated from the model"
+  },
+  {
+   "check_id": "MULTILEVEL-ROBUST-02",
+   "plain": "A multilevel model for counts or proportions (Poisson or binomial) should check for overdispersion, meaning more spread in the data than the model allows, or use a model that allows for it, such as a negative-binomial model.",
+   "why": "These models have no separate parameter for spread, so uncorrected overdispersion makes confidence intervals too narrow. Outcomes coded only 0 or 1 are exempt.",
+   "done": "checks for overdispersion or uses a model that allows for it"
+  },
+  {
+   "check_id": "MULTILEVEL-REPORT-01",
+   "plain": "A paper should state whether each prediction from its mixed model is marginal (for the population as a whole) or conditional (specific to particular groups, using their estimated group-level deviations).",
+   "why": "Because the model lets groups differ, a prediction can describe the population average or a specific group, and readers need to know which one they are seeing.",
+   "done": "states whether its predictions are for the whole population or for specific groups"
+  },
+  {
+   "check_id": "MULTILEVEL-REPORT-02",
+   "plain": "A multilevel model should state how many groups there are for each grouping factor, for example how many countries when people are grouped by country.",
+   "why": "How reliable the estimates of variation between groups are depends on how many groups there are, though no fixed minimum number applies.",
+   "done": "states the number of groups for each grouping factor"
+  },
+  {
+   "check_id": "MULTILEVEL-REPORT-03",
+   "plain": "A Bayesian multilevel model should state the priors, meaning the distributions assumed before seeing the data, placed on its parameters, including those for variation between groups.",
+   "why": "Every parameter in such a model has a prior, and software defaults are not guaranteed to be sensible, so silently relying on them is not enough.",
+   "done": "states the priors on its parameters, including any software defaults it adopts by name"
+  }
+ ],
+ "reviewed": "2026-10-07: 1 field(s) revised after an Opus review against the check text"
+}

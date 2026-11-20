@@ -1,0 +1,67 @@
+{
+ "IV-IDENT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 12
+ },
+ "IV-IDENT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 7
+ },
+ "IV-IDENT-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "IV-IDENT-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 11
+ },
+ "IV-IDENT-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "IV-IDENT-06": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "IV-IDENT-07": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "IV-INFER-01": {
+  "disputed": true,
+  "basis": "Andrews (2019) argues first-stage F-statistics can be spuriously large even with irrelevant instruments and so may not reliably indicate whether conventional inference performs well, and Olea (2013) argues the ordinary and robust first-stage F cannot substitute for the effective F.",
+  "n_attached": 3
+ },
+ "IV-INFER-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "IV-INFER-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "IV-INFER-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "IV-INFER-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "IV-INFER-06": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ }
+}

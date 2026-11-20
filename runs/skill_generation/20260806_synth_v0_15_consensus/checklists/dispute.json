@@ -1,0 +1,47 @@
+{
+ "SYNTH-IDENT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 4
+ },
+ "SYNTH-IDENT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "SYNTH-IDENT-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 4
+ },
+ "SYNTH-IDENT-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "SYNTH-EST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "SYNTH-INFER-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 12
+ },
+ "SYNTH-REPORT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "SYNTH-DATA-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 4
+ },
+ "SYNTH-DATA-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ }
+}

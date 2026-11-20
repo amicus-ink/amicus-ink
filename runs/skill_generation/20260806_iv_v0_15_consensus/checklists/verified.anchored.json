@@ -1,0 +1,1299 @@
+[
+ {
+  "_module": "IV",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "all",
+   "as_if_random_or_conditional",
+   "late_causal",
+   "multiple_endogenous"
+  ],
+  "_scope_definitions": {
+   "all": "The paper states it estimates a causal effect of an endogenous regressor using an instrumental variable (2SLS/IV/GMM with an excluded instrument). Fires on any paper that names an instrument for an endogenous regressor. A paper that runs only OLS/regression adjustment and never names an instrument is out of scope.",
+   "as_if_random_or_conditional": "Fires when the paper describes its instrument as randomly or as-if-randomly assigned (lottery/natural experiment), or as valid only conditional on named covariates. Near-miss that does NOT fire: an instrument defended purely by theoretical argument with no claim of (conditional) random assignment.",
+   "late_causal": "The paper states it interprets its IV estimate as an average causal/treatment effect: it invokes potential outcomes or compliers/LATE, or it explicitly allows the treatment effect to vary across units (heterogeneous effects) and reads the 2SLS coefficient as such an average. Fires only on an explicit causal-effect reading. NEAR-MISS that does NOT fire: a paper that explicitly assumes a single constant/homogeneous structural coefficient and reports only that slope, making no complier/average-treatment-effect claim; a purely predictive/first-stage-only exercise. Ambiguity resolves OUT (NA): a coder never infers a causal-effect reading, or effect heterogeneity, the paper did not state.",
+   "multiple_endogenous": "The paper states it instruments two or more endogenous regressors jointly in the same equation. Fires on a declared count >1 of endogenous regressors. NEAR-MISS: a single endogenous regressor with several instruments (overidentified but one endogenous variable) does NOT fire."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 13 concepts in >=2 draws; dropped 8 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "IV-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "A paper must state which causal parameter (estimand) its IV design targets, rather than leaving the estimated quantity implicit.",
+  "observable": "Whether the paper contains an explicit statement naming the causal parameter being estimated (e.g., the effect of the endogenous regressor on the outcome for a named population).",
+  "pass_condition": "The paper names, in words, the causal parameter it estimates; where that parameter is population-specific (e.g., a local effect), it also identifies the population it applies to.",
+  "flag_condition": "The paper reports an IV estimate without ever stating which causal parameter it is meant to identify.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources require readers be told the causal parameter estimated before the estimate can be judged (Sovey 2010; Dunning 2012).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "State the target causal parameter the IV estimate is meant to identify.",
+  "contributing_sources": [
+   "iv_sovey_2010",
+   "iv_gelman_2006",
+   "iv_dunning_2012"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_sovey_2010",
+    "short_cite": "Sovey (2010)",
+    "source_lines": "L8",
+    "quote": "Readers also need a description of the causal parameter to be estimated and an argument explaining why the proposed instrumental variable satisfies",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_gelman_2006",
+    "short_cite": "Gelman (2006)",
+    "source_lines": "L3777",
+    "quote": "We are estimating (a special case of) what has been called a local average treatment effect (LATE).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     246
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_dunning_2012",
+    "short_cite": "Dunning (2012)",
+    "source_lines": "L221",
+    "quote": "Causal effects estimated for a particular natural-experimental study group may indeed be local average treatment effects (LATEs), in the sense that they only characterize causal parameters for particular units",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     33
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_dunning_2012",
+    "cite": "Thad Dunning. (2012). Natural Experiments in the Social Sciences. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9781139084444",
+    "short_cite": "Dunning (2012)",
+    "pages": "p. 33",
+    "pagination": "printed",
+    "pdf_pages": [
+     33
+    ]
+   },
+   {
+    "source_id": "iv_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "p. 220",
+    "pagination": "printed",
+    "pdf_pages": [
+     246
+    ]
+   },
+   {
+    "source_id": "iv_sovey_2010",
+    "cite": "Allison J. Sovey & Donald P. Green. (2010). Instrumental Variables Estimation in Political Science: A Readers’ Guide. American Journal of Political Science, 55(1), 188-200. https://doi.org/10.1111/j.1540-5907.2010.00477.x",
+    "short_cite": "Sovey (2010)",
+    "pages": "p. 188",
+    "pagination": "printed",
+    "pdf_pages": [
+     1
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "IV-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "Because the exclusion restriction cannot be tested from the data, a paper must give a substantive argument for why its instrument affects the outcome only through the endogenous regressor.",
+  "observable": "Whether the paper presents reasoning (not a statistical test) defending that the instrument has no pathway to the outcome except through the treatment.",
+  "pass_condition": "The paper gives an explicit substantive argument for the exclusion restriction, findable anywhere in the paper or its appendices.",
+  "flag_condition": "The paper invokes an instrument but offers no argued defense of the exclusion restriction, or defends it only by an OLS regression of the outcome on the instrument.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources make the exclusion restriction the pivotal, untestable IV assumption whose violation biases the estimate (Sovey 2010; Kippersluis 2018; Conley 2010).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Argue, substantively, why the instrument influences the outcome only through the endogenous regressor.",
+  "contributing_sources": [
+   "iv_sovey_2010",
+   "iv_kippersluis_2018",
+   "iv_conley_2010",
+   "iv_miguel_2004a",
+   "iv_angrist_1996c"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_sovey_2010",
+    "short_cite": "Sovey (2010)",
+    "source_lines": "L32",
+    "quote": "the plausibility of the exclusion restriction hinges on argumentation; it cannot be established empirically",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_kippersluis_2018",
+    "short_cite": "Kippersluis (2018)",
+    "source_lines": "L7",
+    "quote": "This assumption is often debatable and cannot be formally tested.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_conley_2010",
+    "short_cite": "Conley (2010)",
+    "source_lines": "L3",
+    "quote": "the instrument exclusion restriction that underlies the validity of the usual IV inference is suspect",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_miguel_2004a",
+    "short_cite": "Miguel (2004a)",
+    "source_lines": "L159",
+    "quote": "they must also satisfy the exclusion restriction: weather shocks should affect civil conflict only through economic growth",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     21
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "coder_note": "A single exogeneity / as-if-random argument can cover both the exclusion restriction (this check) and independence (IV-IDENT-03); credit both and do not double-flag.",
+  "further_reading": [
+   {
+    "source_id": "iv_conley_2010",
+    "cite": "Timothy G. Conley, Christian Hansen, & Peter E. Rossi. (2010). Plausibly Exogenous. The Review of Economics and Statistics, 94(1), 260-272. https://doi.org/10.1162/rest_a_00139",
+    "short_cite": "Conley (2010)",
+    "pages": "p. 260",
+    "pagination": "printed",
+    "pdf_pages": [
+     1
+    ]
+   },
+   {
+    "source_id": "iv_kippersluis_2018",
+    "cite": "Hans van Kippersluis & Cornelius A. Rietveld. (2018). Beyond plausibly exogenous. Econometrics Journal, 21(3), 316-331. https://doi.org/10.1111/ectj.12113",
+    "short_cite": "Kippersluis (2018)",
+    "pages": "p. 316",
+    "pagination": "printed",
+    "pdf_pages": [
+     1
+    ]
+   },
+   {
+    "source_id": "iv_miguel_2004a",
+    "cite": "Edward Miguel, Shanker Satyanath, & Ernest Sergenti. (2004). Economic Shocks and Civil Conflict: An Instrumental Variables Approach. Journal of Political Economy, 112(4), 725-753. https://doi.org/10.1086/421174",
+    "short_cite": "Miguel (2004a)",
+    "pages": "p. 745",
+    "pagination": "printed",
+    "pdf_pages": [
+     21
+    ]
+   },
+   {
+    "source_id": "iv_sovey_2010",
+    "cite": "Allison J. Sovey & Donald P. Green. (2010). Instrumental Variables Estimation in Political Science: A Readers’ Guide. American Journal of Political Science, 55(1), 188-200. https://doi.org/10.1111/j.1540-5907.2010.00477.x",
+    "short_cite": "Sovey (2010)",
+    "pages": "p. 190",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "IV-IDENT-03",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "IV requires the instrument to be (as-if) independent of the unobserved determinants of the outcome; outside a clean randomization this ignorability must be argued explicitly.",
+  "observable": "Whether the paper argues that the instrument is unrelated to outcome confounders / as-good-as-randomly assigned, and (when not physically randomized) makes that case rather than assuming it.",
+  "pass_condition": "The paper argues the instrument is independent of confounders of the treatment-outcome relationship, e.g. by establishing (conditional) random or as-if-random assignment and naming the conditioning covariates it relies on.",
+  "flag_condition": "The paper treats a non-randomized instrument as exogenous without argument, or rests independence on an a-priori belief with no supporting reasoning.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources hold that a non-random instrument's ignorability must be argued and that an unexamined belief in exogeneity does not make IV credible (Angrist 1996; Bound 1995; Dunning 2012).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must argue the instrument is (as-if) independent of the outcome's unobserved determinants, explicitly when it is not physically randomized.",
+  "contributing_sources": [
+   "iv_kippersluis_2018",
+   "iv_angrist_1996a",
+   "iv_gelman_2006",
+   "iv_dunning_2012",
+   "iv_imbens_1994",
+   "iv_angrist_2000",
+   "iv_sovey_2010"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_kippersluis_2018",
+    "short_cite": "Kippersluis (2018)",
+    "source_lines": "L27",
+    "quote": "(b) Independence. The instrumental variables Z are uncorrelated with any confounders of the exposure–outcome relationship.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_angrist_1996a",
+    "short_cite": "Angrist (1996a)",
+    "source_lines": "L315",
+    "quote": "the instrument is not randomly assigned, and this assumption must be argued more carefully.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_gelman_2006",
+    "short_cite": "Gelman (2006)",
+    "source_lines": "L3848",
+    "quote": "In these examples we have simply traded one ignorability assumption (ignorability of the treatment variable) for another (ignorability of the instrument) that we believe to be more plausible.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     251
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_dunning_2012",
+    "short_cite": "Dunning (2012)",
+    "source_lines": "L179",
+    "quote": "the onus is therefore on the researcher to make a very compelling case for this assertion (or to drop the claim to a natural experiment)",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     28
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_angrist_1996a",
+    "cite": "Joshua D. Angrist, Guido W. Imbens, & Donald B. Rubin. (1996). Identification of Causal Effects Using Instrumental Variables. Journal of the American Statistical Association, 91(434), 444-455. https://doi.org/10.1080/01621459.1996.10476902",
+    "short_cite": "Angrist (1996a)",
+    "pages": "p. 450",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "iv_dunning_2012",
+    "cite": "Thad Dunning. (2012). Natural Experiments in the Social Sciences. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9781139084444",
+    "short_cite": "Dunning (2012)",
+    "pages": "p. 28",
+    "pagination": "printed",
+    "pdf_pages": [
+     28
+    ]
+   },
+   {
+    "source_id": "iv_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "p. 225",
+    "pagination": "printed",
+    "pdf_pages": [
+     251
+    ]
+   },
+   {
+    "source_id": "iv_kippersluis_2018",
+    "cite": "Hans van Kippersluis & Cornelius A. Rietveld. (2018). Beyond plausibly exogenous. Econometrics Journal, 21(3), 316-331. https://doi.org/10.1111/ectj.12113",
+    "short_cite": "Kippersluis (2018)",
+    "pages": "p. 318",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 7,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "IV-IDENT-04",
+  "category": "IDENT",
+  "scope": [
+   "as_if_random_or_conditional"
+  ],
+  "claim": "When the instrument is claimed to be (conditionally) randomly assigned, that claim has a testable implication: the instrument should be unrelated to predetermined covariates, which the paper should check.",
+  "observable": "Whether the paper reports comparing the instrument against variables fixed before assignment (a balance / randomization check), using the same covariate scheme it uses in estimation.",
+  "pass_condition": "The paper reports a balance/randomization check — e.g. tests or comparisons of predetermined covariates across instrument values, or an F-test for unexpected instrument-covariate correlations.",
+  "flag_condition": "The paper claims (conditional) random or as-if-random assignment but reports no check of the instrument against predetermined covariates.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources note random assignment is directly testable by balance tests and that as-if random should be assessed even in lotteries (Frandsen 2022; Dunning 2012).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper claiming (conditional) random assignment must report a balance/randomization check of the instrument against predetermined covariates.",
+  "contributing_sources": [
+   "iv_frandsen_2022",
+   "iv_dunning_2012",
+   "iv_sovey_2010",
+   "iv_kippersluis_2018"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_frandsen_2022",
+    "short_cite": "Frandsen (2022)",
+    "source_lines": "L63",
+    "quote": "Random assignment can be directly tested via the usual balance tests, but the exclusion restriction portion of Condition 1(i) cannot be directly verified.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_dunning_2012",
+    "short_cite": "Dunning (2012)",
+    "source_lines": "L73",
+    "quote": "Pre-treatment characteristics are those thought to be determined before the notional treatment of interest took place, in this case the assigning of land titles; they are not thought to be themselves potentially affected by the treatment.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_sovey_2010",
+    "short_cite": "Sovey (2010)",
+    "source_lines": "L124",
+    "quote": "look for unexpected correlations between the instrumental variables and other predetermined covariates",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_dunning_2012",
+    "cite": "Thad Dunning. (2012). Natural Experiments in the Social Sciences. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9781139084444",
+    "short_cite": "Dunning (2012)",
+    "pages": "p. 11",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   },
+   {
+    "source_id": "iv_frandsen_2022",
+    "cite": "Brigham Frandsen, Lars Lefgren, & Emily Leslie. (2022). Judging Judge Fixed Effects. American Economic Review, 113(1), 253-277. https://doi.org/10.1257/aer.20201860",
+    "short_cite": "Frandsen (2022)",
+    "pages": "p. 259",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   },
+   {
+    "source_id": "iv_sovey_2010",
+    "cite": "Allison J. Sovey & Donald P. Green. (2010). Instrumental Variables Estimation in Political Science: A Readers’ Guide. American Journal of Political Science, 55(1), 188-200. https://doi.org/10.1111/j.1540-5907.2010.00477.x",
+    "short_cite": "Sovey (2010)",
+    "pages": "p. 198",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "IV-IDENT-05",
+  "category": "IDENT",
+  "scope": [
+   "late_causal"
+  ],
+  "claim": "A paper reading its IV estimate as an average treatment effect under possibly heterogeneous effects must justify monotonicity (that the instrument moves no unit's treatment in the opposite direction — no defiers).",
+  "observable": "Whether the paper states and defends the monotonicity/no-defiers condition (by argument or design).",
+  "pass_condition": "A paper with a fired late_causal trigger gives a theoretical or design-based justification that no defiers exist.",
+  "flag_condition": "A late_causal paper interprets the IV estimand as an average effect without addressing monotonicity.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Without monotonicity the IV estimand is not a nonnegatively-weighted average of treatment effects (Imbens 1994; Angrist 1996; Gelman 2006). A coder decides fired-vs-not from the paper's stated causal-effect reading alone; an unfired or ambiguous trigger is NA.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Justify monotonicity (no defiers) when interpreting the IV estimand as an average treatment effect.",
+  "contributing_sources": [
+   "iv_imbens_1994",
+   "iv_gelman_2006",
+   "iv_angrist_1996a",
+   "iv_angrist_1996c",
+   "iv_sovey_2010"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_imbens_1994",
+    "short_cite": "Imbens (1994)",
+    "source_lines": "L58",
+    "quote": "This condition ensures that the instrument affects the participation or selection decision in a monotone way",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_gelman_2006",
+    "short_cite": "Gelman (2006)",
+    "source_lines": "L3743",
+    "quote": "In defining never-watchers and always-watchers, we assumed that there were no children who would watch if they were not encouraged but who would not watch if they were encouraged. Formally this is called the monotonicity assumption, and it need not hold in practice, though there are many situations in which it is defensible.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     243
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_angrist_1996a",
+    "short_cite": "Angrist (1996a)",
+    "source_lines": "L191",
+    "quote": "Assumption 5: Monotonicity (Imbens and Angrist 1994). Di(1) > Di(0) for all i =1,.. .,N.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_angrist_1996a",
+    "cite": "Joshua D. Angrist, Guido W. Imbens, & Donald B. Rubin. (1996). Identification of Causal Effects Using Instrumental Variables. Journal of the American Statistical Association, 91(434), 444-455. https://doi.org/10.1080/01621459.1996.10476902",
+    "short_cite": "Angrist (1996a)",
+    "pages": "p. 447",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "iv_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "p. 217",
+    "pagination": "printed",
+    "pdf_pages": [
+     243
+    ]
+   },
+   {
+    "source_id": "iv_imbens_1994",
+    "cite": "Guido W. Imbens & Joshua D. Angrist. (1994). Identification and Estimation of Local Average Treatment Effects. Econometrica, 62(2), 467. https://doi.org/10.2307/2951620",
+    "short_cite": "Imbens (1994)",
+    "pages": "p. 469",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "IV-IDENT-06",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "IV rests on the stable-unit-treatment-value assumption of no interference between units; spillovers between treated and untreated units bias the estimate, so the paper should address them.",
+  "observable": "Whether the paper addresses no-interference / SUTVA -- by arguing that one unit's outcome is unaffected by other units' assignment or treatment, or by explicitly modeling spillovers where they are expected.",
+  "pass_condition": "The paper addresses no interference between units -- arguing from design or context that one unit's outcome is unaffected by other units' assignment/treatment, or explicitly modeling the interference where it is expected.",
+  "flag_condition": "The paper neither argues no interference between units nor models spillovers -- it is silent on SUTVA.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state SUTVA is required and that settings where it is implausible cannot use standard IV, with spillovers biasing estimates in an unpredictable direction (Angrist 1996; Sovey 2010).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must address no interference between units (SUTVA), by argument, design, or explicit modeling.",
+  "contributing_sources": [
+   "iv_angrist_1996a",
+   "iv_gelman_2006",
+   "iv_sovey_2010",
+   "iv_dunning_2012",
+   "iv_angrist_1996d"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_angrist_1996a",
+    "short_cite": "Angrist (1996a)",
+    "source_lines": "L137",
+    "quote": "we follow the convention in statistics and medical research by assuming no interference between units.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_gelman_2006",
+    "short_cite": "Gelman (2006)",
+    "source_lines": "L3733",
+    "quote": "In addition, the model assumes no interference between units (the stable unit treatment value assumption) as with most other causal analyses, an issue we have already discussed at the end of Section 9.3.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     242
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_sovey_2010",
+    "short_cite": "Sovey (2010)",
+    "source_lines": "L113",
+    "quote": "These possible SUTVA violations can produce biased estimates, which, importantly, could be biased in either direction.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_angrist_1996a",
+    "cite": "Joshua D. Angrist, Guido W. Imbens, & Donald B. Rubin. (1996). Identification of Causal Effects Using Instrumental Variables. Journal of the American Statistical Association, 91(434), 444-455. https://doi.org/10.1080/01621459.1996.10476902",
+    "short_cite": "Angrist (1996a)",
+    "pages": "p. 446",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "iv_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "p. 216",
+    "pagination": "printed",
+    "pdf_pages": [
+     242
+    ]
+   },
+   {
+    "source_id": "iv_sovey_2010",
+    "cite": "Allison J. Sovey & Donald P. Green. (2010). Instrumental Variables Estimation in Political Science: A Readers’ Guide. American Journal of Political Science, 55(1), 188-200. https://doi.org/10.1111/j.1540-5907.2010.00477.x",
+    "short_cite": "Sovey (2010)",
+    "pages": "p. 197",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "IV-IDENT-07",
+  "category": "IDENT",
+  "scope": [
+   "late_causal"
+  ],
+  "claim": "A paper reading its IV estimate causally under heterogeneity must acknowledge that the estimand is local (compliers / instrument-moved units) and not automatically the population effect.",
+  "observable": "Whether the paper states that its IV estimate applies only to the subpopulation the instrument moves and flags the resulting limit on generalizability.",
+  "pass_condition": "A fired late_causal paper states the locality of its estimand (compliers / instrument-shifted range) and does not silently generalize it to the whole population.",
+  "flag_condition": "A late_causal paper presents its IV estimate as a population/average effect with no acknowledgment of complier-locality.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "IV identifies an effect only for instrument-responsive units, which need not equal the population effect (Imbens 1994; Gelman 2006; Angrist 1996; Sovey 2010). Trigger fired-vs-not is decided from the paper's own causal reading; ambiguity is NA.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Acknowledge the local (complier) nature of the IV estimand and its limited generalizability.",
+  "contributing_sources": [
+   "iv_imbens_1994",
+   "iv_gelman_2006",
+   "iv_sovey_2010",
+   "iv_angrist_1996a",
+   "iv_dunning_2012"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_imbens_1994",
+    "short_cite": "Imbens (1994)",
+    "source_lines": "L75",
+    "quote": "the treatment effect identified is an average for those who can be induced to change participation status by a change in the instrument",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_gelman_2006",
+    "short_cite": "Gelman (2006)",
+    "source_lines": "L3768",
+    "quote": "Given that the children in these groups cannot be induced to change their watching behavior by the instrument, we cannot estimate the causal effect of watching Sesame Street for these children. Therefore the causal estimates apply only to the “induced watchers.”",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     245
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_sovey_2010",
+    "short_cite": "Sovey (2010)",
+    "source_lines": "L69",
+    "quote": "caution must be exercised when extrapolating from an estimated LATE to other settings or populations",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "p. 219",
+    "pagination": "printed",
+    "pdf_pages": [
+     245
+    ]
+   },
+   {
+    "source_id": "iv_imbens_1994",
+    "cite": "Guido W. Imbens & Joshua D. Angrist. (1994). Identification and Estimation of Local Average Treatment Effects. Econometrica, 62(2), 467. https://doi.org/10.2307/2951620",
+    "short_cite": "Imbens (1994)",
+    "pages": "p. 470",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "iv_sovey_2010",
+    "cite": "Allison J. Sovey & Donald P. Green. (2010). Instrumental Variables Estimation in Political Science: A Readers’ Guide. American Journal of Political Science, 55(1), 188-200. https://doi.org/10.1111/j.1540-5907.2010.00477.x",
+    "short_cite": "Sovey (2010)",
+    "pages": "p. 193",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "IV-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "all"
+  ],
+  "claim": "A paper must report a first-stage instrument-strength diagnostic (first-stage F and/or partial R-squared of the excluded instruments net of covariates).",
+  "observable": "Whether the paper reports a first-stage strength statistic for the excluded instrument(s).",
+  "pass_condition": "The paper reports a first-stage F statistic or partial R-squared of the excluded instruments (partialling out covariates), findable anywhere in the paper or appendices.",
+  "flag_condition": "The paper reports IV/2SLS estimates but no first-stage strength statistic.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Weak instruments produce large finite-sample bias and unreliable inference; sources require applied work to report first-stage strength as a matter of routine (Staiger-Stock 1997; Bound 1995).",
+  "prevalence_aggravator": "Surveys find IV papers routinely omit any first-stage relevance statistic (Staiger-Stock 1997; Sovey 2010).",
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Report a first-stage instrument-strength statistic (F or partial R-squared of the excluded instruments).",
+  "contributing_sources": [
+   "iv_staiger_1997a",
+   "iv_staiger_1997b",
+   "iv_bound_1995",
+   "iv_sovey_2010",
+   "iv_stock_2002"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_staiger_1997a",
+    "short_cite": "Staiger (1997a)",
+    "source_lines": "L492",
+    "quote": "first stage F statistics (or, when n > 1, GT and/or the bias measures in Section 3b) should be reported",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     27
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_bound_1995",
+    "short_cite": "Bound (1995)",
+    "source_lines": "L40",
+    "quote": "When Equations (1) and (2) include common exogenous variables, the relevant parameter is the partial R2, the pop- ulation R2 from the regression of x on z once the common exogenous variables have been partialled out of both x and z.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_bound_1995",
+    "short_cite": "Bound (1995)",
+    "source_lines": "L11",
+    "quote": "R2 and the F statistic of the identifying instruments in the first-stage estimation are useful indicators of the quality of the IV estimates and should be routinely reported.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_bound_1995",
+    "cite": "John Bound, David A. Jaeger, & Regina Baker. (1995). Problems with Instrumental Variables Estimation When the Correlation Between the Instruments and the Endogeneous Explanatory Variable is Weak. Journal of the American Statistical Association, 90(430), 443. https://doi.org/10.2307/2291055",
+    "short_cite": "Bound (1995)",
+    "pages": "pp. 443-444",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     3
+    ]
+   },
+   {
+    "source_id": "iv_staiger_1997a",
+    "cite": "Douglas O. Staiger & James H. Stock. (1997). Instrumental Variables Regression with Weak Instruments. Econometrica, 65(3), 557. https://doi.org/10.2307/2171753",
+    "short_cite": "Staiger (1997a)",
+    "pages": "p. 582",
+    "pagination": "printed",
+    "pdf_pages": [
+     27
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": true,
+  "dispute_basis": "Andrews (2019) argues first-stage F-statistics can be spuriously large even with irrelevant instruments and so may not reliably indicate whether conventional inference performs well, and Olea (2013) argues the ordinary and robust first-stage F cannot substitute for the effective F."
+ },
+ {
+  "check_id": "IV-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "all"
+  ],
+  "claim": "When the first stage is weak, a paper must use identification-robust inference (e.g., Anderson-Rubin / effective-F-based procedures) rather than conventional t/Wald intervals, which under-cover; rescaling standard errors does not fix this.",
+  "observable": "Whether, given a weak first stage, the paper reports weak-instrument-robust inference rather than relying only on conventional 2SLS standard errors.",
+  "pass_condition": "Either the first-stage effective F is at or above the strong-instrument threshold (23.1, the conservative worst-case value for TSLS) and conventional inference is reported; or the effective F is weak/borderline and the paper additionally reports weak-instrument-robust inference (e.g., an Anderson-Rubin confidence set).",
+  "flag_condition": "The first-stage effective F is below the strong-instrument threshold and the paper reports only conventional t/Wald standard errors or CIs, with no identification-robust inference.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Under weak instruments conventional IV t-statistics are non-normal and CIs miss nominal coverage at any sample size; correct coverage needs test inversion, not rescaled SEs (Staiger-Stock 1997; Andrews-Stock-Sun 2019; Stock-Wright-Yogo 2002).",
+  "prevalence_aggravator": null,
+  "threshold": {
+   "cutoff": 10,
+   "border_band": [
+    10,
+    23.1
+   ],
+   "provenance": "rule_of_thumb",
+   "band_rule": "Judge strength on the first-stage EFFECTIVE F (not an ordinary F against homoskedastic critical values; see IV-INFER-03). At or above 23.1 (the conservative worst-case effective-F critical value for TSLS) conventional inference alone PASSes; below 10 the first stage is weak and a weak-instrument-robust confidence set is required to PASS; within [10, 23.1] strength is not established at the conservative bound, so PASS only if a weak-instrument-robust confidence set is also reported, otherwise FLAG."
+  },
+  "coder_decidable": true,
+  "requirement_statement": "Use identification-robust inference when the first stage is weak.",
+  "contributing_sources": [
+   "iv_andrews_2019",
+   "iv_staiger_1997a",
+   "iv_staiger_1997b",
+   "iv_stock_2002",
+   "iv_stock_2018"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_andrews_2019",
+    "short_cite": "Andrews (2019)",
+    "source_lines": "L308",
+    "quote": "we cannot obtain correct coverage under weak instruments by adjusting our (finite) standard errors, and so points to the need for a different approach such as test inversion",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_staiger_1997a",
+    "short_cite": "Staiger (1997a)",
+    "source_lines": "L178",
+    "quote": "will not in general have a 95% coverage rate, even asymptotically",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_stock_2002",
+    "short_cite": "Stock (2002)",
+    "source_lines": "L23",
+    "quote": "If instruments are weak, then the sampling distributions of GMM and IV statistics are in general nonnormal",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_olea_2013",
+    "short_cite": "Olea (2013)",
+    "source_lines": "L24",
+    "quote": "Thus, a simple, asymptotically valid rule of thumb is available for TSLS that rejects when the effective F is greater than 23.1.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_andrews_2019",
+    "cite": "Isaiah Andrews, James H. Stock, & Liyang Sun. (2019). Weak Instruments in Instrumental Variables Regression: Theory and Practice. Annual Review of Economics, 11(1), 727-753. https://doi.org/10.1146/annurev-economics-080218-025643",
+    "short_cite": "Andrews (2019)",
+    "pages": "p. 742",
+    "pagination": "printed",
+    "pdf_pages": [
+     16
+    ]
+   },
+   {
+    "source_id": "iv_olea_2013",
+    "cite": "José Luis Montiel Olea & Carolin Pflueger. (2013). A Robust Test for Weak Instruments. Journal of Business and Economic Statistics, 31(3), 358-369. https://doi.org/10.1080/00401706.2013.806694",
+    "short_cite": "Olea (2013)",
+    "pages": "p. 358",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   },
+   {
+    "source_id": "iv_staiger_1997a",
+    "cite": "Douglas O. Staiger & James H. Stock. (1997). Instrumental Variables Regression with Weak Instruments. Econometrica, 65(3), 557. https://doi.org/10.2307/2171753",
+    "short_cite": "Staiger (1997a)",
+    "pages": "p. 565",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   },
+   {
+    "source_id": "iv_stock_2002",
+    "cite": "James H. Stock, Jonathan H. Wright, & Motohiro Yogo. (2002). A Survey of Weak Instruments and Weak Identification in Generalized Method of Moments. Journal of Business and Economic Statistics, 20(4), 518-529. https://doi.org/10.1198/073500102288618658",
+    "short_cite": "Stock (2002)",
+    "pages": "p. 519",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "IV-INFER-03",
+  "category": "INFER",
+  "scope": [
+   "all"
+  ],
+  "claim": "Under non-homoskedastic, clustered, or serially correlated errors, instrument strength must be judged with an error-structure-matched robust weak-instrument statistic (the effective F), not by comparing an ordinary or robust first-stage F to homoskedastic Stock-Yogo critical values.",
+  "observable": "Whether the strength diagnostic the paper uses matches its error structure (effective / robust weak-instrument statistic) rather than an ordinary F judged against homoskedastic critical values.",
+  "pass_condition": "With non-homoskedastic/clustered/serial errors, the paper assesses strength with a heteroskedasticity/HAC/cluster-robust weak-instrument statistic (e.g., effective F).",
+  "flag_condition": "The paper has non-homoskedastic/clustered/serial errors but judges strength by an ordinary (or plain robust) first-stage F against homoskedastic Stock-Yogo values.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Outside the homoskedastic serially-uncorrelated case the ordinary/robust F has no theoretical basis as a strength measure and Stock-Yogo mappings break down (Montiel Olea-Pflueger 2013; Andrews-Stock-Sun 2019).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Assess instrument strength with an error-structure-matched robust statistic (effective F), not a plain F against homoskedastic critical values.",
+  "contributing_sources": [
+   "iv_olea_2013",
+   "iv_andrews_2019"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_olea_2013",
+    "short_cite": "Olea (2013)",
+    "source_lines": "L239",
+    "quote": "to the best of our knowledge, there is no analysis supporting this practice.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_andrews_2019",
+    "short_cite": "Andrews (2019)",
+    "source_lines": "L206",
+    "quote": "in the nonhomoskedastic case, the homoskedastic first-stage F-statistic is inapplicable and should not be compared to the Stock & Yogo (2005) critical values",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_andrews_2019",
+    "short_cite": "Andrews (2019)",
+    "source_lines": "L217",
+    "quote": "We are unaware of theoretical justification for the use of either FN or FR to gauge instrument strength in nonhomoskedastic settings",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_andrews_2019",
+    "cite": "Isaiah Andrews, James H. Stock, & Liyang Sun. (2019). Weak Instruments in Instrumental Variables Regression: Theory and Practice. Annual Review of Economics, 11(1), 727-753. https://doi.org/10.1146/annurev-economics-080218-025643",
+    "short_cite": "Andrews (2019)",
+    "pages": "pp. 737-738",
+    "pagination": "printed",
+    "pdf_pages": [
+     11,
+     12
+    ]
+   },
+   {
+    "source_id": "iv_olea_2013",
+    "cite": "José Luis Montiel Olea & Carolin Pflueger. (2013). A Robust Test for Weak Instruments. Journal of Business and Economic Statistics, 31(3), 358-369. https://doi.org/10.1080/00401706.2013.806694",
+    "short_cite": "Olea (2013)",
+    "pages": "p. 365",
+    "pagination": "printed",
+    "pdf_pages": [
+     9
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "IV-INFER-04",
+  "category": "INFER",
+  "scope": [
+   "all"
+  ],
+  "claim": "A paper must not select or discard specifications by a first-stage F threshold, because F-screening biases the surviving estimates and distorts test size.",
+  "observable": "Whether the paper reports keeping/dropping specifications, samples, or instruments on the basis of a first-stage F cutoff.",
+  "pass_condition": "The paper does not screen specifications on a first-stage F threshold (silence about such screening passes).",
+  "flag_condition": "The paper states it retained only specifications, samples, or instruments whose first-stage F exceeded a cutoff.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Discarding specifications by a first-stage F threshold worsens rather than mitigates weak-instrument inference, biasing estimates and distorting size for any F variant (Andrews-Stock-Sun 2019).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Do not screen/select specifications by a first-stage F threshold.",
+  "contributing_sources": [
+   "iv_andrews_2019",
+   "iv_staiger_1997a"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_andrews_2019",
+    "short_cite": "Andrews (2019)",
+    "source_lines": "L261",
+    "quote": "While selection on first-stage F-statistics is intuitively reasonable, it can unfortunately result in bias in published estimates and size distortions in published tests",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_andrews_2019",
+    "short_cite": "Andrews (2019)",
+    "source_lines": "L298",
+    "quote": "screening on the first-stage F-statistic appears to compound, rather than reduce, inferential problems arising from weak instruments",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_andrews_2019",
+    "cite": "Isaiah Andrews, James H. Stock, & Liyang Sun. (2019). Weak Instruments in Instrumental Variables Regression: Theory and Practice. Annual Review of Economics, 11(1), 727-753. https://doi.org/10.1146/annurev-economics-080218-025643",
+    "short_cite": "Andrews (2019)",
+    "pages": "pp. 740-741",
+    "pagination": "printed",
+    "pdf_pages": [
+     14,
+     15
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "IV-INFER-05",
+  "category": "INFER",
+  "scope": [
+   "all"
+  ],
+  "claim": "A paper must match its variance/standard-error estimator to the error and clustering structure of the data (clustering at the level of dependence; adjusting for the two stages / generated regressors), so reported IV standard errors are valid.",
+  "observable": "Whether the reported IV standard errors use a variance estimator appropriate to the design's heteroskedasticity/clustering/serial-correlation and account for the estimation stages.",
+  "pass_condition": "The paper reports standard errors from a variance estimator matched to its error structure (e.g., clustered at the dependence level; HAC for time series) and consistent with the two-stage/generated-regressor structure.",
+  "flag_condition": "The paper uses default/homoskedastic or mismatched-level standard errors where the design implies clustering or serial correlation, or ignores the two-stage estimation.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Group-level assignment and unmatched clustering understate uncertainty, and naive second-stage SEs ignore first-stage estimation (Dunning 2012; Sovey 2010; Andrews-Stock-Sun 2019; Gelman 2006).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Use a variance estimator matched to the error/clustering structure and the two-stage design.",
+  "contributing_sources": [
+   "iv_dunning_2012",
+   "iv_sovey_2010",
+   "iv_andrews_2019",
+   "iv_gelman_2006",
+   "iv_miguel_2004b"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_dunning_2012",
+    "short_cite": "Dunning (2012)",
+    "source_lines": "L241",
+    "quote": "issues such as clustered randomization are crucial for natural experiments",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     38
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_andrews_2019",
+    "short_cite": "Andrews (2019)",
+    "source_lines": "L93",
+    "quote": "Such estimators, however, necessarily depend on the assumptions imposed on the data-generating process (for example, whether we allow heteroskedasticity, clustering, or time-series dependence)",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_gelman_2006",
+    "short_cite": "Gelman (2006)",
+    "source_lines": "L3807",
+    "quote": "This second-stage regression does not give the correct standard error, however, as we discuss at the bottom of this page.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     248
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_andrews_2019",
+    "cite": "Isaiah Andrews, James H. Stock, & Liyang Sun. (2019). Weak Instruments in Instrumental Variables Regression: Theory and Practice. Annual Review of Economics, 11(1), 727-753. https://doi.org/10.1146/annurev-economics-080218-025643",
+    "short_cite": "Andrews (2019)",
+    "pages": "p. 732",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   },
+   {
+    "source_id": "iv_dunning_2012",
+    "cite": "Thad Dunning. (2012). Natural Experiments in the Social Sciences. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9781139084444",
+    "short_cite": "Dunning (2012)",
+    "pages": "p. 38",
+    "pagination": "printed",
+    "pdf_pages": [
+     38
+    ]
+   },
+   {
+    "source_id": "iv_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "p. 222",
+    "pagination": "printed",
+    "pdf_pages": [
+     248
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "IV-INFER-06",
+  "category": "INFER",
+  "scope": [
+   "multiple_endogenous"
+  ],
+  "claim": "With more than one endogenous regressor, a paper must assess joint identification with a statistic designed for that case (Cragg-Donald minimum-eigenvalue / conditional Sanderson-Windmeijer F), not each equation's own first-stage F.",
+  "observable": "Whether a paper with multiple endogenous regressors reports a joint/conditional identification statistic rather than only per-equation F statistics.",
+  "pass_condition": "A fired multiple_endogenous paper reports a Cragg-Donald and/or conditional (Sanderson-Windmeijer) first-stage statistic.",
+  "flag_condition": "A multiple_endogenous paper judges strength only from separate per-equation first-stage F statistics.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Each equation's F can be large while the reduced-form matrix is near a rank reduction, leaving some parameters underidentified (Sanderson-Windmeijer 2015; Stock-Wright-Yogo 2002).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Assess joint identification with a Cragg-Donald/conditional-F statistic under multiple endogenous regressors.",
+  "contributing_sources": [
+   "iv_sanderson_2015",
+   "iv_stock_2002",
+   "iv_cragg_1993"
+  ],
+  "evidence": [
+   {
+    "source_id": "iv_sanderson_2015",
+    "short_cite": "Sanderson (2015)",
+    "source_lines": "L30",
+    "quote": "For multiple endogenous variables, inspection of the individual first-stage F-statistics is no longer sufficient",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_sanderson_2015",
+    "short_cite": "Sanderson (2015)",
+    "source_lines": "L173",
+    "quote": "Significant first-stage F-statistics are clearly necessary, but not sufficient, for identification of β",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "iv_stock_2002",
+    "short_cite": "Stock (2002)",
+    "source_lines": "L82",
+    "quote": "it is not suf cient that some elements of Œ²=K are large. Rather, the matrix Œ²=K must be large in the sense that its smallest eigenvalue is large",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "iv_sanderson_2015",
+    "cite": "Eleanor Sanderson & Frank Windmeijer. (2015). A weak instrument <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" altimg=\"si3.gif\" display=\"inline\" overflow=\"scroll\"><mml:mi>F</mml:mi></mml:math>-test in linear IV models with multiple endogenous variables. Journal of Econometrics, 190(2), 212-221. https://doi.org/10.1016/j.jeconom.2015.06.004",
+    "short_cite": "Sanderson (2015)",
+    "pages": "pp. 212, 215",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     5
+    ]
+   },
+   {
+    "source_id": "iv_stock_2002",
+    "cite": "James H. Stock, Jonathan H. Wright, & Motohiro Yogo. (2002). A Survey of Weak Instruments and Weak Identification in Generalized Method of Moments. Journal of Business and Economic Statistics, 20(4), 518-529. https://doi.org/10.1198/073500102288618658",
+    "short_cite": "Stock (2002)",
+    "pages": "p. 522",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

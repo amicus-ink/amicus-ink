@@ -1,0 +1,106 @@
+{
+ "module": "did",
+ "run": "20260806_did_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-10-07",
+ "explainers": [
+  {
+   "check_id": "DID-IDENT-01",
+   "plain": "The paper should state that the treatment had no effect on treated units before it started, or say how far ahead of the start it allows effects to appear and defend that window.",
+   "why": "The method uses periods before treatment as a clean baseline, which only works if units were not already reacting to the coming treatment.",
+   "done": "states that the treatment had no effect before it began, or defends an allowed early-effect window"
+  },
+  {
+   "check_id": "DID-IDENT-02",
+   "plain": "The paper should acknowledge its no-spillover assumption (often called SUTVA), meaning treating some units does not change outcomes for others, or discuss whether such spillovers could occur.",
+   "why": "The method assumes each unit's outcome depends only on its own treatment, so spillovers or broader economy-wide effects would distort the estimate.",
+   "done": "acknowledges the no-spillover assumption or discusses whether spillovers could affect the estimate"
+  },
+  {
+   "check_id": "DID-IDENT-03",
+   "plain": "The paper should name its key assumption, parallel trends (treated and comparison groups would have changed in the same way without treatment) or an equivalent; ideally it also explains why this is plausible in its setting.",
+   "why": "This assumption cannot be tested directly, so a paper that never states it leaves unclear what its causal claim rests on.",
+   "done": "names the parallel-trends assumption its estimate relies on"
+  },
+  {
+   "check_id": "DID-IDENT-04",
+   "plain": "When the paper adjusts for control variables, it should use only ones measured before treatment began or argued to be unaffected by the treatment, and treat any exception as a limitation.",
+   "why": "Controls are meant to make the comparison more credible, but adjusting for a variable the treatment itself can change biases the estimate.",
+   "done": "uses only control variables measured before treatment or unaffected by it"
+  },
+  {
+   "check_id": "DID-IDENT-05",
+   "plain": "When the paper adjusts for control variables, it should report or discuss overlap (also called common support): whether treated and comparison units are both present across the same values of those variables.",
+   "why": "The comparison group can only stand in for the treated group where both kinds of units exist at the same values of the controls.",
+   "done": "reports or discusses overlap of control variables between treated and comparison units"
+  },
+  {
+   "check_id": "DID-EST-01",
+   "plain": "When units start treatment at different times, the paper should use an estimator built for effects that vary across groups and time, or argue in advance that effects are the same everywhere.",
+   "why": "With staggered timing and varying effects, the usual regression with unit and period fixed effects is biased: already-treated units act as comparisons, and some effects are even subtracted from the average rather than added.",
+   "done": "uses an estimator robust to varying effects across start dates, or justifies assuming equal effects"
+  },
+  {
+   "check_id": "DID-EST-02",
+   "plain": "The paper should not keep units that were already treated before its data begin as treated or comparison units, as if their untreated outcomes had been observed.",
+   "why": "These units have no observed period without treatment, so they cannot show the treatment's effect or serve as a valid comparison.",
+   "done": "does not use units treated before the data begin as if their untreated outcomes were observed"
+  },
+  {
+   "check_id": "DID-EST-03",
+   "plain": "When treatment is partial, varies in intensity, or is adopted unevenly, the paper should state either that it assumes treatment effects are the same across units, or that its comparison group's exposure to treatment stays stable over time.",
+   "why": "In these designs the usual ratio estimate (called Wald-DiD) measures a causal effect only under such an equal-effects assumption, or with a comparison group whose exposure does not change.",
+   "done": "states its equal-effects assumption or identifies a comparison group with stable treatment exposure"
+  },
+  {
+   "check_id": "DID-INFER-01",
+   "plain": "With data over several periods, the paper should compute standard errors that allow outcomes within the same group to be correlated over time, for example by clustering at the group level.",
+   "why": "Outcomes in the same group tend to move together over time, so treating each observation as independent makes estimates look more precise than they are.",
+   "done": "clusters standard errors by group or otherwise allows for correlation within groups over time"
+  },
+  {
+   "check_id": "DID-INFER-02",
+   "plain": "When only a few units or clusters are treated, the paper should measure uncertainty with a method designed for that case, such as a permutation test, rather than standard clustered standard errors.",
+   "why": "With few treated units, standard clustered standard errors understate uncertainty and find effects too often.",
+   "done": "uses an inference method suited to few treated units, such as a permutation test"
+  },
+  {
+   "check_id": "DID-ROBUST-01",
+   "plain": "The paper should report at least one check on the parallel-trends assumption (that groups would have moved together without treatment): a sensitivity analysis, a placebo or pre-treatment test, another comparison group, or an alternative specification.",
+   "why": "Because the assumption cannot be tested and pre-treatment checks can miss real violations, usual confidence intervals can mislead; probing sensitivity shows how much the conclusion depends on it.",
+   "done": "reports a sensitivity analysis, placebo test, alternative comparison group, or alternative specification checking parallel trends"
+  },
+  {
+   "check_id": "DID-ROBUST-02",
+   "plain": "The paper should show how treated and comparison groups moved before treatment, for example with an event-study plot, pre-treatment effect estimates, or plotted group averages.",
+   "why": "Clearly different trends before treatment make the estimate suspect, though similar trends do not prove the groups would have kept moving together afterward.",
+   "done": "shows how treated and comparison groups trended before treatment"
+  },
+  {
+   "check_id": "DID-ROBUST-03",
+   "plain": "The paper should not claim that similar trends before treatment prove the parallel-trends assumption, and should not choose its sample, specification, or whether to proceed based on passing a pre-trends test.",
+   "why": "Similar earlier trends do not guarantee similar later ones, such tests often miss real differences, and choosing an analysis because it passed one biases the results.",
+   "done": "does not treat similar pre-treatment trends as proof or choose its analysis based on a pre-trends test"
+  },
+  {
+   "check_id": "DID-ROBUST-04",
+   "plain": "When units start treatment at different times, the paper should not rely on the pre-treatment (\"lead\") coefficients from a standard two-way fixed effects event study as its test of pre-trends.",
+   "why": "With staggered timing and varying effects, those coefficients mix in treatment effects from other periods and groups, so they are not a valid pre-trends test.",
+   "done": "does not rely on standard two-way fixed effects lead coefficients to test pre-trends"
+  },
+  {
+   "check_id": "DID-REPORT-01",
+   "plain": "The paper should name the quantity it aims to estimate, such as the average effect on the treated units, and say which comparison groups and time periods it uses.",
+   "why": "Leaving the target quantity implicit in a regression setup is a central source of problems in these designs, so the target and comparison should be explicit.",
+   "done": "names its target quantity and the comparison groups and time periods used to estimate it"
+  },
+  {
+   "check_id": "DID-DATA-01",
+   "plain": "When the paper uses different samples in each period (repeated cross-sections), it should address whether the makeup of each group and its characteristics stay stable across periods.",
+   "why": "If the kinds of units in the groups shift over time, those shifts can bias the estimate.",
+   "done": "addresses whether group makeup and characteristics stay stable across periods"
+  }
+ ],
+ "reviewed": "2026-10-07: 1 field(s) revised after an Opus review against the check text"
+}

@@ -1,0 +1,94 @@
+{
+ "module": "conjoint",
+ "run": "20260806_conjoint_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-10-07",
+ "explainers": [
+  {
+   "check_id": "CONJOINT-IDENT-01",
+   "plain": "The paper should state that the levels of each attribute (a feature of the profiles respondents compare, such as a candidate's age) were assigned at random and independently, or conditionally independently, of the other attributes.",
+   "why": "This random, independent assignment is what lets the paper recover each attribute's effect without relying on a statistical model's assumptions.",
+   "done": "states that attribute levels were randomly and independently assigned across profiles"
+  },
+  {
+   "check_id": "CONJOINT-IDENT-02",
+   "plain": "If the design rules out some combinations of attributes, the paper should limit the affected effects to the combinations that were allowed, or state that excluded combinations cannot be analyzed without added assumptions.",
+   "why": "Effects for those attributes are defined only over the allowed combinations, so presenting them as covering every possible profile claims more than the data can show.",
+   "done": "reports effects of restricted attributes only over the attribute combinations the design allowed"
+  },
+  {
+   "check_id": "CONJOINT-IDENT-03",
+   "plain": "When the paper splits or conditions attribute effects by a respondent characteristic, it should report that the characteristic was measured before the conjoint tasks or argue that the tasks could not have affected it.",
+   "why": "A characteristic changed by the experiment itself can distort the comparison, a problem called post-treatment bias.",
+   "done": "measures subgroup characteristics before the conjoint tasks or argues the tasks could not affect them"
+  },
+  {
+   "check_id": "CONJOINT-EST-01",
+   "plain": "The paper should name the causal quantity its conjoint estimates are meant to recover, such as the AMCE (average marginal component effect, the average effect of changing one attribute level) for a stated contrast.",
+   "why": "Without a named target, readers cannot tell what the reported estimates actually represent.",
+   "done": "names the causal quantity its conjoint estimates are meant to recover"
+  },
+  {
+   "check_id": "CONJOINT-EST-02",
+   "plain": "The paper should not read an AMCE (the average effect of changing one attribute level) as showing that a majority, or some stated share, of respondents prefer that level.",
+   "why": "The AMCE combines which way respondents lean with how strongly they lean, so it cannot reveal what share of them prefer the level.",
+   "done": "avoids reading its AMCEs as the share or majority of respondents preferring a level"
+  },
+  {
+   "check_id": "CONJOINT-EST-03",
+   "plain": "The paper should not present an AMCE (the average effect of changing one attribute level) as an effect on a profile's chance of winning an election or beating a specific opponent, or as a claim about its relative electability.",
+   "why": "AMCE estimates do not identify how an attribute changes a candidate's probability of winning or electability.",
+   "done": "avoids presenting its AMCEs as chances of winning or claims about electability"
+  },
+  {
+   "check_id": "CONJOINT-EST-04",
+   "plain": "The paper should treat its conjoint estimates as relative effects of attributes, not as predictions of absolute levels, such as an acceptance rate, or of real-world totals, such as an election result.",
+   "why": "Conjoint estimates capture relative attribute effects only; in a forced-choice design, where respondents must pick one profile, the overall selection rate is fixed by the design.",
+   "done": "interprets its estimates as relative attribute effects, not predictions of absolute or real-world outcomes"
+  },
+  {
+   "check_id": "CONJOINT-EST-05",
+   "plain": "The paper should not read differences or similarities in AMCEs across respondent subgroups as differences or similarities in preferences, unless it bases the comparison on marginal means (how often profiles with a level are chosen) or another baseline-free quantity.",
+   "why": "Subgroup AMCEs depend on the arbitrary choice of baseline level, so differences between them need not reflect differences in preferences.",
+   "done": "bases any subgroup preference comparison on marginal means or another baseline-free quantity"
+  },
+  {
+   "check_id": "CONJOINT-INFER-01",
+   "plain": "When each respondent completes several conjoint tasks, the paper should report standard errors or confidence intervals that account for this, for example by clustering on the respondent or resampling whole respondents (a block bootstrap).",
+   "why": "A respondent's answers across tasks are related, so default standard errors are substantially biased.",
+   "done": "reports standard errors that account for repeated tasks by the same respondent"
+  },
+  {
+   "check_id": "CONJOINT-INFER-02",
+   "plain": "If the paper uses a data-driven method, such as regularization or machine learning, to choose which levels to combine or which subgroups to study, it should make that choice on one part of the data and estimate effects on a separate part.",
+   "why": "Selecting and estimating on the same data can bias the resulting estimates.",
+   "done": "uses separate samples for the data-driven selection and for effect estimation"
+  },
+  {
+   "check_id": "CONJOINT-ROBUST-01",
+   "plain": "If the paper's target profile distribution (how often each combination of attribute levels appears) is non-uniform and differs from the one used in randomization, the paper should report AMCE estimates under two or more distributions, including its stated target.",
+   "why": "An AMCE from uniform randomization carries over to a different target only if attributes do not interact, so readers need to see how estimates change.",
+   "done": "reports AMCE estimates under several profile distributions, including its stated target"
+  },
+  {
+   "check_id": "CONJOINT-REPORT-01",
+   "plain": "The paper should state the profile distribution (how much weight each combination of attribute levels gets, for example equal weight) over which its AMCEs are averaged, and justify that choice.",
+   "why": "An AMCE averages over the other attributes, so its value depends on the distribution used.",
+   "done": "states and justifies the profile distribution over which its AMCEs are averaged"
+  },
+  {
+   "check_id": "CONJOINT-REPORT-02",
+   "plain": "The paper should acknowledge at least one limit on how far its conjoint results generalize, such as applying only to the levels tested, profiles that may be unrealistic, or a sample that may not match the target population.",
+   "why": "Conjoint results do not automatically carry over to the real world; they depend on the levels included, the realism of the profiles and the sample.",
+   "done": "acknowledges at least one limit on how far its conjoint results generalize"
+  },
+  {
+   "check_id": "CONJOINT-DATA-01",
+   "plain": "If the paper uses a fractional factorial design (showing only a subset of all attribute combinations), it should report that the design is orthogonal, meaning attributes are uncorrelated (for generic options such as Candidate A and Candidate B, within each option is enough), and balanced, meaning each level appears equally often.",
+   "why": "Both properties are needed for efficient estimation that does not mix up one attribute's effect with another's.",
+   "done": "reports that its fractional factorial design is orthogonal and that its attribute levels are balanced"
+  }
+ ],
+ "reviewed": "2026-10-07: 1 field(s) revised after an Opus review against the check text"
+}

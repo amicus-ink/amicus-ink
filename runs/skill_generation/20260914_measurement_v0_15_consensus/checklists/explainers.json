@@ -1,0 +1,382 @@
+{
+ "module": "measurement",
+ "run": "20260914_measurement_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-10-07",
+ "explainers": [
+  {
+   "check_id": "MEASUREMENT-IDENT-01",
+   "plain": "The paper should back its main measured variable with at least two different kinds of evidence that it captures the concept it is named after, such as comparison with an outside record or a test of a predicted relationship, reported or cited from specific studies.",
+   "why": "Each kind of evidence covers only part of the case, and no design or sample size can fix a measure that misses its target.",
+   "done": "reports or cites at least two different kinds of evidence that its main measure captures the intended concept"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-02",
+   "plain": "The paper should not offer reliability or agreement figures, such as coder agreement or how well items hang together, as evidence that its measure captures the intended concept.",
+   "why": "Consistency shows only that a procedure repeats itself; coders who share the same mistake can agree with each other and still be wrong together.",
+   "done": "uses reliability figures only as evidence of consistency, not as proof the measure captures its concept"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-03",
+   "plain": "When the paper checks its measure against an outside standard, it should say how well that standard is itself measured, for example its reliability, where it comes from and its known errors, or that it is an official record of the event itself.",
+   "why": "The comparison rests on the standard, so weakness in the standard can undo the case for the measure.",
+   "done": "describes how well the standard it compares against is itself measured"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-04",
+   "plain": "When the paper uses agreement with another measure as support, it should state the conceptual reason it expected the two to agree, or, if it claims to capture something others miss, what difference it expected and why.",
+   "why": "Without a stated expectation, any correlation could be read as good news, and close agreement counts against a measure said to capture what others miss.",
+   "done": "explains why it expected its measure to agree, or differ, with the other measure"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-05",
+   "plain": "The paper should not present as a finding the same relationship it assumed in order to show its measure works, unless it says plainly that this relationship was assumed and is not offered as a finding.",
+   "why": "A relationship taken as true to vouch for a measure cannot later be reported as something the measure discovered.",
+   "done": "keeps the relationship used to validate its measure out of its reported findings"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-06",
+   "plain": "When one question stands for a concept, the paper should report how much error that question carries, argue why one question is enough, or state the resulting limit on its conclusions.",
+   "why": "One question can stand for a concept only if the two move together almost exactly; for many-sided topics they do not, and about half of a single item's variation is error even in well-run surveys.",
+   "done": "reports the single item's error, defends using one question, or states the limit this places on its conclusions"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-07",
+   "plain": "When the paper measures something from text automatically, it should check that measure on its own documents, for example by hand-checking a sample or comparing with independently coded values, and report what the check found.",
+   "why": "How a text method performs on one set of documents says nothing about the next, so its record in other studies does not show it works here.",
+   "done": "checks its automated text measure on its own documents and reports the results"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-08",
+   "plain": "When the paper measures something from text with a computer procedure, it should state the setting in which the texts are read: who produced them, for what audience, and what the language is taken as evidence about.",
+   "why": "The same passage can support several reasonable readings, so readers need the frame behind the measure.",
+   "done": "states who produced its texts, for whom, and what it takes the language to reveal"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-09",
+   "plain": "When the paper uses a trained classifier, a model that sorts documents into set categories, it should compare its labels with human labels on documents held out from training, reporting for each category both what share of its documents it found and how often it was right.",
+   "why": "Scores on training documents overstate accuracy, and an overall figure hides failures, because these two shares can differ.",
+   "done": "reports, per category on held-out documents, the share of documents the classifier found and how often it was right"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-10",
+   "plain": "When the paper uses categories or topics a model discovered in its texts, it should validate them on its own documents before drawing conclusions, for example by having people judge whether grouped documents belong together, and validate anything built from them too.",
+   "why": "Discovered categories need not match the concept of interest and partly reflect the model that produced them; success elsewhere does not carry over.",
+   "done": "validates its discovered categories, and any measures built from them, on its own documents"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-11",
+   "plain": "When the paper scores text with a word list (a dictionary of words tied to a concept), it should state that the list was built for this problem or show that a borrowed list works on these documents.",
+   "why": "Words carry different meanings in different settings, so a list taken from elsewhere can badly mismeasure unless it is shown to transfer.",
+   "done": "builds its word list for this problem or shows that a borrowed list fits its documents"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-12",
+   "plain": "When the paper places texts or speakers on a scale using a model, it should show that the dimension recovered is the one it claims, for example by comparing placements with known positions or examining the words that drive the scale.",
+   "why": "A scaling model latches onto whatever variation dominates the words, which may be topic, style, or tone rather than the intended dimension.",
+   "done": "shows that the recovered dimension matches the one it claims, and reports what that check found"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-13",
+   "plain": "When the paper fits a latent-variable model (one that infers an unobserved concept from several items), it should examine at least one rival setup and give a substantive reason for the one it keeps.",
+   "why": "Quite different models can fit the data equally well, and assigning an item to the wrong group can create a significant effect from nothing, so fit statistics alone cannot choose.",
+   "done": "examines at least one rival model setup and argues substantively for the one it keeps"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-14",
+   "plain": "When the paper fits a measurement model, it should state which way influence runs between its items and the concept, whether the concept drives the items or the items shape the concept, and give a reason.",
+   "why": "Treating every item as driven by the concept is a substantive choice that is often wrong, so it needs an argument.",
+   "done": "states and defends which way influence runs between its items and the concept"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-15",
+   "plain": "When the paper supports its measure by showing it relates to another variable as expected, it should state the expected relationship, say where that expectation comes from, and report the result against it.",
+   "why": "Saying a measure behaves sensibly proves little; this kind of validation works only from a stated theoretical expectation with a named basis, not an ad hoc guess.",
+   "done": "states the expected relationship, its source, and how the result compares with it"
+  },
+  {
+   "check_id": "MEASUREMENT-IDENT-16",
+   "plain": "When the paper uses a measure built by a fitted model in its main analysis, it should state what else the measure might pick up besides the intended trait, and either argue that this is absent or say how the analysis handles it.",
+   "why": "The raw inputs behind such a measure carry information beyond the target, so the measure cannot simply be treated as clean.",
+   "done": "states what else its measure may capture and how it treats that"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-01",
+   "plain": "When the paper reports Cronbach's alpha (a reliability figure that summarizes how consistently a set of survey items measure the same thing), it should state how many answer options its items have and, when there are seven or fewer, compute alpha in a way suited to ordered categories.",
+   "why": "The usual alpha assumes continuous answers; with few ordered categories it understates how strongly items relate, so reliability comes out too low.",
+   "done": "states its items' number of answer options and computes alpha in a way suited to them"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-02",
+   "plain": "The paper should not report Cronbach's alpha as the reliability of a score in which items carry different weights; it should use a reliability measure built for weighted scores instead.",
+   "why": "Alpha is designed for scores in which every item counts equally, so it is the wrong figure for a weighted score.",
+   "done": "uses a reliability measure suited to its weighted score rather than alpha"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-03",
+   "plain": "When the paper adds up or averages items into one score, it should present evidence on whether the items relate to the concept about equally, for example from a factor model, and connect that evidence to its use of a total.",
+   "why": "Adding items is not neutral arithmetic; it assumes each item reflects the concept equally and with equal noise, which needs support like any other assumption.",
+   "done": "reports evidence on whether its items contribute about equally and relates it to its use of a total"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-04",
+   "plain": "When the paper borrows an existing instrument, it should say whether it scores it the way the validating study did; if not, it should explain why and give fresh support for its own scoring on its own data.",
+   "why": "Validity evidence belongs to the scoring that was tested, so it does not carry over to a different scoring.",
+   "done": "scores the borrowed instrument as validated, or explains and supports its different scoring"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-05",
+   "plain": "When the paper's estimates come from a sampler (a simulation method that builds estimates from many random draws), it should name a convergence check it ran and the value or standard it was judged against.",
+   "why": "Sampler results are usable only once the sampler has settled on a stable answer, which a convergence check confirms.",
+   "done": "names its convergence check and the value or standard it met"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-06",
+   "plain": "When the paper combines items into one variable, it should report direct evidence on how many distinct dimensions the items cover, such as a factor analysis; a reliability figure like alpha does not count.",
+   "why": "If the items span separate dimensions, a single combined score blurs what the variable means.",
+   "done": "reports direct evidence on how many dimensions its combined items cover"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-07",
+   "plain": "When the paper finds categories or topics with a model fitted by step-by-step adjustment, it should report using more than one starting point or describe how the categories change across runs.",
+   "why": "Such routines can settle on different solutions depending on where they start, so one run cannot be presented as the grouping the texts contain.",
+   "done": "fits its model from several starting points or reports how results vary across runs"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-08",
+   "plain": "When the paper's concept requires every one of its parts, the scoring rule should clearly prevent a case low on any required part from scoring high overall, for example by taking the minimum across parts.",
+   "why": "Sums and averages let strength on one part make up for weakness on another, which discards the claim that every part is required.",
+   "done": "uses a scoring rule that keeps cases lacking a required part from scoring high"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-09",
+   "plain": "When the paper builds a combined index, it should report the correlations among its components.",
+   "why": "How much each part actually moves the index depends on how it correlates with the others, not only on its nominal weight, so readers need these figures to see what drives it.",
+   "done": "reports the correlations among the components of its index"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-10",
+   "plain": "When the paper analyzes an index made of required parts, it should report results for every component alongside the index, either the index plotted against each component or each component's relationship estimated on its own.",
+   "why": "An added-up index fails for cases low on one part and high on the rest, and a result credited to the whole concept may come from one part.",
+   "done": "reports results for each component alongside the combined index"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-11",
+   "plain": "When the paper standardizes components to its sample before combining them, it should state that the scores are relative to the sample and compare only within it, or justify the meaning of the scales when comparing levels across places or periods.",
+   "why": "Standardizing makes scores relative to the sample, so on their own they cannot support comparisons across places or periods.",
+   "done": "explains what standardizing does to its scores' meaning for the comparisons it makes"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-12",
+   "plain": "When the paper estimates scores on a latent scale (one inferred rather than observed), it should state the restrictions that fix the scale's zero point, unit, and direction, and read its estimates in those terms.",
+   "why": "A latent scale has no built-in zero, unit, or direction, so without such restrictions the estimates have no unique solution and cannot be interpreted.",
+   "done": "states what fixes its latent scale's zero point, unit, and direction"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-13",
+   "plain": "The paper should say whether its final measurement model was revised after seeing how well earlier versions fit; if so, it should give substantive reasons and either note that its tests are affected or confirm the model on new data.",
+   "why": "Revising a model to improve fit makes its reported tests wrong by an unknown amount, and only fresh data can separate real findings from chance.",
+   "done": "says whether its model was revised after checking fit and addresses what that means for its tests"
+  },
+  {
+   "check_id": "MEASUREMENT-EST-14",
+   "plain": "When the paper treats ranked categories (such as low, medium, high) as numbers, it should give grounds for their order and for the equal steps it assigns, or also report results treating them only as ranked.",
+   "why": "Order and equal spacing are claims to be shown, not assumed, before categories are used in arithmetic.",
+   "done": "justifies treating its ranked categories as numbers or also reports results treating them as ranks"
+  },
+  {
+   "check_id": "MEASUREMENT-INFER-01",
+   "plain": "When the paper uses an estimated measure in a later analysis, its reported uncertainty should include the uncertainty from estimating that measure, for example by fitting both stages together or repeating the analysis across draws of the measure.",
+   "why": "Treating an estimated measure as if it were observed exactly makes intervals too narrow.",
+   "done": "carries the uncertainty from estimating its measure into its later results"
+  },
+  {
+   "check_id": "MEASUREMENT-INFER-02",
+   "plain": "The paper should not treat a null result obtained with an estimated measure as evidence against its hypothesis; when it reports such a null, it should name a weak measure as a possible explanation.",
+   "why": "A measure that tracks the concept poorly is a second route to finding nothing, on top of ordinary low statistical power.",
+   "done": "does not read a null result from an estimated measure as evidence against its hypothesis"
+  },
+  {
+   "check_id": "MEASUREMENT-INFER-03",
+   "plain": "When the paper controls for a confounder (a factor linked to both cause and outcome) using an estimated version of it, it should state that some confounding may remain, or apply a correction based on the estimate's error.",
+   "why": "The part of the confounder the estimate misses still links the variables, so the control does not remove the confounding.",
+   "done": "states that confounding may remain after controlling for an estimated variable"
+  },
+  {
+   "check_id": "MEASUREMENT-INFER-04",
+   "plain": "The paper should not call its estimate a lower bound because measurement error only shrinks effects, unless it states that its design meets the conditions: independent error unrelated to true values, modest error, a large sample, and a result not selected for significance.",
+   "why": "Measurement error does not always shrink estimates; the direction can reverse when error is severe or correlated, or when small-sample results were selected for significance.",
+   "done": "avoids calling its estimate conservative, or states the conditions under which that holds"
+  },
+  {
+   "check_id": "MEASUREMENT-ROBUST-01",
+   "plain": "When the paper builds its measure using a numeric cutoff, it should give a substantive reason for the value chosen or report its main result at more than one cutoff.",
+   "why": "Obvious cutoffs are often unavailable, so a threshold leaves room for arbitrary or convenient choices.",
+   "done": "justifies its cutoff value or reports its main result at more than one cutoff"
+  },
+  {
+   "check_id": "MEASUREMENT-ROBUST-02",
+   "plain": "When the paper fits a measurement model based on covariances (how variables move together), it should screen for unusual cases looking at several variables at once, and report estimates with and without them.",
+   "why": "A few extreme cases can distort the picture of how variables relate for most of the sample, in either direction.",
+   "done": "screens for influential cases and reports estimates with and without them"
+  },
+  {
+   "check_id": "MEASUREMENT-ROBUST-03",
+   "plain": "When the paper places texts on a scale using anchor documents (reference texts that define its ends), it should identify them and report something on their influence, such as why they were chosen or results with other anchors.",
+   "why": "Every estimate depends heavily on the anchors picked, since their style and non-ideological content carry into the scale.",
+   "done": "identifies its anchor documents and reports evidence on how they shape the estimates"
+  },
+  {
+   "check_id": "MEASUREMENT-ROBUST-04",
+   "plain": "When the paper compares latent scores estimated from different sets of items or periods, it should state what puts them on a common scale, such as shared items or units assumed not to have moved.",
+   "why": "A shift in the items looks exactly like a shift in the units being measured, so without such a link only relative movement is known.",
+   "done": "states what places scores from different item sets on a common scale"
+  },
+  {
+   "check_id": "MEASUREMENT-ROBUST-05",
+   "plain": "When the paper applies one measure across settings it describes as different, it should report what it did about whether the measure means the same thing in each, such as testing items across settings or adapting them, and why.",
+   "why": "The same value can mean different things in different settings, so comparability should be addressed rather than assumed.",
+   "done": "reports how it made sure its measure means the same thing across settings"
+  },
+  {
+   "check_id": "MEASUREMENT-REPORT-01",
+   "plain": "The paper should give an explicit definition of the concept it measures, saying what it includes, excludes, or is made of, with reasons tied to the study; a label, synonym, or pointer to the measure does not count.",
+   "why": "Measured values can only be judged against the definition they are meant to capture, so without one there is nothing to check the measure against.",
+   "done": "defines its concept explicitly and explains why that definition suits the study"
+  },
+  {
+   "check_id": "MEASUREMENT-REPORT-02",
+   "plain": "For every instrument the paper uses, such as a survey scale, it should cite where the instrument came from or state that it was built for this study.",
+   "why": "Readers need the source to see how the instrument was developed and tested.",
+   "done": "cites the source of each instrument or states that it was built for this study"
+  },
+  {
+   "check_id": "MEASUREMENT-REPORT-03",
+   "plain": "The paper should explain how each key concept became the numbers it analyzes, including the raw material, the rule used, and its assumptions, and say which variables a model produced rather than recorded directly.",
+   "why": "Without this, readers cannot assess the measurement or replicate it, nor tell which variables carry estimation error.",
+   "done": "explains how its concepts became numbers and flags which values a model produced"
+  },
+  {
+   "check_id": "MEASUREMENT-REPORT-04",
+   "plain": "The paper or its materials should make three things available: the exact wording and number of items, the answer options, and how the instrument was administered, such as online or by phone, plus equipment where relevant.",
+   "why": "An instrument is defined by its content and delivery; without these, its validity cannot be judged and the study cannot be replicated.",
+   "done": "provides item wording, answer options, and mode of administration, at least in an appendix"
+  },
+  {
+   "check_id": "MEASUREMENT-REPORT-05",
+   "plain": "When the paper changes an existing instrument, it should list each change, give a reason for it, and say whether it was decided before or after data collection.",
+   "why": "Undeclared changes break comparison with earlier work, and changes decided after seeing the data open more room for discretion.",
+   "done": "lists each change to its instrument with a reason and when it was decided"
+  },
+  {
+   "check_id": "MEASUREMENT-REPORT-06",
+   "plain": "Whenever the paper mentions transforming responses, such as recoding, reversing, collapsing categories, dropping items, rescaling, or filling in missing values, it should state the rule used and the reason.",
+   "why": "These moves are legitimate but change what is analyzed, so readers need the rule and reason to reproduce and judge them.",
+   "done": "states the rule and reason for each transformation of its responses"
+  },
+  {
+   "check_id": "MEASUREMENT-REPORT-07",
+   "plain": "The paper should support its scoring rule by citing a validation using it, testing it on its own data, rerunning its main result under another scoring, or arguing substantively, including how far components can substitute for one another.",
+   "why": "Different scorings of the same items can change an effect's sign and significance even when scores correlate around .99, so a correlation between scorings does not count.",
+   "done": "gives evidence or a substantive argument for the scoring rule it uses"
+  },
+  {
+   "check_id": "MEASUREMENT-REPORT-08",
+   "plain": "When the paper uses categories or topics a model discovered, it should state how many there are and how that number was chosen, either by the analyst on stated grounds or by a named procedure.",
+   "why": "The number of categories is an unavoidable choice, and letting a model estimate it still depends heavily on which model is used.",
+   "done": "states how many categories its model produced and how that number was set"
+  },
+  {
+   "check_id": "MEASUREMENT-REPORT-09",
+   "plain": "When the paper builds its own instrument, it should say why, and if it names an existing instrument for the same trait, explain why that one was not used.",
+   "why": "Readers need to know why a new instrument was preferred over established ones.",
+   "done": "explains why it built a new instrument instead of using an existing one"
+  },
+  {
+   "check_id": "MEASUREMENT-REPORT-10",
+   "plain": "When the paper introduces a new instrument, it should state what evidence exists that it measures what it claims, or say plainly that none exists and treat that as a limit on its conclusions.",
+   "why": "A new instrument with little such evidence limits what can be concluded from it, and readers should be told.",
+   "done": "states the validity evidence for its new instrument, or names its absence as a limitation"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-01",
+   "plain": "When the paper codes material by hand, it should make its written coding rules available, in the text, an appendix, a codebook, or a replication archive.",
+   "why": "Others can reproduce coded data only if the rules were written down and applied the same way to every unit.",
+   "done": "makes its full coding rules available to readers"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-02",
+   "plain": "When the paper codes material by hand, it should report a number showing how well different coders agreed; saying coders were trained or agreement was high is not enough.",
+   "why": "Findings built on hand-coded data are credible only once the coding is shown to come out the same across coders.",
+   "done": "reports a numerical agreement figure across its coders"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-03",
+   "plain": "A paper training a classifier should state how many hand-coded units it used; by a common rule of thumb over 500 suffices and under 100 is too few, and 100 to 500 also requires stating the number of categories and reporting held-out performance.",
+   "why": "A model needs enough labeled examples to learn the link between features and categories, and the number needed grows with the number of categories.",
+   "done": "states how many hand-coded units trained its classifier, enough for its coding scheme"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-04",
+   "plain": "The paper's coder agreement figure should be corrected for chance, using a measure such as Krippendorff's alpha, Scott's pi, or Fleiss's K, rather than only percent agreement, similar uncorrected ratios, or Cohen's kappa.",
+   "why": "Raw agreement has no meaningful floor, and Cohen's kappa uses a different chance baseline that answers another question.",
+   "done": "reports coder agreement with a chance-corrected measure such as Krippendorff's alpha"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-05",
+   "plain": "The paper should state whether its reliability figure treats codes as unordered categories, ranked categories, or numbers, and that choice should match the codes.",
+   "why": "The reliability figure changes a lot with this choice, so it should use exactly the information the codes carry and no more.",
+   "done": "states the measurement level of its reliability figure, matching its codes"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-06",
+   "plain": "When the paper trains a classifier, it should state how the hand-labeled examples were chosen and either that they were drawn at random from the documents the model was applied to or why they represent them.",
+   "why": "Nearly every classifier assumes its labeled examples are a random draw from the documents it is applied to.",
+   "done": "explains how its labeled examples were chosen and why they represent the full set"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-07",
+   "plain": "The paper should not build a measure using the outcome, or a close stand-in for it, and then report how that measure relates to the outcome.",
+   "why": "If the outcome helped build the measure, their association says nothing about the relationship being studied.",
+   "done": "keeps the outcome out of the inputs used to build its measure"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-08",
+   "plain": "When several raters score the material, the paper should report how many units each rater covered and which units more than one rater scored.",
+   "why": "What can be learned from multiple raters depends on who rated what, including where their assignments overlap.",
+   "done": "reports which raters scored which units and how far their assignments overlapped"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-09",
+   "plain": "The paper should state that the units coded by more than one coder to check reliability were picked at random from all the coded data, or by a method approximating that, or that every unit was multiply coded.",
+   "why": "Reliability measured on a convenient subset, such as the first or easiest documents, certifies nothing beyond that subset.",
+   "done": "states that its reliability units were drawn at random or nearly so, or that every unit was multiply coded"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-10",
+   "plain": "The paper should state that its reliability figure comes from coders who worked separately on the same units using the same instructions, without conferring before the figure was computed.",
+   "why": "A reliability figure assumes coders worked independently, and coordination among them breaks the condition it rests on.",
+   "done": "states that coders worked independently on the same units from shared instructions"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-11",
+   "plain": "When the paper combines expert ratings, it should model rater differences in precision or scale use, test for such differences and tie its choice to the result, or defend the premise that raters are equally competent and read the scale alike.",
+   "why": "A simple average assumes every expert is equally competent and reads the scale the same way; when that fails, the average misrepresents the quantity.",
+   "done": "accounts for differences among raters when combining their scores"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-12",
+   "plain": "When the paper reports cross-validated performance (accuracy tested on rotating held-out portions of the data), it should state that every model-building step, including feature selection and tuning, was done separately within each training portion.",
+   "why": "Steps done once on all labeled data leak information across the split, so the performance figure no longer means what it claims.",
+   "done": "states that all model-building steps were done within each training portion of its cross-validation"
+  },
+  {
+   "check_id": "MEASUREMENT-DATA-13",
+   "plain": "When the paper scores named cases, it should lay out the evidence behind each case's score, or state its coding criteria and apply them to at least two named example cases.",
+   "why": "Scores need to answer to what is known about each case, and readers cannot check reasoning they cannot see.",
+   "done": "documents the evidence for each case's score or works through at least two example cases"
+  }
+ ],
+ "reviewed": "2026-10-07: 8 field(s) revised after an Opus review against the check text; 2026-10-07: plain line(s) revised after the authors' spot check"
+}

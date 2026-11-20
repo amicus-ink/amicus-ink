@@ -1,0 +1,20 @@
+{
+  "name": "amicus",
+  "interface": {
+    "displayName": "AMICUS"
+  },
+  "plugins": [
+    {
+      "name": "amicus",
+      "source": {
+        "source": "local",
+        "path": "./plugins/amicus"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Education & Research"
+    }
+  ]
+}

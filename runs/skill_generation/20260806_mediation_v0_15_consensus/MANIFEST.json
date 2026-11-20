@@ -1,0 +1,139 @@
+{
+ "module": "mediation",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-4-8",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "mediation_imai_2010",
+   "sha256_pdf": "68ef8b00d85b748cde812b035ac768064f77ed6470b9daadbd33069718c58041",
+   "claims": 19,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "mediation_lindquist_2012",
+   "sha256_pdf": "fccce560a1bf57e257be11d04c7a11cf49f8a1a1194cbb3eb127eb546158780b",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "mediation_breen_2013",
+   "sha256_pdf": "fc0e6fd904fed4af91aeb3b79c5ca092684b78bad89cb1b3fda5e7ad2822929a",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "mediation_tingley_2014",
+   "sha256_pdf": "73855032ec6fbb3ecab1375e906acc1b889578ed5ccad4db60b01f7ab7bddaac",
+   "claims": 31,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "mediation_myers_2016",
+   "sha256_pdf": "2d1c89cae2c4e5096ef505bc04c1e3bbfab12ecf4d946e1eb50a51475f6232f7",
+   "claims": 14,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "mediation_steen_2017",
+   "sha256_pdf": "639864082c5ed8acaa0472bb05303ddf9bbcb85d4036f5344702246a01b6dfdd",
+   "claims": 46,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "mediation_sohn_2019",
+   "sha256_pdf": "f527bdcc18efc6e98bbb8d410dfb380b4940a2e3503441dda028a5efabcaf84e",
+   "claims": 19,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "mediation_d_az_2020",
+   "sha256_pdf": "2cbbc7d63ed86688bcd737341cc70e910bb8ce278519d130d404c1804d88cdd6",
+   "claims": 17,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "mediation_liu_2021",
+   "sha256_pdf": "91be4172daf6780e7b812ad544823d955c6974a740fbffb3326f905658798a12",
+   "claims": 19,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "mediation_alfons_2022",
+   "sha256_pdf": "5ca2331f565a6ef587ba10793f15732e47200b6264ba4fb16004790bcc87273c",
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 12,
+ "categories": {
+  "IDENT": 2,
+  "EST": 4,
+  "INFER": 3,
+  "ROBUST": 1,
+  "REPORT": 1,
+  "DATA": 1
+ },
+ "single_source_checks": 4,
+ "sha256_checklist": "80f3968f28ef501d88541c74048c1d6b89f221598275cf680f3d3c778c060b42",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 12,
+  "categories": {
+   "IDENT": 2,
+   "EST": 4,
+   "INFER": 3,
+   "ROBUST": 1,
+   "REPORT": 1,
+   "DATA": 1
+  },
+  "single_source_checks": 4,
+  "sha256_checklist": "1a42aebf399d20d875d462f1a5174a34c678f2d12a6bf124a7f68a11817b2edf"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release (v0.1)",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 91.7,
+   "pilot_pairwise_agreement_pct": 100.0
+  },
+  "meets_95pct_diagnostic_bar": false,
+  "reason": "Ships since 2026-11-11 in place of this module's single-draw artifact, so that every module of the release is a three-draw consensus build. Figures are this artifact's own decidability block below. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 3,
+   "codings_per_paper": 2,
+   "core_stability": "36/36 = 100.0%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 3,
+   "codings_per_paper": 5,
+   "core_stability": "33/36 = 91.7%",
+   "judgment_call_bucket": null
+  }
+ }
+}

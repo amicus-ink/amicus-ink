@@ -1,0 +1,177 @@
+{
+ "module": "universal",
+ "run": "20261113_universal_v1_streamlined",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-11-20",
+ "explainers": [
+  {
+   "check_id": "UNIV-IDENT-04",
+   "plain": "The paper should not call its estimate the total effect if it adjusts in one step for a variable it describes as caused by the treatment, as a pathway to the outcome, or as measured after treatment began; it should call it a direct effect or use a multi-stage method.",
+   "why": "Holding fixed something between cause and outcome removes part of the effect, leaving only a direct effect.",
+   "done": "labels its estimate a direct effect when it adjusts for variables affected by the treatment"
+  },
+  {
+   "check_id": "UNIV-IDENT-06",
+   "plain": "The paper should say whether one unit's outcome could be affected by other units' exposure to the cause (spillovers), and give an argument or analysis for that position.",
+   "why": "Effect estimates assume units do not affect each other; spillovers break the comparison between groups and can bias the result, not just make it less precise.",
+   "done": "states whether spillovers between units could occur and supports this with an argument or analysis"
+  },
+  {
+   "check_id": "UNIV-IDENT-17",
+   "plain": "A before-versus-after comparison should show the outcome at two or more points before treatment, or state, with a reason, that without treatment the outcome would have stayed at its earlier level with no carryover from earlier periods.",
+   "why": "The earlier value stands in for the outcome without treatment, which fails if the outcome was already moving, units change on their own, or past exposure carries over.",
+   "done": "shows the outcome at several time points before treatment began"
+  },
+  {
+   "check_id": "UNIV-IDENT-28",
+   "plain": "The paper should define its causal comparison: an action that could be applied, the alternative it is compared with, and when the outcome is measured after treatment starts. A fixed trait such as race is not itself an action, though a signal or policy tied to it can be.",
+   "why": "A causal effect is defined by contrasting an applicable action with a named alternative at a stated time.",
+   "done": "names the action, the alternative it is compared with, and when the outcome is measured"
+  },
+  {
+   "check_id": "UNIV-IDENT-30",
+   "plain": "The paper should name the assumptions that let its non-experimental estimate be read as causal, such as parallel trends or no unmeasured confounding, and support each one with an argument, an institutional fact, outside evidence, or a diagnostic test.",
+   "why": "Without random assignment, a causal reading rests on assumptions the data cannot supply, so each needs support rather than being taken for granted.",
+   "done": "names each assumption behind its causal reading and gives a reason for each"
+  },
+  {
+   "check_id": "UNIV-EST-04",
+   "plain": "The paper should not use an average effect to claim effects on every unit, on a specific case, or on the spread of individual effects unless it states an added assumption that supports the claim.",
+   "why": "Effects on individual units cannot be computed, and an average effect does not show that effects are uniform or how they are spread.",
+   "done": "keeps its claims at the level of the average effect"
+  },
+  {
+   "check_id": "UNIV-EST-05",
+   "plain": "For any background variable the paper reports as unbalanced between groups, the main estimate should adjust for it, or the paper should explain why it cannot affect the outcome.",
+   "why": "If a variable related to the outcome differs between groups, even by chance in a randomized study, the unadjusted estimate and its significance cannot be trusted.",
+   "done": "adjusts its main estimate for every covariate it reports as imbalanced"
+  },
+  {
+   "check_id": "UNIV-EST-07",
+   "plain": "The paper should say which units its effect averages over, such as the whole sample, the treated units, or a named subgroup, or state and justify an assumption that the effect is the same for all units.",
+   "why": "When effects differ across units, the estimate is an average over a particular set, and assuming one common effect needs a reason.",
+   "done": "states that its estimate is the average effect among treated units"
+  },
+  {
+   "check_id": "UNIV-EST-10",
+   "plain": "If the paper claims measurement error makes its estimate conservative, it should state that this assumes random error unrelated to the true value and other variables, and limit the claim to the variable of interest, not control variables.",
+   "why": "Bias toward zero follows only under that assumption, which can fail, and random error in a control variable can make an effect look too large.",
+   "done": "states that its conservativeness claim assumes random error in the variable of interest only"
+  },
+  {
+   "check_id": "UNIV-EST-13",
+   "plain": "The paper should justify the form of its main statistical model, such as a straight-line relationship, with a formal model, a plot of the outcome against the key variable, a comparison with a more flexible form, or fit diagnostics.",
+   "why": "A model's form does not justify itself; it needs support from theory or from evidence that it fits the data.",
+   "done": "shows a plot of the outcome against the key explanatory variable"
+  },
+  {
+   "check_id": "UNIV-INFER-08",
+   "plain": "Each headline estimate should come with a measure of its uncertainty, such as a standard error, confidence interval, or p-value, unless the paper states that it covers the whole population and draws no wider inference.",
+   "why": "Estimates from finite data carry sampling error, so readers need to know how precise they are.",
+   "done": "reports a standard error or confidence interval for every headline estimate"
+  },
+  {
+   "check_id": "UNIV-INFER-13",
+   "plain": "If the paper reports standard errors, intervals, or p-values, it should say what chance process justifies them: a random sample from a named population, random assignment, or a described real-world process with a reason it acts like random draws.",
+   "why": "These statistics mean something only under a chance process; invoking an imagined population without describing how the units arose leaves them without an empirical anchor.",
+   "done": "states that its data are a random sample from a named population"
+  },
+  {
+   "check_id": "UNIV-INFER-14",
+   "plain": "The paper should not present a hypothesis, explanation, or model choice as confirmed by the data or cases it came from; it should label it exploratory, test it on separate data, or, for a data-driven model choice, adjust its inference for that choice.",
+   "why": "Ideas built from particular data gain little support from those same data, and screening models by their results can make noise look significant.",
+   "done": "tests its hypothesis on data separate from those used to develop it"
+  },
+  {
+   "check_id": "UNIV-INFER-16",
+   "plain": "When the paper's observations come in groups, repeat over time, or are linked to each other, its uncertainty estimates should allow errors to be correlated within each such structure, for example by clustering standard errors at the right level.",
+   "why": "Treating related observations as independent makes uncertainty look too small, sometimes by a large factor even when the correlation is slight.",
+   "done": "clusters standard errors by unit to allow for repeated observations over time"
+  },
+  {
+   "check_id": "UNIV-INFER-20",
+   "plain": "The paper should not conclude that an effect is absent or the same for everyone just because a result is not statistically significant, unless it shows an interval that rules out meaningful effects or a power calculation.",
+   "why": "Failing to detect an effect does not show it is zero or uniform, since small samples or noisy measures may miss real effects.",
+   "done": "backs its claim of no effect with an interval that rules out meaningful effect sizes"
+  },
+  {
+   "check_id": "UNIV-ROBUST-01",
+   "plain": "An observational causal estimate should come with an analysis of its sensitivity to unmeasured confounding (hidden factors affecting both cause and outcome), such as how strong such a factor would need to be to change the conclusion, or bounds under weaker assumptions.",
+   "why": "Knowledge of possible confounders is always incomplete, so readers need to know how far off the estimate could be.",
+   "done": "reports how strong an unmeasured confounder would need to be to overturn its conclusion"
+  },
+  {
+   "check_id": "UNIV-REPORT-02",
+   "plain": "The paper should explain how large its headline estimate is in practical terms, for example relative to a baseline or a benchmark, and should not call an effect large or important based only on its statistical significance.",
+   "why": "Statistical significance does not show that an effect is large or important, and large samples can make trivial effects significant.",
+   "done": "expresses its main estimate as a percentage change from the baseline rate"
+  },
+  {
+   "check_id": "UNIV-REPORT-07",
+   "plain": "For each key concept in its main claim, the paper should state in words what the concept means, not just how it is coded, and say which variables represent it.",
+   "why": "Scores and estimates only carry meaning through a defined concept, and an undefined or shifting concept leaves nothing to judge the measures against.",
+   "done": "defines each key concept in words and names the variables that measure it"
+  },
+  {
+   "check_id": "UNIV-REPORT-08",
+   "plain": "The paper should state explicitly whether its argument is descriptive, causal, predictive, or of another type.",
+   "why": "A claim whose goal is unclear cannot be properly judged or tested.",
+   "done": "states that its aim is to estimate a causal effect"
+  },
+  {
+   "check_id": "UNIV-REPORT-19",
+   "plain": "If the paper generalizes beyond the units it studied, it should compare those units with the wider population on named characteristics, or explain how they were drawn from it.",
+   "why": "Findings carry over only if the studied units resemble the wider population, and unusual or convenience samples weaken that link.",
+   "done": "compares its sample with the target population on named characteristics"
+  },
+  {
+   "check_id": "UNIV-DATA-06",
+   "plain": "For each indicator used to measure a concept, the paper should report or cite at least one empirical check of its validity, such as comparison with another measure of the same concept, official records, or expected relationships.",
+   "why": "Treating scores as measures of a concept needs evidence; plausibility, consistency, or content fit alone do not show the indicator measures what is intended.",
+   "done": "compares its indicator with official records of the same concept"
+  },
+  {
+   "check_id": "UNIV-DATA-07",
+   "plain": "A classification should state the rule that sorts cases, say what distinguishes each subcategory in a nested scheme, place each case in only one category per level, and assign every case to a category or a stated catch-all.",
+   "why": "Categories that overlap, leave cases out, or lack a consistent rule make a list rather than a classification.",
+   "done": "states its sorting rule and places every case in exactly one category"
+  },
+  {
+   "check_id": "UNIV-DATA-08",
+   "plain": "When the paper validates a measure by showing it agrees with another measure, it should address whether that other measure is valid and whether it shares a source or bias with the paper's measure.",
+   "why": "Agreement with a flawed comparison measure, or one sharing the same source or bias, may not reflect valid measurement.",
+   "done": "cites validation of its comparison measure and discusses shared biases"
+  },
+  {
+   "check_id": "UNIV-DATA-09",
+   "plain": "When the paper compares settings on a measure, relies on validation from other cases, or adapts a measure to each setting, it should argue or show that the measure means the same thing across those settings or cases.",
+   "why": "The same score can mean different things in different settings, so shared labels or stated adjustments do not show the meaning holds.",
+   "done": "tests whether its survey measure means the same thing in each country"
+  },
+  {
+   "check_id": "UNIV-DATA-11",
+   "plain": "When the paper introduces a new concept or redefines an existing one, it should name at least one existing term or definition and explain, in terms of its research aims or setting, why that does not serve.",
+   "why": "New terms and definitions are warranted only when familiar concepts will not do, so departures from common usage need a reason.",
+   "done": "names an existing definition and explains why it does not fit its research aims"
+  },
+  {
+   "check_id": "UNIV-DATA-12",
+   "plain": "When the paper relies on people's or agencies' reports about their own conduct, it should discuss whether they have reasons to over- or under-report and how this is handled or affects the findings.",
+   "why": "Those reporting on themselves often have reasons to give figures that are too high or too low, which can bias the evidence.",
+   "done": "discusses whether respondents have reasons to underreport and how this affects the findings"
+  },
+  {
+   "check_id": "UNIV-DATA-21",
+   "plain": "The paper should discuss whether errors in its key measures could be systematically related to the outcome or the main explanatory factor, and, if the outcome is self-reported or error-prone, whether its error could differ with that factor.",
+   "why": "Errors that vary with the outcome or a key factor bias conclusions, while purely random errors in the outcome mainly add noise.",
+   "done": "discusses whether misreporting of the outcome could differ between treatment groups"
+  },
+  {
+   "check_id": "UNIV-DATA-24",
+   "plain": "The paper should state how its units entered the data and how any supporting cases, interviews, or examples were chosen, and if it calls its sample random, it should name how the random draw was made.",
+   "why": "Readers need to know how the evidence was obtained, since hand-picked cases can mislead and a sample is random only if a random draw took place.",
+   "done": "states that its respondents were drawn at random from a named voter list"
+  }
+ ]
+}

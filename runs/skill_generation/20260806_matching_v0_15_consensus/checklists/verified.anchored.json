@@ -1,0 +1,1065 @@
+[
+ {
+  "_module": "MATCHING",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "all",
+   "prunes_units",
+   "interference",
+   "continuous_treatment",
+   "multi_continuous_matching",
+   "weighting",
+   "missing_data"
+  ],
+  "_scope_definitions": {
+   "all": "Any observational or design-based study that reports estimating a treatment/exposure effect by matching, subclassification, or covariate-balancing weighting.",
+   "prunes_units": "Fires only if the paper explicitly states it drops, prunes, discards, or restricts units in a way that changes which units the reported effect is estimated for -- e.g. it names a restriction to a common-support/overlap region, or says it drops treated units that have no acceptable match. Does NOT fire when the paper reuses controls via matching-with-replacement but keeps all treated units, and does NOT fire when the only exclusion is data cleaning such as dropping rows with missing covariates.",
+   "interference": "Fires only if the paper explicitly states that units interfere -- that one unit's treatment can affect another unit's outcome (spillover, contagion, peer/network effects, an exposure mapping). Does NOT fire merely because data are clustered/grouped or geographically arranged, and does NOT fire for a paper that explicitly assumes SUTVA/no-interference.",
+   "continuous_treatment": "Fires only if the paper states its treatment/exposure is continuous or dose-valued rather than binary. Does NOT fire when the treatment is binary but the estimated propensity score is continuous, and does NOT fire when the paper explicitly defines and analyzes a binary treatment even if an underlying dose exists.",
+   "multi_continuous_matching": "Fires when the paper states it matches directly on two or more continuously measured covariates (not solely on a one-dimensional propensity score). Near-miss: matching on a single propensity score, or on discrete/categorical cells only, does not fire.",
+   "weighting": "Fires only if the paper states it forms effect estimates using inverse-probability, propensity-score, or covariate-balancing weights. Does NOT fire for propensity-score pair/nearest-neighbor matching that produces matched sets rather than weights, and does NOT fire for plain outcome regression.",
+   "missing_data": "Fires only if the paper states that some covariate (or outcome) values used for matching are missing. Does NOT fire for a study that reports complete data on all matching variables."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 12 concepts in >=2 draws; dropped 5 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "MATCHING-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "A matching or covariate-adjustment estimate identifies a causal effect only under an unconfoundedness (selection-on-observables) assumption; the paper should state that assumption and the covariate set meant to satisfy it.",
+  "observable": "Whether the paper names the identifying assumption (unconfoundedness, conditional independence of treatment and potential outcomes given covariates, ignorability, or selection on observables) and points to the covariates intended to make it hold.",
+  "pass_condition": "The paper explicitly states that identification rests on conditioning on observed covariates (using a term such as unconfoundedness, ignorability, conditional independence, or selection on observables) and indicates which covariates carry that assumption.",
+  "flag_condition": "The paper reports a matched or adjusted causal estimate without stating any conditional-independence / selection-on-observables assumption behind it.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sekhon (2011) and Kang (2007) state this conditional-independence condition is necessary to identify the effect; without it the estimand is not identified.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must state the selection-on-observables assumption it relies on and the covariates meant to satisfy it.",
+  "contributing_sources": [
+   "Sekhon (2011)",
+   "Abadie (2006)",
+   "Fong (2018)",
+   "Iacus (2011)",
+   "King (2019)",
+   "Kang (2007)",
+   "Wager (2017)",
+   "Zubizarreta (2015)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_sekhon_2011",
+    "short_cite": "Sekhon (2011)",
+    "source_lines": "L39",
+    "quote": "Together, unconfoundedness and overlap constitute a property known as strong ignorability of treatment assignment which is necessary for identifying the average treatment effect.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_kang_2007",
+    "short_cite": "Kang (2007)",
+    "source_lines": "L29",
+    "quote": "we will assume that the response mechanism is unconfounded in the sense that yi and ti are conditionally independent given xi",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_king_2019",
+    "short_cite": "King (2019)",
+    "source_lines": "L26",
+    "quote": "A reasonable way to try to satisfy this assumption is to include in X any variable known to affect either Y or T , since if any subset of these variables satisfies unconfoundedness, this set will too (VanderWeele and Shpitser 2011).",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 0.975
+   },
+   {
+    "source_id": "matching_iacus_2011",
+    "short_cite": "Iacus (2011)",
+    "source_lines": "L245",
+    "quote": "CEM will not save you if an important covariate is not matched on, unless it is closely related to a variable that is matched on.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     23
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_iacus_2011",
+    "cite": "Stefano M. Iacus, Gary King, & Giuseppe Porro. (2011). Causal Inference without Balance Checking: Coarsened Exact Matching. Political Analysis, 20(1), 1-24. https://doi.org/10.1093/pan/mpr013",
+    "short_cite": "Iacus (2011)",
+    "pages": "p. 23",
+    "pagination": "printed",
+    "pdf_pages": [
+     23
+    ]
+   },
+   {
+    "source_id": "matching_kang_2007",
+    "cite": "Joseph D. Y. Kang & Joseph L. Schafer. (2007). Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data. Statistical Science, 22(4), 569-573. https://doi.org/10.1214/07-sts227",
+    "short_cite": "Kang (2007)",
+    "pages": "p. 571",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "matching_king_2019",
+    "cite": "Gary King & Richard A. Nielsen. (2019). Why Propensity Scores Should Not Be Used for Matching. Political Analysis, 27(4), 435-454. https://doi.org/10.1017/pan.2019.11",
+    "short_cite": "King (2019)",
+    "pages": "p. 437",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "matching_sekhon_2011",
+    "cite": "Jasjeet S. Sekhon. (2011). Multivariate and Propensity Score Matching Software with Automated Balance Optimization: The<b>Matching</b>Package for<i>R</i>. Journal of Statistical Software, 42(7). https://doi.org/10.18637/jss.v042.i07",
+    "short_cite": "Sekhon (2011)",
+    "pages": "p. 4",
+    "pagination": "pdf",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 8,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MATCHING-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "Matching can only reproduce the treated covariate distribution among controls where treated and control units actually overlap. The paper must address overlap / common support -- for an effect on the treated it suffices that the treated covariate support sit inside the control support.",
+  "observable": "Whether the paper states or checks that treated units have comparable controls in covariate space (a common-support / overlap condition, or that treated support lies within control support).",
+  "pass_condition": "The paper explicitly discusses overlap or common support -- e.g. it states the treated covariate support lies inside the control support, restricts to a region of common support, or otherwise asserts comparable controls exist for the treated units.",
+  "flag_condition": "The paper matches and reports an effect without any statement or check that the treated units have comparable controls in covariate space.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Abadie (2020) states it is necessary that the treated support be inside the nontreated support; Wager (2017) lists overlap among the assumptions required for consistency.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A matching paper must address the overlap / common-support condition under which comparable controls exist for the treated units.",
+  "contributing_sources": [
+   "Abadie (2020)",
+   "Wager (2017)",
+   "King (2019)",
+   "Sekhon (2011)",
+   "Abadie (2006)",
+   "Iacus (2011)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_wager_2017",
+    "short_cite": "Wager (2017)",
+    "source_lines": "L69",
+    "quote": "we also need to assume that we have overlap",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_abadie_2020",
+    "short_cite": "Abadie (2020)",
+    "source_lines": "L75",
+    "quote": "it is necessary that the support of the matching variables, X, for the treated is inside the support for the nontreated.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_sekhon_2011",
+    "short_cite": "Sekhon (2011)",
+    "source_lines": "L39",
+    "quote": "The overlap assumption for ATT only requires that the support of X for the treated be a subset of the support of X for control observations.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_abadie_2020",
+    "cite": "Alberto Abadie & Jann Spiess. (2020). Robust Post-Matching Inference. Journal of the American Statistical Association, 117(538), 983-995. https://doi.org/10.1080/01621459.2020.1840383",
+    "short_cite": "Abadie (2020)",
+    "pages": "p. 985",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "matching_sekhon_2011",
+    "cite": "Jasjeet S. Sekhon. (2011). Multivariate and Propensity Score Matching Software with Automated Balance Optimization: The<b>Matching</b>Package for<i>R</i>. Journal of Statistical Software, 42(7). https://doi.org/10.18637/jss.v042.i07",
+    "short_cite": "Sekhon (2011)",
+    "pages": "p. 4",
+    "pagination": "pdf",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "matching_wager_2017",
+    "cite": "Stefan Wager & Susan Athey. (2017). Estimation and Inference of Heterogeneous Treatment Effects using Random Forests. Journal of the American Statistical Association, 113(523), 1228-1242. https://doi.org/10.1080/01621459.2017.1319839",
+    "short_cite": "Wager (2017)",
+    "pages": "p. 1231",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 6,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MATCHING-IDENT-03",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "Matching estimates a well-defined effect only under SUTVA: no interference across units and a treatment defined identically for every unit. The paper must invoke this assumption.",
+  "observable": "Whether the paper states SUTVA or its components -- no interference between units and a consistently defined treatment.",
+  "pass_condition": "The paper explicitly invokes SUTVA, or states its content: that one unit's outcome is unaffected by other units' assignments and that the treatment means the same thing across units (for a non-binary treatment, that potential outcomes are defined on the original treatment).",
+  "flag_condition": "The paper never states the no-interference / stable-treatment assumption underlying its matched contrast.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sekhon (2011) and Fong (2018) both state SUTVA is required for the matched potential-outcome contrast to be defined.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A matching paper must state SUTVA -- no interference and an identically-defined treatment -- as an assumption behind its estimate.",
+  "contributing_sources": [
+   "Sekhon (2011)",
+   "Fong (2018)",
+   "King (2019)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_sekhon_2011",
+    "short_cite": "Sekhon (2011)",
+    "source_lines": "L45",
+    "quote": "SUTVA requires that the treatment status of any unit be independent of potential outcomes for all other units, and that treatment is defined identically for all units.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_fong_2018",
+    "short_cite": "Fong (2018)",
+    "source_lines": "L25",
+    "quote": "the potential outcomes must be defined with respect to the original treatment variable in order to satisfy the stable unit treatment value assumption or SUTVA",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_fong_2018",
+    "short_cite": "Fong (2018)",
+    "source_lines": "L25",
+    "quote": "as part of the SUTVA, we assume no interference among units.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_fong_2018",
+    "cite": "Christian Fong, Chad Hazlett, & Kosuke Imai. (2018). Covariate balancing propensity score for a continuous treatment: Application to the efficacy of political advertisements. The Annals of Applied Statistics, 12(1). https://doi.org/10.1214/17-aoas1101",
+    "short_cite": "Fong (2018)",
+    "pages": "p. 160",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "matching_sekhon_2011",
+    "cite": "Jasjeet S. Sekhon. (2011). Multivariate and Propensity Score Matching Software with Automated Balance Optimization: The<b>Matching</b>Package for<i>R</i>. Journal of Statistical Software, 42(7). https://doi.org/10.18637/jss.v042.i07",
+    "short_cite": "Sekhon (2011)",
+    "pages": "p. 4",
+    "pagination": "pdf",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MATCHING-IDENT-04",
+  "category": "IDENT",
+  "scope": [
+   "prunes_units"
+  ],
+  "claim": "When matching drops treated (or other) units so the effect is no longer defined over the original population -- a feasible/local estimand -- the paper must characterize the new set of units the effect covers, so readers know what quantity was estimated.",
+  "observable": "For a paper that restricts to a feasible/common-support region or drops unmatched treated units: whether it states which units the reported effect is now defined over.",
+  "pass_condition": "The paper explicitly characterizes the redefined estimand -- it says the effect now applies to the retained/matched subset (e.g. a feasible-sample ATT/ATE), and describes or depicts which units that is.",
+  "flag_condition": "The paper prunes units in an estimand-changing way but still reports the effect as if it applied to the original target population, without characterizing the retained set.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Iacus (2011) and King (2019) hold that pruning to a feasible estimand is acceptable only if the resulting quantity of interest is characterized for readers.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "When pruning changes which units the effect is defined over, the paper must characterize the redefined estimand.",
+  "contributing_sources": [
+   "Iacus (2011)",
+   "King (2019)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_iacus_2011",
+    "short_cite": "Iacus (2011)",
+    "source_lines": "L48",
+    "quote": "This choice is reasonable so long as one is transparent about the choice and the consequences in terms of the new set of treated units over which the causal effect is defined",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_iacus_2011",
+    "short_cite": "Iacus (2011)",
+    "source_lines": "L245",
+    "quote": "One must also be careful allowing selection to occur on the treated units and to recognize and clarify for readers the new estimand.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     23
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_king_2019",
+    "short_cite": "King (2019)",
+    "source_lines": "L29",
+    "quote": "Using FSATT or FSATE is widely recommended by statisticians (and widely used in applied research) and is appropriate so long as one is careful to characterize the resulting quantity of interest (see Crump et al. 2009; Rubin 2010; Iacus, King, and Porro 2011).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_iacus_2011",
+    "cite": "Stefano M. Iacus, Gary King, & Giuseppe Porro. (2011). Causal Inference without Balance Checking: Coarsened Exact Matching. Political Analysis, 20(1), 1-24. https://doi.org/10.1093/pan/mpr013",
+    "short_cite": "Iacus (2011)",
+    "pages": "pp. 5, 23",
+    "pagination": "printed",
+    "pdf_pages": [
+     5,
+     23
+    ]
+   },
+   {
+    "source_id": "matching_king_2019",
+    "cite": "Gary King & Richard A. Nielsen. (2019). Why Propensity Scores Should Not Be Used for Matching. Political Analysis, 27(4), 435-454. https://doi.org/10.1017/pan.2019.11",
+    "short_cite": "King (2019)",
+    "pages": "p. 437",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MATCHING-IDENT-05",
+  "category": "IDENT",
+  "scope": [
+   "interference"
+  ],
+  "claim": "Under interference SUTVA fails, and a bare treatment indicator no longer defines the potential outcomes. The paper must specify an exposure mapping -- a substantively-justified rule taking assignments to the exposure each unit receives -- together with the estimand it targets.",
+  "observable": "For a paper that declares interference/spillover: whether it specifies an exposure mapping (how assignments translate into each unit's exposure) and the exposure-specific quantity it estimates.",
+  "pass_condition": "The paper states an explicit exposure mapping constraining the interference (e.g. exposure defined by own treatment plus a summary of neighbors' treatments) and names the exposure-specific effect/estimand it targets.",
+  "flag_condition": "The paper declares spillover/interference but estimates effects from a bare treatment indicator with no exposure mapping, leaving what exposure the estimate refers to unspecified.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Aronow (2017) requires a more sophisticated characterization of exposure once interference is present and makes the exposure mapping a component of the estimation framework.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper that declares interference must specify an exposure mapping and the exposure-specific estimand it targets.",
+  "contributing_sources": [
+   "Aronow (2017)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_aronow_2017",
+    "short_cite": "Aronow (2017)",
+    "source_lines": "L13",
+    "quote": "A more sophisticated characterization of treatment exposure and associated potential outcomes must be specified.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_aronow_2017",
+    "short_cite": "Aronow (2017)",
+    "source_lines": "L409",
+    "quote": "The framework integrates (i) an experimental design that defines the probability distribution for treatments assigned, (ii) an exposure mapping that relates treatments assigned to exposures received, and (iii) an estimand chosen to make use of an experimental design to answer questions of substantive interest.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     28
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_aronow_2017",
+    "short_cite": "Aronow (2017)",
+    "source_lines": "L24",
+    "quote": "the analyst must use substantive judgment about the extent of interference to fix a mapping",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_aronow_2017",
+    "cite": "Peter M. Aronow & Cyrus Samii. (2017). Estimating average causal effects under general interference, with application to a social network experiment. The Annals of Applied Statistics, 11(4). https://doi.org/10.1214/16-aoas1005",
+    "short_cite": "Aronow (2017)",
+    "pages": "pp. 2, 5, 28",
+    "pagination": "pdf",
+    "pdf_pages": [
+     2,
+     5,
+     28
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MATCHING-EST-01",
+  "category": "EST",
+  "scope": [
+   "continuous_treatment"
+  ],
+  "claim": "Reducing an essentially continuous treatment to a binary indicator discards information and leaves hidden imbalance on the underlying dose that can bias the estimate; the resulting effect also cannot be read as the contrast between the threshold dose and zero. A paper with a continuous treatment must not dichotomize it for the causal estimate.",
+  "observable": "For a paper whose treatment it declares continuous/dose-valued: whether it collapses that treatment into a binary indicator for its causal estimate.",
+  "pass_condition": "The paper estimates the effect on the original continuous treatment scale (e.g. a dose-response / generalized-propensity-score analysis), not on a binarized version.",
+  "flag_condition": "The paper dichotomizes its declared-continuous treatment into treated/untreated for the causal estimate (and, a fortiori, interprets that estimate as a fixed-dose-versus-zero contrast).",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Fong (2018) states balancing on a dichotomized treatment does not guarantee balance on the underlying continuous treatment and leaves hidden imbalance that can bias the estimate.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper with a declared-continuous treatment must not dichotomize it for the causal estimate.",
+  "contributing_sources": [
+   "Fong (2018)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_fong_2018",
+    "short_cite": "Fong (2018)",
+    "source_lines": "L18",
+    "quote": "balancing covariates on the dichotomized treatment variable does not guarantee that the covariates will be balanced on the underlying continuous treatment variable. The estimate may be biased by this hidden imbalance.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_fong_2018",
+    "short_cite": "Fong (2018)",
+    "source_lines": "L18",
+    "quote": "dichotomization makes the interpretation of the results difficult because the naive interpretation—the reported estimate represents the effect of airing 1000 advertisements instead of 0—is incorrect.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_fong_2018",
+    "short_cite": "Fong (2018)",
+    "source_lines": "L14",
+    "quote": "The dichotomization of treatment variable results in the loss of information, which can compromise substantive insights gained from the data analysis.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_fong_2018",
+    "cite": "Christian Fong, Chad Hazlett, & Kosuke Imai. (2018). Covariate balancing propensity score for a continuous treatment: Application to the efficacy of political advertisements. The Annals of Applied Statistics, 12(1). https://doi.org/10.1214/17-aoas1101",
+    "short_cite": "Fong (2018)",
+    "pages": "pp. 157, 159",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MATCHING-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "all"
+  ],
+  "claim": "The standard nonparametric bootstrap that resamples individual observations does not consistently estimate the standard error of a simple matching estimator. A paper must not build its matching-estimator standard errors or confidence intervals that way; matched-set block bootstrap, the Abadie-Imbens variance estimator, or matched-set clustering are the valid alternatives.",
+  "observable": "Whether the paper's reported standard error / confidence interval for a matching estimator comes from an ordinary nonparametric bootstrap that resamples individual units.",
+  "pass_condition": "The paper does not use the individual-observation nonparametric bootstrap for its matching-estimator inference -- e.g. it uses the Abadie-Imbens variance estimator, a block bootstrap resampling matched pairs/sets, matched-set clustered errors, or is silent about using the bootstrap.",
+  "flag_condition": "The paper states its matching-estimator standard errors or confidence intervals come from a standard nonparametric bootstrap resampling individual observations.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Abadie (2006) and Abadie (2020) both state the nonparametric bootstrap fails to consistently estimate the standard error of a simple matching estimator.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper must not compute matching-estimator standard errors or confidence intervals from an individual-observation nonparametric bootstrap.",
+  "contributing_sources": [
+   "Abadie (2006)",
+   "Abadie (2020)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_abadie_2006",
+    "short_cite": "Abadie (2006)",
+    "source_lines": "L434",
+    "quote": "there is evidence that the bootstrap is not valid for matching estimators (Abadie and Imbens (2005)).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     18
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_abadie_2020",
+    "short_cite": "Abadie (2020)",
+    "source_lines": "L261",
+    "quote": "for matching with replacement Abadie and Imbens (2008) showed that the nonparametric bootstrap fails to consistently estimate the standard error of a simple matching estimator.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_abadie_2006",
+    "short_cite": "Abadie (2006)",
+    "source_lines": "L13",
+    "quote": "we also propose a consistent estimator for the variance of matching estimators that does not require consistent nonparametric estimation of unknown functions.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_abadie_2006",
+    "cite": "Alberto Abadie & Guido W. Imbens. (2006). Large Sample Properties of Matching Estimators for Average Treatment Effects. Econometrica, 74(1), 235-267. https://doi.org/10.1111/j.1468-0262.2006.00655.x",
+    "short_cite": "Abadie (2006)",
+    "pages": "pp. 236, 252",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     18
+    ]
+   },
+   {
+    "source_id": "matching_abadie_2020",
+    "cite": "Alberto Abadie & Jann Spiess. (2020). Robust Post-Matching Inference. Journal of the American Statistical Association, 117(538), 983-995. https://doi.org/10.1080/01621459.2020.1840383",
+    "short_cite": "Abadie (2020)",
+    "pages": "p. 989",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MATCHING-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "multi_continuous_matching"
+  ],
+  "claim": "When matching directly on two or more continuous covariates, a simple matching estimator carries a bias that does not vanish at the root-n rate, so the paper must report a bias-adjusted estimator (or show the carve-out where correction is unneeded: a single continuous covariate, or matching only the treated to a large control reservoir).",
+  "observable": "For a paper matching on two or more continuous covariates, whether it reports a bias correction or falls into a stated no-correction carve-out.",
+  "pass_condition": "The paper reports a bias-adjusted / regression-corrected matching estimator, or documents that it matches on at most one continuous covariate, or that it matches only the treated to a control pool of much larger order.",
+  "flag_condition": "The paper reports a simple, unadjusted matching estimate on two or more continuous covariates with no bias correction and no stated carve-out.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Abadie (2006) shows the conditional bias of matching estimators grows with the number of continuous matching variables and that with more than one continuous covariate the estimator is not root-n consistent, so confidence intervals ignoring the bias can be invalid.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper matching on two or more continuous covariates must report a bias-corrected estimator unless it documents a no-correction carve-out.",
+  "contributing_sources": [
+   "Sekhon (2011)",
+   "Abadie (2006)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_abadie_2006",
+    "short_cite": "Abadie (2006)",
+    "source_lines": "L13",
+    "quote": "matching estimators include a conditional bias term whose stochastic order increases with the number of continuous matching variables.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_abadie_2006",
+    "short_cite": "Abadie (2006)",
+    "source_lines": "L434",
+    "quote": "matching estimators are not N1/2-consistent in general and standard confidence intervals are not necessarily valid.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     18
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_abadie_2006",
+    "short_cite": "Abadie (2006)",
+    "source_lines": "L434",
+    "quote": "when the set of matching variables contains at most one continuously distributed variable, the conditional bias term is op(N−1/2)",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     18
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_sekhon_2011",
+    "short_cite": "Sekhon (2011)",
+    "source_lines": "L52",
+    "quote": "If X consists of more than one continuous variable, multivariate matching estimates contain a bias term which does not asymptotically go to zero at rate √n",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_abadie_2006",
+    "cite": "Alberto Abadie & Guido W. Imbens. (2006). Large Sample Properties of Matching Estimators for Average Treatment Effects. Econometrica, 74(1), 235-267. https://doi.org/10.1111/j.1468-0262.2006.00655.x",
+    "short_cite": "Abadie (2006)",
+    "pages": "pp. 236, 252",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     18
+    ]
+   },
+   {
+    "source_id": "matching_sekhon_2011",
+    "cite": "Jasjeet S. Sekhon. (2011). Multivariate and Propensity Score Matching Software with Automated Balance Optimization: The<b>Matching</b>Package for<i>R</i>. Journal of Statistical Software, 42(7). https://doi.org/10.18637/jss.v042.i07",
+    "short_cite": "Sekhon (2011)",
+    "pages": "p. 5",
+    "pagination": "pdf",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MATCHING-INFER-03",
+  "category": "INFER",
+  "scope": [
+   "interference"
+  ],
+  "claim": "Under interference the exact randomization variance is unidentified because only one potential outcome per unit is seen, and estimators that ignore the clustering interference induces in exposures are anti-conservative. A paper estimating effects under interference must use a variance estimator that is conservative or accounts for that dependence.",
+  "observable": "For a paper estimating effects under interference: whether its reported variance/confidence intervals come from a conservative or dependence-aware estimator rather than a naive OLS / difference-in-means variance that assumes independence.",
+  "pass_condition": "The paper uses a variance estimator that is conservative or accounts for the exposure dependence (e.g. a design-based conservative variance or clustering keyed to the exposure/dependency structure) when forming intervals under interference.",
+  "flag_condition": "The paper reports intervals under interference from a naive OLS or difference-in-means variance that ignores the clustering interference induces in exposure conditions.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Aronow (2017) shows the exact variance is unidentified so a conservative approximation must be used, and warns that OLS/difference-in-means variances are anti-conservative because they ignore exposure clustering.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper estimating effects under interference must use a conservative or dependence-aware variance estimator for its intervals.",
+  "contributing_sources": [
+   "Aronow (2017)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_aronow_2017",
+    "short_cite": "Aronow (2017)",
+    "source_lines": "L138",
+    "quote": "we can always identify a conservative approximation to the exact variances.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_aronow_2017",
+    "short_cite": "Aronow (2017)",
+    "source_lines": "L383",
+    "quote": "The variance estimators for OLS and DSM may be anti-conservative because they ignore the clustering in exposure conditions.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     24
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_aronow_2017",
+    "short_cite": "Aronow (2017)",
+    "source_lines": "L412",
+    "quote": "Wald-type intervals based on a normal approximation provide a reasonable reflection of large N behavior when clustering of exposure indicator values is limited.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     29
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_aronow_2017",
+    "cite": "Peter M. Aronow & Cyrus Samii. (2017). Estimating average causal effects under general interference, with application to a social network experiment. The Annals of Applied Statistics, 11(4). https://doi.org/10.1214/16-aoas1005",
+    "short_cite": "Aronow (2017)",
+    "pages": "pp. 11, 24, 29",
+    "pagination": "pdf",
+    "pdf_pages": [
+     11,
+     24,
+     29
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MATCHING-REPORT-01",
+  "category": "REPORT",
+  "scope": [
+   "all"
+  ],
+  "claim": "A single application of a matching or balancing method is not guaranteed to improve covariate balance -- it can leave balance unchanged or worse -- so match quality must be evaluated in the sample at hand rather than assumed. The paper must report a post-matching covariate-balance diagnostic.",
+  "observable": "Whether the paper reports achieved covariate balance after matching/weighting for the covariates it adjusted on (a balance table, standardized differences, or comparable summary), located anywhere in the paper or its supplements.",
+  "pass_condition": "The paper reports a post-adjustment balance diagnostic covering its covariates -- e.g. treated-vs-control means or standardized mean differences before and after, or another distributional balance summary.",
+  "flag_condition": "The paper reports a matched/weighted effect but shows no post-adjustment balance for the covariates it adjusted on (e.g. it reports only the propensity-model fit, or asserts balance without any diagnostic).",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Iacus (2011) states a single use of most matching algorithms is not guaranteed to do any good without balance checking, and Abadie (2020) requires match quality to be evaluated for each particular sample.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A matching/weighting paper must report a post-adjustment covariate-balance diagnostic on the covariates it adjusted on.",
+  "contributing_sources": [
+   "Iacus (2011)",
+   "Abadie (2020)",
+   "King (2019)",
+   "Sekhon (2011)",
+   "Fong (2018)",
+   "Zubizarreta (2015)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_iacus_2011",
+    "short_cite": "Iacus (2011)",
+    "source_lines": "L16",
+    "quote": "This of course is a real mistake since any one application of most existing matching algorithms is not guaranteed (without balance checking) to do any good at all.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_abadie_2020",
+    "short_cite": "Abadie (2020)",
+    "source_lines": "L104",
+    "quote": "the adequacy of matching should not rely on asymptotic results. Instead, the quality of the matches needs to be evaluated for each particular sample.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_king_2019",
+    "short_cite": "King (2019)",
+    "source_lines": "L123",
+    "quote": "researchers need to provide full information and diagnostics to readers to understand what was done.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_sekhon_2011",
+    "short_cite": "Sekhon (2011)",
+    "source_lines": "L166",
+    "quote": "This example shows that it is important to not simply look at differences of means. It is important to examine more general summaries of the distributions.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_abadie_2020",
+    "cite": "Alberto Abadie & Jann Spiess. (2020). Robust Post-Matching Inference. Journal of the American Statistical Association, 117(538), 983-995. https://doi.org/10.1080/01621459.2020.1840383",
+    "short_cite": "Abadie (2020)",
+    "pages": "p. 986",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "matching_iacus_2011",
+    "cite": "Stefano M. Iacus, Gary King, & Giuseppe Porro. (2011). Causal Inference without Balance Checking: Coarsened Exact Matching. Political Analysis, 20(1), 1-24. https://doi.org/10.1093/pan/mpr013",
+    "short_cite": "Iacus (2011)",
+    "pages": "p. 2",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   },
+   {
+    "source_id": "matching_king_2019",
+    "cite": "Gary King & Richard A. Nielsen. (2019). Why Propensity Scores Should Not Be Used for Matching. Political Analysis, 27(4), 435-454. https://doi.org/10.1017/pan.2019.11",
+    "short_cite": "King (2019)",
+    "pages": "p. 451",
+    "pagination": "printed",
+    "pdf_pages": [
+     17
+    ]
+   },
+   {
+    "source_id": "matching_sekhon_2011",
+    "cite": "Jasjeet S. Sekhon. (2011). Multivariate and Propensity Score Matching Software with Automated Balance Optimization: The<b>Matching</b>Package for<i>R</i>. Journal of Statistical Software, 42(7). https://doi.org/10.18637/jss.v042.i07",
+    "short_cite": "Sekhon (2011)",
+    "pages": "p. 13",
+    "pagination": "pdf",
+    "pdf_pages": [
+     13
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 6,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MATCHING-REPORT-02",
+  "category": "REPORT",
+  "scope": [
+   "weighting"
+  ],
+  "claim": "Inverse-probability / balancing weights can be dominated by a few very large weights, and highly variable weights inflate the estimator's variance; because that variance cost is governed by the weight distribution, a weighting paper should report a diagnostic of weight variability so readers can gauge it.",
+  "observable": "For a paper that estimates effects with weights: whether it reports a diagnostic of the weight distribution (largest weights, coefficient of variation of the weights, or effective sample size).",
+  "pass_condition": "The paper reports at least one weight-stability quantity -- e.g. the distribution or maximum of the weights, their coefficient of variation, or the effective sample size implied by the weights.",
+  "flag_condition": "The paper reports weighted effect estimates but gives no diagnostic of how variable or concentrated the weights are.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Zubizarreta (2015) states very large weights overly influence results and highly variable weights raise variance, and offers the squared coefficient of variation as the corresponding stability measure.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A weighting paper should report a diagnostic of weight variability/stability (weight distribution or maximum, coefficient of variation, or effective sample size).",
+  "contributing_sources": [
+   "Zubizarreta (2015)",
+   "Kang (2007)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_zubizarreta_2015",
+    "short_cite": "Zubizarreta (2015)",
+    "source_lines": "L21",
+    "quote": "very large weights may overly influence the results and highly variable weights produce results with high variance",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "matching_zubizarreta_2015",
+    "short_cite": "Zubizarreta (2015)",
+    "source_lines": "L43",
+    "quote": "the square of the coefficient of variation of the weights yields a simplified measure of the proportional added variance induced by weighting",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_zubizarreta_2015",
+    "cite": "José R. Zubizarreta. (2015). Stable Weights that Balance Covariates for Estimation With Incomplete Outcome Data. Journal of the American Statistical Association, 110(511), 910-922. https://doi.org/10.1080/01621459.2015.1023805",
+    "short_cite": "Zubizarreta (2015)",
+    "pages": "pp. 910, 912",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MATCHING-DATA-01",
+  "category": "DATA",
+  "scope": [
+   "missing_data"
+  ],
+  "claim": "When matching variables have missing values, listwise deletion is not the appropriate handling; missing data should be addressed with multiple imputation or another principled method. A paper with missing covariates must state such handling.",
+  "observable": "For a paper that reports missing values on matching covariates: whether it states it used multiple imputation or another proper missing-data method, rather than dropping incomplete cases.",
+  "pass_condition": "The paper states it handled the missing covariate values with multiple imputation or another principled approach.",
+  "flag_condition": "The paper has missing matching-covariate values and either listwise-deletes the incomplete cases or says nothing about how the missingness was handled.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Iacus (2011) states missing data should not be listwise deleted but treated via multiple imputation or another proper statistical approach.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper with missing matching-covariate values must state it used multiple imputation or another principled method rather than listwise deletion.",
+  "contributing_sources": [
+   "Iacus (2011)"
+  ],
+  "evidence": [
+   {
+    "source_id": "matching_iacus_2011",
+    "short_cite": "Iacus (2011)",
+    "source_lines": "L161",
+    "quote": "missing data should not be listwise deleted but should instead be treated via multiple imputation or another proper statistical approach",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "matching_iacus_2011",
+    "cite": "Stefano M. Iacus, Gary King, & Giuseppe Porro. (2011). Causal Inference without Balance Checking: Coarsened Exact Matching. Political Analysis, 20(1), 1-24. https://doi.org/10.1093/pan/mpr013",
+    "short_cite": "Iacus (2011)",
+    "pages": "p. 15",
+    "pagination": "printed",
+    "pdf_pages": [
+     15
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

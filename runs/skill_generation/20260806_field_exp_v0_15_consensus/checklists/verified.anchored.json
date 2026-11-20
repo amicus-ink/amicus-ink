@@ -1,0 +1,2233 @@
+[
+ {
+  "_module": "FIELD_EXP",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "all",
+   "bundled_treatment",
+   "longitudinal_followup",
+   "imperfect_compliance",
+   "matched_pair_audit",
+   "signal_manipulation",
+   "iv_estimation",
+   "mediation_claim",
+   "heterogeneous_nonrandom_moderator",
+   "voluntary_participation",
+   "has_control_group",
+   "stratified_or_blocked",
+   "randomized_experiment",
+   "clustered_data",
+   "multiple_outcomes",
+   "null_primary_result",
+   "structural_model",
+   "self_report_sensitive",
+   "proxy_outcome"
+  ],
+  "_scope_definitions": {
+   "all": "Every paper in the corpus.",
+   "bundled_treatment": "Fires only if the paper describes its treatment arm as combining two or more distinct components. Near-miss: a single-component treatment with incidental delivery logistics does NOT fire it.",
+   "longitudinal_followup": "Fires when the paper states outcomes were collected in a follow-up/endline wave after assignment, so enrolled units could fail to be re-measured. Does NOT fire when every assigned unit's outcome comes from a complete administrative record with no possible non-response.",
+   "imperfect_compliance": "Fires when the paper states that some units assigned to treatment did not actually receive/take it (partial contact, uptake, or noncompliance). Does NOT fire when the paper states full compliance, and defaults OUT when the paper is silent about uptake.",
+   "matched_pair_audit": "Fires when the paper states an in-person audit/tester design using paired human confederates who appear before the decision-maker. Does NOT fire for a correspondence study using fictitious written applications, where comparability of decision-maker-visible information is mechanical rather than achieved by matching people.",
+   "signal_manipulation": "Fires only if the paper states its manipulation operates by sending a signal/cue/proxy for a trait (e.g. a name, price, or label standing in for a characteristic). Near-miss: directly assigning the substantive treatment good/service itself does NOT fire it.",
+   "iv_estimation": "Fires when the paper states it uses an instrumental-variables second stage, including using random assignment as an instrument for treatment receipt or for a mediator/endogenous regressor. Does NOT fire when the paper reports only an intent-to-treat / reduced-form estimate with no instrumented quantity.",
+   "mediation_claim": "Fires when the paper attributes its treatment effect to a specific named intermediate mechanism/mediator. Does NOT fire for a treatment-effect claim on a final outcome with no asserted mediator; a design that experimentally manipulates the mediator itself SATISFIES rather than triggers the concern.",
+   "heterogeneous_nonrandom_moderator": "Fires when the paper reports treatment-effect heterogeneity, a subgroup contrast, or an interaction defined by a moderator variable it did NOT randomly assign. Does NOT fire for heterogeneity across a randomized factor (e.g. a randomized 2x2), nor for a single pooled average effect with no subgroup split.",
+   "voluntary_participation": "Fires when the paper states subjects consented to or opted into enrollment (a recruited or volunteer sample). Does NOT fire when the intervention is applied to a pre-existing full population (e.g. every name on an administrative list) without an opt-in step.",
+   "has_control_group": "Fires when the paper states a no-treatment or untreated comparison arm. Does NOT fire for a design with only active/alternative arms and no untreated control.",
+   "stratified_or_blocked": "Fires when the paper states it stratified, blocked, matched, paired, or rerandomized on covariates prior to assignment. Does NOT fire for simple/complete randomization with no stated stratification, nor for covariate control introduced only at the analysis stage.",
+   "randomized_experiment": "Fires when the paper states it assigned units to treatment/control by an explicit random procedure. Does NOT fire for an observational or 'as-if random' natural-experiment comparison the paper never randomized itself.",
+   "clustered_data": "Fires when the paper states its randomization unit is a group/cluster, or that it has multiple correlated observations per unit (repeated measures). Does NOT fire merely because units sit on a geographic grid when the paper describes individual-level assignment and one observation per unit.",
+   "multiple_outcomes": "Fires when the paper reports significance tests for two or more distinct outcome measures or subgroup contrasts. Does NOT fire for a single pre-declared primary outcome accompanied only by descriptive secondary statistics.",
+   "null_primary_result": "Fires when the paper reports its primary treatment estimate as statistically non-significant and draws a substantive reading from that null. Does NOT fire when the primary effect is significant and only incidental secondary outcomes are null.",
+   "structural_model": "Fires when the paper states it estimates a structural/parametric economic model (for counterfactual or policy simulation) beyond reduced-form effect estimation. Does NOT fire for a reduced-form regression that merely makes functional-form choices.",
+   "self_report_sensitive": "Fires when the paper states its outcome is self-reported AND concerns sensitive/socially-undesirable behavior or attitudes, or that the treatment could change willingness to report. Does NOT fire for a self-reported but non-sensitive factual outcome, nor for an objective/administrative measure.",
+   "proxy_outcome": "Fires only if the paper itself frames its outcome as a proxy, detected-trace, or discrepancy measure of the construct of interest (e.g. administrative traces of a hidden behavior, a coarse indicator standing in for the true outcome). Near-miss that does NOT fire: a direct measurement the paper treats as the construct itself, or the generic imperfection every measure has that the paper does not flag. Default OUT on silence."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 23 concepts in >=2 draws; dropped 5 draw-specific singleton(s).",
+  "_verification_note": "Independent verification pass. 22 proposed -> 21 verified. EST-02 (report unadjusted alongside adjusted estimate) DISSOLVED: its only grounding is advice-modality ('it is of use to compare' -- Bruhn L388) and a property statement ('adding controls should not affect point estimates' -- DellaVigna L311); no source states a reporting requirement, so its claims are parked as workflow_advice. INFER-02, REPORT-01, DATA-01 reworded to match source modality. 16 member claims reassigned off checks whose requirement they did not establish (measurement-error, attitude-vs-behavior, selection, partial-identification, and rerandomization-inference misfits parked as new_check_candidate; a GE caveat as motivation_only). proxy_outcome scope tightened to the paper's own framing of the outcome."
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "An experimental identification claim rests on units being assigned to conditions by a genuine random mechanism with known assignment probabilities; the paper must describe that mechanism.",
+  "observable": "The methods section's description of how units were assigned to treatment and control, including the randomization unit and the assignment probabilities or scheme.",
+  "pass_condition": "The paper states that units were assigned to conditions by an explicit random procedure and gives the assignment unit; the probability scheme is stated or evident from the design (equal-probability assignment, a block/stratified draw, or explicitly stated probabilities).",
+  "flag_condition": "The paper claims experimental identification but never describes a random assignment procedure, or leaves the assignment unit unstated. Leaving exact probabilities implicit where equal-probability assignment is evident is not by itself disqualifying.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources treat random assignment with known probability as the definitional basis of experimental inference (Green 2012; Levitt 2008); without it the causal warrant is absent.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must describe a genuine random assignment mechanism, its unit, and its probability scheme.",
+  "contributing_sources": [
+   "Green (2012)",
+   "Levitt (2008)",
+   "List (2002)",
+   "Moore (2012)",
+   "Findley (2013)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_green_2012",
+    "short_cite": "Green (2012)",
+    "source_lines": "L24",
+    "quote": "An experiment is a study in which the units of observation are assigned at random with known probability to treatment and control conditions.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_levitt_2008",
+    "short_cite": "Levitt (2008)",
+    "source_lines": "L29",
+    "quote": "any two plots, not in the same block, shall have the same probability of being treated alike, and the same probability of being treated differently",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_list_2002",
+    "short_cite": "List (2002)",
+    "source_lines": "L98",
+    "quote": "randomly divided into six different treatments",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_green_2012",
+    "cite": "Donald P. Green, Mary C. McGrath, & Peter M. Aronow. (2012). Field Experiments and the Study of Voter Turnout. Journal of Elections Public Opinion and Parties, 23(1), 27-48. https://doi.org/10.1080/17457289.2012.728223",
+    "short_cite": "Green (2012)",
+    "pages": "p. 28",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "field_exp_levitt_2008",
+    "cite": "Steven D. Levitt & John A. List. (2008). Field experiments in economics: The past, the present, and the future. European Economic Review, 53(1), 1-18. https://doi.org/10.1016/j.euroecorev.2008.12.001",
+    "short_cite": "Levitt (2008)",
+    "pages": "p. 3",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "field_exp_list_2002",
+    "cite": "John A. List & David Lucking‐Reiley. (2002). The Effects of Seed Money and Refunds on Charitable Giving: Experimental Evidence from a University Capital Campaign. Journal of Political Economy, 110(1), 215-233. https://doi.org/10.1086/324392",
+    "short_cite": "List (2002)",
+    "pages": "p. 231",
+    "pagination": "printed",
+    "pdf_pages": [
+     17
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "Restricting the analysis sample or set of controls by a variable realized after treatment (response, compliance, a post-treatment subgroup, an intermediate outcome) breaks the randomization and reintroduces confounding.",
+  "observable": "Whether the estimating sample or covariate set is defined by any quantity measured after assignment rather than fixed pre-assignment.",
+  "pass_condition": "The estimate is computed on the full randomized sample using only pre-assignment covariates; no analysis variable used to select the sample or adjust the estimate is realized after treatment.",
+  "flag_condition": "The paper conditions its estimate on a post-treatment quantity (analyzing only responders/donors/survivors, splitting on a treatment-affected subgroup, or controlling for an intermediate outcome).",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources show post-treatment conditioning de-randomizes the comparison so the groups are no longer equivalent in expectation (Coppock 2018; Karlan 2007; Malesky 2012).",
+  "prevalence_aggravator": "Coppock (2018) reports inappropriate conditioning on response appears in a sizable share of surveyed audit studies.",
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must not condition its estimate on any variable realized after treatment assignment.",
+  "contributing_sources": [
+   "Coppock (2018)",
+   "Karlan (2007)",
+   "Malesky (2012)",
+   "Ashraf (2010)",
+   "Grossman (2018)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_coppock_2018",
+    "short_cite": "Coppock (2018)",
+    "source_lines": "L5",
+    "quote": "conditioning on post-treatment outcomes “de-randomizes” an experiment in the sense that the resulting treatment and control groups no longer have potential outcomes that are in expectation equivalent.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_coppock_2018",
+    "short_cite": "Coppock (2018)",
+    "source_lines": "L29",
+    "quote": "conditioning on post-treatment variables should be avoided in all cases.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_karlan_2007",
+    "short_cite": "Karlan (2007)",
+    "source_lines": "L147",
+    "quote": "Thus, the specifications in panel B no longer adhere to the experimental design, since a selection effect confounds the incentive effects on amount given.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_malesky_2012",
+    "short_cite": "Malesky (2012)",
+    "source_lines": "L207",
+    "quote": "Another way to think about this is through the methodological lens of post-treatment effects.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     19
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_coppock_2018",
+    "cite": "Alexander Coppock. (2018). Avoiding Post-Treatment Bias in Audit Experiments. Journal of Experimental Political Science, 6(1), 1-4. https://doi.org/10.1017/xps.2018.9",
+    "short_cite": "Coppock (2018)",
+    "pages": "pp. 1, 3",
+    "pagination": "printed",
+    "pdf_pages": [
+     1,
+     3
+    ]
+   },
+   {
+    "source_id": "field_exp_karlan_2007",
+    "cite": "Dean Karlan & John A. List. (2007). Does Price Matter in Charitable Giving? Evidence from a Large-Scale Natural Field Experiment. American Economic Review, 97(5), 1774-1793. https://doi.org/10.1257/aer.97.5.1774",
+    "short_cite": "Karlan (2007)",
+    "pages": "p. 1783",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   },
+   {
+    "source_id": "field_exp_malesky_2012",
+    "cite": "Edmund Malesky, Paul Schuler, & Anh Tran. (2012). The Adverse Effects of Sunshine: A Field Experiment on Legislative Transparency in an Authoritarian Assembly. American Political Science Review, 106(4), 762-786. https://doi.org/10.1017/s0003055412000408",
+    "short_cite": "Malesky (2012)",
+    "pages": "p. 780",
+    "pagination": "printed",
+    "pdf_pages": [
+     19
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-03",
+  "category": "IDENT",
+  "scope": [
+   "bundled_treatment"
+  ],
+  "claim": "When a single treatment arm combines multiple distinct components, the paper must not attribute the effect to one component unless a separate arm isolates it, and otherwise must state the attribution is indeterminate.",
+  "observable": "Whether a treatment the paper describes as multi-component is either decomposed by a dedicated arm or accompanied by an explicit statement that the responsible component cannot be identified.",
+  "pass_condition": "A dedicated arm varies the component of interest against an otherwise-identical alternative, or the paper explicitly states the effect cannot be attributed to any single bundled component.",
+  "flag_condition": "The paper attributes the effect to one component of an admittedly bundled treatment without an isolating arm and without acknowledging the indeterminacy.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources state a bundled treatment cannot identify which component drives the effect, so single-component claims require an isolating design.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "When a single treatment arm combines multiple distinct components, the paper must not attribute the effect to one component unless a separate arm isolates it, and otherwise must state the attribution is indeterminate.",
+  "contributing_sources": [
+   "Alatas (2016)",
+   "Ashraf (2010)",
+   "Ashraf (2014b)",
+   "Bertrand (2004)",
+   "Butler (2011a)",
+   "Butler (2011b)",
+   "Fearon (2009)",
+   "Gerber (2008a)",
+   "Gerber (2008b)",
+   "Grossman (2018)",
+   "Humphreys (2006)",
+   "Scacco (2018)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_gerber_2008b",
+    "short_cite": "Gerber (2008b)",
+    "source_lines": "L44",
+    "quote": "employ treatments that cannot isolate the effect of social pressure from the effects of other elements of the experimental treatments.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_scacco_2018",
+    "short_cite": "Scacco (2018)",
+    "source_lines": "L39",
+    "quote": "because most NGO-led projects bundle social contact together with peace education or diversity training, it is impossible to establish a causal relationship between social contact and outcomes",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_fearon_2009",
+    "short_cite": "Fearon (2009)",
+    "source_lines": "L40",
+    "quote": "a different research design would be required, in which different sorts of aid programming are assigned at random to different communities.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_fearon_2009",
+    "cite": "James D. Fearon, Macartan Humphreys, & Jeremy M. Weinstein. (2009). Development Assistance, Institution Building, and Social Cohesion after Civil War: Evidence from a Field Experiment in Liberia. SSRN Electronic Journal. https://doi.org/10.2139/ssrn.1517941",
+    "short_cite": "Fearon (2009)",
+    "pages": "p. 5",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   },
+   {
+    "source_id": "field_exp_gerber_2008b",
+    "cite": "Alan S. Gerber, Donald P. Green, & Christopher W. Larimer. (2008). Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment. American Political Science Review, 102(1), 33-48. https://doi.org/10.1017/s000305540808009x",
+    "short_cite": "Gerber (2008b)",
+    "pages": "p. 36",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "field_exp_scacco_2018",
+    "cite": "Alexandra Scacco & Shana S. Warren. (2018). Can Social Contact Reduce Prejudice and Discrimination? Evidence from a Field Experiment in Nigeria. American Political Science Review, 112(3), 654-677. https://doi.org/10.1017/s0003055418000151",
+    "short_cite": "Scacco (2018)",
+    "pages": "p. 657",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 12,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-04",
+  "category": "IDENT",
+  "scope": [
+   "longitudinal_followup"
+  ],
+  "claim": "When outcomes are collected in a follow-up wave, treatment that differentially affects who is re-measured produces attrition bias, so the paper must assess whether attrition differs across arms.",
+  "observable": "Whether the paper reports a comparison of attrition/non-response rates (and ideally baseline composition of attriters) across treatment and control.",
+  "pass_condition": "The paper reports that attrition/non-response was compared across arms (rates and/or attriter characteristics) or bounds the estimate against differential attrition.",
+  "flag_condition": "The paper collects follow-up outcomes but never checks whether attrition differs across arms.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources show differential attrition directly biases the treatment-control comparison and can render estimates inconsistent (List 2010; Broockman 2017; Kleven 2011).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper with follow-up outcomes must assess whether attrition differs across arms.",
+  "contributing_sources": [
+   "List (2010)",
+   "Broockman (2017)",
+   "Kleven (2011)",
+   "Harrison (2004)",
+   "Mel (2008)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_list_2010",
+    "short_cite": "List (2010)",
+    "source_lines": "L198",
+    "quote": "systematic differences between the treatment and control groups because of differential losses of participants.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_broockman_2017",
+    "short_cite": "Broockman (2017)",
+    "source_lines": "L16",
+    "quote": "the results of such experiments are vulnerable to bias from differential attrition, which occurs when treatments influence survey completion.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_kleven_2011",
+    "short_cite": "Kleven (2011)",
+    "source_lines": "L228",
+    "quote": "This absence of selective attrition is critical as our analysis of prior audits effects is based on 2008 returns.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     31
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_broockman_2017",
+    "cite": "David Broockman, Joshua Kalla, & Jasjeet S. Sekhon. (2017). The Design of Field Experiments With Survey Outcomes: A Framework for Selecting More Efficient, Robust, and Ethical Designs. Political Analysis, 25(4), 435-464. https://doi.org/10.1017/pan.2017.27",
+    "short_cite": "Broockman (2017)",
+    "pages": "p. 436",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   },
+   {
+    "source_id": "field_exp_kleven_2011",
+    "cite": "Henrik Kleven, Martin Knudsen, Claus Thustrup Kreiner, Søren Pedersen, & Emmanuel Saez. (2011). Unwilling or Unable to Cheat? Evidence From a Tax Audit Experiment in Denmark. Econometrica, 79(3), 651-692. https://doi.org/10.3982/ecta9113",
+    "short_cite": "Kleven (2011)",
+    "pages": "p. 681",
+    "pagination": "printed",
+    "pdf_pages": [
+     31
+    ]
+   },
+   {
+    "source_id": "field_exp_list_2010",
+    "cite": "John A. List & Imran Rasul. (2010). Field Experiments in Labor Economics. National Bureau of Economic Research. https://doi.org/10.3386/w16062",
+    "short_cite": "List (2010)",
+    "pages": "p. 12",
+    "pagination": "printed",
+    "pdf_pages": [
+     13
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-05",
+  "category": "IDENT",
+  "scope": [
+   "imperfect_compliance"
+  ],
+  "claim": "Under imperfect compliance the effect of assignment is identified, but substituting realized treatment receipt for assignment reintroduces selection bias, so the paper must not read effects off a naive comparison of those actually treated versus not.",
+  "observable": "Whether the primary contrast is between randomized assignment arms (ITT, or assignment-instrumented compliance effect) rather than between units grouped by whether they actually received treatment.",
+  "pass_condition": "The primary effect is estimated from randomized assignment (ITT, or a compliance effect that instruments receipt with assignment).",
+  "flag_condition": "The paper estimates the treatment effect by comparing units who actually received treatment against those who did not, without instrumenting receipt with assignment.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources show that grouping on realized receipt lets unobservables driving uptake correlate with the outcome, biasing the estimate (Arceneaux 2008; Wantchekon 2003b).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Under noncompliance the paper must not estimate the effect from a naive as-treated comparison.",
+  "contributing_sources": [
+   "Arceneaux (2008)",
+   "Wantchekon (2003b)",
+   "Green (2012)",
+   "Nickerson (2006)",
+   "Heller (2016)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_arceneaux_2008",
+    "short_cite": "Arceneaux (2008)",
+    "source_lines": "L146",
+    "quote": "this approach risks introducing bias into the causal estimates since unobservable factors that causeindividualstobeexposedtoGOTVcontactmayalso be correlated with voting behavior",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_wantchekon_2003b",
+    "short_cite": "Wantchekon (2003b)",
+    "source_lines": "L47",
+    "quote": "The effect is underestimated simply because only a fraction of the intent-to-treat group is actually treated.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_arceneaux_2008",
+    "cite": "Kevin Arceneaux & David W. Nickerson. (2008). Who Is Mobilized to Vote? A Re‐Analysis of 11 Field Experiments. American Journal of Political Science, 53(1), 1-16. https://doi.org/10.1111/j.1540-5907.2008.00354.x",
+    "short_cite": "Arceneaux (2008)",
+    "pages": "p. 7",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   },
+   {
+    "source_id": "field_exp_wantchekon_2003b",
+    "cite": "Léonard Wantchekon. (2003). Clientelism and Voting Behavior: Evidence from a Field Experiment in Benin. World Politics, 55(3), 399-422. https://doi.org/10.1353/wp.2003.0018",
+    "short_cite": "Wantchekon (2003b)",
+    "pages": "p. 408",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-06",
+  "category": "IDENT",
+  "scope": [
+   "matched_pair_audit"
+  ],
+  "claim": "In an in-person matched-pair audit, the causal reading depends on the paired confederates being alike on every outcome-relevant characteristic except the manipulated trait, so the paper must state how that matching was achieved.",
+  "observable": "Whether the paper describes matching or standardizing the paired testers on outcome-relevant characteristics apart from the manipulated trait.",
+  "pass_condition": "The paper states that paired testers were matched/standardized on the characteristics that could affect the outcome, leaving only the manipulated trait to differ.",
+  "flag_condition": "The paper uses paired in-person confederates but does not describe matching them on outcome-relevant characteristics.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources make identical-except-for-trait matching the identifying condition of paired audits and doubt it can be met (List 2010; Bertrand 2016; Bertrand 2004).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A matched-pair audit must state that testers were matched on all outcome-relevant traits except the manipulated one.",
+  "contributing_sources": [
+   "List (2010)",
+   "Bertrand (2016)",
+   "Bertrand (2004)",
+   "Bertrand (2018)",
+   "Harrison (2004)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_list_2010",
+    "short_cite": "List (2010)",
+    "source_lines": "L993",
+    "quote": "the researcher matches two testers who are identical along all relevant employment characteristics except the comparative static of interest",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     53
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_bertrand_2016",
+    "short_cite": "Bertrand (2016)",
+    "source_lines": "L314",
+    "quote": "identical in all dimensions that might affect productivity in employers’ eyes, except for the trait",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_bertrand_2004",
+    "short_cite": "Bertrand (2004)",
+    "source_lines": "L18",
+    "quote": "these studies require that both members of the auditor pair are identical in all dimensions that might affect productivity in employers’ eyes, except for race.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_bertrand_2004",
+    "cite": "Marianne Bertrand & Sendhil Mullainathan. (2004). Are Emily and Greg More Employable Than Lakisha and Jamal? A Field Experiment on Labor Market Discrimination. American Economic Review, 94(4), 991-1013. https://doi.org/10.1257/0002828042002561",
+    "short_cite": "Bertrand (2004)",
+    "pages": "p. 993",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "field_exp_bertrand_2016",
+    "cite": "Marianne Bertrand & Esther Duflo. (2016). Field Experiments on Discrimination. Handbook of economic field experiments, 309-393. https://doi.org/10.1016/bs.hefe.2016.08.004",
+    "short_cite": "Bertrand (2016)",
+    "pages": "p. 320",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   },
+   {
+    "source_id": "field_exp_list_2010",
+    "cite": "John A. List & Imran Rasul. (2010). Field Experiments in Labor Economics. National Bureau of Economic Research. https://doi.org/10.3386/w16062",
+    "short_cite": "List (2010)",
+    "pages": "p. 52",
+    "pagination": "printed",
+    "pdf_pages": [
+     53
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-07",
+  "category": "IDENT",
+  "scope": [
+   "signal_manipulation"
+  ],
+  "claim": "When the manipulation operates through a signal or cue that could carry meaning beyond the intended trait, the paper must identify and empirically address the possibility that the signal conveys unintended, outcome-relevant attributes.",
+  "observable": "Whether the paper names the alternative attributes its manipulated signal could convey and tests or argues against them.",
+  "pass_condition": "The paper identifies the plausible unintended attributes the signal could convey and reports a test or explicit argument that they do not drive the measured difference.",
+  "flag_condition": "The paper's manipulation relies on a signal/proxy and it neither names nor addresses the unintended attributes that signal could carry.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state a manipulation meant to signal one trait may inadvertently convey additional attributes, confounding the intended contrast.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "When the manipulation operates through a signal or cue that could carry meaning beyond the intended trait, the paper must identify and empirically address the possibility that the signal conveys unintended, outcome-relevant attributes.",
+  "contributing_sources": [
+   "Ashraf (2010)",
+   "Bertrand (2004)",
+   "Bertrand (2016)",
+   "Bertrand (2018)",
+   "Distelhorst (2014)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_bertrand_2016",
+    "short_cite": "Bertrand (2016)",
+    "source_lines": "L524",
+    "quote": "The manipulation through student activities may reveal more than just religion",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     19
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_bertrand_2018",
+    "short_cite": "Bertrand (2018)",
+    "source_lines": "L165",
+    "quote": "While the names we have used in this experiment strongly signal racial origin, they may also signal some other personal trait.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_distelhorst_2014",
+    "short_cite": "Distelhorst (2014)",
+    "source_lines": "L53",
+    "quote": "we sought to ensure that signaling minority identity did not additionally alter perceptions of the citizen’s economic well-being or social class",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 0.913
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_bertrand_2016",
+    "cite": "Marianne Bertrand & Esther Duflo. (2016). Field Experiments on Discrimination. Handbook of economic field experiments, 309-393. https://doi.org/10.1016/bs.hefe.2016.08.004",
+    "short_cite": "Bertrand (2016)",
+    "pages": "p. 327",
+    "pagination": "printed",
+    "pdf_pages": [
+     19
+    ]
+   },
+   {
+    "source_id": "field_exp_bertrand_2018",
+    "cite": "Marianne Bertrand & Sendhil Mullainathan. (2018). Are Emily and Greg More Employable Than Lakisha and Jamal?. The Inequality Reader, 254-259. https://doi.org/10.4324/9780429494468-28",
+    "short_cite": "Bertrand (2018)",
+    "pages": "p. 270",
+    "pagination": "printed",
+    "pdf_pages": [
+     17
+    ]
+   },
+   {
+    "source_id": "field_exp_distelhorst_2014",
+    "cite": "Greg Distelhorst & Yue Hou. (2014). Ingroup Bias in Official Behavior: A National Field Experiment in China. Quarterly Journal of Political Science, 9(2), 203-230. https://doi.org/10.1561/100.00013110",
+    "short_cite": "Distelhorst (2014)",
+    "pages": "p. 210",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-08",
+  "category": "IDENT",
+  "scope": [
+   "iv_estimation"
+  ],
+  "claim": "An instrumental-variables estimate (including one that instruments a mediator or treatment receipt with random assignment) is valid only if the instrument affects the outcome solely through the instrumented channel, so the paper must state and defend that exclusion restriction.",
+  "observable": "Whether the paper states the exclusion restriction for its instrument and offers a defense of its plausibility.",
+  "pass_condition": "The paper states that the instrument influences the outcome only through the instrumented variable and gives a reasoned or empirical defense of that restriction.",
+  "flag_condition": "The paper reports an IV estimate without stating the exclusion restriction, or states it without any defense of its plausibility.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources make the no-direct-effect exclusion restriction the condition for interpreting an IV/mediation ratio causally (Gerber 2010; Gerber 2003; Mel 2008).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "An IV estimate must state and defend the exclusion restriction for its instrument.",
+  "contributing_sources": [
+   "Gerber (2010)",
+   "Gerber (2003)",
+   "Mel (2008)",
+   "Heller (2016)",
+   "Kleven (2011)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_gerber_2010",
+    "short_cite": "Gerber (2010)",
+    "source_lines": "L168",
+    "quote": "The critical assumption is that the treatment, T, has no direct effect on Y, and also does not cause",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_gerber_2003",
+    "short_cite": "Gerber (2003)",
+    "source_lines": "L54",
+    "quote": "The assumption that the treatment is uncorrelated with U99 means that interventions prior to the 1998 election have no direct effect on voting in 1999.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_mel_2008",
+    "short_cite": "Mel (2008)",
+    "source_lines": "L153",
+    "quote": "they must affect capital stock alone, and not be associated with changes in either the levels or the marginal products of other factors affecting production",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     21
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_gerber_2003",
+    "cite": "Alan S. Gerber, Donald P. Green, & Ron Shachar. (2003). Voting May Be Habit‐Forming: Evidence from a Randomized Field Experiment. American Journal of Political Science, 47(3), 540-550. https://doi.org/10.1111/1540-5907.00038",
+    "short_cite": "Gerber (2003)",
+    "pages": "p. 543",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "field_exp_gerber_2010",
+    "cite": "Alan S. Gerber, Gregory A. Huber, & Ebonya Washington. (2010). Party Affiliation, Partisanship, and Political Beliefs: A Field Experiment. American Political Science Review, 104(4), 720-744. https://doi.org/10.1017/s0003055410000407",
+    "short_cite": "Gerber (2010)",
+    "pages": "p. 727",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "field_exp_mel_2008",
+    "cite": "Suresh de Mel, David McKenzie, & Christopher Woodruff. (2008). Returns to Capital in Microenterprises: Evidence from a Field Experiment<sup>*</sup>. Quarterly Journal of Economics, 123(4), 1329-1372. https://doi.org/10.1162/qjec.2008.123.4.1329",
+    "short_cite": "Mel (2008)",
+    "pages": "p. 1348",
+    "pagination": "printed",
+    "pdf_pages": [
+     21
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-09",
+  "category": "IDENT",
+  "scope": [
+   "mediation_claim"
+  ],
+  "claim": "A mediator that was measured but not itself experimentally manipulated cannot establish a mechanism causally, so a mechanism claim resting on such a mediator must be flagged as suggestive rather than asserted as causal.",
+  "observable": "Whether the asserted mediator was itself randomized/manipulated, and if not, whether the paper labels the mechanism as correlational/suggestive.",
+  "pass_condition": "The mediator was experimentally manipulated, or the paper explicitly presents the mechanism as suggestive/hypothesis-generating rather than causally established.",
+  "flag_condition": "The paper asserts a specific causal mechanism from a mediator it only measured (not manipulated) without flagging the inference as non-causal.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources hold that non-manipulated mediators can only suggest mechanisms and risk omitted-variable bias if read causally (Paluck 2009; Humphreys 2006; Heller 2016).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A mechanism claim from a non-manipulated mediator must be presented as suggestive, not causal.",
+  "contributing_sources": [
+   "Paluck (2009)",
+   "Humphreys (2006)",
+   "Heller (2016)",
+   "Ludwig (2011)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_paluck_2009",
+    "short_cite": "Paluck (2009)",
+    "source_lines": "L40",
+    "quote": "Because neither empathy nor discussion was experimentally manipulated in the present study, documenting emotional and conversational reactions to the radio program can point to possible processes of change for future investigation",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_humphreys_2006",
+    "short_cite": "Humphreys (2006)",
+    "source_lines": "L121",
+    "quote": "the data on leader preferences were collected after the the meetings were conducted (typically within one week after the completion of the decentralized meetings). This means that we cannot discount the possibility that the preferences of the leaders are a result of, rather than a determinant of, the outcomes of the discussions",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_heller_2016",
+    "short_cite": "Heller (2016)",
+    "source_lines": "L563",
+    "quote": "leading to omitted variables bias in the direction of overstating the importance of these candidate mechanisms.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     43
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_heller_2016",
+    "cite": "Sara Heller, Anuj Shah, Jonathan Guryan, Jens Ludwig, Sendhil Mullainathan, & Harold A. Pollack. (2016). Thinking, Fast and Slow? Some Field Experiments to Reduce Crime and Dropout in Chicago*. The Quarterly Journal of Economics, 132(1), 1-54. https://doi.org/10.1093/qje/qjw033",
+    "short_cite": "Heller (2016)",
+    "pages": "p. 43",
+    "pagination": "printed",
+    "pdf_pages": [
+     43
+    ]
+   },
+   {
+    "source_id": "field_exp_humphreys_2006",
+    "cite": "Macartan Humphreys, William A. Masters, & Martin Sandbu. (2006). The Role of Leaders in Democratic Deliberations: Results from a Field Experiment in São Tomé and Príncipe. World Politics, 58(4), 583-622. https://doi.org/10.1353/wp.2007.0008",
+    "short_cite": "Humphreys (2006)",
+    "pages": "p. 598",
+    "pagination": "printed",
+    "pdf_pages": [
+     17
+    ]
+   },
+   {
+    "source_id": "field_exp_paluck_2009",
+    "cite": "Elizabeth Levy Paluck. (2009). Reducing intergroup prejudice and conflict using the media: A field experiment in Rwanda. Journal of Personality and Social Psychology, 96(3), 574-587. https://doi.org/10.1037/a0011989",
+    "short_cite": "Paluck (2009)",
+    "pages": "p. 577",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-10",
+  "category": "IDENT",
+  "scope": [
+   "heterogeneous_nonrandom_moderator"
+  ],
+  "claim": "An interaction or subgroup contrast defined by a moderator that was not randomly assigned is confounded with other traits, so its estimate must not be read as the isolated causal effect of that moderator.",
+  "observable": "Whether a reported heterogeneity/interaction is defined by a non-randomized moderator, and whether the paper flags that contrast as non-causal/confounded.",
+  "pass_condition": "The paper presents heterogeneity across a non-randomized moderator as descriptive/confounded (a bundle of correlated traits), not as the moderator's isolated causal effect.",
+  "flag_condition": "The paper interprets an interaction with a non-randomized moderator as that moderator's causal effect.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources hold that interacting treatment with a non-randomized variable reopens omitted-variable bias, so the interaction is a bundle not an isolated effect (Butler 2011a; Grossman 2018; Malesky 2012).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Heterogeneity across a non-randomized moderator must not be read as that moderator's isolated causal effect.",
+  "contributing_sources": [
+   "Butler (2011a)",
+   "Grossman (2018)",
+   "Malesky (2012)",
+   "Arceneaux (2008)",
+   "Gerber (2011)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_butler_2011a",
+    "short_cite": "Butler (2011a)",
+    "source_lines": "L337",
+    "quote": "it is important to remember that we did not randomize legislators’ characteristics, and that some",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_grossman_2018",
+    "short_cite": "Grossman (2018)",
+    "source_lines": "L127",
+    "quote": "this conditioning variable likely captures competitiveness and a bundle of factors that make a constituency competitive or mutually reinforce competitiveness.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_malesky_2012",
+    "short_cite": "Malesky (2012)",
+    "source_lines": "L163",
+    "quote": "Although our treatment is randomly assigned, Internet penetration is not, leading to the possibility that our results could be an artifact of omitted variable bias.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_butler_2011a",
+    "cite": "Daniel M. Butler & David Broockman. (2011). Do Politicians Racially Discriminate Against Constituents? A Field Experiment on State Legislators. American Journal of Political Science, 55(3), 463-477. https://doi.org/10.1111/j.1540-5907.2011.00515.x",
+    "short_cite": "Butler (2011a)",
+    "pages": "p. 478",
+    "pagination": "printed",
+    "pdf_pages": [
+     16
+    ]
+   },
+   {
+    "source_id": "field_exp_grossman_2018",
+    "cite": "Guy Grossman & Kristin Michelitch. (2018). Information Dissemination, Competitive Pressure, and Politician Performance between Elections: A Field Experiment in Uganda. American Political Science Review, 112(2), 280-301. https://doi.org/10.1017/s0003055417000648",
+    "short_cite": "Grossman (2018)",
+    "pages": "p. 290",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   },
+   {
+    "source_id": "field_exp_malesky_2012",
+    "cite": "Edmund Malesky, Paul Schuler, & Anh Tran. (2012). The Adverse Effects of Sunshine: A Field Experiment on Legislative Transparency in an Authoritarian Assembly. American Political Science Review, 106(4), 762-786. https://doi.org/10.1017/s0003055412000408",
+    "short_cite": "Malesky (2012)",
+    "pages": "p. 776",
+    "pagination": "printed",
+    "pdf_pages": [
+     15
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-11",
+  "category": "IDENT",
+  "scope": [
+   "voluntary_participation"
+  ],
+  "claim": "When subjects consent to or opt into enrollment, who participates can diverge from the target population (including through randomization-induced selection), so the paper must address selection into the experiment.",
+  "observable": "Whether the paper addresses whether the participating sample is selected relative to the population its claim targets (e.g. comparing participants and non-participants, or bounding the selection).",
+  "pass_condition": "The paper addresses participation selection (compares participants with non-participants, or explicitly reasons about how opt-in shapes the sample and estimand).",
+  "flag_condition": "The paper relies on a consenting/opt-in sample and never addresses selection into the experiment.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources show self-selection into the experiment biases the recruited sample away from the population and must be accounted for (List 2010; Harrison 2004; Cohen 2015).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper with a consenting/opt-in sample must address selection into the experiment.",
+  "contributing_sources": [
+   "List (2010)",
+   "Harrison (2004)",
+   "Cohen (2015)",
+   "Bertrand (2016)",
+   "Scacco (2018)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_list_2010",
+    "short_cite": "List (2010)",
+    "source_lines": "L419",
+    "quote": "the self selection of individuals into the field experiment needs to be accounted for.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     24
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_harrison_2004",
+    "short_cite": "Harrison (2004)",
+    "source_lines": "L74",
+    "quote": "then the observed sample will tend to look less riskaverse than the population.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_harrison_2004",
+    "cite": "Glenn W. Harrison & John A. List. (2004). Field Experiments. Journal of Economic Literature, 42(4), 1009-1055. https://doi.org/10.1257/0022051043004577",
+    "short_cite": "Harrison (2004)",
+    "pages": "p. 1017",
+    "pagination": "printed",
+    "pdf_pages": [
+     9
+    ]
+   },
+   {
+    "source_id": "field_exp_list_2010",
+    "cite": "John A. List & Imran Rasul. (2010). Field Experiments in Labor Economics. National Bureau of Economic Research. https://doi.org/10.3386/w16062",
+    "short_cite": "List (2010)",
+    "pages": "p. 23",
+    "pagination": "printed",
+    "pdf_pages": [
+     24
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-12",
+  "category": "IDENT",
+  "scope": [
+   "has_control_group"
+  ],
+  "claim": "The control arm identifies the counterfactual only if it is untreated in fact; if controls obtain substitutes for the treatment or receive spillover from it, control outcomes no longer represent no-treatment and the estimate is biased.",
+  "observable": "Whether the paper addresses that its control units could have accessed close substitutes for the treatment or received spillover from treated units.",
+  "pass_condition": "The paper addresses control-group integrity (argues or shows controls lacked access to substitutes and were not exposed to treatment spillover, or measures/bounds that contamination).",
+  "flag_condition": "The paper relies on a control arm without addressing whether controls could have obtained substitutes or received spillover.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources show control access to substitutes, or spillover onto controls, makes the control arm an improper counterfactual and biases the effect (Harrison 2004; List 2010; Ashraf 2014c).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper with a control arm must address control access to substitutes and spillover onto controls.",
+  "contributing_sources": [
+   "Harrison (2004)",
+   "List (2010)",
+   "Ashraf (2014c)",
+   "Scacco (2018)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_harrison_2004",
+    "short_cite": "Harrison (2004)",
+    "source_lines": "L221",
+    "quote": "If they are, then subjects who are placed in the control group could opt for the substitutes available outside the experimental setting.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     30
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_list_2010",
+    "short_cite": "List (2010)",
+    "source_lines": "L211",
+    "quote": "a bias that can result in significant understatement of the treatment effect.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_ashraf_2014c",
+    "short_cite": "Ashraf (2014c)",
+    "source_lines": "L391",
+    "quote": "The identifying assumption fails if, because of spillovers, the control group is not a proper counter-",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 0.938
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_ashraf_2014c",
+    "cite": "Nava Ashraf, Oriana Bandiera, & Jack, Kelsey. (2014). No Margin, No Mission? A Field Experiment on Incentives for Public Services Delivery. Digital Access to Scholarship at Harvard (DASH) (Harvard University).",
+    "short_cite": "Ashraf (2014c)",
+    "pages": "p. 14",
+    "pagination": "pdf",
+    "pdf_pages": [
+     14
+    ]
+   },
+   {
+    "source_id": "field_exp_harrison_2004",
+    "cite": "Glenn W. Harrison & John A. List. (2004). Field Experiments. Journal of Economic Literature, 42(4), 1009-1055. https://doi.org/10.1257/0022051043004577",
+    "short_cite": "Harrison (2004)",
+    "pages": "p. 1038",
+    "pagination": "printed",
+    "pdf_pages": [
+     30
+    ]
+   },
+   {
+    "source_id": "field_exp_list_2010",
+    "cite": "John A. List & Imran Rasul. (2010). Field Experiments in Labor Economics. National Bureau of Economic Research. https://doi.org/10.3386/w16062",
+    "short_cite": "List (2010)",
+    "pages": "p. 13",
+    "pagination": "printed",
+    "pdf_pages": [
+     14
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-IDENT-13",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "clarity_check": true,
+  "author_guidance": "State whether subjects were aware they were being studied or knew their assignment status, and if so, address how you rule out that awareness (Hawthorne/demand) rather than the treatment drove the measured response.",
+  "claim": "Subjects' awareness that they are being studied, or of their assignment status, can itself change behavior and contaminate the estimated effect, so the paper must address this observation/demand threat.",
+  "observable": "Whether the paper states subjects' awareness of the study/assignment and addresses whether that awareness (rather than the treatment) could have produced the measured response.",
+  "pass_condition": "The paper addresses observation/demand effects (delivered treatment covertly, argues awareness was equal across arms, or otherwise rules the artifact out), OR the design is manifestly unobtrusive/covert so that subjects were unaware they were being studied.",
+  "flag_condition": "Subjects were plausibly aware of the study or their assignment, or awareness could differ across arms or be induced by the treatment or its delivery, and the paper is silent on whether that awareness (rather than the treatment) could have produced the measured response.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources show awareness of being studied induces Hawthorne/demand artifacts that bias the estimate when unequal across arms (Gerber 2008b; Levitt 2008; Cheema 2022).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Where subjects could have been aware of the study or their assignment, the paper must address whether that awareness could have altered the outcome; a manifestly covert/unobtrusive design satisfies this.",
+  "contributing_sources": [
+   "Gerber (2008b)",
+   "Levitt (2008)",
+   "Cheema (2022)",
+   "Kleven (2011)",
+   "Gerber (2008a)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_gerber_2008b",
+    "short_cite": "Gerber (2008b)",
+    "source_lines": "L49",
+    "quote": "announced to the subjects in large, bold type that they were part of an experiment, a feature that might be expected to induce a Hawthorne effect of its own.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_levitt_2008",
+    "short_cite": "Levitt (2008)",
+    "source_lines": "L57",
+    "quote": "Hawthorne effects do not operate equally on the treatment and control group, bias is induced",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_cheema_2022",
+    "short_cite": "Cheema (2022)",
+    "source_lines": "L86",
+    "quote": "These omissions were deemed necessary to avoid the possibility of participants’ behavior and responses",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_cheema_2022",
+    "cite": "Ali Cheema, Sarah Khan, Asad Liaqat, & Shandana Khan Mohmand. (2022). Canvassing the Gatekeepers: A Field Experiment to Increase Women Voters’ Turnout in Pakistan. American Political Science Review, 117(1), 1-21. https://doi.org/10.1017/s0003055422000375",
+    "short_cite": "Cheema (2022)",
+    "pages": "p. 7",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   },
+   {
+    "source_id": "field_exp_gerber_2008b",
+    "cite": "Alan S. Gerber, Donald P. Green, & Christopher W. Larimer. (2008). Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment. American Political Science Review, 102(1), 33-48. https://doi.org/10.1017/s000305540808009x",
+    "short_cite": "Gerber (2008b)",
+    "pages": "p. 36",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "field_exp_levitt_2008",
+    "cite": "Steven D. Levitt & John A. List. (2008). Field experiments in economics: The past, the present, and the future. European Economic Review, 53(1), 1-18. https://doi.org/10.1016/j.euroecorev.2008.12.001",
+    "short_cite": "Levitt (2008)",
+    "pages": "p. 7",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-EST-01",
+  "category": "EST",
+  "scope": [
+   "stratified_or_blocked"
+  ],
+  "claim": "A design that stratified, blocked, matched, or rerandomized on covariates should carry those design variables into the analysis (strata as covariates, a dummy per matched pair); omitting them gives the wrong-size inference (overly conservative standard errors), even though the point estimate stays consistent.",
+  "observable": "Whether the estimating specification includes the stratification/block/pair indicators used in assignment.",
+  "pass_condition": "The analysis includes the stratification variables as covariates (or a dummy for each matched pair / block).",
+  "flag_condition": "The design stratified/blocked/paired on covariates but the analysis omits those design variables.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources show omitting stratification variables yields overly conservative standard errors that can hide real effects (Bruhn 2009); Malesky (2012) and Finseraas (2017) apply the same requirement.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A stratified/blocked/paired design should include its design variables in the analysis; omitting them yields wrong-size (overly conservative) inference.",
+  "contributing_sources": [
+   "Bruhn (2009)",
+   "Malesky (2012)",
+   "Finseraas (2017)",
+   "Karlan (2009a)",
+   "Karlan (2009b)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_bruhn_2009",
+    "short_cite": "Bruhn (2009)",
+    "source_lines": "L279",
+    "quote": "Kernan et al. (1999) state that results should take into account stratification by including strata as covariates in the analysis. Failure to do so results in overly conservative standard errors, which may lead a researcher to erroneously fail to reject the null hypothesis of no treatment effect.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     18
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_malesky_2012",
+    "short_cite": "Malesky (2012)",
+    "source_lines": "L127",
+    "quote": "These results are interesting, but slightly incorrect, as they do not include the stratification variables from the randomization exercise.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_finseraas_2017",
+    "short_cite": "Finseraas (2017)",
+    "source_lines": "L355",
+    "quote": "Platoon fixed effects are included since randomization occurred at the platoon",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_bruhn_2009",
+    "cite": "Miriam Bruhn & David McKenzie. (2009). In Pursuit of Balance: Randomization in Practice in Development Field Experiments. American Economic Journal Applied Economics, 1(4), 200-232. https://doi.org/10.1257/app.1.4.200",
+    "short_cite": "Bruhn (2009)",
+    "pages": "p. 217",
+    "pagination": "printed",
+    "pdf_pages": [
+     18
+    ]
+   },
+   {
+    "source_id": "field_exp_finseraas_2017",
+    "cite": "Henning Finseraas & Andreas Kotsadam. (2017). Does personal contact with ethnic minorities affect anti‐immigrant sentiments? Evidence from a field experiment. European Journal of Political Research, 56(3), 703-722. https://doi.org/10.1111/1475-6765.12199",
+    "short_cite": "Finseraas (2017)",
+    "pages": "p. 719",
+    "pagination": "printed",
+    "pdf_pages": [
+     17
+    ]
+   },
+   {
+    "source_id": "field_exp_malesky_2012",
+    "cite": "Edmund Malesky, Paul Schuler, & Anh Tran. (2012). The Adverse Effects of Sunshine: A Field Experiment on Legislative Transparency in an Authoritarian Assembly. American Political Science Review, 106(4), 762-786. https://doi.org/10.1017/s0003055412000408",
+    "short_cite": "Malesky (2012)",
+    "pages": "p. 773",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-EST-02",
+  "category": "EST",
+  "scope": [
+   "randomized_experiment"
+  ],
+  "claim": "Under valid randomization, analysis covariates should be chosen for their expected relation to the outcome, not selected because a baseline difference was statistically significant; picking controls off baseline significance tests is a misuse.",
+  "observable": "Whether the paper selects its analysis controls on the basis of statistically significant baseline imbalances.",
+  "pass_condition": "The paper does not choose controls from baseline significance tests (it adjusts for pre-specified outcome-predictive covariates regardless of imbalance significance, or its control choice is not driven by balance p-values).",
+  "flag_condition": "The paper adds or drops controls specifically because a baseline covariate showed a statistically significant difference across arms.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "LOW",
+  "severity_basis": "Source (methods paper Bruhn 2009) shows imbalance relevance turns on the covariate's outcome correlation, not on the significance of the imbalance; single-source, flagged for the verifier.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Controls must not be selected on the basis of statistically significant baseline differences.",
+  "contributing_sources": [
+   "Bruhn (2009)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_bruhn_2009",
+    "short_cite": "Bruhn (2009)",
+    "source_lines": "L440",
+    "quote": "In the ex post analysis, do not automatically control for baseline variables that show a statistically significant difference in means.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     31
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_bruhn_2009",
+    "short_cite": "Bruhn (2009)",
+    "source_lines": "L388",
+    "quote": "a small imbalance in a variable highly correlated with the outcome of interest can be far more important than a large and significant imbalance for a variable uncorrelated with the variable of interest.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     27
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_bruhn_2009",
+    "cite": "Miriam Bruhn & David McKenzie. (2009). In Pursuit of Balance: Randomization in Practice in Development Field Experiments. American Economic Journal Applied Economics, 1(4), 200-232. https://doi.org/10.1257/app.1.4.200",
+    "short_cite": "Bruhn (2009)",
+    "pages": "pp. 226, 230",
+    "pagination": "printed",
+    "pdf_pages": [
+     27,
+     31
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "clustered_data"
+  ],
+  "claim": "When treatment is assigned to clusters or units contribute multiple correlated observations, standard errors must account for that within-cluster/within-unit correlation rather than treating observations as independent.",
+  "observable": "The stated inference method for the reported standard errors relative to the level of clustering / repeated observation.",
+  "pass_condition": "The paper reports inference that accounts for the correlation (standard errors clustered at the assignment level, a random-effects/GEE model, or aggregation to the independent unit).",
+  "flag_condition": "The paper has clustered assignment or repeated observations per unit but reports standard errors that treat the correlated observations as independent.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources uniformly require standard errors to be adjusted for within-cluster/within-unit correlation, else inference is invalid (Olken 2005; Gerber 2008a; Fearon 2009; Cohen 2015).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Clustered or repeated-observation designs must report correlation-adjusted standard errors.",
+  "contributing_sources": [
+   "Olken (2005)",
+   "Gerber (2008a)",
+   "Fearon (2009)",
+   "Cohen (2015)",
+   "Finseraas (2017)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_olken_2005",
+    "short_cite": "Olken (2005)",
+    "source_lines": "L482",
+    "quote": "errors are adjusted to allow for correlation within subdistricts.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     22
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_gerber_2008a",
+    "short_cite": "Gerber (2008a)",
+    "source_lines": "L82",
+    "quote": "proper estimation of the standard errors requires a correction for the possibility that individuals within each household share unobserved characteristics",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_fearon_2009",
+    "short_cite": "Fearon (2009)",
+    "source_lines": "L56",
+    "quote": "standard errors are clustered at the level of communities to take account of the fact that observations are not independent within communities.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_cohen_2015",
+    "short_cite": "Cohen (2015)",
+    "source_lines": "L118",
+    "quote": "we include all concurrent first episodes, and therefore cluster the standard errors in all illness episode regressions at the household level",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     19
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_cohen_2015",
+    "cite": "Jessica Cohen, Pascaline Dupas, & Simone Schaner. (2015). Price Subsidies, Diagnostic Tests, and Targeting of Malaria Treatment: Evidence from a Randomized Controlled Trial. American Economic Review, 105(2), 609-645. https://doi.org/10.1257/aer.20130267",
+    "short_cite": "Cohen (2015)",
+    "pages": "p. 627",
+    "pagination": "printed",
+    "pdf_pages": [
+     19
+    ]
+   },
+   {
+    "source_id": "field_exp_fearon_2009",
+    "cite": "James D. Fearon, Macartan Humphreys, & Jeremy M. Weinstein. (2009). Development Assistance, Institution Building, and Social Cohesion after Civil War: Evidence from a Field Experiment in Liberia. SSRN Electronic Journal. https://doi.org/10.2139/ssrn.1517941",
+    "short_cite": "Fearon (2009)",
+    "pages": "p. 8",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   },
+   {
+    "source_id": "field_exp_gerber_2008a",
+    "cite": "Alan S. Gerber, Donald P. Green, & Christopher W. Larimer. (2008). Social Pressure and Voter Turnout: Evidence from a Large-Scale Field Experiment. American Political Science Review, 102(1), 33-48. https://doi.org/10.1017/s000305540808009x",
+    "short_cite": "Gerber (2008a)",
+    "pages": "p. 39",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   },
+   {
+    "source_id": "field_exp_olken_2005",
+    "cite": "Benjamin Olken. (2005). Monitoring Corruption: Evidence from a Field Experiment in Indonesia. National Bureau of Economic Research. https://doi.org/10.3386/w11753",
+    "short_cite": "Olken (2005)",
+    "pages": "p. 20",
+    "pagination": "printed",
+    "pdf_pages": [
+     22
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "multiple_outcomes"
+  ],
+  "claim": "When many outcomes or subgroups are tested, some will reach significance by chance, so the paper must either adjust significance for multiplicity or pre-specify the tests and confine confirmatory claims to them.",
+  "observable": "Whether the paper adjusts its significance threshold for the number of tests (or pre-specifies the primary tests) versus reading isolated significant results at face value.",
+  "pass_condition": "The paper applies a multiplicity adjustment (e.g. Bonferroni or false-discovery-rate) OR pre-specifies its primary tests and labels the rest as exploratory.",
+  "flag_condition": "The paper tests two or more outcomes/subgroups and interprets isolated significant results without any multiplicity adjustment or pre-specification.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources warn that with many coefficients some are significant by chance and that thresholds should be adjusted or hypotheses pre-specified (Finseraas 2017; Blake 2014; Fearon 2009).",
+  "prevalence_aggravator": null,
+  "threshold": {
+   "cutoff": 2,
+   "border_band": [
+    2,
+    2
+   ],
+   "provenance": "rule_of_thumb",
+   "band_rule": "With exactly two tested outcomes/subgroups the concern is borderline: PASS if the paper pre-specifies its primary outcome; otherwise borderline flag."
+  },
+  "coder_decidable": true,
+  "requirement_statement": "A paper testing multiple outcomes/subgroups must adjust for multiplicity or pre-specify its confirmatory tests.",
+  "contributing_sources": [
+   "Finseraas (2017)",
+   "Blake (2014)",
+   "Fearon (2009)",
+   "Blake (2015)",
+   "Butler (2011a)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_finseraas_2017",
+    "short_cite": "Finseraas (2017)",
+    "source_lines": "L802-806",
+    "quote": "adjust our critical levels for rejection of the null hypothesis for work ethics to be: .05/4 = .0125",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     46
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_blake_2014",
+    "short_cite": "Blake (2014)",
+    "source_lines": "L709",
+    "quote": "significant, but with 38 coefficients, at least one will be significant by chance.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     20
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_fearon_2009",
+    "short_cite": "Fearon (2009)",
+    "source_lines": "L84",
+    "quote": "In the presence of multiple outcomes, one should be cautious in placing too much confidence on estimated effects in just one or two measures.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_blake_2014",
+    "cite": "Tom Blake, Chris Nosko, & Steven Tadelis. (2014). Consumer Heterogeneity and Paid Search Effectiveness: A Large Scale Field Experiment. National Bureau of Economic Research. https://doi.org/10.3386/w20171",
+    "short_cite": "Blake (2014)",
+    "pages": "p. 18",
+    "pagination": "printed",
+    "pdf_pages": [
+     20
+    ]
+   },
+   {
+    "source_id": "field_exp_fearon_2009",
+    "cite": "James D. Fearon, Macartan Humphreys, & Jeremy M. Weinstein. (2009). Development Assistance, Institution Building, and Social Cohesion after Civil War: Evidence from a Field Experiment in Liberia. SSRN Electronic Journal. https://doi.org/10.2139/ssrn.1517941",
+    "short_cite": "Fearon (2009)",
+    "pages": "p. 12",
+    "pagination": "printed",
+    "pdf_pages": [
+     14
+    ]
+   },
+   {
+    "source_id": "field_exp_finseraas_2017",
+    "cite": "Henning Finseraas & Andreas Kotsadam. (2017). Does personal contact with ethnic minorities affect anti‐immigrant sentiments? Evidence from a field experiment. European Journal of Political Research, 56(3), 703-722. https://doi.org/10.1111/1475-6765.12199",
+    "short_cite": "Finseraas (2017)",
+    "pages": "p. 748",
+    "pagination": "printed",
+    "pdf_pages": [
+     46
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-INFER-03",
+  "category": "INFER",
+  "scope": [
+   "null_primary_result"
+  ],
+  "claim": "A non-significant primary result does not establish the absence of an effect or equivalence between conditions, so the paper must interpret its null against the study's power rather than as a demonstrated zero.",
+  "observable": "Whether the paper interprets its non-significant primary result with reference to power / detectable effect size, rather than asserting no effect or equivalence.",
+  "pass_condition": "The paper references the study's power or minimum detectable effect when reading its non-significant primary result, and does not treat non-significance as evidence of no effect or of equivalence between conditions.",
+  "flag_condition": "The paper treats a non-significant primary result as evidence of no effect or of equivalence between conditions.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state a lack of rejection does not mean no effect, since a real pattern may be undetectable at the available sample size (Bertrand 2018; Kalla 2020; Humphreys 2006).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A null primary result must be interpreted against power, not as demonstrated absence of an effect.",
+  "contributing_sources": [
+   "Bertrand (2018)",
+   "Kalla (2020)",
+   "Humphreys (2006)",
+   "Bertrand (2016)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_bertrand_2018",
+    "short_cite": "Bertrand (2018)",
+    "source_lines": "L187",
+    "quote": "Of course, a lack of a rejection does not mean there is no underlying pattern in the betweenname variation in callbacks that might have been detectable with larger sample sizes.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     19
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_kalla_2020",
+    "short_cite": "Kalla (2020)",
+    "source_lines": "L662",
+    "quote": "cannot rule out the possibility of meaningful differences between the conditions.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     26
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_humphreys_2006",
+    "short_cite": "Humphreys (2006)",
+    "source_lines": "L140",
+    "quote": "Note that the absence of a difference is not evidence for the absence of leader effects, since individual leaders may exercise influence in opposing directions",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     20
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_bertrand_2018",
+    "cite": "Marianne Bertrand & Sendhil Mullainathan. (2018). Are Emily and Greg More Employable Than Lakisha and Jamal?. The Inequality Reader, 254-259. https://doi.org/10.4324/9780429494468-28",
+    "short_cite": "Bertrand (2018)",
+    "pages": "p. 272",
+    "pagination": "printed",
+    "pdf_pages": [
+     19
+    ]
+   },
+   {
+    "source_id": "field_exp_humphreys_2006",
+    "cite": "Macartan Humphreys, William A. Masters, & Martin Sandbu. (2006). The Role of Leaders in Democratic Deliberations: Results from a Field Experiment in São Tomé and Príncipe. World Politics, 58(4), 583-622. https://doi.org/10.1353/wp.2007.0008",
+    "short_cite": "Humphreys (2006)",
+    "pages": "p. 601",
+    "pagination": "printed",
+    "pdf_pages": [
+     20
+    ]
+   },
+   {
+    "source_id": "field_exp_kalla_2020",
+    "cite": "Joshua Kalla & David Broockman. (2020). Reducing Exclusionary Attitudes through Interpersonal Conversation: Evidence from Three Field Experiments. American Political Science Review, 114(2), 410-425. https://doi.org/10.1017/s0003055419000923",
+    "short_cite": "Kalla (2020)",
+    "pages": "p. 435",
+    "pagination": "printed",
+    "pdf_pages": [
+     26
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-ROBUST-01",
+  "category": "ROBUST",
+  "scope": [
+   "structural_model"
+  ],
+  "claim": "A structural/parametric model's estimates depend on its parametric and distributional assumptions, so a paper using one for counterfactual or policy claims must report sensitivity analysis of those assumptions.",
+  "observable": "Whether the paper reports how its structural estimates respond to varying the key parametric/distributional/functional-form assumptions.",
+  "pass_condition": "The paper reports sensitivity analysis showing how the structural estimates move under alternative parametric or distributional assumptions.",
+  "flag_condition": "The paper draws counterfactual/policy conclusions from a structural model without examining sensitivity to its assumptions.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources require systematic sensitivity analysis of structural parameters because the results hinge on parametric and distributional assumptions (Harrison 2004; DellaVigna 2016).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A structural model used for counterfactual claims must report sensitivity to its assumptions.",
+  "contributing_sources": [
+   "Harrison (2004)",
+   "DellaVigna (2016)",
+   "Ludwig (2011)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_harrison_2004",
+    "short_cite": "Harrison (2004)",
+    "source_lines": "L61",
+    "quote": "yields structural parameters that are wellsuited for ex ante policy simulation, provided one undertakes systematic sensitivity analysis of those parameters.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_dellavigna_2016",
+    "short_cite": "DellaVigna (2016)",
+    "source_lines": "L222",
+    "quote": "as in any structural paper, the value depends on the parametric and distributional assumptions",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     27
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_dellavigna_2016",
+    "cite": "Stefano DellaVigna, John A. List, Ulrike Malmendier, & Gautam Rao. (2016). Voting to Tell Others. The Review of Economic Studies, 84(1), 143-181. https://doi.org/10.1093/restud/rdw056",
+    "short_cite": "DellaVigna (2016)",
+    "pages": "p. 168",
+    "pagination": "printed",
+    "pdf_pages": [
+     27
+    ]
+   },
+   {
+    "source_id": "field_exp_harrison_2004",
+    "cite": "Glenn W. Harrison & John A. List. (2004). Field Experiments. Journal of Economic Literature, 42(4), 1009-1055. https://doi.org/10.1257/0022051043004577",
+    "short_cite": "Harrison (2004)",
+    "pages": "p. 1016",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-REPORT-01",
+  "category": "REPORT",
+  "scope": [
+   "all"
+  ],
+  "clarity_check": true,
+  "author_guidance": "State the population, setting, and range over which your estimate is meant to generalize, and name the features (selected sample, narrow treatment range, one channel/context, partial-equilibrium scope) that bound extrapolation beyond it.",
+  "claim": "An experimental estimate is local to its sample, setting, and induced range of variation, so the paper must state the scope conditions that bound generalization of its finding.",
+  "observable": "Whether the paper states the limits on generalizing its estimate (sample/setting selectivity, the induced range of treatment, single-channel or partial-equilibrium scope).",
+  "pass_condition": "The paper explicitly states the population/setting/range over which its estimate is claimed to hold and names what bounds extrapolation beyond it.",
+  "flag_condition": "The paper generalizes its finding without stating the scope conditions that limit that generalization.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources hold that estimates are intrinsically local to the induced variation/eligible sample and identify only partial-equilibrium effects, so scope limits must be stated (Ashraf 2010; Tarozzi 2014; Kalla 2017).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must state the scope conditions bounding generalization of its estimate.",
+  "contributing_sources": [
+   "Ashraf (2010)",
+   "Tarozzi (2014)",
+   "Kalla (2017)",
+   "Bertrand (2016)",
+   "Nickerson (2008)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_ashraf_2010",
+    "short_cite": "Ashraf (2010)",
+    "source_lines": "L212",
+    "quote": "they are intrinsically local to the price variation we induce in the experiment",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     23
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_tarozzi_2014",
+    "short_cite": "Tarozzi (2014)",
+    "source_lines": "L196",
+    "quote": "our study does not identify the impacts of introducing sales of ITNs on credit in a population with no access to BISWA’s credit network.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     30
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_kalla_2017",
+    "short_cite": "Kalla (2017)",
+    "source_lines": "L142",
+    "quote": "field experiments identify partial and not general equilibrium effects",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_ashraf_2010",
+    "cite": "Nava Ashraf, James Berry, & Jesse M. Shapiro. (2010). Can Higher Prices Stimulate Product Use? Evidence from a Field Experiment in Zambia. American Economic Review, 100(5), 2383-2413. https://doi.org/10.1257/aer.100.5.2383",
+    "short_cite": "Ashraf (2010)",
+    "pages": "p. 2405",
+    "pagination": "printed",
+    "pdf_pages": [
+     23
+    ]
+   },
+   {
+    "source_id": "field_exp_kalla_2017",
+    "cite": "Joshua Kalla & David Broockman. (2017). The Minimal Persuasive Effects of Campaign Contact in General Elections: Evidence from 49 Field Experiments. American Political Science Review, 112(1), 148-166. https://doi.org/10.1017/s0003055417000363",
+    "short_cite": "Kalla (2017)",
+    "pages": "p. 153",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   },
+   {
+    "source_id": "field_exp_tarozzi_2014",
+    "cite": "Alessandro Tarozzi, Aprajit Mahajan, Brian G. Blackburn, Dan Kopf, Lakshmi Krishnan, & Joanne Yoong. (2014). Micro-Loans, Insecticide-Treated Bednets, and Malaria: Evidence from a Randomized Controlled Trial in Orissa, India. American Economic Review, 104(7), 1909-1941. https://doi.org/10.1257/aer.104.7.1909",
+    "short_cite": "Tarozzi (2014)",
+    "pages": "p. 1938",
+    "pagination": "printed",
+    "pdf_pages": [
+     30
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-REPORT-02",
+  "category": "REPORT",
+  "scope": [
+   "imperfect_compliance"
+  ],
+  "claim": "Interpreting an intent-to-treat estimate and recovering the effect on the treated both require knowing what share of assigned units were actually treated, measured per arm, so the paper must report the compliance/contact rate.",
+  "observable": "Whether the paper reports the share of assigned-to-treatment units that actually received treatment, for each relevant arm.",
+  "pass_condition": "The paper reports the compliance/contact rate for the treatment arm(s).",
+  "flag_condition": "The paper has imperfect compliance but does not report the rate at which assigned units were actually treated.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources make the per-arm contact/compliance rate necessary to estimate the effect of contact and to power the study (Nickerson 2006; Broockman 2017).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper with imperfect compliance must report the per-arm compliance/contact rate.",
+  "contributing_sources": [
+   "Nickerson (2006)",
+   "Broockman (2017)",
+   "Wantchekon (2003a)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_nickerson_2006",
+    "short_cite": "Nickerson (2006)",
+    "source_lines": "L24",
+    "quote": "So long as information about the rate at which subjects assigned to the treatment group are actually reached by the campaign for each technology is available, the effect of contact can be accurately estimated.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_broockman_2017",
+    "short_cite": "Broockman (2017)",
+    "source_lines": "L29",
+    "quote": "Failure to treat arises when some treatment group subjects are not successfully administered treatment. It increases necessary sample sizes",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_broockman_2017",
+    "cite": "David Broockman, Joshua Kalla, & Jasjeet S. Sekhon. (2017). The Design of Field Experiments With Survey Outcomes: A Framework for Selecting More Efficient, Robust, and Ethical Designs. Political Analysis, 25(4), 435-464. https://doi.org/10.1017/pan.2017.27",
+    "short_cite": "Broockman (2017)",
+    "pages": "p. 438",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "field_exp_nickerson_2006",
+    "cite": "David W. Nickerson, Ryan D. Friedrichs, & David C. King. (2006). Partisan Mobilization Campaigns in the Field: Results from a Statewide Turnout Experiment in Michigan. Political Research Quarterly, 59(1), 85-97. https://doi.org/10.1177/106591290605900108",
+    "short_cite": "Nickerson (2006)",
+    "pages": "p. 87",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-DATA-01",
+  "category": "DATA",
+  "scope": [
+   "self_report_sensitive"
+  ],
+  "claim": "Self-reports of sensitive or socially-objectionable behavior are systematically biased, so a paper whose outcome is of this kind must use an objective/behavioral measure or acknowledge the reporting-bias threat.",
+  "observable": "Whether the paper uses an objective/behavioral measure for its sensitive outcome, or explicitly acknowledges the self-report bias.",
+  "pass_condition": "The paper measures the sensitive outcome objectively/behaviorally, or explicitly acknowledges and addresses the reporting-bias threat.",
+  "flag_condition": "The paper's outcome is self-reported sensitive behavior/attitudes and it neither uses an objective measure nor acknowledges the reporting bias.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources hold that survey self-reports of morally objectionable or sensitive behavior are unreliable/biased and motivate behavioral measurement (Wantchekon 2003a; Scacco 2018; Humphreys 2006).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A sensitive self-reported outcome must be measured objectively or its reporting bias acknowledged.",
+  "contributing_sources": [
+   "Wantchekon (2003a)",
+   "Scacco (2018)",
+   "Humphreys (2006)",
+   "Cheema (2022)",
+   "Niven (2006)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_wantchekon_2003a",
+    "short_cite": "Wantchekon (2003a)",
+    "source_lines": "L17",
+    "quote": "survey methods do not provide reliable and unbiased measures of clientelism because it (clientelism) is perceived by most politicians and voters as morally objectionable",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_scacco_2018",
+    "short_cite": "Scacco (2018)",
+    "source_lines": "L31",
+    "quote": "participant awareness of the purpose of the study can result in inaccurate self-reporting about prejudice",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_humphreys_2006",
+    "short_cite": "Humphreys (2006)",
+    "source_lines": "L43",
+    "quote": "we know from other contexts that expressed opinions are often strongly influenced by perceptions of what those collecting them want to hear",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_humphreys_2006",
+    "cite": "Macartan Humphreys, William A. Masters, & Martin Sandbu. (2006). The Role of Leaders in Democratic Deliberations: Results from a Field Experiment in São Tomé and Príncipe. World Politics, 58(4), 583-622. https://doi.org/10.1353/wp.2007.0008",
+    "short_cite": "Humphreys (2006)",
+    "pages": "p. 587",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   },
+   {
+    "source_id": "field_exp_scacco_2018",
+    "cite": "Alexandra Scacco & Shana S. Warren. (2018). Can Social Contact Reduce Prejudice and Discrimination? Evidence from a Field Experiment in Nigeria. American Political Science Review, 112(3), 654-677. https://doi.org/10.1017/s0003055418000151",
+    "short_cite": "Scacco (2018)",
+    "pages": "p. 655",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "field_exp_wantchekon_2003a",
+    "cite": "Léonard Wantchekon. (2003). Clientelism and Voting Behavior: Evidence from a Field Experiment in Benin. World Politics, 55(3), 399-422. https://doi.org/10.1353/wp.2003.0018",
+    "short_cite": "Wantchekon (2003a)",
+    "pages": "p. 402",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "FIELD_EXP-DATA-02",
+  "category": "DATA",
+  "scope": [
+   "proxy_outcome"
+  ],
+  "claim": "When the outcome is a proxy or indirect measure of the construct of interest, the paper must state the direction of the resulting bias or that the estimate is a bound.",
+  "observable": "Whether, for a proxy/indirect outcome, the paper states the sign of the bias it induces or characterizes the estimate as a lower/upper bound.",
+  "pass_condition": "The paper states the direction of bias implied by the proxy outcome, or characterizes the estimate as a lower or upper bound.",
+  "flag_condition": "The paper uses a proxy/indirect outcome and draws conclusions without stating the direction of bias or that the estimate is a bound.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources (Fehr, Kleven, Ashraf 2014c) each sign the direction of bias or characterize the estimate as a bound for their own proxy/trace outcome; the requirement generalizes that self-applied practice to any outcome the paper itself frames as a proxy or indirect measure.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "When the outcome is a proxy or indirect measure of the construct of interest, the paper must state the direction of the resulting bias or that the estimate is a bound.",
+  "contributing_sources": [
+   "Ashraf (2014c)",
+   "Bertrand (2004)",
+   "Fehr (2007)",
+   "Heller (2016)",
+   "Kleven (2011)",
+   "Regan (2017)",
+   "Tarozzi (2014)"
+  ],
+  "evidence": [
+   {
+    "source_id": "field_exp_fehr_2007",
+    "short_cite": "Fehr (2007)",
+    "source_lines": "L131",
+    "quote": "our measure of the elasticity of labor supply with regard to a temporary wage increase underestimates the true elasticity because we use revenues per messenger as a proxy for labor supply per messenger.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_kleven_2011",
+    "short_cite": "Kleven (2011)",
+    "source_lines": "L87",
+    "quote": "Despite the large amount of resources spent on these audits, they are unlikely to uncover all tax evasion for all taxpayers and our results therefore provide lower bounds on total evasion.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "field_exp_ashraf_2014c",
+    "short_cite": "Ashraf (2014c)",
+    "source_lines": "L200",
+    "quote": "it is likely to be biased upward, as every pack the sales representative",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "field_exp_ashraf_2014c",
+    "cite": "Nava Ashraf, Oriana Bandiera, & Jack, Kelsey. (2014). No Margin, No Mission? A Field Experiment on Incentives for Public Services Delivery. Digital Access to Scholarship at Harvard (DASH) (Harvard University).",
+    "short_cite": "Ashraf (2014c)",
+    "pages": "p. 8",
+    "pagination": "pdf",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "field_exp_fehr_2007",
+    "cite": "Ernst Fehr & Lorenz Göette. (2007). Do Workers Work More if Wages Are High? Evidence from a Randomized Field Experiment. American Economic Review, 97(1), 298-317. https://doi.org/10.1257/aer.97.1.298",
+    "short_cite": "Fehr (2007)",
+    "pages": "p. 309",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   },
+   {
+    "source_id": "field_exp_kleven_2011",
+    "cite": "Henrik Kleven, Martin Knudsen, Claus Thustrup Kreiner, Søren Pedersen, & Emmanuel Saez. (2011). Unwilling or Unable to Cheat? Evidence From a Tax Audit Experiment in Denmark. Econometrica, 79(3), 651-692. https://doi.org/10.3982/ecta9113",
+    "short_cite": "Kleven (2011)",
+    "pages": "p. 662",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 7,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

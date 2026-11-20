@@ -1,0 +1,82 @@
+{
+ "DID-IDENT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 5
+ },
+ "DID-IDENT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "DID-IDENT-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "DID-IDENT-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "DID-IDENT-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "DID-EST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 12
+ },
+ "DID-EST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 6
+ },
+ "DID-EST-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "DID-INFER-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "DID-INFER-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 4
+ },
+ "DID-ROBUST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 12
+ },
+ "DID-ROBUST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 4
+ },
+ "DID-ROBUST-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "DID-ROBUST-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "DID-REPORT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "DID-DATA-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ }
+}

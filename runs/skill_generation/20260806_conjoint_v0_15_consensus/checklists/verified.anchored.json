@@ -1,0 +1,1219 @@
+[
+ {
+  "_module": "CONJOINT",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "all",
+   "restricted_randomization",
+   "subgroup_comparison",
+   "repeated_tasks",
+   "data_driven_selection",
+   "population_target",
+   "fractional_factorial"
+  ],
+  "_scope_definitions": {
+   "all": "Any study that fields a conjoint or factorial survey experiment and reports attribute-level effects (AMCEs, marginal means, or equivalent regression coefficients on attribute levels).",
+   "restricted_randomization": "Fires when the paper states it restricted, excluded, or linked attribute combinations (conditional / non-independent randomization). Does NOT fire when the paper states every attribute was assigned fully independently with no combination excluded.",
+   "subgroup_comparison": "Fires when the paper states it estimates attribute effects separately for two or more respondent subgroups (conditional AMCEs) and compares them. Does NOT fire for a paper reporting only pooled AMCEs, nor for a robustness subset of tasks/profiles (a respondent subgroup is required).",
+   "repeated_tasks": "Fires when the paper states each respondent completed more than one choice or rating task. Does NOT fire for a design that assigns one task per respondent, and is not fired merely by a large respondent count.",
+   "data_driven_selection": "Fires when the paper states it uses a data-driven procedure (regularization, machine learning, model/level selection) to collapse factor levels or to define respondent subgroups that are then used in estimation. Does NOT fire for pre-specified subgroups or a standard F-test for interactions.",
+   "population_target": "Fires when the paper states its AMCE is meant to represent a real-world or population profile distribution that differs from the (typically uniform / independent) distribution used in its own randomization. Does NOT fire for a paper that interprets its effects only with respect to its own experimental randomization distribution.",
+   "fractional_factorial": "Fires when the paper states it uses a fractional factorial, D-optimal, or orthogonal-array design (a chosen subset of profile combinations). Does NOT fire when the paper states it assigned each attribute by independent per-attribute randomization."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 14 concepts in >=2 draws; dropped 6 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "CONJOINT-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "Nonparametric identification of attribute effects requires that each attribute's level be assigned to profiles at random and independently (or conditionally independently) of the other attributes; the paper must state that such randomization was used.",
+  "observable": "Whether the paper reports that attribute levels were randomly assigned, and (conditionally) independently of one another, across profiles.",
+  "pass_condition": "The paper states that attribute levels were randomly assigned and that the assignment was independent (or conditionally independent) of the other attributes.",
+  "flag_condition": "The paper reports attribute-level effects without stating that attribute levels were randomly and (conditionally) independently assigned.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Randomization is the sole basis for nonparametric identification of the AMCE (Teele 2018; Hainmueller 2014; Bansak 2022); without it the reported effects carry no causal warrant.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A conjoint paper must state that its attribute levels were randomly and (conditionally) independently assigned across profiles.",
+  "contributing_sources": [
+   "conjoint_teele_2018",
+   "conjoint_hainmueller_2014",
+   "conjoint_bansak_2022",
+   "conjoint_hainmueller_2013",
+   "conjoint_horiuchi_2018",
+   "conjoint_hainmueller_2015"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_teele_2018",
+    "short_cite": "Teele (2018)",
+    "source_lines": "L76",
+    "quote": "We are able to estimate this simple linear regression because each attribute was randomly assigned independently of all other attributes.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_hainmueller_2014",
+    "short_cite": "Hainmueller (2014)",
+    "source_lines": "L90",
+    "quote": "AMCE is nonparametrically identified given the conditionally independent randomization of the attributes and can be easily estimated using a regression of the binary outcome variable",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_bansak_2022",
+    "short_cite": "Bansak (2022)",
+    "source_lines": "L139",
+    "quote": "by virtue of attribute randomization, the AMCE can be nonparametrically identified via a simple difference in means, much like a standard experiment with a single treatment.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_bansak_2022",
+    "cite": "Kirk Bansak, Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2022). Using Conjoint Experiments to Analyze Election Outcomes: The Essential Role of the Average Marginal Component Effect. Political Analysis, 31(4), 500-518. https://doi.org/10.1017/pan.2022.16",
+    "short_cite": "Bansak (2022)",
+    "pages": "p. 514",
+    "pagination": "printed",
+    "pdf_pages": [
+     15
+    ]
+   },
+   {
+    "source_id": "conjoint_hainmueller_2014",
+    "cite": "Jens Hainmueller & Daniel J. Hopkins. (2014). The Hidden American Immigration Consensus: A Conjoint Analysis of Attitudes toward Immigrants. American Journal of Political Science, 59(3), 529-548. https://doi.org/10.1111/ajps.12138",
+    "short_cite": "Hainmueller (2014)",
+    "pages": "p. 537",
+    "pagination": "printed",
+    "pdf_pages": [
+     9
+    ]
+   },
+   {
+    "source_id": "conjoint_teele_2018",
+    "cite": "Dawn Langan Teele, Joshua Kalla, & Frances Rosenbluth. (2018). The Ties That Double Bind: Social Roles and Women's Underrepresentation in Politics. American Political Science Review, 112(3), 525-541. https://doi.org/10.1017/s0003055418000217",
+    "short_cite": "Teele (2018)",
+    "pages": "p. 530",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 6,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "restricted_randomization"
+  ],
+  "claim": "When the design restricts or links attribute combinations, the effect for the affected attributes is defined only over the permitted strata of the linked attribute, and causal quantities involving excluded combinations are not identified; results must be reported and read accordingly.",
+  "observable": "Whether, given a stated restriction on attribute combinations, the paper limits or qualifies the affected effects to the permitted strata rather than reporting them over the full profile space.",
+  "pass_condition": "For attributes touched by the restriction, the paper reports the effect as an average over the permitted strata of the linked attribute, or states that excluded combinations cannot be analyzed without added assumptions.",
+  "flag_condition": "The paper reports AMCEs for restricted attributes as if they ranged over the full profile space, with no acknowledgement that the restriction confines the estimand to permitted strata.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources show excluded combinations render the corresponding causal quantities unidentifiable and confine the AMCE to a subset of linked values (Hainmueller 2013; Hainmueller 2014).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper that restricts attribute combinations must confine the affected effects to the permitted strata and not present them as spanning the full profile space.",
+  "contributing_sources": [
+   "Hainmueller (2013)",
+   "Hainmueller (2014)",
+   "Cuesta (2021)"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L74",
+    "quote": "it will be impossible to analyze causal quantities involving these combinations (unless we impose additional assumptions such as constant treatment effects)",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L279",
+    "quote": "in the presence of restrictions, the AMCE is only defined for a subset of the linked attribute values",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     20
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_hainmueller_2014",
+    "short_cite": "Hainmueller (2014)",
+    "source_lines": "L100",
+    "quote": "the AMCEs for these linked attributes need to be estimated as the weighted average of the effect of a specific attribute averaged over the valid strata of the linked attribute",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_hainmueller_2013",
+    "cite": "Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2013). Causal Inference in Conjoint Analysis: Understanding Multidimensional Choices via Stated Preference Experiments. Political Analysis, 22(1), 1-30. https://doi.org/10.1093/pan/mpt024",
+    "short_cite": "Hainmueller (2013)",
+    "pages": "pp. 9, 20",
+    "pagination": "printed",
+    "pdf_pages": [
+     9,
+     20
+    ]
+   },
+   {
+    "source_id": "conjoint_hainmueller_2014",
+    "cite": "Jens Hainmueller & Daniel J. Hopkins. (2014). The Hidden American Immigration Consensus: A Conjoint Analysis of Attitudes toward Immigrants. American Journal of Political Science, 59(3), 529-548. https://doi.org/10.1111/ajps.12138",
+    "short_cite": "Hainmueller (2014)",
+    "pages": "p. 537",
+    "pagination": "printed",
+    "pdf_pages": [
+     9
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-IDENT-03",
+  "category": "IDENT",
+  "scope": [
+   "subgroup_comparison"
+  ],
+  "claim": "Respondent characteristics used to define subgroups or condition attribute effects must be measured pre-treatment, or the paper must argue that the treatment cannot have affected them, to avoid post-treatment bias.",
+  "observable": "Whether the paper reports that the conditioning/moderator variable was measured before the conjoint tasks, or explicitly argues the treatment cannot have affected it.",
+  "pass_condition": "The paper reports pre-treatment measurement of the conditioning variable, or gives a stated argument that the treatment cannot affect it.",
+  "flag_condition": "The paper conditions attribute effects on a respondent characteristic without stating it is pre-treatment or arguing it is unaffected by the treatment.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Conditioning on a treatment-affected characteristic introduces post-treatment bias (Hainmueller 2013); post-treatment measurement is defensible only when the treatment plausibly cannot affect the variable (Teele 2018).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Variables used to condition or subset attribute effects must be established as pre-treatment or argued to be unaffected by the treatment.",
+  "contributing_sources": [
+   "conjoint_hainmueller_2013",
+   "conjoint_teele_2018",
+   "conjoint_horiuchi_2021",
+   "conjoint_hainmueller_2014"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L142",
+    "quote": "the respondent characteristics must not be affected by the treatments",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_teele_2018",
+    "short_cite": "Teele (2018)",
+    "source_lines": "L109",
+    "quote": "we measured gender post-treatment, after the conjoint tasks. We find it unlikely that gender could plausibly be affected by the conjoint experiments and therefore unlikely that this would introduce post-treatment bias",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_hainmueller_2013",
+    "cite": "Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2013). Causal Inference in Conjoint Analysis: Understanding Multidimensional Choices via Stated Preference Experiments. Political Analysis, 22(1), 1-30. https://doi.org/10.1093/pan/mpt024",
+    "short_cite": "Hainmueller (2013)",
+    "pages": "p. 13",
+    "pagination": "printed",
+    "pdf_pages": [
+     13
+    ]
+   },
+   {
+    "source_id": "conjoint_teele_2018",
+    "cite": "Dawn Langan Teele, Joshua Kalla, & Frances Rosenbluth. (2018). The Ties That Double Bind: Social Roles and Women's Underrepresentation in Politics. American Political Science Review, 112(3), 525-541. https://doi.org/10.1017/s0003055418000217",
+    "short_cite": "Teele (2018)",
+    "pages": "p. 531",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-EST-01",
+  "category": "EST",
+  "scope": [
+   "all"
+  ],
+  "claim": "The paper should name the substantive causal quantity of interest and tie it to a well-defined estimand, rather than reporting conjoint estimates without specifying what causal quantity they represent.",
+  "observable": "Whether the paper names the causal quantity or estimand its conjoint estimates are meant to recover (e.g., the AMCE for a stated attribute contrast).",
+  "pass_condition": "The paper names the causal quantity / estimand its conjoint estimates are meant to recover.",
+  "flag_condition": "The paper reports conjoint estimates without stating what causal quantity or estimand they are meant to represent.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Bansak (2022) holds that design and estimand must be chosen together and that conjoint data cannot recover an unspecified quantity.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A conjoint paper must name the causal quantity of interest it maps to a well-defined estimand.",
+  "contributing_sources": [
+   "conjoint_bansak_2022"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_bansak_2022",
+    "short_cite": "Bansak (2022)",
+    "source_lines": "L123",
+    "quote": "it is imperative to clarify one’s substantive question of interest and map it to a well-defined estimand in terms of potential outcomes.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_bansak_2022",
+    "short_cite": "Bansak (2022)",
+    "source_lines": "L20",
+    "quote": "research designs and quantities of interest should go hand in hand. As a corollary of this point, one cannot and should not expect the AMCE to provide answers to all research questions, nor data from a conjoint design to allow for recovery of any quantity of interest.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_bansak_2022",
+    "cite": "Kirk Bansak, Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2022). Using Conjoint Experiments to Analyze Election Outcomes: The Essential Role of the Average Marginal Component Effect. Political Analysis, 31(4), 500-518. https://doi.org/10.1017/pan.2022.16",
+    "short_cite": "Bansak (2022)",
+    "pages": "pp. 502, 512",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     13
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-EST-02",
+  "category": "EST",
+  "scope": [
+   "all"
+  ],
+  "claim": "The AMCE aggregates the direction and intensity of preferences and does not identify the share of respondents preferring a level; the paper must not read a (positive) AMCE as a majority preference or as the fraction/proportion of respondents preferring the level.",
+  "observable": "Whether the paper claims that an AMCE shows a majority of respondents prefer a level, or reports it as the fraction/proportion of respondents (or voters) preferring a level.",
+  "pass_condition": "The paper makes no majority-preference or fraction/proportion-preferring claim on the basis of an AMCE.",
+  "flag_condition": "The paper interprets an AMCE as showing that a majority — or a stated fraction/proportion — of respondents prefer the attribute level.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "A positive AMCE can point opposite to the true majority (Abramson 2022); the divergence is a property of the estimand, not fixable by estimation.",
+  "prevalence_aggravator": "Direction and intensity of preferences are empirically correlated on most issues (Abramson 2022), so the failure mode is realistic rather than pathological.",
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper must not interpret an AMCE as a majority preference or as the fraction of respondents preferring a level.",
+  "contributing_sources": [
+   "conjoint_abramson_2022",
+   "conjoint_bansak_2022"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_abramson_2022",
+    "short_cite": "Abramson (2022)",
+    "source_lines": "L265",
+    "quote": "A positive AMCE for a particular candidate feature does not imply that the majority of respondents prefer that feature over the baseline.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_bansak_2022",
+    "short_cite": "Bansak (2022)",
+    "source_lines": "L37",
+    "quote": "the AMCE does not reflect a simple majority preference (i.e., a positive AMCE does not necessarily mean a majority of voters prefer the attribute level in question)",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_abramson_2022",
+    "short_cite": "Abramson (2022)",
+    "source_lines": "L201",
+    "quote": "we find evidence that the supporters of a given policy or issue area have a meaningfully different assessment of its importance than its opponents.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_abramson_2022",
+    "cite": "Scott F Abramson, Korhan Koçak, & Asya Magazinnik. (2022). What Do We Learn about Voter Preferences from Conjoint Experiments?. American Journal of Political Science, 66(4), 1008-1020. https://doi.org/10.1111/ajps.12714",
+    "short_cite": "Abramson (2022)",
+    "pages": "pp. 1017-1018",
+    "pagination": "printed",
+    "pdf_pages": [
+     10,
+     11
+    ]
+   },
+   {
+    "source_id": "conjoint_bansak_2022",
+    "cite": "Kirk Bansak, Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2022). Using Conjoint Experiments to Analyze Election Outcomes: The Essential Role of the Average Marginal Component Effect. Political Analysis, 31(4), 500-518. https://doi.org/10.1017/pan.2022.16",
+    "short_cite": "Bansak (2022)",
+    "pages": "p. 504",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-EST-03",
+  "category": "EST",
+  "scope": [
+   "all"
+  ],
+  "claim": "AMCE estimators do not identify an attribute's effect on the probability of winning or a candidate's electability; the paper must not present AMCEs as probabilities of winning or claims about relative electability.",
+  "observable": "Whether the paper interprets an AMCE as an effect on the probability of winning an election, the likelihood of being elected, the chance of beating a specific opponent, or the relative electability of a profile.",
+  "pass_condition": "The paper makes no probability-of-winning, beat-a-specific-opponent, or electability claim on the basis of an AMCE.",
+  "flag_condition": "The paper interprets an AMCE as an effect on the probability of winning, the likelihood of election, the chance of beating a specific baseline opponent, or the relative electability of a candidate/profile.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "AMCE estimators are not appropriate for probability-of-winning quantities (Bansak 2022); even the valid vote-share reading cannot support electability claims about specific candidates (Abramson 2022).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper must not interpret an AMCE as a probability of winning or a statement of relative electability.",
+  "contributing_sources": [
+   "conjoint_bansak_2022",
+   "conjoint_abramson_2022"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_bansak_2022",
+    "short_cite": "Bansak (2022)",
+    "source_lines": "L109",
+    "quote": "In general, estimators of the AMCE are not appropriate for estimating alternative quantities, such as the effect of attributes on the probability of winning.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_abramson_2022",
+    "short_cite": "Abramson (2022)",
+    "source_lines": "L265",
+    "quote": "It does not mean that voters are more likely to elect a candidate with that feature than candidates without it.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_bansak_2022",
+    "short_cite": "Bansak (2022)",
+    "source_lines": "L97",
+    "quote": "this property holds regardless of the structure of individual voters’ preferences. AMCEs identify vote shares irrespective of whether the intensity of voters’ preferences about individual attributes is homogeneous or heterogeneous, or whether there are interactions between candidate attributes in shaping voter preferences.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_abramson_2022",
+    "cite": "Scott F Abramson, Korhan Koçak, & Asya Magazinnik. (2022). What Do We Learn about Voter Preferences from Conjoint Experiments?. American Journal of Political Science, 66(4), 1008-1020. https://doi.org/10.1111/ajps.12714",
+    "short_cite": "Abramson (2022)",
+    "pages": "p. 1018",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   },
+   {
+    "source_id": "conjoint_bansak_2022",
+    "cite": "Kirk Bansak, Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2022). Using Conjoint Experiments to Analyze Election Outcomes: The Essential Role of the Average Marginal Component Effect. Political Analysis, 31(4), 500-518. https://doi.org/10.1017/pan.2022.16",
+    "short_cite": "Bansak (2022)",
+    "pages": "pp. 509, 511",
+    "pagination": "printed",
+    "pdf_pages": [
+     10,
+     12
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-EST-04",
+  "category": "EST",
+  "scope": [
+   "all"
+  ],
+  "claim": "Conjoint estimates recover relative attribute effects, not absolute outcome levels; a forced-choice design in particular fixes the marginal selection probability by construction, so the paper must not read AMCEs as predictions of absolute acceptance levels or of real-world aggregate outcomes.",
+  "observable": "Whether the paper reads its conjoint estimates as predicting an absolute level (e.g., an acceptance/rejection rate) or a real-world aggregate outcome (e.g., an election result).",
+  "pass_condition": "The paper interprets its estimates as relative attribute effects and does not present them as absolute levels or real-world outcome predictions.",
+  "flag_condition": "The paper interprets AMCEs as predicting an absolute outcome level or a real-world aggregate outcome.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Survey experiments predict absolute levels poorly and forced-choice designs fix the marginal selection probability by construction (Hainmueller 2015); conjoint measures stated, not revealed, preferences (Horiuchi 2018).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper must not present conjoint AMCEs as predictions of absolute outcome levels or real-world aggregate outcomes.",
+  "contributing_sources": [
+   "conjoint_hainmueller_2015",
+   "conjoint_horiuchi_2018",
+   "conjoint_bansak_2022",
+   "conjoint_eshima_2022"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_hainmueller_2015",
+    "short_cite": "Hainmueller (2015)",
+    "source_lines": "L76",
+    "quote": "the survey experiments generally do rather poorly in predicting the absolute levels of rejection rates observed in the actual referendums",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_hainmueller_2015",
+    "short_cite": "Hainmueller (2015)",
+    "source_lines": "L76",
+    "quote": "the designs that fix the unconditional rejection rate at exactly 50% by construction",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_horiuchi_2018",
+    "short_cite": "Horiuchi (2018)",
+    "source_lines": "L40",
+    "quote": "even conjoint analysis does not fully address the potential problem of using stated preferences, as opposed to revealed preferences, to study political behavior",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_hainmueller_2015",
+    "cite": "Jens Hainmueller, Dominik Hangartner, & Teppei Yamamoto. (2015). Validating vignette and conjoint survey experiments against real-world behavior. Proceedings of the National Academy of Sciences, 112(8), 2395-2400. https://doi.org/10.1073/pnas.1416587112",
+    "short_cite": "Hainmueller (2015)",
+    "pages": "p. 2399",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "conjoint_horiuchi_2018",
+    "cite": "Yusaku Horiuchi, Daniel M. Smith, & Teppei Yamamoto. (2018). Measuring Voters’ Multidimensional Policy Preferences with Conjoint Analysis: Application to Japan’s 2014 Election. Political Analysis, 26(2), 190-209. https://doi.org/10.1017/pan.2018.2",
+    "short_cite": "Horiuchi (2018)",
+    "pages": "p. 194",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-EST-05",
+  "category": "EST",
+  "scope": [
+   "subgroup_comparison"
+  ],
+  "claim": "Because conditional AMCEs depend on the arbitrary reference category, a difference in conditional AMCEs across subgroups does not equal a difference in preferences; a paper comparing subgroups must not infer subgroup preference differences from differences-in-AMCEs without a reference-invariant basis (e.g., marginal means).",
+  "observable": "Whether the paper describes a difference in preferences between respondent subgroups on the basis of a difference in their conditional AMCEs, without reporting a reference-invariant quantity such as marginal means.",
+  "pass_condition": "The paper bases any subgroup preference comparison on marginal means or another reference-invariant quantity, or makes no subgroup preference-difference claim.",
+  "flag_condition": "The paper interprets a difference (or similarity) in conditional AMCEs across subgroups as a difference (or similarity) in subgroup preferences.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Reference-category dependence gives difference-in-AMCE subgroup inferences arbitrary sign, size, and significance (Leeper 2019).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper must not read differences in conditional AMCEs across subgroups as differences in subgroup preferences.",
+  "contributing_sources": [
+   "conjoint_leeper_2019",
+   "conjoint_eshima_2022",
+   "conjoint_teele_2018",
+   "conjoint_hainmueller_2014"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_leeper_2019",
+    "short_cite": "Leeper (2019)",
+    "source_lines": "L11",
+    "quote": "using conditional AMCEs to describe the degree of subgroup agreement can be misleading as regression interactions are sensitive to the reference category used in the analysis",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_leeper_2019",
+    "short_cite": "Leeper (2019)",
+    "source_lines": "L11",
+    "quote": "This leads to inferences about subgroup differences in preferences that have arbitrary sign, size, and significance",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_leeper_2019",
+    "short_cite": "Leeper (2019)",
+    "source_lines": "L938",
+    "quote": "Always report unadjusted marginal means when attempting to provide a",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     24
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_leeper_2019",
+    "cite": "Thomas J. Leeper, Sara B. Hobolt, & James Tilley. (2019). Measuring Subgroup Preferences in Conjoint Experiments. Political Analysis, 28(2), 207-221. https://doi.org/10.1017/pan.2019.30",
+    "short_cite": "Leeper (2019)",
+    "pages": "pp. 208, 230",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     24
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "repeated_tasks"
+  ],
+  "claim": "The multiple tasks a respondent completes are dependent, so default standard errors are substantially biased; a paper with repeated tasks per respondent must report standard errors or confidence intervals that account for within-respondent clustering.",
+  "observable": "Whether the paper reports respondent-clustered standard errors, a respondent-level block bootstrap, or an equivalent within-respondent correction.",
+  "pass_condition": "The paper reports standard errors/confidence intervals clustered on the respondent, a respondent-level block bootstrap, or an equivalent adjustment for within-respondent dependence.",
+  "flag_condition": "The paper reports standard errors/confidence intervals with no adjustment for the dependence among a respondent's repeated tasks.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Default standard errors that ignore within-respondent clustering are likely substantially biased (Hainmueller 2013; Hainmueller 2014).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A repeated-task conjoint must report inference that accounts for within-respondent clustering.",
+  "contributing_sources": [
+   "conjoint_hainmueller_2013",
+   "conjoint_hainmueller_2014",
+   "conjoint_horiuchi_2018",
+   "conjoint_teele_2018",
+   "conjoint_hainmueller_2015"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_hainmueller_2014",
+    "short_cite": "Hainmueller (2014)",
+    "source_lines": "L91",
+    "quote": "To obtain accurate variance estimates, we cluster the standard errors by the respondent because observed choice outcomes are not independent across the profiles rated by a single respondent.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L224",
+    "quote": "the estimates based on the default standard errors for regression coefficients or differences in means are likely to be substantially biased",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L224",
+    "quote": "these standard errors are valid for population inference when errors in potential outcomes are correlated within clusters (i.e., respondents) in an arbitrary manner, as long as the number of clusters is sufficiently large",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_hainmueller_2013",
+    "cite": "Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2013). Causal Inference in Conjoint Analysis: Understanding Multidimensional Choices via Stated Preference Experiments. Political Analysis, 22(1), 1-30. https://doi.org/10.1093/pan/mpt024",
+    "short_cite": "Hainmueller (2013)",
+    "pages": "p. 17",
+    "pagination": "printed",
+    "pdf_pages": [
+     17
+    ]
+   },
+   {
+    "source_id": "conjoint_hainmueller_2014",
+    "cite": "Jens Hainmueller & Daniel J. Hopkins. (2014). The Hidden American Immigration Consensus: A Conjoint Analysis of Attitudes toward Immigrants. American Journal of Political Science, 59(3), 529-548. https://doi.org/10.1111/ajps.12138",
+    "short_cite": "Hainmueller (2014)",
+    "pages": "p. 537",
+    "pagination": "printed",
+    "pdf_pages": [
+     9
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "data_driven_selection"
+  ],
+  "claim": "When a data-driven procedure (regularization, machine learning) selects factor levels to collapse or defines respondent subgroups that are then used in estimation, selection and estimation must use separate data (cross-fitting / train-test split) so that estimates are not biased by the selection.",
+  "observable": "Whether the paper reports splitting its data so that the data-driven selection and the effect estimation use separate samples.",
+  "pass_condition": "The paper reports using separate training and estimation samples (cross-fitting / a train-test split) for the data-driven selection.",
+  "flag_condition": "The paper uses a data-driven procedure to select levels or subgroups and estimates effects on the same data without any sample split.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Separate training/test data are required to remove regularization bias (Cuesta 2021) and to keep ML subgroup predictions independent of the outcomes used to estimate effects (Horiuchi 2021).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Data-driven level or subgroup selection must be separated from effect estimation by a sample split.",
+  "contributing_sources": [
+   "conjoint_cuesta_2021",
+   "conjoint_horiuchi_2021"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_cuesta_2021",
+    "short_cite": "Cuesta (2021)",
+    "source_lines": "L273",
+    "quote": "It is important that we collapse levels with the training data and estimate the pAMCE with the separate test data to remove bias due to regularization",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     18
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_horiuchi_2021",
+    "short_cite": "Horiuchi (2021)",
+    "source_lines": "L91",
+    "quote": "Because we randomly assign respondents to the training and test sets, these predictions for effect heterogeneity are statistically independent of those respondents’ actual responses",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_cuesta_2021",
+    "cite": "Brandon De La Cuesta, Naoki Egami, & Kosuke Imai. (2021). Improving the External Validity of Conjoint Analysis: The Essential Role of Profile Distribution. Political Analysis, 30(1), 19-45. https://doi.org/10.1017/pan.2020.40",
+    "short_cite": "Cuesta (2021)",
+    "pages": "p. 36",
+    "pagination": "printed",
+    "pdf_pages": [
+     18
+    ]
+   },
+   {
+    "source_id": "conjoint_horiuchi_2021",
+    "cite": "Yusaku Horiuchi, Zachary Markovich, & Teppei Yamamoto. (2021). Does Conjoint Analysis Mitigate Social Desirability Bias?. Political Analysis, 30(4), 535-549. https://doi.org/10.1017/pan.2021.30",
+    "short_cite": "Horiuchi (2021)",
+    "pages": "p. 545",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-ROBUST-01",
+  "category": "ROBUST",
+  "scope": [
+   "population_target"
+  ],
+  "claim": "A uniform-randomization AMCE is externally valid for a non-uniform target only when attributes do not interact; a paper whose estimand refers to a target distribution differing from its randomization must report how its AMCE estimates change under alternative profile distributions rather than reporting a single distribution's estimate.",
+  "observable": "Whether the paper reports AMCE estimates under more than one profile distribution when its stated target distribution differs from its randomization distribution.",
+  "pass_condition": "The paper reports its AMCE estimates under two or more distinct profile distributions, including the distribution it names as its target.",
+  "flag_condition": "The paper states a non-uniform target for its AMCE but reports estimates under only its single (e.g., uniform) randomization distribution.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Cuesta (2021) holds that a uniform AMCE is externally valid for a non-uniform target only absent interactions, making sensitivity to alternative distributions material. Rests on a single source.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper targeting a non-uniform profile distribution must report AMCE estimates under two or more profile distributions.",
+  "contributing_sources": [
+   "conjoint_cuesta_2021"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_cuesta_2021",
+    "short_cite": "Cuesta (2021)",
+    "source_lines": "L25",
+    "quote": "the resulting estimates of the AMCE are externally valid only when there is no interaction between attributes or when the uniform is the theoretically relevant profile distribution",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_cuesta_2021",
+    "short_cite": "Cuesta (2021)",
+    "source_lines": "L208",
+    "quote": "it is essential to examine the robustness of the AMCE estimates to alternative profile distributions that are of theoretical interest",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_cuesta_2021",
+    "short_cite": "Cuesta (2021)",
+    "source_lines": "L30",
+    "quote": "it is essential to use the proposed pAMCE framework to systematically investigate the sensitivity of the AMCE estimates to alternative theoretically relevant profile distributions",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_cuesta_2021",
+    "cite": "Brandon De La Cuesta, Naoki Egami, & Kosuke Imai. (2021). Improving the External Validity of Conjoint Analysis: The Essential Role of Profile Distribution. Political Analysis, 30(1), 19-45. https://doi.org/10.1017/pan.2020.40",
+    "short_cite": "Cuesta (2021)",
+    "pages": "pp. 21-22, 34",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     4,
+     16
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-REPORT-01",
+  "category": "REPORT",
+  "scope": [
+   "all"
+  ],
+  "claim": "The AMCE depends on the distribution used to average over the non-target attributes, so the paper must state which weighting/target profile distribution it used and justify that choice.",
+  "observable": "Whether the paper states the weighting/target profile distribution over which its AMCEs are averaged and gives a rationale for it.",
+  "pass_condition": "The paper states the weighting/target profile distribution used for its AMCEs (e.g. uniform, or a stated target) and gives a justification for that choice.",
+  "flag_condition": "The paper reports AMCEs without stating the weighting/target distribution used, or states it but offers no justification.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Cuesta (2021) / Hainmueller (2013): it should always be made clear what weighting distribution was used to calculate the AMCE and the choice convincingly justified, because poorly chosen weights can misrepresent findings and a uniform-based estimate is externally valid only under restrictive conditions.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper states and justifies the weighting/target profile distribution used for its AMCEs.",
+  "contributing_sources": [
+   "Hainmueller (2013)",
+   "Cuesta (2021)",
+   "Bansak (2022)"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L127",
+    "quote": "It should always be made clear what weighting distribution of the treatment components was used in calculating the AMCE, and the choice should be convincingly justified",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_cuesta_2021",
+    "short_cite": "Cuesta (2021)",
+    "source_lines": "L18",
+    "quote": "the definition of the AMCE critically depends on the distribution used to average over profile attributes",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_cuesta_2021",
+    "short_cite": "Cuesta (2021)",
+    "source_lines": "L25",
+    "quote": "the resulting estimates of the AMCE are externally valid only when there is no interaction between attributes or when the uniform is the theoretically relevant profile distribution",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L127",
+    "quote": "researchers may intentionally or unintentionally misrepresent their empirical findings by using weights that exaggerate particular attribute combinations so as to produce effects in the desired direction",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_cuesta_2021",
+    "cite": "Brandon De La Cuesta, Naoki Egami, & Kosuke Imai. (2021). Improving the External Validity of Conjoint Analysis: The Essential Role of Profile Distribution. Political Analysis, 30(1), 19-45. https://doi.org/10.1017/pan.2020.40",
+    "short_cite": "Cuesta (2021)",
+    "pages": "pp. 20-21",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     3
+    ]
+   },
+   {
+    "source_id": "conjoint_hainmueller_2013",
+    "cite": "Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2013). Causal Inference in Conjoint Analysis: Understanding Multidimensional Choices via Stated Preference Experiments. Political Analysis, 22(1), 1-30. https://doi.org/10.1093/pan/mpt024",
+    "short_cite": "Hainmueller (2013)",
+    "pages": "p. 12",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-REPORT-02",
+  "category": "REPORT",
+  "scope": [
+   "all"
+  ],
+  "clarity_check": true,
+  "author_guidance": "State the external-validity limits of your conjoint: that estimates are preferences over the specific attribute levels included (not the universe of possible positions), whether the profiles are realistic relative to real-world targets, and that results may not transfer to other contexts or to real behavior. Do not let readers infer that AMCEs generalize automatically.",
+  "claim": "External validity in conjoint is not automatic: estimates are conditional on the included attribute levels, the realism of the profiles is an essential and under-appreciated component of external validity, and the sample must match the target population; the paper should acknowledge these limits.",
+  "observable": "Whether the paper acknowledges at least one core external-validity limit of its conjoint (interpretation confined to the included levels, profile realism, or sample-to-target correspondence).",
+  "pass_condition": "The paper acknowledges an external-validity limit of its design (e.g. that estimates apply only to the levels tested, that profiles may be unrealistic, or that the sample may not match the target population).",
+  "flag_condition": "The paper generalizes its conjoint estimates to real-world targets or populations without acknowledging any external-validity limit.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "LOW",
+  "severity_basis": "Cuesta (2021): the realism of treatments is an essential yet under-appreciated element of external validity; Hainmueller (2015): externally valid conclusions require the sample to match the target population as closely as possible.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper acknowledges the external-validity limits of its conjoint design.",
+  "contributing_sources": [
+   "Cuesta (2021)",
+   "Hainmueller (2015)",
+   "Abramson (2022)",
+   "Horiuchi (2018)",
+   "Eshima (2022)"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_cuesta_2021",
+    "short_cite": "Cuesta (2021)",
+    "source_lines": "L485",
+    "quote": "the realism of treatments is an essential yet under-appreciated element of external validity",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     26
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_hainmueller_2015",
+    "short_cite": "Hainmueller (2015)",
+    "source_lines": "L60",
+    "quote": "it is essential to match the characteristics of a survey sample to the target population as closely as possible",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_horiuchi_2018",
+    "short_cite": "Horiuchi (2018)",
+    "source_lines": "L68",
+    "quote": "our results should be interpreted as estimates of preferences among the policy options that are actually presented to the electorate, instead of the universe of possible positions on each policy issue",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_abramson_2022",
+    "short_cite": "Abramson (2022)",
+    "source_lines": "L273",
+    "quote": "for a result to be externally valid, researchers must include the full set of theoretically relevant attributes in their randomization scheme.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_abramson_2022",
+    "cite": "Scott F Abramson, Korhan Koçak, & Asya Magazinnik. (2022). What Do We Learn about Voter Preferences from Conjoint Experiments?. American Journal of Political Science, 66(4), 1008-1020. https://doi.org/10.1111/ajps.12714",
+    "short_cite": "Abramson (2022)",
+    "pages": "p. 1019",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   },
+   {
+    "source_id": "conjoint_cuesta_2021",
+    "cite": "Brandon De La Cuesta, Naoki Egami, & Kosuke Imai. (2021). Improving the External Validity of Conjoint Analysis: The Essential Role of Profile Distribution. Political Analysis, 30(1), 19-45. https://doi.org/10.1017/pan.2020.40",
+    "short_cite": "Cuesta (2021)",
+    "pages": "p. 44",
+    "pagination": "printed",
+    "pdf_pages": [
+     26
+    ]
+   },
+   {
+    "source_id": "conjoint_hainmueller_2015",
+    "cite": "Jens Hainmueller, Dominik Hangartner, & Teppei Yamamoto. (2015). Validating vignette and conjoint survey experiments against real-world behavior. Proceedings of the National Academy of Sciences, 112(8), 2395-2400. https://doi.org/10.1073/pnas.1416587112",
+    "short_cite": "Hainmueller (2015)",
+    "pages": "p. 2398",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "conjoint_horiuchi_2018",
+    "cite": "Yusaku Horiuchi, Daniel M. Smith, & Teppei Yamamoto. (2018). Measuring Voters’ Multidimensional Policy Preferences with Conjoint Analysis: Application to Japan’s 2014 Election. Political Analysis, 26(2), 190-209. https://doi.org/10.1017/pan.2018.2",
+    "short_cite": "Horiuchi (2018)",
+    "pages": "p. 196",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "CONJOINT-DATA-01",
+  "category": "DATA",
+  "scope": [
+   "fractional_factorial"
+  ],
+  "claim": "A fractional factorial (non-fully-crossed) design must be orthogonal (attribute columns uncorrelated) and balanced (each level appearing equally often) for efficient, unconfounded estimation; for unlabeled/generic-profile designs orthogonality need only hold within alternatives. A paper declaring such a design must report that it satisfies these properties.",
+  "observable": "Whether a paper that declares a fractional factorial / optimal design reports that the design is orthogonal (within-alternative orthogonality suffices for unlabeled designs) and that its attribute levels are balanced.",
+  "pass_condition": "The paper reports that its fractional factorial design is orthogonal (within-alternative orthogonality suffices for unlabeled/generic-profile designs) and that its attribute levels are balanced. Reporting only one property flags for the missing property.",
+  "flag_condition": "The paper declares a fractional factorial design but does not report that it is orthogonal (within-alternative for unlabeled designs), or does not report that its attribute levels are balanced.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Franchino (2014) holds that an efficient fractional factorial design must be orthogonal and balanced. Rests on a single source.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A fractional factorial conjoint design must report orthogonality (within-alternative for unlabeled designs) and level balance.",
+  "contributing_sources": [
+   "conjoint_franchino_2014"
+  ],
+  "evidence": [
+   {
+    "source_id": "conjoint_franchino_2014",
+    "short_cite": "Franchino (2014)",
+    "source_lines": "L54",
+    "quote": "a statistically efficient fractional factorial design must be orthogonal, in which columns display zero correlation",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_franchino_2014",
+    "short_cite": "Franchino (2014)",
+    "source_lines": "L54",
+    "quote": "the design should be balanced. Each level of any given attribute should appear the same number of times",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "conjoint_franchino_2014",
+    "short_cite": "Franchino (2014)",
+    "source_lines": "L54",
+    "quote": "for unlabeled designs, only within-alternative orthogonality needs to be maintained",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "conjoint_franchino_2014",
+    "cite": "Fabio Franchino & Francesco Zucchini. (2014). Voting in a Multi-dimensional Space: A Conjoint Analysis Employing Valence and Ideology Attributes of Candidates. Political Science Research and Methods, 3(2), 221-241. https://doi.org/10.1017/psrm.2014.24",
+    "short_cite": "Franchino (2014)",
+    "pages": "p. 226",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

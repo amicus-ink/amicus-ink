@@ -1,0 +1,839 @@
+[
+ {
+  "_module": "SYNTH",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "all",
+   "synthetic_control"
+  ],
+  "_scope_definitions": {
+   "all": "The paper estimates a causal effect by building a data-driven counterfactual for one or a few treated units observed before and after an intervention -- it names or adopts a 'synthetic control', 'synthetic control group', penalized or 'generalized synthetic control', a Bayesian structural time-series / CausalImpact counterfactual, or a factor-model / matrix-completion imputation of the treated unit's untreated outcome, and reports the resulting treated-vs-counterfactual gap. Fires on the paper's own description of its estimator. Does NOT fire on a plain two-way fixed-effects / difference-in-differences regression that reports a treatment coefficient without constructing a weighted or imputed counterfactual series for the treated unit, nor on a cross-sectional matching estimator with no pre/post time dimension; when it is unclear whether the paper constructed such a counterfactual, the module is out of scope.",
+   "synthetic_control": "Fires only when the paper states that it builds its counterfactual as a weighted combination of donor/control units, with weights chosen to reproduce the treated unit's pre-intervention characteristics (it names a 'synthetic control', a 'donor pool', or reports per-unit weights). Near-miss that does NOT fire: a difference-in-differences that uses a simple unweighted average of all controls; a regression that adjusts for control-unit covariates without constructing unit weights. A coder decides fired-vs-not from the paper's own description of how the counterfactual is built, so there is never an NA-vs-FLAG choice for the same paper."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 9 concepts in >=2 draws; dropped 8 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "SYNTH-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "The counterfactual must be built from control units that did not themselves receive the intervention, a similar intervention, or a large outcome-specific shock during the study window; such contaminated units have to be removed from the donor / control set.",
+  "observable": "Whether the paper states any screening of its donor pool or control series to remove units that themselves received the intervention (or a comparable one) or that were hit by a large idiosyncratic shock to the outcome during the study period.",
+  "pass_condition": "The paper states a donor-pool / control-set restriction that removes units exposed to the intervention or a similar event, or units subject to a large idiosyncratic shock to the outcome during the period (or states it verified none were present).",
+  "flag_condition": "The paper builds its counterfactual from a donor pool or control set without stating any such screening.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Abadie (2014), in its section on requirements for empirical practice, requires excluding units affected by the intervention or similar events and units subject to large idiosyncratic outcome shocks; a contaminated donor directly biases the counterfactual.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must state that units themselves exposed to the intervention (or a similar event) or hit by a large outcome shock during the study window were excluded from the donor/control set.",
+  "contributing_sources": [
+   "Abadie (2014)",
+   "Abadie (2010)",
+   "Brodersen (2015)"
+  ],
+  "evidence": [
+   {
+    "source_id": "synth_abadie_2014",
+    "short_cite": "Abadie (2014)",
+    "source_lines": "L104",
+    "quote": "units affected by the event or intervention of interest or by events of a similar nature should be excluded from the donor pool",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_abadie_2014",
+    "short_cite": "Abadie (2014)",
+    "source_lines": "L104",
+    "quote": "units that may have suffered large idiosyncratic shocks to the outcome of interest during the study period should also be excluded",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_abadie_2014",
+    "short_cite": "Abadie (2014)",
+    "source_lines": "L32",
+    "quote": "it is important to restrict the donor pool to units with outcomes that are thought to be driven by the same structural process as for the unit representing the case of interest and that were not subject to structural shocks to the outcome variable during the sample period of the study",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "synth_abadie_2014",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2014). Comparative Politics and the Synthetic Control Method. American Journal of Political Science, 59(2), 495-510. https://doi.org/10.1111/ajps.12116",
+    "short_cite": "Abadie (2014)",
+    "pages": "pp. 497, 500",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SYNTH-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "Identification assumes the treated unit's intervention does not affect the outcomes of its control / donor units; where that no-interference assumption is doubtful the paper must assess whether spillover onto the controls is plausible and, if so, its likely direction, since spillover-affected controls bias the estimate.",
+  "observable": "Whether the paper contains any assessment of interference or spillover from the treated unit onto its control / donor units -- an argument that it is implausible, reasoning about its direction, or a robustness check addressing controls that might be affected.",
+  "pass_condition": "The paper addresses possible interference / spillover from the treated unit onto its controls: it argues the no-interference assumption holds, reasons about the direction of any spillover bias, or checks robustness to controls that could be affected.",
+  "flag_condition": "The paper makes no mention of possible interference or spillover from the treated unit onto its control / donor units.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Abadie (2010) makes no-interference between units an explicit identifying assumption; Brodersen (2015) shows indirectly-affected controls underestimate the effect.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must address whether the treated unit's intervention could have affected its control units and, where plausible, the direction of the resulting bias.",
+  "contributing_sources": [
+   "Abadie (2010)",
+   "Brodersen (2015)",
+   "Abadie (2014)",
+   "Arkhangelsky (2024)"
+  ],
+  "evidence": [
+   {
+    "source_id": "synth_abadie_2010",
+    "short_cite": "Abadie (2010)",
+    "source_lines": "L33",
+    "quote": "Implicit in our notation is the usual assumption of no interference between units",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_brodersen_2015",
+    "short_cite": "Brodersen (2015)",
+    "source_lines": "L36",
+    "quote": "the use of such indirectly affected markets as controls would lead to pessimistic inferences, that is, the effect of the campaign would be underestimated",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_abadie_2014",
+    "short_cite": "Abadie (2014)",
+    "source_lines": "L197",
+    "quote": "the limited number of units in the synthetic control allows the evaluation of the existence and direction of potential biases created by spillover effects",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "synth_abadie_2010",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2010). Synthetic Control Methods for Comparative Case Studies: Estimating the Effect of California’s Tobacco Control Program. Journal of the American Statistical Association, 105(490), 493-505. https://doi.org/10.1198/jasa.2009.ap08746",
+    "short_cite": "Abadie (2010)",
+    "pages": "p. 494",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "synth_abadie_2014",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2014). Comparative Politics and the Synthetic Control Method. American Journal of Political Science, 59(2), 495-510. https://doi.org/10.1111/ajps.12116",
+    "short_cite": "Abadie (2014)",
+    "pages": "p. 504",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   },
+   {
+    "source_id": "synth_brodersen_2015",
+    "cite": "Kay H. Brodersen, Fabian Gallusser, Jim Koehler, Nicolas Rémy, & Steven L. Scott. (2015). Inferring causal impact using Bayesian structural time-series models. The Annals of Applied Statistics, 9(1). https://doi.org/10.1214/14-aoas788",
+    "short_cite": "Brodersen (2015)",
+    "pages": "p. 7",
+    "pagination": "pdf",
+    "pdf_pages": [
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SYNTH-IDENT-03",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "The method assumes the outcome did not respond to the intervention before its formal date; where anticipation is possible the pre/post cutoff must be moved back to the first period the outcome could react, so the paper must justify the timing of that cutoff or argue anticipation away.",
+  "observable": "Whether the paper addresses the possibility that outcomes responded to the intervention before its formal date -- by arguing anticipation is absent or by placing the last pre-intervention period before the first date the outcome could respond.",
+  "pass_condition": "The paper argues anticipation is absent, or sets the last pre-intervention period ahead of the first date the outcome could react to the announced intervention.",
+  "flag_condition": "The paper adopts the formal implementation date as the pre/post cutoff without addressing whether the outcome could have responded earlier.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Abadie (2010) states interventions may have an impact prior to implementation via anticipation and that the pre-period cutoff should then be redefined to the first period the outcome may react.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must address anticipation -- justifying that the outcome did not respond before the formal intervention date or moving the pre/post cutoff back to the first period it could.",
+  "contributing_sources": [
+   "Abadie (2010)",
+   "Arkhangelsky (2024)"
+  ],
+  "evidence": [
+   {
+    "source_id": "synth_abadie_2010",
+    "short_cite": "Abadie (2010)",
+    "source_lines": "L33",
+    "quote": "In practice, interventions may have an impact prior to their implementation (e.g., via anticipation effects). In those cases, T0 could be redefined to be the first period in which the outcome may possibly react to the intervention.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_arkhangelsky_2024",
+    "short_cite": "Arkhangelsky (2024)",
+    "source_lines": "L236",
+    "quote": "One remedy for this problem is to allow for limited anticipation, assuming the treatment can be anticipated for a fixed number of periods",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "synth_abadie_2010",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2010). Synthetic Control Methods for Comparative Case Studies: Estimating the Effect of California’s Tobacco Control Program. Journal of the American Statistical Association, 105(490), 493-505. https://doi.org/10.1198/jasa.2009.ap08746",
+    "short_cite": "Abadie (2010)",
+    "pages": "p. 494",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "synth_arkhangelsky_2024",
+    "cite": "Dmitry Arkhangelsky & Guido W. Imbens. (2024). Causal models for longitudinal and panel data: a survey. Econometrics Journal, 27(3), C1-C61. https://doi.org/10.1093/ectj/utae014",
+    "short_cite": "Arkhangelsky (2024)",
+    "pages": "p. 7",
+    "pagination": "printed",
+    "pdf_pages": [
+     16
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SYNTH-IDENT-04",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "The paper must state the core identifying assumption its counterfactual rests on -- parallel trends for difference-in-differences, the factor / interactive-fixed-effects structure and strict exogeneity for factor models, or the invariance of the treated-control relationship for time-series counterfactuals.",
+  "observable": "Whether the paper names and defends the identifying assumption underlying its estimator (parallel trends, the factor / low-rank structure with strict exogeneity, or invariance of the shock/relationship under the intervention).",
+  "pass_condition": "The paper explicitly identifies the assumption its counterfactual requires and gives at least one argument or piece of evidence for its plausibility in the application.",
+  "flag_condition": "The paper presents an effect estimate without ever stating the identifying assumption its estimator depends on, or asserts the assumption with no supporting argument.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Li (2019) and Xu (2017) show the estimate is biased or inconsistent when the identifying assumption (parallel trends / strict exogeneity) fails; a paper that never states the assumption gives the reader no way to judge that risk.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper must state and defend the identifying assumption its counterfactual estimator depends on.",
+  "contributing_sources": [
+   "Li (2019)",
+   "Abadie (2011)",
+   "Chernozhukov (2021)",
+   "Xu (2017)",
+   "Abadie (2010)",
+   "Arkhangelsky (2024)",
+   "Brodersen (2015)"
+  ],
+  "evidence": [
+   {
+    "source_id": "synth_li_2019",
+    "short_cite": "Li (2019)",
+    "source_lines": "L29",
+    "quote": "One crucial assumption for the DID method is that outcomes of the treated and control units follow parallel trends in the absence of treatment. Violation of this parallel trends assumption in general will result in biased estimates.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_xu_2017",
+    "short_cite": "Xu (2017)",
+    "source_lines": "L43",
+    "quote": "three assumptions are required for the identification of the quantities of interest. Among them, the assumption of strict exogeneity is the most important.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_chernozhukov_2021",
+    "short_cite": "Chernozhukov (2021)",
+    "source_lines": "L60",
+    "quote": "the stochastic shock sequence is invariant under the intervention. This is the fundamental identifying assumption.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "synth_chernozhukov_2021",
+    "cite": "Victor Chernozhukov, Kaspar Wüthrich, & Yinchu Zhu. (2021). An Exact and Robust Conformal Inference Method for Counterfactual and Synthetic Controls. Journal of the American Statistical Association, 116(536), 1849-1864. https://doi.org/10.1080/01621459.2021.1920957",
+    "short_cite": "Chernozhukov (2021)",
+    "pages": "p. 1852",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "synth_li_2019",
+    "cite": "Kathleen T. Li. (2019). Statistical Inference for Average Treatment Effects Estimated by Synthetic Control Methods. Journal of the American Statistical Association, 115(532), 2068-2083. https://doi.org/10.1080/01621459.2019.1686986",
+    "short_cite": "Li (2019)",
+    "pages": "p. 2068",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   },
+   {
+    "source_id": "synth_xu_2017",
+    "cite": "Yiqing Xu. (2017). Generalized Synthetic Control Method: Causal Inference with Interactive Fixed Effects Models. Political Analysis, 25(1), 57-76. https://doi.org/10.1017/pan.2016.2",
+    "short_cite": "Xu (2017)",
+    "pages": "p. 61",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 7,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SYNTH-EST-01",
+  "category": "EST",
+  "scope": [
+   "synthetic_control"
+  ],
+  "claim": "A synthetic-control paper must report the estimated donor weights -- which control units contribute and how much -- so the reader can see the counterfactual is a transparent, non-extrapolating combination of identifiable units.",
+  "observable": "Whether the paper lists the control units that receive positive weight in the synthetic control and their weight magnitudes.",
+  "pass_condition": "The paper reports the donor units and their assigned weights (e.g., a weights table or a list of the units receiving positive weight and their shares).",
+  "flag_condition": "The paper builds a synthetic control but never discloses which donor units enter it or with what weights.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Abadie (2010) frames the reported non-negative, sum-to-one weights as the device that both guards against extrapolation and forces the researcher to demonstrate the treated/synthetic affinity, and Abadie (2021) notes the interpretable weights let experts evaluate the counterfactual; withholding them removes the method's central transparency check.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A synthetic-control paper must report the donor units and the weights assigned to them.",
+  "contributing_sources": [
+   "Abadie (2010)",
+   "Abadie (2011)",
+   "Abadie (2021)",
+   "Abadie (2014)",
+   "Li (2019)",
+   "Arkhangelsky (2024)"
+  ],
+  "evidence": [
+   {
+    "source_id": "synth_abadie_2010",
+    "short_cite": "Abadie (2010)",
+    "source_lines": "L130",
+    "quote": "the synthetic control method forces the researcher to demonstrate the affinity between the region exposed to the intervention of interest and its synthetic counterpart",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_abadie_2010",
+    "short_cite": "Abadie (2010)",
+    "source_lines": "L27",
+    "quote": "Because the weights can be restricted to be positive and sum to one, the synthetic control method provides a safeguard against extrapolation.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_abadie_2021",
+    "short_cite": "Abadie (2021)",
+    "source_lines": "L28",
+    "quote": "are important features that allow the use of expert knowledge to evaluate and interpret the estimated counterfactuals",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "synth_abadie_2010",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2010). Synthetic Control Methods for Comparative Case Studies: Estimating the Effect of California’s Tobacco Control Program. Journal of the American Statistical Association, 105(490), 493-505. https://doi.org/10.1198/jasa.2009.ap08746",
+    "short_cite": "Abadie (2010)",
+    "pages": "pp. 494, 500",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     9
+    ]
+   },
+   {
+    "source_id": "synth_abadie_2021",
+    "cite": "Alberto Abadie & Jérémy L’Hour. (2021). A Penalized Synthetic Control Estimator for Disaggregated Data. Journal of the American Statistical Association, 116(536), 1817-1834. https://doi.org/10.1080/01621459.2021.1971535",
+    "short_cite": "Abadie (2021)",
+    "pages": "p. 1817",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 6,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SYNTH-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "all"
+  ],
+  "claim": "Because the design typically has one or few treated units and serially dependent outcomes, uncertainty about the effect must come from a procedure suited to that structure -- reassigning the intervention across units or in time to build a placebo distribution, a permutation or conformal p-value, or a resampling scheme that preserves serial correlation -- rather than from conventional independent-observation standard errors, which understate the uncertainty.",
+  "observable": "Which procedure the paper uses to attach uncertainty or statistical significance to the estimated treated-vs-counterfactual effect.",
+  "pass_condition": "The paper reports uncertainty through at least one procedure from this list: a placebo/permutation exercise applying the method to donor units, an in-time (pre-dated) placebo, a permutation or conformal p-value, a block or sieve bootstrap or subsampling scheme that preserves within-unit serial correlation, or -- for a design with several treated units and multiple periods -- standard errors clustered by unit.",
+  "flag_condition": "The paper's only stated basis for significance is conventional independent-observation or heteroskedasticity-only (Eicker-Huber-White) standard errors that presume a large-sample normal approximation, or it reports an effect with no uncertainty procedure at all.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Abadie (2010) states large-sample inference is not well suited to a small comparison group; Brodersen (2015) shows static/iid inference gives over-optimistic, too-narrow intervals on serially correlated data.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper reporting a constructed-counterfactual effect must base its uncertainty on a procedure appropriate to few treated units and serially dependent outcomes, not on conventional large-sample independent-observation standard errors alone.",
+  "contributing_sources": [
+   "Abadie (2010)",
+   "Abadie (2011)",
+   "Abadie (2014)",
+   "Abadie (2021)",
+   "Brodersen (2015)",
+   "Chernozhukov (2021)",
+   "Li (2019)",
+   "Xu (2017)",
+   "Arkhangelsky (2024)"
+  ],
+  "evidence": [
+   {
+    "source_id": "synth_abadie_2010",
+    "short_cite": "Abadie (2010)",
+    "source_lines": "L106",
+    "quote": "Large sample inferential techniques are not well suited to comparative case studies when the number of units in the comparison group is small.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_abadie_2011",
+    "short_cite": "Abadie (2011)",
+    "source_lines": "L49",
+    "quote": "The basic principle is to iteratively apply the synthetic control method by randomly reassigning the intervention in time (i.e., pre-intervention dates) or across units (i.e., to control units where the intervention did not occur) to produce a set of placebo effects",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_brodersen_2015",
+    "short_cite": "Brodersen (2015)",
+    "source_lines": "L26",
+    "quote": "When fit to serially correlated data, static models yield overoptimistic inferences with too narrow uncertainty intervals",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "synth_abadie_2010",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2010). Synthetic Control Methods for Comparative Case Studies: Estimating the Effect of California’s Tobacco Control Program. Journal of the American Statistical Association, 105(490), 493-505. https://doi.org/10.1198/jasa.2009.ap08746",
+    "short_cite": "Abadie (2010)",
+    "pages": "p. 497",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   },
+   {
+    "source_id": "synth_abadie_2011",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2011). <b>Synth</b>: An<i>R</i>Package for Synthetic Control Methods in Comparative Case Studies. Journal of Statistical Software, 42(13). https://doi.org/10.18637/jss.v042.i13",
+    "short_cite": "Abadie (2011)",
+    "pages": "p. 5",
+    "pagination": "pdf",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "synth_brodersen_2015",
+    "cite": "Kay H. Brodersen, Fabian Gallusser, Jim Koehler, Nicolas Rémy, & Steven L. Scott. (2015). Inferring causal impact using Bayesian structural time-series models. The Annals of Applied Statistics, 9(1). https://doi.org/10.1214/14-aoas788",
+    "short_cite": "Brodersen (2015)",
+    "pages": "p. 5",
+    "pagination": "pdf",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 9,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SYNTH-REPORT-01",
+  "category": "REPORT",
+  "scope": [
+   "synthetic_control"
+  ],
+  "claim": "When a synthetic control weights predictors by importance (the V matrix), the paper should report how that weighting was determined, because an ad hoc choice forces balance on covariates that should not be balanced and changes which units enter the counterfactual.",
+  "observable": "Whether the paper states how the predictor-importance weighting was set -- a data-driven procedure minimizing pre-intervention prediction error, a training/validation split, or a stated custom choice -- as opposed to leaving it unspecified or defaulting silently to an identity-style weighting.",
+  "pass_condition": "The paper reports how the predictor-importance weights were chosen (data-driven minimization of pre-period prediction error, cross-validation, or an explicitly justified custom weighting).",
+  "flag_condition": "The paper uses covariate predictors to build the synthetic control but never states how their relative importance was weighted.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Abadie (2011) makes the optimal predictor weighting the one minimizing the estimator's mean squared error, and Botosaru (2019) shows an ad hoc (identity) weighting balances the wrong covariates; the choice therefore moves the estimate, not just its presentation.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A synthetic-control paper should report how the predictor-importance weighting (V) was determined.",
+  "contributing_sources": [
+   "Abadie (2011)",
+   "Abadie (2014)",
+   "Abadie (2010)",
+   "Abadie (2021)",
+   "Botosaru (2019)"
+  ],
+  "evidence": [
+   {
+    "source_id": "synth_abadie_2011",
+    "short_cite": "Abadie (2011)",
+    "source_lines": "L39",
+    "quote": "An optimal choice of V assigns weights that minimize the mean square error of the synthetic control estimator",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_abadie_2014",
+    "short_cite": "Abadie (2014)",
+    "source_lines": "L53",
+    "quote": "those variables should be assigned large vm weights",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_botosaru_2019",
+    "short_cite": "Botosaru (2019)",
+    "source_lines": "L145",
+    "quote": "if a researcher uses an ad hoc matrix V (e.g., the identity matrix), then weights would be chosen to provide balance on covariates that should not be balanced.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "synth_abadie_2011",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2011). <b>Synth</b>: An<i>R</i>Package for Synthetic Control Methods in Comparative Case Studies. Journal of Statistical Software, 42(13). https://doi.org/10.18637/jss.v042.i13",
+    "short_cite": "Abadie (2011)",
+    "pages": "p. 4",
+    "pagination": "pdf",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "synth_abadie_2014",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2014). Comparative Politics and the Synthetic Control Method. American Journal of Political Science, 59(2), 495-510. https://doi.org/10.1111/ajps.12116",
+    "short_cite": "Abadie (2014)",
+    "pages": "p. 498",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "synth_botosaru_2019",
+    "cite": "Irene Botosaru & Bruno Ferman. (2019). On the role of covariates in the synthetic control method. Econometrics Journal, 22(2), 117-130. https://doi.org/10.1093/ectj/utz001",
+    "short_cite": "Botosaru (2019)",
+    "pages": "p. 126",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SYNTH-DATA-01",
+  "category": "DATA",
+  "scope": [
+   "all"
+  ],
+  "claim": "Every variable used to build the counterfactual -- matching predictors and control series alike -- must be measured before the intervention or otherwise be unaffected by it; a predictor that is itself moved by the treatment biases the estimated effect.",
+  "observable": "Whether any variable used to construct the counterfactual (a matching predictor or a control / covariate series) is measured after the intervention or is itself plausibly moved by the treatment.",
+  "pass_condition": "Every matching predictor and control series used to build the counterfactual is measured before the intervention or is explicitly argued to be unaffected by it.",
+  "flag_condition": "The paper builds the counterfactual using a predictor or control series that is measured after the intervention or is visibly affected by the treatment.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Brodersen (2015) shows a covariate affected by the campaign introduces a bias in the effect estimate; Abadie (2014, 2011) requires predictors that are not affected by the intervention.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must not build its counterfactual from any predictor or control series that is measured post-intervention or is itself affected by the treatment.",
+  "contributing_sources": [
+   "Abadie (2014)",
+   "Abadie (2011)",
+   "Brodersen (2015)"
+  ],
+  "evidence": [
+   {
+    "source_id": "synth_abadie_2014",
+    "short_cite": "Abadie (2014)",
+    "source_lines": "L60",
+    "quote": "These predictors are themselves not affected by the intervention",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_brodersen_2015",
+    "short_cite": "Brodersen (2015)",
+    "source_lines": "L159",
+    "quote": "This precludes a positive bias in estimating the effect of the campaign that would arise if a covariate was negatively affected by the campaign.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     22
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_abadie_2011",
+    "short_cite": "Abadie (2011)",
+    "source_lines": "L30",
+    "quote": "the user could include post-intervention characteristics as long as they are unaffected by the intervention",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "synth_abadie_2011",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2011). <b>Synth</b>: An<i>R</i>Package for Synthetic Control Methods in Comparative Case Studies. Journal of Statistical Software, 42(13). https://doi.org/10.18637/jss.v042.i13",
+    "short_cite": "Abadie (2011)",
+    "pages": "p. 3",
+    "pagination": "pdf",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "synth_abadie_2014",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2014). Comparative Politics and the Synthetic Control Method. American Journal of Political Science, 59(2), 495-510. https://doi.org/10.1111/ajps.12116",
+    "short_cite": "Abadie (2014)",
+    "pages": "p. 498",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "synth_brodersen_2015",
+    "cite": "Kay H. Brodersen, Fabian Gallusser, Jim Koehler, Nicolas Rémy, & Steven L. Scott. (2015). Inferring causal impact using Bayesian structural time-series models. The Annals of Applied Statistics, 9(1). https://doi.org/10.1214/14-aoas788",
+    "short_cite": "Brodersen (2015)",
+    "pages": "p. 22",
+    "pagination": "pdf",
+    "pdf_pages": [
+     22
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SYNTH-DATA-02",
+  "category": "DATA",
+  "scope": [
+   "all"
+  ],
+  "claim": "Credible application requires a substantial pre-intervention span, over which the estimator's bias declines, plus enough post-intervention periods to capture the effect; so the reader can judge whether the method was applied where it is credible, the paper must report how many pre- and post-intervention periods (or the dated span at its sampling frequency) enter the analysis.",
+  "observable": "Whether the paper states how many pre-intervention and post-intervention periods (or the date span at its sampling frequency) enter the analysis.",
+  "pass_condition": "The paper reports the length of both the pre-intervention and post-intervention windows (period counts or an equivalent dated span at the analysis frequency).",
+  "flag_condition": "The reader cannot determine from the paper how many pre-intervention or post-intervention periods the estimate is based on.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Abadie (2010) shows the estimator's bias bound shrinks only as the number of pre-intervention periods grows, and Abadie (2014) makes a sizable pre-period count an applicability condition; without the counts the reader cannot judge whether the method was applied where it is credible.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper must report the number of pre- and post-intervention periods underlying its estimate.",
+  "contributing_sources": [
+   "Abadie (2014)",
+   "Abadie (2010)",
+   "Xu (2017)",
+   "Chernozhukov (2021)",
+   "Botosaru (2019)",
+   "Arkhangelsky (2024)"
+  ],
+  "evidence": [
+   {
+    "source_id": "synth_abadie_2014",
+    "short_cite": "Abadie (2014)",
+    "source_lines": "L105",
+    "quote": "The applicability of the method requires a sizable number of preintervention periods",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_abadie_2010",
+    "short_cite": "Abadie (2010)",
+    "source_lines": "L308",
+    "quote": "the bias of the estimator can be bounded by a function that goes to zero as the number of pretreatment periods increases",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "synth_abadie_2014",
+    "short_cite": "Abadie (2014)",
+    "source_lines": "L37",
+    "quote": "the sample includes a positive number of preintervention periods, T0, as well as a positive number of postintervention periods, T1",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "synth_abadie_2010",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2010). Synthetic Control Methods for Comparative Case Studies: Estimating the Effect of California’s Tobacco Control Program. Journal of the American Statistical Association, 105(490), 493-505. https://doi.org/10.1198/jasa.2009.ap08746",
+    "short_cite": "Abadie (2010)",
+    "pages": "p. 504",
+    "pagination": "printed",
+    "pdf_pages": [
+     13
+    ]
+   },
+   {
+    "source_id": "synth_abadie_2014",
+    "cite": "Alberto Abadie, Alexis Diamond, & Jens Hainmueller. (2014). Comparative Politics and the Synthetic Control Method. American Journal of Political Science, 59(2), 495-510. https://doi.org/10.1111/ajps.12116",
+    "short_cite": "Abadie (2014)",
+    "pages": "pp. 497, 500",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 6,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

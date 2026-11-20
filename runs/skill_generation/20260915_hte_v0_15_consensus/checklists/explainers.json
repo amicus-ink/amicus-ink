@@ -1,0 +1,154 @@
+{
+ "module": "hte",
+ "run": "20260915_hte_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-10-07",
+ "explainers": [
+  {
+   "check_id": "HTE-IDENT-01",
+   "plain": "The paper should state that each unit's outcome depends only on its own treatment, not on other units' treatment (the no-interference or SUTVA assumption), or show how its design rules out such spillover.",
+   "why": "Effect estimates rely on this assumption; if one unit's treatment can affect another's outcome, as within a household, the analysis has to move to a level where no spillover occurs.",
+   "done": "states that units do not affect one another's outcomes, or shows how its design rules out spillover"
+  },
+  {
+   "check_id": "HTE-IDENT-02",
+   "plain": "When effects come from non-randomized data, the paper should state its unconfoundedness assumption: once the measured covariates are accounted for, no unmeasured factor drives both treatment and outcome.",
+   "why": "Without random assignment this assumption does not hold automatically, so the result depends on it.",
+   "done": "states that no unmeasured factor drives both treatment and outcome once covariates are accounted for"
+  },
+  {
+   "check_id": "HTE-IDENT-03",
+   "plain": "When it estimates covariate-specific effects from non-randomized data, the paper should state or check overlap (common support), meaning that units with similar covariates appear in both the treated and untreated groups.",
+   "why": "Where some covariate values have few treated or few untreated units, estimates become biased, imprecise, and sensitive to modeling choices.",
+   "done": "states or checks that comparable units appear in both the treated and untreated groups"
+  },
+  {
+   "check_id": "HTE-IDENT-04",
+   "plain": "A paper using an instrumental variable should state its exclusion restriction (the instrument affects the outcome only through treatment) and monotonicity (no unit is pushed against the instrument's direction), and address how strongly the instrument moves treatment (first-stage strength).",
+   "why": "These are the core conditions under which the instrument gives a valid effect estimate, and a weak instrument undermines it.",
+   "done": "states the exclusion restriction and monotonicity and addresses the strength of its first stage"
+  },
+  {
+   "check_id": "HTE-IDENT-05",
+   "plain": "A paper with instrumental-variable estimates should describe them as effects for compliers (units whose treatment follows the instrument), or state that effects are assumed equal across units if it reads them more broadly.",
+   "why": "An instrument reveals the effect only for compliers, so applying the estimate to a wider population needs that extra assumption.",
+   "done": "describes its instrumental-variable estimate as an effect for compliers, or states an equal-effects assumption for a broader reading"
+  },
+  {
+   "check_id": "HTE-IDENT-06",
+   "plain": "When applying its result to a population it did not sample, the paper should state its assumption that, after its adjustments, who was sampled is unrelated to how units respond to treatment, and name the adjusted covariates that change the effect and differ between sample and target.",
+   "why": "The transfer is valid only if the adjustment covers every variable that both changes the effect and differs between sample and target.",
+   "done": "states that sample selection is unconfounded and names the effect-changing covariates used to adjust to the target"
+  },
+  {
+   "check_id": "HTE-EST-01",
+   "plain": "A model with an interaction (a product of two variables) should also include each of those variables on its own.",
+   "why": "Dropping one of these lower-order terms biases the estimates, and reasons such as an assumed zero average effect, correlation between terms, or centering do not justify leaving it out.",
+   "done": "includes each interacted variable on its own alongside the product term"
+  },
+  {
+   "check_id": "HTE-EST-02",
+   "plain": "In a nonlinear model, the paper should measure an interaction by how the predicted outcome responds to both variables changing together (the cross-partial), not by the coefficient on the product term.",
+   "why": "In such models the product-term coefficient can be zero when the interaction is not, can have the opposite sign, and the interaction varies across observations.",
+   "done": "computes the interaction from changes in predicted outcomes rather than from the product-term coefficient"
+  },
+  {
+   "check_id": "HTE-INFER-01",
+   "plain": "In a nonlinear model, the paper should judge whether an interaction is statistically significant from the standard error of the cross-partial (the interaction's effect on predicted outcomes), not from the test on the product-term coefficient.",
+   "why": "That coefficient's test does not test the interaction effect, which varies with covariates and so is assessed at chosen covariate values or as an average.",
+   "done": "tests the interaction using the uncertainty of its effect on predicted outcomes, at stated covariate values or averaged"
+  },
+  {
+   "check_id": "HTE-INFER-02",
+   "plain": "The paper should base conclusions about an interaction on how one variable's effect changes across values of the other (conditional marginal effects), and should not read the coefficient on a single interacted variable as its overall effect.",
+   "why": "Whether the product-term coefficient is significant neither proves nor rules out that an effect depends on another variable.",
+   "done": "bases interaction conclusions on effects across the other variable and never reads a component coefficient as an overall effect"
+  },
+  {
+   "check_id": "HTE-INFER-03",
+   "plain": "When the paper tests a family of related hypotheses or outcomes, it should adjust for the number of tests (for example with Bonferroni, Holm, or false discovery rate methods) or combine them into a summary index.",
+   "why": "Running many tests makes at least one false positive likely, so highlighting only the significant results can mislead.",
+   "done": "adjusts its tests for the number of hypotheses or reports a summary index"
+  },
+  {
+   "check_id": "HTE-INFER-04",
+   "plain": "A test for whether the treatment effect varies across units should separate that variation from a shift in the average effect, and should properly account for the average effect being unknown, for example with a randomization test over a confidence interval for it.",
+   "why": "Plugging an estimated average into a standard test, as in a plain or shifted Kolmogorov-Smirnov test, gives invalid p-values.",
+   "done": "tests for effect variation after removing the average shift and accounting for uncertainty in the average effect"
+  },
+  {
+   "check_id": "HTE-INFER-05",
+   "plain": "When the paper checks at many values of a moderating variable whether the effect is significant, it should correct for these multiple comparisons, for example with a joint test or a bootstrap-based critical value.",
+   "why": "Standard intervals at each value are not built for this scan, so reporting any value where the effect looks significant produces too many false positives.",
+   "done": "corrects for multiple comparisons when reporting significance across values of the moderating variable"
+  },
+  {
+   "check_id": "HTE-INFER-06",
+   "plain": "When the paper reports confidence intervals or standard errors from a causal or random forest, it should state that the trees are honest (each observation either places splits or estimates effects, not both) and grown on subsamples.",
+   "why": "Without honesty and subsampling, the forest's intervals do not cover the true effect.",
+   "done": "states that its forest uses honest trees grown on subsamples of the data"
+  },
+  {
+   "check_id": "HTE-INFER-07",
+   "plain": "The paper should read quantile or distributional effects as differences between the treated and untreated outcome distributions, not as gains or losses for particular individuals, unless it states a rank-preservation assumption (units keep their position in the distribution under treatment).",
+   "why": "Units can change positions between the two groups, so these effects alone do not reveal who gains and who loses.",
+   "done": "reads quantile effects as differences between distributions and states rank preservation for any claims about individuals"
+  },
+  {
+   "check_id": "HTE-INFER-08",
+   "plain": "When observations are clustered or otherwise dependent, the paper should adjust its standard errors for that structure, for example with cluster-robust errors or, when clusters are few, a block bootstrap.",
+   "why": "Standard errors that treat dependent observations as independent are too small, which overstates confidence in the result.",
+   "done": "adjusts its standard errors for clustering or dependence in the data"
+  },
+  {
+   "check_id": "HTE-ROBUST-01",
+   "plain": "The paper should either specify its subgroups or sources of effect variation before analysis, or find them in one part of the data and test them in another, for example by sample splitting or a held-out test set.",
+   "why": "Subgroups chosen after seeing the outcomes can produce spurious findings.",
+   "done": "specifies its subgroups in advance or tests them on data separate from the data used to find them"
+  },
+  {
+   "check_id": "HTE-ROBUST-02",
+   "plain": "When the paper lets an effect vary with a continuous variable through a linear interaction, it should check the assumption that the effect changes at a constant rate, for example with a diagnostic plot or a more flexible estimate.",
+   "why": "If the effect does not change at a constant rate, the estimated effects at particular values are biased.",
+   "done": "checks whether the effect changes at a constant rate and interprets its results accordingly"
+  },
+  {
+   "check_id": "HTE-ROBUST-03",
+   "plain": "The paper should report effects for subgroups or values of a moderating variable only where it has enough data, or mark estimates in thin regions as extrapolation, for example by showing a histogram or observation counts.",
+   "why": "In regions with few observations, an estimate rests on model assumptions rather than data, so it is fragile.",
+   "done": "reports conditional effects only where data are adequate, or marks sparse-region estimates as extrapolation"
+  },
+  {
+   "check_id": "HTE-ROBUST-04",
+   "plain": "When the paper groups units by a model of their baseline risk, it should fit that model without a treatment term and, if built from the study's own data, on all participants rather than the control group alone.",
+   "why": "A risk model built otherwise can create or exaggerate apparent differences in treatment effects across risk levels.",
+   "done": "fits its risk model without a treatment term and, if internal, on all trial participants"
+  },
+  {
+   "check_id": "HTE-ROBUST-05",
+   "plain": "When the paper trims or restricts its sample to handle poor overlap, it should define the rule from covariates and treatment, such as limits on the propensity score (the estimated chance of treatment), not from outcomes.",
+   "why": "A selection rule that uses outcomes introduces bias into the estimated effects.",
+   "done": "defines its trimming rule from covariates or propensity scores without using outcomes"
+  },
+  {
+   "check_id": "HTE-REPORT-01",
+   "plain": "In a nonlinear model, the paper should present an interaction through predicted outcomes or the spread of the interaction effect across observations, plotted when a key variable is continuous, rather than through one summary number.",
+   "why": "The interaction effect in such models varies in size and direction across observations, so one number cannot describe it.",
+   "done": "reports predicted outcomes or the spread of the interaction effect across covariate values"
+  },
+  {
+   "check_id": "HTE-REPORT-02",
+   "plain": "When the paper claims or denies that effects vary, it should state the outcome scale it uses, such as absolute differences, ratios, or a named transformation.",
+   "why": "Whether an effect looks constant depends on the scale; a constant relative effect generally means the absolute effect varies.",
+   "done": "states the scale, such as absolute or relative, on which it assesses effect variation"
+  },
+  {
+   "check_id": "HTE-DATA-01",
+   "plain": "When a meaningful share of outcomes is missing, the paper should check how sensitive its results are, for example with imputation, worst-case bounds, or re-estimation, or show that missingness is unrelated to treatment, rather than silently analyzing only complete cases.",
+   "why": "If missing outcomes differ by treatment status, comparisons between treated and control groups can be biased.",
+   "done": "assesses how missing outcomes affect its results, or shows that missingness is unrelated to treatment"
+  }
+ ],
+ "reviewed": "2026-10-07: 3 field(s) revised after an Opus review against the check text"
+}

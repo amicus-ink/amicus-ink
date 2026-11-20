@@ -1,0 +1,76 @@
+{
+ "module": "panel",
+ "run": "20260806_panel_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-11-11",
+ "explainers": [
+  {
+   "check_id": "PANEL-IDENT-01",
+   "plain": "A paper using a difference-in-differences or two-way fixed-effects design (comparing changes over time between treated and untreated units) should show evidence that both groups' outcomes moved in parallel before treatment, such as a pre-period trend comparison, an event-study plot, or a placebo test on leads.",
+   "why": "The estimate is credible only if treated and untreated units would have followed the same outcome path without treatment.",
+   "done": "shows that treated and untreated units followed similar outcome trends before treatment"
+  },
+  {
+   "check_id": "PANEL-IDENT-02",
+   "plain": "When units choose whether to receive treatment, the paper should state explicitly that its estimate is the effect for the units that took up treatment, rather than a general effect for everyone.",
+   "why": "With self-selected treatment, the design identifies an effect only for the units that took it up, so reading it as a population-wide effect goes beyond what the design supports.",
+   "done": "states that its estimate is the effect for the units that received or chose treatment"
+  },
+  {
+   "check_id": "PANEL-EST-01",
+   "plain": "A panel model that uses the previous period's outcome as a predictor should estimate that coefficient with a method built to avoid short-panel bias (such as GMM with lagged instruments or a bias correction), or argue that the panel has enough time periods for the bias to be negligible.",
+   "why": "With few time periods, ordinary least squares and fixed-effects estimates of that coefficient are biased.",
+   "done": "uses a bias-aware estimator for the lagged outcome or argues its panel has enough time periods"
+  },
+  {
+   "check_id": "PANEL-EST-02",
+   "plain": "A nonlinear fixed-effects model, such as a logit or probit with a separate effect for each unit, should use conditional likelihood or a bias correction, or the paper should argue it has enough time periods for the bias to be negligible.",
+   "why": "Estimating every unit's effect directly from few time periods gives inconsistent results, a flaw known as the incidental-parameters problem.",
+   "done": "uses conditional likelihood or a bias correction, or argues its panel has enough time periods"
+  },
+  {
+   "check_id": "PANEL-EST-03",
+   "plain": "A paper using random effects should justify, with a test such as a Hausman test comparing fixed and random effects or with an explicit argument, that its predictors are unrelated to the unit-specific effects.",
+   "why": "Random-effects estimates are valid only if the predictors are unrelated to those unit-specific effects.",
+   "done": "tests or argues that its predictors are unrelated to the unit-specific effects"
+  },
+  {
+   "check_id": "PANEL-INFER-01",
+   "plain": "A panel paper should report standard errors that allow errors to be correlated over time within the same unit, typically by clustering at the unit level or higher.",
+   "why": "Repeated observations on the same unit tend to be correlated, so standard errors that assume independence give misleading test results.",
+   "done": "clusters standard errors by unit or uses another correction for within-unit correlation over time"
+  },
+  {
+   "check_id": "PANEL-INFER-02",
+   "plain": "A dynamic-panel paper reporting two-step GMM (generalized method of moments) estimates should base its inference on standard errors with a finite-sample correction or on one-step estimates.",
+   "why": "Uncorrected two-step standard errors understate the true uncertainty in the estimates, so tests reject too often.",
+   "done": "uses corrected two-step standard errors or one-step GMM results for inference"
+  },
+  {
+   "check_id": "PANEL-ROBUST-01",
+   "plain": "A dynamic-panel GMM paper should report a test for second-order serial correlation in its differenced residuals, which checks whether its instruments are valid.",
+   "why": "The lagged values used as instruments are valid only if the errors are not correlated over time at that order.",
+   "done": "reports a second-order serial-correlation test of the residuals alongside its GMM estimates"
+  },
+  {
+   "check_id": "PANEL-ROBUST-02",
+   "plain": "A factor or interactive-effects model (one with unobserved common factors that affect units differently) should choose the number of factors with a data-driven rule, such as an information criterion with a stated maximum, or show that results hold across factor counts.",
+   "why": "The model is valid only with the correct number of factors, so simply assuming a count is not enough.",
+   "done": "selects the number of factors from the data or shows results hold across factor counts"
+  },
+  {
+   "check_id": "PANEL-ROBUST-03",
+   "plain": "A panel with many units and many time periods should test its residuals for correlation across units, or use an estimator or standard-error correction that it states accounts for such correlation.",
+   "why": "Errors correlated across units can bias estimates and make tests unreliable.",
+   "done": "tests for cross-unit error correlation or uses a method that accounts for it"
+  },
+  {
+   "check_id": "PANEL-DATA-01",
+   "plain": "A panel that loses units over time should assess whether dropout is selective, for example by comparing retained units with dropped units on key characteristics, or by correcting for dropout in a model.",
+   "why": "Selective dropout is the most damaging threat to the validity of panel results.",
+   "done": "checks whether units that dropped out differ from those that stayed, or corrects for selective dropout in a model"
+  }
+ ],
+ "reviewed": "2026-11-11: 1 field(s) revised after an Opus review against the check text"
+}

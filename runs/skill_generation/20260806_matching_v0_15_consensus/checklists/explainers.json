@@ -1,0 +1,82 @@
+{
+ "module": "matching",
+ "run": "20260806_matching_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-11-11",
+ "explainers": [
+  {
+   "check_id": "MATCHING-IDENT-01",
+   "plain": "The paper should state that its causal estimate assumes treatment is as good as random once observed covariates are accounted for (often called unconfoundedness or selection on observables), and name the covariates meant to make that hold.",
+   "why": "A matched or adjusted estimate is causal only under this assumption, so readers need to see it and the covariates behind it.",
+   "done": "states that its estimate assumes no hidden confounding given named covariates"
+  },
+  {
+   "check_id": "MATCHING-IDENT-02",
+   "plain": "The paper should state or check that treated units have comparable control units with similar covariate values (called overlap or common support).",
+   "why": "Matching can only find fair comparisons where treated and control units actually resemble each other; for an effect on the treated, it is enough that treated units fall within the range of the controls.",
+   "done": "shows or states that comparable controls exist for the treated units"
+  },
+  {
+   "check_id": "MATCHING-IDENT-03",
+   "plain": "The paper should state that one unit's outcome is not affected by other units' treatment and that the treatment means the same thing for every unit (together called SUTVA).",
+   "why": "The matched comparison estimates a well-defined effect only when this assumption holds.",
+   "done": "states that units do not affect each other and the treatment is the same for all"
+  },
+  {
+   "check_id": "MATCHING-IDENT-04",
+   "plain": "When the paper drops units, such as unmatched treated units, so the effect no longer covers the original population, it should say which units the reported effect now applies to.",
+   "why": "Readers need to know what group the estimate actually describes, since it may differ from the population first targeted.",
+   "done": "describes which retained units the reported effect applies to after dropping units"
+  },
+  {
+   "check_id": "MATCHING-IDENT-05",
+   "plain": "When the paper says units affect each other (interference or spillover), it should give a clear rule for how everyone's treatment translates into each unit's exposure, and name the exposure-specific effect it estimates.",
+   "why": "With spillovers, a simple treated-or-not indicator no longer defines what each unit experienced, so the estimate is unclear without such a rule.",
+   "done": "defines each unit's exposure from its own and others' treatment and names the target effect"
+  },
+  {
+   "check_id": "MATCHING-EST-01",
+   "plain": "When the paper describes its treatment as continuous, like a dose, it should estimate the effect on that continuous scale rather than splitting it into treated and untreated.",
+   "why": "Splitting a dose into two groups throws away information, can leave hidden imbalance in dose that biases the estimate, and the result cannot be read as the cutoff dose versus zero.",
+   "done": "estimates the effect on its continuous treatment without splitting it into two groups"
+  },
+  {
+   "check_id": "MATCHING-INFER-01",
+   "plain": "The paper should not compute standard errors or confidence intervals for its matching estimate with an ordinary bootstrap that resamples individual observations.",
+   "why": "That bootstrap gives unreliable standard errors for simple matching estimators; valid options include resampling whole matched sets, the Abadie-Imbens variance formula, or clustering by matched set.",
+   "done": "uses a valid uncertainty method for matching rather than an individual-observation bootstrap"
+  },
+  {
+   "check_id": "MATCHING-INFER-02",
+   "plain": "When the paper matches on two or more continuous covariates, it should report a bias-corrected matching estimate, unless it shows it matches on at most one continuous covariate or matches treated units to a much larger control pool.",
+   "why": "Simple matching on several continuous covariates leaves a bias that does not shrink fast enough as the sample grows, which can distort the result.",
+   "done": "reports a bias-corrected matching estimate or documents why correction is unneeded"
+  },
+  {
+   "check_id": "MATCHING-INFER-03",
+   "plain": "When the paper estimates effects with units affecting each other, its confidence intervals should use a variance method that is cautious or accounts for that dependence, not one that assumes independent units.",
+   "why": "Spillovers create dependence among units' exposures, so methods that ignore it make results look more precise than they are.",
+   "done": "uses a cautious or dependence-aware variance method for intervals under spillovers"
+  },
+  {
+   "check_id": "MATCHING-REPORT-01",
+   "plain": "The paper should report how similar treated and control groups are on the adjusted covariates after matching or weighting, such as a balance table or standardized mean differences.",
+   "why": "Matching or weighting does not always improve balance and can even worsen it, so match quality must be checked in the actual sample.",
+   "done": "reports covariate balance between groups after matching or weighting"
+  },
+  {
+   "check_id": "MATCHING-REPORT-02",
+   "plain": "When the paper uses weights to estimate effects, it should report how variable the weights are, such as the largest weights, their coefficient of variation, or the effective sample size.",
+   "why": "A few very large weights can dominate the estimate and inflate its uncertainty, so readers need to see the weight spread.",
+   "done": "reports the spread of its weights or the effective sample size"
+  },
+  {
+   "check_id": "MATCHING-DATA-01",
+   "plain": "When matching covariates have missing values, the paper should state that it handled them with multiple imputation or another principled method rather than dropping incomplete cases.",
+   "why": "Simply dropping cases with missing matching variables is not appropriate handling and can affect the result.",
+   "done": "handles missing covariate values with multiple imputation or another principled method"
+  }
+ ],
+ "reviewed": "2026-11-11: 0 field(s) revised after an Opus review against the check text"
+}

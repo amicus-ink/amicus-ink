@@ -1,0 +1,16 @@
+{
+  "name": "amicus",
+  "description": "AMICUS: audit a quantitative social-science paper against 14 methods checklists and a universal checklist, inside Claude Code",
+  "owner": {
+    "name": "Tak-Huen Chau and Andrew T. Little"
+  },
+  "plugins": [
+    {
+      "name": "amicus",
+      "source": "./plugins/amicus",
+      "description": "Run /amicus path/to/paper.pdf to code a paper against the AMICUS method checklists and get AMICUS_REPORT.md",
+      "license": "GPL-3.0-only AND CC-BY-SA-4.0",
+      "keywords": ["methods", "audit", "causal-inference", "social-science", "checklist"]
+    }
+  ]
+}

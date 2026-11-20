@@ -1,0 +1,137 @@
+{
+ "module": "matching",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-4-8",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "matching_abadie_2006",
+   "sha256_pdf": "4475d5d023e2f41d6532938421549a5213f7fc4bd6373ee11e3e6a94cee7a93b",
+   "claims": 17,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "matching_kang_2007",
+   "sha256_pdf": "e4bdbbc0e0b5fc2d6fc1a527e275718088b6058958481176b6c23a9b5a1fc875",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "matching_iacus_2011",
+   "sha256_pdf": "54a3a65cbddf649e140484851e976f7bd7d3009d6d18f945ee643cc88a23d555",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "matching_sekhon_2011",
+   "sha256_pdf": "b8e2e08b09df6b3b69f4000263421e83dce648826b2799b98cae23d0f2bda817",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "matching_zubizarreta_2015",
+   "sha256_pdf": "50c21bf4e5d68ef0d9c648171d7a4fbac33271a1d7624747688c00fb92d95731",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "matching_aronow_2017",
+   "sha256_pdf": "0e90860ec951314c117b018ae76acb5adb1c476aec0516315c4d6c34bc6cccbb",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "matching_wager_2017",
+   "sha256_pdf": "15018333a484bd0d4a3059e6823507aa45b3a4851b266c6045ec9da4ac966bbf",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "matching_fong_2018",
+   "sha256_pdf": "87e89da3da811b5c1be057b987abf90dacaaf958479cb00e5a6b0eda56424e68",
+   "claims": 18,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "matching_king_2019",
+   "sha256_pdf": "0eeaac77fe3c93c8ac68f7f041d756104161c187eb124211084e57c205f5e453",
+   "claims": 31,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "matching_abadie_2020",
+   "sha256_pdf": "69db7dfef92a804831f229677c0030ee2a8cc098d9f1d99bcb73e8124019130d",
+   "claims": 13,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 12,
+ "categories": {
+  "IDENT": 5,
+  "EST": 1,
+  "INFER": 3,
+  "REPORT": 2,
+  "DATA": 1
+ },
+ "single_source_checks": 4,
+ "sha256_checklist": "065115f6d3b7fc711caa12cbed7196013c4138853b4f999b7a38d64a30b7bbdf",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 12,
+  "categories": {
+   "IDENT": 5,
+   "EST": 1,
+   "INFER": 3,
+   "REPORT": 2,
+   "DATA": 1
+  },
+  "single_source_checks": 5,
+  "sha256_checklist": "d69ce9a407551de15dcdfbc522bb75eeda421a388cc72ff1d724719e98be3a94"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release (v0.1)",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 91.7,
+   "pilot_pairwise_agreement_pct": 95.8
+  },
+  "meets_95pct_diagnostic_bar": false,
+  "reason": "Ships since 2026-11-11 in place of this module's single-draw artifact, so that every module of the release is a three-draw consensus build. Figures are this artifact's own decidability block below. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 4,
+   "codings_per_paper": 2,
+   "core_stability": "46/48 = 95.8%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 4,
+   "codings_per_paper": 5,
+   "core_stability": "44/48 = 91.7%",
+   "judgment_call_bucket": null
+  }
+ }
+}

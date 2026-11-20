@@ -1,0 +1,1008 @@
+[
+ {
+  "_module": "MEDIATION",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "causal_mediation_claim",
+   "intermediate_confounder",
+   "covariate_adjusted",
+   "nonlinear_binary_outcome",
+   "coefficient_decomposition",
+   "all",
+   "weighting_estimator",
+   "large_scale_testing",
+   "manipulation_induction"
+  ],
+  "_scope_definitions": {
+   "causal_mediation_claim": "Fires when the paper describes one of its estimands with a mediation vocabulary term it applies to itself — 'indirect effect', 'direct effect', 'mediation', 'mediator', 'natural (in)direct effect', 'ACME', or 'mechanism/pathway' from a treatment through an intermediate variable to an outcome. Does NOT fire on a paper that reports only a treatment-outcome effect, only a correlation between two variables, or a moderation/interaction result, without naming an intermediate variable through which the effect is said to travel. The coder reads the paper's own labels; a paper that never calls any variable a mediator or any effect indirect is out of scope.",
+   "intermediate_confounder": "The paper explicitly describes a variable that is affected by the treatment/exposure AND also confounds the mediator-outcome relationship (a post-treatment, intermediate, or exposure-induced confounder), OR states that it studies multiple mediators that causally influence one another. Fires only on the paper's own statement of such a structure. Does NOT fire when the paper adjusts only for pre-treatment baseline covariates, when it states its multiple mediators are causally unrelated, or when a coder merely suspects an intermediate confounder the paper never names. If it is unclear whether a described confounder is treatment-affected, the check is NA.",
+   "covariate_adjusted": "The paper states it includes one or more control variables/covariates in its mediation model to address confounding, and names or lists them. Does NOT fire when the paper reports an unadjusted analysis using only exposure, mediator, and outcome, nor when a coder judges that covariates should have been added but the paper reports none.",
+   "nonlinear_binary_outcome": "The paper states its outcome model is a nonlinear binary-response model (it names logit, probit, or another nonlinear probability model for a dichotomous outcome) AND reports a direct/indirect decomposition or a comparison of the exposure coefficient across models with and without the mediator. Does NOT fire when the outcome model is a linear regression or a linear probability model, nor when a logit/probit is fit for a purpose other than mediation decomposition.",
+   "coefficient_decomposition": "Fires when the paper states it estimates the indirect (or direct) effect from regression/SEM path coefficients — a product-of-coefficients, difference-in-coefficients, Baron-Kenny, or path-analytic estimate. Does NOT fire on a fully nonparametric or simulation/imputation-based effect estimate that the paper does not describe as a coefficient product or difference. The coder keys on the estimator the paper names.",
+   "all": "The paper reports a mediation analysis: it decomposes the effect of an exposure/treatment on an outcome into a part carried by at least one intermediate mediator variable, or reports an indirect / mediation / natural-indirect effect. Fires for any such analysis regardless of estimator. Does NOT fire for a plain regression whose covariates the paper never designates as mediators, nor for a moderation/interaction analysis with no mediator.",
+   "weighting_estimator": "The paper states it estimates natural or interventional effects by an inverse-probability / weighting-based approach (weighting units by a function of the mediator or exposure density). Does NOT fire for imputation-, regression-, or simulation-based estimators, nor for the classic product-of-coefficients method.",
+   "large_scale_testing": "The paper states it tests mediation for many mediators or units at once: a genome-wide or high-throughput mediation scan, many candidate mediators, many CpG sites, or the indirect effect evaluated across a grid of many time points. Fires on the paper's own declaration of multiplicity. Does NOT fire when the paper tests a single indirect effect or a small pre-specified set it does not treat as a multiple-testing family.",
+   "manipulation_induction": "The paper states it uses an experimental manipulation designed to induce a particular psychological state or construct (e.g. an emotion or attitude induction) that serves as its treatment or the thing the mediator measures. Does NOT fire for observational mediators, nor for manipulations of non-psychological treatments where no induced-state verification is at issue."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 12 concepts in >=2 draws; dropped 3 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "MEDIATION-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "causal_mediation_claim"
+  ],
+  "claim": "A direct or indirect effect earns a causal reading only under an untestable identifying assumption of no unmeasured confounding of the mediator-outcome relationship (sequential ignorability / mediator ignorability); estimated path or structural coefficients are not causal effects by default, and randomizing the treatment secures only the treatment-side condition, not this mediator-side one.",
+  "observable": "Whether the paper names the identifying assumption its mediation estimate relies on — that, given the measured covariates, no unobserved variable jointly drives the mediator and the outcome (equivalently, sequential ignorability / conditional independence of the mediator) — rather than leaning on treatment randomization as if it settled that condition.",
+  "pass_condition": "The paper explicitly states the no-unmeasured-mediator-outcome-confounding (or sequential ignorability / conditional ignorability) assumption on which its causal reading of the indirect or direct effect depends, whether in the main text or any appendix or supplement.",
+  "flag_condition": "The paper reports an indirect/direct/mediation effect and interprets it as a causal mechanism, but never states the no-unmeasured-confounding / ignorability assumption required for that interpretation — including a randomized-treatment paper that treats the mediation effect as identified on the strength of treatment randomization alone.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Multiple sources establish that structural/path coefficients diverge from causal effects and that identification collapses without this assumption (Lindquist: coefficients 'should not be interpreted as causal effects'; Steen: the condition is 'largely ignored' with studies not adjusting for mediator-outcome confounders), and that randomization does not supply it (Breen: 'a randomized experiment automatically ensures that assumption 1 holds, but not that assumption 2 holds').",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper claiming a causal indirect or direct effect must state the no-unmeasured-mediator-outcome-confounding (sequential ignorability) assumption its estimate requires; treatment randomization does not remove this obligation.",
+  "contributing_sources": [
+   "Imai (2010)",
+   "Lindquist (2012)",
+   "Breen (2013)",
+   "Steen (2017)",
+   "Tingley (2014)",
+   "Sohn (2019)",
+   "Myers (2016)",
+   "Liu (2021)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_imai_2010",
+    "short_cite": "Imai (2010)",
+    "source_lines": "L15",
+    "quote": "under a particular version of the sequential ignorability assumption, the average causal mediation effect (ACME) is nonparametrically identified.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_lindquist_2012",
+    "short_cite": "Lindquist (2012)",
+    "source_lines": "L35",
+    "quote": "In general, the causal and lfSEM parameters are not equal, implying that the latter should not be interpreted as causal effects",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_steen_2017",
+    "short_cite": "Steen (2017)",
+    "source_lines": "L48",
+    "quote": "condition A3 since has largely been ignored in much of the social sciences literature, as evidenced by many mediation studies not adjusting for confounders of the mediator-outcome relationship",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_breen_2013",
+    "short_cite": "Breen (2013)",
+    "source_lines": "L334",
+    "quote": "a randomized experiment automatically ensures that assumption 1 holds, but not that assumption 2 holds, because individuals can still self-select into the mediator, z",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_breen_2013",
+    "cite": "Richard Breen, Kristian Bernt Karlson, & Anders Holm. (2013). Total, Direct, and Indirect Effects in Logit and Probit Models. Sociological Methods & Research, 42(2), 164-191. https://doi.org/10.1177/0049124113494572",
+    "short_cite": "Breen (2013)",
+    "pages": "p. 177",
+    "pagination": "printed",
+    "pdf_pages": [
+     14
+    ]
+   },
+   {
+    "source_id": "mediation_imai_2010",
+    "cite": "Kosuke Imai, Luke Keele, & Teppei Yamamoto. (2010). Identification, Inference and Sensitivity Analysis for Causal Mediation Effects. Statistical Science, 25(1). https://doi.org/10.1214/10-sts321",
+    "short_cite": "Imai (2010)",
+    "pages": "p. -5",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "mediation_lindquist_2012",
+    "cite": "Martin A. Lindquist. (2012). Functional Causal Mediation Analysis With an Application to Brain Connectivity. Journal of the American Statistical Association, 107(500), 1297-1309. https://doi.org/10.1080/01621459.2012.695640",
+    "short_cite": "Lindquist (2012)",
+    "pages": "p. 1299",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "mediation_steen_2017",
+    "cite": "Johan Steen, Tom Loeys, Beatrijs Moerkerke, & Stijn Vansteelandt. (2017). <b>medflex</b>: An <i>R</i> Package for Flexible Mediation Analysis using Natural Effect Models. Journal of Statistical Software, 76(11). https://doi.org/10.18637/jss.v076.i11",
+    "short_cite": "Steen (2017)",
+    "pages": "p. 5",
+    "pagination": "pdf",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 8,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MEDIATION-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "intermediate_confounder"
+  ],
+  "claim": "When a confounder of the mediator-outcome relationship is itself affected by the treatment, or when mediators causally influence one another, natural direct and indirect effects are not identified even in a randomized trial; a paper in this situation must acknowledge the non-identification or switch to a target (such as interventional effects) that remains identified.",
+  "observable": "Whether a paper that describes a treatment-affected mediator-outcome confounder or causally-linked mediators either estimates a still-identified quantity (e.g. interventional effects) or explicitly flags that natural effects are not identified here.",
+  "pass_condition": "Having declared an intermediate confounder or causally-ordered mediators, the paper targets an estimand that stays identified under that structure or states that natural direct/indirect effects are not identified.",
+  "flag_condition": "The paper reports natural direct/indirect effects as identified despite declaring a treatment-affected mediator-outcome confounder or causally-linked mediators, without addressing the resulting non-identification.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Diaz (2020) and Imai (2010) state natural effects lose identification under a treatment-affected confounder; Tingley (2014) calls handling entangled mechanisms crucial.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper declaring a treatment-affected mediator-outcome confounder or causally-linked mediators must address the resulting non-identification of natural effects.",
+  "contributing_sources": [
+   "Steen (2017)",
+   "Lindquist (2012)",
+   "Imai (2010)",
+   "Myers (2016)",
+   "Tingley (2014)",
+   "Díaz (2020)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_d_az_2020",
+    "short_cite": "Díaz (2020)",
+    "source_lines": "L43",
+    "quote": "natural direct and indirect effects are not generally identified in the presence of a mediator-outcome confounder affected by treatment",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_imai_2010",
+    "short_cite": "Imai (2010)",
+    "source_lines": "L61",
+    "quote": "the nonparametric identification of natural direct and indirect effects is not possible without an additional assumption if equation (5) holds only after conditioning on the post-treatment confounders",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_tingley_2014",
+    "short_cite": "Tingley (2014)",
+    "source_lines": "L359",
+    "quote": "Accounting for alternative mechanisms is indeed crucial for the identification of the mechanism of primary interest, especially when such mechanisms are causally not independent.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     25
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_d_az_2020",
+    "cite": "Iván Díaz, Nima S. Hejazi, Kara E. Rudolph, & Mark J. van der Laan. (2020). Nonparametric efficient causal mediation with intermediate confounders. Biometrika, 108(3), 627-641. https://doi.org/10.1093/biomet/asaa085",
+    "short_cite": "Díaz (2020)",
+    "pages": "p. 631",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "mediation_imai_2010",
+    "cite": "Kosuke Imai, Luke Keele, & Teppei Yamamoto. (2010). Identification, Inference and Sensitivity Analysis for Causal Mediation Effects. Statistical Science, 25(1). https://doi.org/10.1214/10-sts321",
+    "short_cite": "Imai (2010)",
+    "pages": "p. -4",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   },
+   {
+    "source_id": "mediation_tingley_2014",
+    "cite": "Dustin Tingley, Teppei Yamamoto, K. Hirose, Luke Keele, & Kosuke Imai. (2014). <b>mediation</b>:<i>R</i>Package for Causal Mediation Analysis. Journal of Statistical Software, 59(5). https://doi.org/10.18637/jss.v059.i05",
+    "short_cite": "Tingley (2014)",
+    "pages": "p. 25",
+    "pagination": "pdf",
+    "pdf_pages": [
+     25
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 6,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MEDIATION-EST-01",
+  "category": "EST",
+  "scope": [
+   "covariate_adjusted"
+  ],
+  "claim": "A control covariate used to remove confounding must be entered in every regression equation of the mediation system (the mediator model and the outcome model alike); a covariate present in only some equations fails to block the confounding path it was included to close.",
+  "observable": "Whether each declared control covariate appears in both the mediator model and the outcome model of the mediation system.",
+  "pass_condition": "Every control covariate the paper names enters all equations of the mediation model, including both the mediator and the outcome regressions.",
+  "flag_condition": "A named control covariate is entered in one equation of the mediation model but omitted from (or not reported for) another (e.g. in the outcome model but not the mediator model).",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Breen (2013) and Alfons (2022) require control variables to appear in every equation of the mediation model to control confounding of the decomposition.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Each control covariate must be included in every equation of the mediation model.",
+  "contributing_sources": [
+   "Steen (2017)",
+   "Breen (2013)",
+   "Alfons (2022)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_alfons_2022",
+    "short_cite": "Alfons (2022)",
+    "source_lines": "L82",
+    "quote": "Such control variables should be added to all regression equations of a mediation model.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_breen_2013",
+    "short_cite": "Breen (2013)",
+    "source_lines": "L218",
+    "quote": "We can control for the potential confounding influence of these covariates on the decomposition by including wi as covariates in each of the equations defining the system of interest",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_steen_2017",
+    "short_cite": "Steen (2017)",
+    "source_lines": "L489",
+    "quote": "all baseline confounders still need to be adjusted for in the imputation model",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     35
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_alfons_2022",
+    "cite": "Andreas Alfons, Nüfer Y. Ate s, & Patrick J. F. Groenen. (2022). Robust Mediation Analysis: The <i>R</i> Package <b>robmed</b>. Journal of Statistical Software, 103(13). https://doi.org/10.18637/jss.v103.i13",
+    "short_cite": "Alfons (2022)",
+    "pages": "p. 6",
+    "pagination": "pdf",
+    "pdf_pages": [
+     6
+    ]
+   },
+   {
+    "source_id": "mediation_breen_2013",
+    "cite": "Richard Breen, Kristian Bernt Karlson, & Anders Holm. (2013). Total, Direct, and Indirect Effects in Logit and Probit Models. Sociological Methods & Research, 42(2), 164-191. https://doi.org/10.1177/0049124113494572",
+    "short_cite": "Breen (2013)",
+    "pages": "p. 174",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   },
+   {
+    "source_id": "mediation_steen_2017",
+    "cite": "Johan Steen, Tom Loeys, Beatrijs Moerkerke, & Stijn Vansteelandt. (2017). <b>medflex</b>: An <i>R</i> Package for Flexible Mediation Analysis using Natural Effect Models. Journal of Statistical Software, 76(11). https://doi.org/10.18637/jss.v076.i11",
+    "short_cite": "Steen (2017)",
+    "pages": "p. 35",
+    "pagination": "pdf",
+    "pdf_pages": [
+     35
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MEDIATION-EST-02",
+  "category": "EST",
+  "scope": [
+   "nonlinear_binary_outcome"
+  ],
+  "claim": "In a logit, probit, or other nonlinear binary-outcome model the total effect does not split into direct and indirect parts the way it does in a linear model, because adding the mediator rescales the coefficients through a change in the residual dispersion; reading the indirect effect off the change in the exposure coefficient across nested models therefore conflates real mediation with rescaling and with shifts in the error's fit.",
+  "observable": "How the paper obtains the direct/indirect split in its nonlinear binary-outcome model: a scale-invariant method versus a bare comparison of the exposure coefficient with and without the mediator.",
+  "pass_condition": "The paper derives the decomposition with a method that holds the scale and error fit constant (e.g. a single-model KHB-style decomposition, or effects expressed on the probability scale).",
+  "flag_condition": "The paper infers the indirect effect from the change in the exposure's logit/probit coefficient between a model without and with the mediator, without holding scale and error fit constant.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Breen (2013) shows the naive cross-model comparison reflects rescaling and error-fit change, not mediation alone; Tingley (2014) restricts coefficient methods to linear additive models.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "In nonlinear binary-outcome models the paper must not read the indirect effect off a naive comparison of the exposure coefficient across nested models.",
+  "contributing_sources": [
+   "Steen (2017)",
+   "Breen (2013)",
+   "Tingley (2014)",
+   "Liu (2021)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_breen_2013",
+    "short_cite": "Breen (2013)",
+    "source_lines": "L18",
+    "quote": "total effects in logit and other nonlinear binary probability models do not decompose into direct and indirect effects as in linear models",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_breen_2013",
+    "short_cite": "Breen (2013)",
+    "source_lines": "L106",
+    "quote": "Comparing coefficients across logit or probit models without and with z will consequently not only reflect confounding and rescaling but also changes in the fit of the error to the assumed functional form",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_tingley_2014",
+    "short_cite": "Tingley (2014)",
+    "source_lines": "L54",
+    "quote": "which are only appropriate for the analysis of causal mediation effects when both the mediator and outcome models are linear regressions where",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_breen_2013",
+    "cite": "Richard Breen, Kristian Bernt Karlson, & Anders Holm. (2013). Total, Direct, and Indirect Effects in Logit and Probit Models. Sociological Methods & Research, 42(2), 164-191. https://doi.org/10.1177/0049124113494572",
+    "short_cite": "Breen (2013)",
+    "pages": "pp. 166, 170",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     7
+    ]
+   },
+   {
+    "source_id": "mediation_tingley_2014",
+    "cite": "Dustin Tingley, Teppei Yamamoto, K. Hirose, Luke Keele, & Kosuke Imai. (2014). <b>mediation</b>:<i>R</i>Package for Causal Mediation Analysis. Journal of Statistical Software, 59(5). https://doi.org/10.18637/jss.v059.i05",
+    "short_cite": "Tingley (2014)",
+    "pages": "p. 5",
+    "pagination": "pdf",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MEDIATION-EST-03",
+  "category": "EST",
+  "scope": [
+   "coefficient_decomposition"
+  ],
+  "claim": "A product-of-coefficients estimate equals the natural indirect effect only when there is no treatment-mediator interaction on the outcome; establishing mediation from the mediator or interaction coefficient alone is neither necessary nor sufficient.",
+  "observable": "Whether a paper that estimates the indirect effect from a product/difference of coefficients allows for, tests, or explicitly assumes away a treatment-mediator interaction on the outcome.",
+  "pass_condition": "The paper includes a treatment-by-mediator interaction in the outcome model (and forms the indirect effect accordingly), tests for it, or explicitly states and justifies a no-interaction assumption.",
+  "flag_condition": "The paper reports a coefficient-product indirect effect without including, testing, or justifying the absence of a treatment-mediator interaction.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state the product method equals the causal indirect effect only 'when the exposure-mediator interaction is absent' (Liu) and that testing a single path coefficient is 'neither a necessary nor sufficient condition' for mediation (Imai).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A coefficient-product mediation estimate must allow for, test, or explicitly justify away a treatment-mediator interaction on the outcome.",
+  "contributing_sources": [
+   "Liu (2021)",
+   "Imai (2010)",
+   "Sohn (2019)",
+   "Tingley (2014)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_liu_2021",
+    "short_cite": "Liu (2021)",
+    "source_lines": "L22",
+    "quote": "This classical product method for mediation analysis is equivalent to the NIE defined in modern causal inference framework when the exposure-mediator interaction is absent (VanderWeele and Vansteelandt 2009; Valeri and VanderWeele 2013).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_imai_2010",
+    "short_cite": "Imai (2010)",
+    "source_lines": "L96",
+    "quote": "the existence of mediation effects can be established by testing either γ = 0 or κ = 0, which is clearly neither a necessary nor sufficient condition",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_imai_2010",
+    "cite": "Kosuke Imai, Luke Keele, & Teppei Yamamoto. (2010). Identification, Inference and Sensitivity Analysis for Causal Mediation Effects. Statistical Science, 25(1). https://doi.org/10.1214/10-sts321",
+    "short_cite": "Imai (2010)",
+    "pages": "p. -2",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "mediation_liu_2021",
+    "cite": "Zhonghua Liu, Jincheng Shen, Richard Barfield, Joel Schwartz, Andrea Baccarelli, & Xihong Lin. (2021). Large-Scale Hypothesis Testing for Causal Mediation Effects with Applications in Genome-wide Epigenetic Studies. Journal of the American Statistical Association, 117(537), 67-81. https://doi.org/10.1080/01621459.2021.1914634",
+    "short_cite": "Liu (2021)",
+    "pages": "p. 68",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MEDIATION-EST-04",
+  "category": "EST",
+  "scope": [
+   "causal_mediation_claim"
+  ],
+  "claim": "A significant total treatment effect is not a precondition for mediation: the indirect effect can be nonzero even when the total effect is zero, so gating a mediation analysis on a significant total effect (the classic first stepwise requirement) is wrong.",
+  "observable": "Whether the paper requires a significant total effect as a precondition before concluding or reporting mediation.",
+  "pass_condition": "The paper does not condition its mediation conclusion on first establishing a significant total effect (it estimates the indirect effect directly regardless of the total effect's significance).",
+  "flag_condition": "The paper states that it tested (or required) a significant total treatment effect as a gate before proceeding to establish mediation.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Imai establishes the gate is unnecessary because 'the ACME can be nonzero even when the average total causal' effect is zero, so requiring total-effect significance can suppress real mediation.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper must not require a significant total treatment effect as a precondition for testing or claiming mediation.",
+  "contributing_sources": [
+   "Imai (2010)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_imai_2010",
+    "short_cite": "Imai (2010)",
+    "source_lines": "L85",
+    "quote": "Thus, testing β1 = 0 is unnecessary since the ACME can be nonzero even when the average total causal",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_imai_2010",
+    "cite": "Kosuke Imai, Luke Keele, & Teppei Yamamoto. (2010). Identification, Inference and Sensitivity Analysis for Causal Mediation Effects. Statistical Science, 25(1). https://doi.org/10.1214/10-sts321",
+    "short_cite": "Imai (2010)",
+    "pages": "p. -3",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MEDIATION-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "all"
+  ],
+  "claim": "The indirect effect is a product of two estimated coefficients, so its sampling distribution is not normal and the null of no mediation is composite; calibrating a Sobel-style test against the standard normal is invalid and underpowered. Inference for the indirect effect should instead use a bootstrap, a Monte-Carlo interval, or a test built for the composite null.",
+  "observable": "What method the paper uses to test or bound the indirect effect: a normal-theory Sobel z-test alone versus a bootstrap / Monte-Carlo / composite-null procedure.",
+  "pass_condition": "The paper's reported inference for the indirect effect uses a bootstrap, Monte-Carlo confidence interval, or a test constructed for the composite null.",
+  "flag_condition": "The only inference the paper reports for the indirect effect is a Sobel / normal-approximation test calibrated against the standard normal distribution.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Liu (2021) proves it is incorrect to use the standard normal as the reference for the Sobel test and that the test is inadmissible; Alfons (2022) shows normality is unrealistic for a product.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must not rely solely on a normal-theory Sobel test for indirect-effect inference.",
+  "contributing_sources": [
+   "Lindquist (2012)",
+   "Alfons (2022)",
+   "Imai (2010)",
+   "Sohn (2019)",
+   "Tingley (2014)",
+   "Liu (2021)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_liu_2021",
+    "short_cite": "Liu (2021)",
+    "source_lines": "L90",
+    "quote": "This explains why it is incorrect to use the standard normal distribution as the reference distribution to calculate p-value for Sobel’s test.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_liu_2021",
+    "short_cite": "Liu (2021)",
+    "source_lines": "L266",
+    "quote": "the MaxP test is uniformly more powerful than the Sobel’s test for any given significance level. In this regard, the Sobel’s test is inadmissible.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_alfons_2022",
+    "short_cite": "Alfons (2022)",
+    "source_lines": "L21",
+    "quote": "Sobel (1982) proposed a test for the indirect effect that assumes a normal distribution of the corresponding estimator, which is an unrealistic assumption for a product of coefficients.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_alfons_2022",
+    "cite": "Andreas Alfons, Nüfer Y. Ate s, & Patrick J. F. Groenen. (2022). Robust Mediation Analysis: The <i>R</i> Package <b>robmed</b>. Journal of Statistical Software, 103(13). https://doi.org/10.18637/jss.v103.i13",
+    "short_cite": "Alfons (2022)",
+    "pages": "p. 2",
+    "pagination": "pdf",
+    "pdf_pages": [
+     2
+    ]
+   },
+   {
+    "source_id": "mediation_liu_2021",
+    "cite": "Zhonghua Liu, Jincheng Shen, Richard Barfield, Joel Schwartz, Andrea Baccarelli, & Xihong Lin. (2021). Large-Scale Hypothesis Testing for Causal Mediation Effects with Applications in Genome-wide Epigenetic Studies. Journal of the American Statistical Association, 117(537), 67-81. https://doi.org/10.1080/01621459.2021.1914634",
+    "short_cite": "Liu (2021)",
+    "pages": "pp. 73, 81",
+    "pagination": "printed",
+    "pdf_pages": [
+     7,
+     15
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 6,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MEDIATION-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "weighting_estimator"
+  ],
+  "claim": "In a weighting-based natural effect model the default model standard errors are biased downward because they ignore the uncertainty from estimating the weights out of a fitted mediator model; the paper must instead report standard errors (bootstrap or robust) that carry that first-stage estimation uncertainty.",
+  "observable": "Whether the paper's standard errors for the weighting estimator account for estimation of the weights, rather than using default model-based errors.",
+  "pass_condition": "The paper reports bootstrap or robust standard errors that incorporate the uncertainty from estimating the mediator model / weights.",
+  "flag_condition": "The paper reports default model-based standard errors for a weighting estimator without accounting for weight-estimation uncertainty.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Steen (2017) states default glm standard errors are downwardly biased because they omit the weight-estimation uncertainty.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A weighting-based mediation estimator must report standard errors that account for weight/mediator-model estimation uncertainty.",
+  "contributing_sources": [
+   "Steen (2017)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_steen_2017",
+    "short_cite": "Steen (2017)",
+    "source_lines": "L174",
+    "quote": "Default glm standard errors tend to be downwardly biased as the uncertainty inherent to prediction of the weights based on the estimated mediator model is not taken into account",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_steen_2017",
+    "short_cite": "Steen (2017)",
+    "source_lines": "L181",
+    "quote": "uncertainty related to estimation of the mediator model is incorporated into the bootstrapped standard errors",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_steen_2017",
+    "cite": "Johan Steen, Tom Loeys, Beatrijs Moerkerke, & Stijn Vansteelandt. (2017). <b>medflex</b>: An <i>R</i> Package for Flexible Mediation Analysis using Natural Effect Models. Journal of Statistical Software, 76(11). https://doi.org/10.18637/jss.v076.i11",
+    "short_cite": "Steen (2017)",
+    "pages": "pp. 13-14",
+    "pagination": "pdf",
+    "pdf_pages": [
+     13,
+     14
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MEDIATION-INFER-03",
+  "category": "INFER",
+  "scope": [
+   "large_scale_testing"
+  ],
+  "claim": "When a paper tests the indirect effect across many mediators, sites, or time points, it must apply a multiple-comparison correction; reporting per-test significance across a large family without correction inflates the false-positive rate.",
+  "observable": "Whether a paper testing many indirect effects reports a multiple-comparison correction (family-wise or false-discovery-rate control) for that family.",
+  "pass_condition": "The paper reports a multiple-testing correction across its family of indirect-effect tests.",
+  "flag_condition": "The paper reports significance for many indirect-effect tests with no multiple-comparison correction.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Lindquist (2012) states testing across the range of time points makes a multiple-comparison correction necessary; Sohn (2019) and Liu (2021) apply FDR control for the same reason.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper testing many indirect effects must report a multiple-comparison correction.",
+  "contributing_sources": [
+   "Lindquist (2012)",
+   "Sohn (2019)",
+   "Liu (2021)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_lindquist_2012",
+    "short_cite": "Lindquist (2012)",
+    "source_lines": "L196",
+    "quote": "Because we are interested in testing for significance across the range of t, it is necessary to correct for multiple comparisons",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_sohn_2019",
+    "short_cite": "Sohn (2019)",
+    "source_lines": "L180",
+    "quote": "For multiple testing corrections, we used the Benjamini and Yekutieli (2001) false discovery rate (FDR) at 0.05.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_lindquist_2012",
+    "cite": "Martin A. Lindquist. (2012). Functional Causal Mediation Analysis With an Application to Brain Connectivity. Journal of the American Statistical Association, 107(500), 1297-1309. https://doi.org/10.1080/01621459.2012.695640",
+    "short_cite": "Lindquist (2012)",
+    "pages": "p. 1303",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "mediation_sohn_2019",
+    "cite": "Michael B. Sohn & Hongzhe Li. (2019). Compositional mediation analysis for microbiome studies. The Annals of Applied Statistics, 13(1). https://doi.org/10.1214/18-aoas1210",
+    "short_cite": "Sohn (2019)",
+    "pages": "p. 672",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MEDIATION-ROBUST-01",
+  "category": "ROBUST",
+  "scope": [
+   "causal_mediation_claim"
+  ],
+  "claim": "The sequential-ignorability / no-unmeasured-confounding assumption cannot be tested from the data even under randomization, so a sensitivity analysis quantifying how the mediation conclusion would change under unmeasured confounding is an essential part of a causal mediation analysis.",
+  "observable": "Whether the paper reports a sensitivity analysis for the untestable identifying assumption — tracing the indirect/direct effect against a confounding parameter (residual correlation, coefficient-of-determination, or bound).",
+  "pass_condition": "The paper reports a sensitivity analysis for unmeasured mediator-outcome confounding (e.g. a sensitivity parameter, bounds, or a stated breakdown point), in the main text or an appendix.",
+  "flag_condition": "The paper reports a causal indirect/direct effect but presents no sensitivity analysis for the untestable no-unmeasured-confounding assumption.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Imai establishes that because the assumption 'cannot be directly tested even in randomized experiments, sensitivity analysis must play an essential role'; Tingley recommends it for the standard design.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A causal mediation analysis must report a sensitivity analysis for the untestable no-unmeasured-confounding assumption.",
+  "contributing_sources": [
+   "Imai (2010)",
+   "Tingley (2014)",
+   "Sohn (2019)",
+   "Myers (2016)",
+   "Liu (2021)",
+   "Steen (2017)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_imai_2010",
+    "short_cite": "Imai (2010)",
+    "source_lines": "L16",
+    "quote": "Given the fact that the sequential ignorability assumption cannot be directly tested even in randomized experiments, sensitivity analysis must play an essential role in causal mediation analysis.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_tingley_2014",
+    "short_cite": "Tingley (2014)",
+    "source_lines": "L522",
+    "quote": "Since the causal mediation analysis under the standard research design requires a strong and untestable assumption, we recommend sensitivity analysis",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     36
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_imai_2010",
+    "short_cite": "Imai (2010)",
+    "source_lines": "L183",
+    "quote": "the data generating process contains no information about the credibility of the sequential ignorability assumption.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_imai_2010",
+    "cite": "Kosuke Imai, Luke Keele, & Teppei Yamamoto. (2010). Identification, Inference and Sensitivity Analysis for Causal Mediation Effects. Statistical Science, 25(1). https://doi.org/10.1214/10-sts321",
+    "short_cite": "Imai (2010)",
+    "pages": "pp. -8, 1",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     11
+    ]
+   },
+   {
+    "source_id": "mediation_tingley_2014",
+    "cite": "Dustin Tingley, Teppei Yamamoto, K. Hirose, Luke Keele, & Kosuke Imai. (2014). <b>mediation</b>:<i>R</i>Package for Causal Mediation Analysis. Journal of Statistical Software, 59(5). https://doi.org/10.18637/jss.v059.i05",
+    "short_cite": "Tingley (2014)",
+    "pages": "p. 36",
+    "pagination": "pdf",
+    "pdf_pages": [
+     36
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 6,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MEDIATION-REPORT-01",
+  "category": "REPORT",
+  "scope": [
+   "manipulation_induction"
+  ],
+  "claim": "When a paper induces a psychological state or construct by experimental manipulation and then studies its effect through a mediator, it must report a manipulation check demonstrating the intended state was actually produced, since a manipulation rarely moves only the targeted construct.",
+  "observable": "Whether the paper reports a manipulation check showing its induction produced the intended psychological state.",
+  "pass_condition": "The paper reports a manipulation check verifying the intended construct was induced.",
+  "flag_condition": "The paper relies on an induced-construct manipulation but reports no manipulation check.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Myers (2016) states a thorough manipulation check is needed to demonstrate the manipulation succeeded, since a manipulation rarely affects only one construct.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using an induced-construct manipulation must report a manipulation check.",
+  "contributing_sources": [
+   "Myers (2016)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_myers_2016",
+    "short_cite": "Myers (2016)",
+    "source_lines": "L39",
+    "quote": "if the AEMT is used, a thorough manipulation check is needed to demonstrate that the manipulation has succeeded.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_myers_2016",
+    "short_cite": "Myers (2016)",
+    "source_lines": "L5",
+    "quote": "studies that make claims about the effects of specific emotions by themselves must grapple with the problem that an experimental manipulation rarely affects only one emotion.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_myers_2016",
+    "cite": "C. Daniel Myers & Dustin Tingley. (2016). The Influence of Emotion on Trust. Political Analysis, 24(4), 492-500. https://doi.org/10.1093/pan/mpw026",
+    "short_cite": "Myers (2016)",
+    "pages": "pp. 492, 496",
+    "pagination": "printed",
+    "pdf_pages": [
+     1,
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MEDIATION-DATA-01",
+  "category": "DATA",
+  "scope": [
+   "causal_mediation_claim"
+  ],
+  "claim": "A valid mediator is a post-treatment variable realized after the treatment and before the outcome, and what qualifies as the mediator is fixed by the substantive theory rather than by the data.",
+  "observable": "Whether the paper establishes that its mediator is measured/realized after the treatment and before the outcome.",
+  "pass_condition": "The paper's design or measurement description places the mediator temporally after the treatment and before the outcome.",
+  "flag_condition": "The mediator is measured contemporaneously with or before the treatment, or contemporaneously with or after the outcome, or the paper leaves the temporal ordering of treatment, mediator, and outcome unstated.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Imai establishes a mediator 'must be a post-treatment variable that occurs before the outcome is realized'; a mediator outside this window cannot carry the claimed effect.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper must establish that its mediator is measured after the treatment and before the outcome.",
+  "contributing_sources": [
+   "Imai (2010)"
+  ],
+  "evidence": [
+   {
+    "source_id": "mediation_imai_2010",
+    "short_cite": "Imai (2010)",
+    "source_lines": "L33",
+    "quote": "it must be a post-treatment variable that occurs before the outcome is realized.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "mediation_imai_2010",
+    "short_cite": "Imai (2010)",
+    "source_lines": "L33",
+    "quote": "what constitutes a mediator is determined solely by the scientific theory under investigation.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "mediation_imai_2010",
+    "cite": "Kosuke Imai, Luke Keele, & Teppei Yamamoto. (2010). Identification, Inference and Sensitivity Analysis for Causal Mediation Effects. Statistical Science, 25(1). https://doi.org/10.1214/10-sts321",
+    "short_cite": "Imai (2010)",
+    "pages": "p. -6",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]
