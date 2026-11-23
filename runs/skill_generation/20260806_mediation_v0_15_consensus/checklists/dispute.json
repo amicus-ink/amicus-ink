@@ -1,0 +1,62 @@
+{
+ "MEDIATION-IDENT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "MEDIATION-IDENT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEDIATION-EST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 4
+ },
+ "MEDIATION-EST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEDIATION-EST-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEDIATION-EST-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEDIATION-INFER-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 7
+ },
+ "MEDIATION-INFER-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEDIATION-INFER-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "MEDIATION-ROBUST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 7
+ },
+ "MEDIATION-REPORT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEDIATION-DATA-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ }
+}

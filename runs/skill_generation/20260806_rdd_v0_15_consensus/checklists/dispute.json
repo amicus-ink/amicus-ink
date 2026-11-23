@@ -1,0 +1,117 @@
+{
+ "RDD-IDENT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 12
+ },
+ "RDD-IDENT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 12
+ },
+ "RDD-IDENT-03": {
+  "disputed": true,
+  "basis": "Lee (2010) argues that in age/time-based RD designs, covariate-smoothness balance tests are generally uninformative because pre-threshold characteristics are identical by construction, so the required check does not help in that common design class.",
+  "n_attached": 12
+ },
+ "RDD-IDENT-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 4
+ },
+ "RDD-IDENT-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "RDD-IDENT-06": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "RDD-IDENT-07": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "RDD-IDENT-08": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 11
+ },
+ "RDD-IDENT-09": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 12
+ },
+ "RDD-IDENT-10": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "RDD-EST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 12
+ },
+ "RDD-INFER-01": {
+  "disputed": true,
+  "basis": "Hall (2015) advises reporting the more conservative of robust and conventional standard errors in small samples, endorsing conventional inference contrary to the requirement's exclusion of conventional CIs.",
+  "n_attached": 12
+ },
+ "RDD-INFER-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 11
+ },
+ "RDD-INFER-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "RDD-INFER-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "RDD-ROBUST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 12
+ },
+ "RDD-ROBUST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 7
+ },
+ "RDD-ROBUST-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 7
+ },
+ "RDD-ROBUST-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 7
+ },
+ "RDD-ROBUST-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "RDD-ROBUST-06": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "RDD-REPORT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 11
+ },
+ "RDD-DATA-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 7
+ }
+}

@@ -1,0 +1,153 @@
+{
+ "module": "conjoint",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-4-8",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "conjoint_hainmueller_2013",
+   "sha256_pdf": "89ee5520ec2f3e819c3e1051c657c59768054b8340e025d73d05f00614473e66",
+   "claims": 35,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "conjoint_hainmueller_2014",
+   "sha256_pdf": "52485a6f98a4cb6fae35cfc7e4f7fac181e130a26aaefc5b1a62d63e7689a8c0",
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "conjoint_franchino_2014",
+   "sha256_pdf": "a95663bd1f515c92545203dc60f346a6ab7c9f0d11699f4643d1f873226b8c7e",
+   "claims": 18,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "conjoint_hainmueller_2015",
+   "sha256_pdf": "f3476f7a28cd3053d16acd9a0fae42384bcf603f8ccab64b68e599f79adf1e6c",
+   "claims": 17,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "conjoint_horiuchi_2018",
+   "sha256_pdf": "e8a341e568fb6a05fe670579ea1602594cdc3aa5c12634799957da6ded5d81ab",
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "conjoint_teele_2018",
+   "sha256_pdf": "d0f059017fc3ab2e7d34d798d95b8968e6f6f4c78ee868c86a9a5115e8604332",
+   "claims": 15,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "conjoint_leeper_2019",
+   "sha256_pdf": "bfdd591bd7f6648223e78c02104d00177a1449e1e54c8ac256bd23085eab72d0",
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "conjoint_horiuchi_2021",
+   "sha256_pdf": "b336ffe8a11b34e7f00399a26b32017f8d40bbea6a43fb8061912c0413f0129c",
+   "claims": 16,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "conjoint_cuesta_2021",
+   "sha256_pdf": "44e1f99391b91e65124ad68dda46beabeac198dc09bffe73dc6d72d09c01d57d",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "conjoint_eshima_2022",
+   "sha256_pdf": "966949795c9309d0fdd28351e8108f9044337ffaf80910738b1167d7513ac4de",
+   "claims": 7,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "conjoint_bansak_2022",
+   "sha256_pdf": "d8cdefd657e1b916e5bd427a5b0db4b5155ceae662ec10cf915f0522cccb619b",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "conjoint_abramson_2022",
+   "sha256_pdf": "891965d42cfc36ec519cdb48b1ec87994751d88d6463f5e74df2b563a575365e",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 14,
+ "categories": {
+  "IDENT": 3,
+  "EST": 5,
+  "INFER": 2,
+  "ROBUST": 1,
+  "REPORT": 2,
+  "DATA": 1
+ },
+ "single_source_checks": 3,
+ "sha256_checklist": "c22dd4f8315fd2785f8510cbe3b4655efdf68f85023a7731cb37d354bcab7479",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 14,
+  "categories": {
+   "IDENT": 3,
+   "EST": 5,
+   "INFER": 2,
+   "ROBUST": 1,
+   "REPORT": 2,
+   "DATA": 1
+  },
+  "single_source_checks": 4,
+  "sha256_checklist": "13d84d0898924c6d092644af5d4eac6939e3739b62442c01cc7975462bb5b754"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release, October 2026",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 100.0,
+   "pilot_pairwise_agreement_pct": 100.0
+  },
+  "meets_95pct_diagnostic_bar": true,
+  "reason": "Shipped as one of the 14 modules of the first public release. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 3,
+   "codings_per_paper": 2,
+   "core_stability": "42/42 = 100.0%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 3,
+   "codings_per_paper": 5,
+   "core_stability": "42/42 = 100.0%",
+   "judgment_call_bucket": null
+  }
+ }
+}

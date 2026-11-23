@@ -1,0 +1,148 @@
+{
+ "module": "field_exp",
+ "run": "20260806_field_exp_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-11-11",
+ "explainers": [
+  {
+   "check_id": "FIELD_EXP-IDENT-01",
+   "plain": "The paper should explain how units were randomly assigned to treatment and control, what the unit of assignment was, and the chances of assignment to each group, unless equal chances are clear from the design.",
+   "why": "A claim that an experiment shows cause and effect rests on a real random draw with known chances of assignment.",
+   "done": "describes its random assignment procedure and the unit assigned, with assignment chances stated or clear from the design"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-02",
+   "plain": "The paper should estimate the effect on everyone who was randomized, and should not pick its sample or controls using anything measured after assignment, such as who responded, who complied, or an intermediate outcome.",
+   "why": "Filtering or adjusting on something the treatment could have changed undoes the randomization and lets other differences between groups creep back in.",
+   "done": "analyzes the full randomized sample using only traits measured before assignment"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-03",
+   "plain": "When one treatment bundles several distinct parts, the paper should credit the effect to a single part only if a separate arm isolates that part, and otherwise should say the responsible part cannot be identified.",
+   "why": "Without an arm that varies one part alone, the data cannot show which part produced the effect.",
+   "done": "isolates the credited part with its own arm, or says which part drove the effect is unknown"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-04",
+   "plain": "When outcomes are measured in a later follow-up, the paper should check whether dropout differs between treatment and control, for example by comparing dropout rates or who dropped out, or by bounding the estimate.",
+   "why": "If treatment changes who stays in the study, the remaining groups are no longer comparable and the estimate is biased.",
+   "done": "compares dropout across arms or bounds its estimate against uneven dropout"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-05",
+   "plain": "When some units did not receive the treatment they were assigned, the paper should base its main estimate on the randomized assignment, either comparing assigned groups (intent-to-treat) or using assignment as an instrument for receipt.",
+   "why": "Comparing those who actually took the treatment with those who did not mixes in the reasons people took it, bringing back selection bias.",
+   "done": "estimates its main effect from randomized assignment"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-06",
+   "plain": "In an in-person audit that sends pairs of testers, the paper should state that each pair was matched on all traits that could affect the outcome except the one being tested.",
+   "why": "A difference in how testers were treated can be traced to the tested trait only if the testers were otherwise alike.",
+   "done": "states how paired testers were matched on outcome-relevant traits other than the tested one"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-07",
+   "plain": "When the treatment works through a signal or cue, the paper should name other outcome-relevant traits the signal could convey and test or argue that they do not drive the result.",
+   "why": "A cue meant to signal one trait may also signal others, and those could explain the measured difference.",
+   "done": "names other traits its signal could convey and tests or argues that they do not drive the result"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-08",
+   "plain": "When the paper uses an instrumental variable (a factor used to shift the treatment, such as random assignment), it should state that the instrument affects the outcome only through the treatment and defend that claim.",
+   "why": "If the instrument reaches the outcome through another path, the estimate is invalid.",
+   "done": "states and defends the assumption that its instrument affects the outcome only through the treatment"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-09",
+   "plain": "When the paper explains an effect through a mediator (an intervening factor) that it measured but did not experimentally manipulate, it should present that mechanism as suggestive rather than proven.",
+   "why": "A measured mediator was not randomized, so it cannot show causally how the effect came about.",
+   "done": "manipulates the mediator or labels its mechanism claim as suggestive"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-10",
+   "plain": "When the paper reports how effects differ across groups defined by a trait that was not randomly assigned, it should treat that difference as descriptive and not as the trait's own causal effect.",
+   "why": "A trait that was not assigned at random travels with other traits, so the difference may reflect any of them.",
+   "done": "presents effect differences across non-randomized groups as descriptive"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-11",
+   "plain": "When participants chose or consented to join, the paper should address how they may differ from the population the claim covers, for example by comparing participants with non-participants or reasoning about how opt-in shapes the sample.",
+   "why": "People who opt in can differ from the target population, so the result may not apply to it.",
+   "done": "addresses how opting in shapes who took part and what the estimate covers"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-12",
+   "plain": "The paper should address whether control units could have obtained close substitutes for the treatment or been affected by treated units, by arguing or showing they were not, or by measuring that contamination.",
+   "why": "If controls received something like the treatment, they no longer show what happens without it, and the estimate is biased.",
+   "done": "shows or argues that controls lacked substitutes and spillover, or measures that contamination"
+  },
+  {
+   "check_id": "FIELD_EXP-IDENT-13",
+   "plain": "When subjects could have known they were studied or which group they were in, the paper should address whether that awareness, rather than the treatment, could explain the result; a clearly covert design meets this.",
+   "why": "Knowing one is being studied can change behavior and distort the estimated effect.",
+   "done": "rules out effects of subjects' awareness, or uses a design subjects could not detect"
+  },
+  {
+   "check_id": "FIELD_EXP-EST-01",
+   "plain": "When assignment was done within strata, blocks, or matched pairs (groups formed before randomizing), the paper should include those groupings in its analysis, such as a dummy for each pair or block.",
+   "why": "Leaving them out keeps the estimate on target but makes standard errors the wrong size, too large.",
+   "done": "includes its stratification, block, or pair indicators in the analysis"
+  },
+  {
+   "check_id": "FIELD_EXP-EST-02",
+   "plain": "The paper should choose control variables for their expected link to the outcome, and should not add or drop them because a baseline difference between groups was statistically significant.",
+   "why": "With valid randomization, baseline significance tests are a poor guide to controls; what matters is how well a covariate predicts the outcome.",
+   "done": "chooses controls by their link to the outcome rather than by baseline significance tests"
+  },
+  {
+   "check_id": "FIELD_EXP-INFER-01",
+   "plain": "When treatment is assigned to groups or units are observed more than once, the paper should report standard errors that allow for correlation within groups or units, for example by clustering at the assignment level.",
+   "why": "Treating correlated observations as independent makes results look more precise than they are.",
+   "done": "reports standard errors that account for clustering or repeated observations"
+  },
+  {
+   "check_id": "FIELD_EXP-INFER-02",
+   "plain": "When the paper tests two or more outcomes or subgroups, it should adjust significance for the number of tests or name its main tests in advance and label the rest exploratory.",
+   "why": "With many tests, some will look significant by chance alone.",
+   "done": "adjusts for multiple tests or pre-specifies its main tests"
+  },
+  {
+   "check_id": "FIELD_EXP-INFER-03",
+   "plain": "When the main result is not statistically significant, the paper should interpret it in light of the study's power (its ability to detect an effect of a given size) and should not present it as proof of no effect or of equal outcomes across conditions.",
+   "why": "A non-significant result does not show that the effect is zero.",
+   "done": "reads its non-significant main result against the study's power"
+  },
+  {
+   "check_id": "FIELD_EXP-ROBUST-01",
+   "plain": "When the paper uses a structural model (a model built on explicit mathematical assumptions) to make counterfactual or policy claims, it should show how its estimates change under different assumptions.",
+   "why": "The model's estimates depend on those assumptions, so its conclusions are only as solid as their robustness to them.",
+   "done": "shows how its structural estimates change under alternative assumptions"
+  },
+  {
+   "check_id": "FIELD_EXP-REPORT-01",
+   "plain": "The paper should state the population, setting, and range of treatment over which its estimate holds, and name what limits extending it further.",
+   "why": "An experimental estimate reflects its own sample, setting, and range of treatment, so it may not carry over elsewhere.",
+   "done": "states where its estimate applies and what limits generalizing it"
+  },
+  {
+   "check_id": "FIELD_EXP-REPORT-02",
+   "plain": "When some assigned units did not receive treatment, the paper should report, for each treatment arm, the share of assigned units that were actually treated or contacted.",
+   "why": "That share is needed to interpret the effect of assignment and to recover the effect on those actually treated.",
+   "done": "reports the share of assigned units actually treated in each arm"
+  },
+  {
+   "check_id": "FIELD_EXP-DATA-01",
+   "plain": "When the outcome is a self-report of sensitive behavior or attitudes, the paper should measure it objectively or by observed behavior, or acknowledge and address reporting bias.",
+   "why": "People misreport sensitive or frowned-upon behavior in systematic ways, which can distort the result.",
+   "done": "measures its sensitive outcome objectively or addresses self-report bias"
+  },
+  {
+   "check_id": "FIELD_EXP-DATA-02",
+   "plain": "When the outcome is a proxy (an indirect stand-in for what the paper wants to measure), the paper should state which way this biases the estimate or that the estimate is an upper or lower bound.",
+   "why": "Readers need to know whether an estimate from a stand-in measure is likely too high or too low.",
+   "done": "states the direction of bias from its proxy outcome or treats the estimate as a bound"
+  }
+ ],
+ "reviewed": "2026-11-11: 2 field(s) revised after an Opus review against the check text"
+}

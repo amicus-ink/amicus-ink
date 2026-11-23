@@ -1,0 +1,1007 @@
+[
+ {
+  "_module": "PANEL",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "did",
+   "self_selected_treatment",
+   "dynamic_panel",
+   "nonlinear_fe",
+   "random_effects",
+   "panel_tscs",
+   "dynamic_gmm",
+   "factor_model",
+   "macro_panel",
+   "attrition_panel"
+  ],
+  "_scope_definitions": {
+   "did": "Does the paper explicitly state that it uses a difference-in-differences design or a two-way (unit and period) fixed-effects design to estimate a treatment/exposure effect by contrasting treated and untreated units over time? Fires on that declared design. Near-miss that does NOT fire: a cross-sectional treated-vs-untreated comparison with no over-time contrast, or descriptive within-unit trends with no treatment/control group. When it is unclear whether a treatment/control over-time contrast is being drawn, the check is NA.",
+   "self_selected_treatment": "Does the paper explicitly state that treatment/exposure status is adopted or chosen by the units themselves (observational, not randomized or as-if-random)? Fires on a declared self-selected/observational treatment. Near-miss that does NOT fire: a randomized or natural-experiment/as-if-random assignment the paper claims exogenous. Ambiguous cases resolve OUT (NA).",
+   "dynamic_panel": "Does the paper explicitly state that its specification includes a lagged dependent variable or otherwise models autoregressive dynamics in the outcome? Fires on a declared dynamic/autoregressive panel model. Near-miss that does NOT fire: a static panel model whose only lags are lagged covariates (no lagged outcome), or serial-correlation-robust standard errors with no lagged-outcome term. Ambiguous cases resolve OUT (NA).",
+   "nonlinear_fe": "Does the paper explicitly state that it estimates a nonlinear or limited-dependent-variable model (for example a binary probit or logit, or another discrete-choice model) that includes individual fixed effects? Fires on that declared model class. Near-miss that does NOT fire: a linear fixed-effects regression, or a pooled logit/probit with no individual effects. Ambiguous cases resolve OUT (NA).",
+   "random_effects": "Does the paper explicitly state that it estimates a random-effects / error-components model, treating the individual effects as uncorrelated with the regressors? Fires on that declared estimator. Near-miss that does NOT fire: a fixed-effects/within estimator, or clustered standard errors on a pooled regression. Ambiguous cases resolve OUT (NA).",
+   "panel_tscs": "Does the paper explicitly state that it observes the same units over two or more time periods and estimates a model across those periods? Fires on a self-description of repeated-over-time observations on fixed units. Near-miss that does NOT fire: a single cross-section, or pooled/repeated cross-sections in which different units are sampled each period without following the same units. If it is genuinely unclear whether the same units are tracked over time, the check is NA, not FLAG.",
+   "dynamic_gmm": "Does the paper explicitly state that it estimates a dynamic panel model by GMM or IV using lagged levels and/or lagged differences of the variables as instruments (Anderson-Hsiao / Arellano-Bond difference-GMM or Blundell-Bond system-GMM)? Fires on the declared use of that estimator family. Near-miss that does NOT fire: a static FE regression, or lagged regressors used as ordinary controls without instrumenting a lagged outcome. Ambiguous cases resolve OUT (NA).",
+   "factor_model": "Fires when the paper states it estimates an unobserved-common-factor or interactive-fixed-effects panel model (principal-components factors, CCE / common-correlated-effects, interactive effects). Near-miss that does NOT fire: additive two-way fixed effects, or a single common linear time trend, which are not a declared factor structure.",
+   "macro_panel": "Does the paper explicitly describe its data as a panel with both a large cross-section and a long time series of comparable magnitude (for example countries, regions, or industries observed over many periods)? Fires on that self-description. Near-miss that does NOT fire: a short micro-panel (many units, only a handful of periods), which the paper describes as small-T. Ambiguous cases resolve OUT (NA).",
+   "attrition_panel": "Fires when the paper states its panel is unbalanced or subject to attrition/dropout across waves (units present in some waves but absent in others). Near-miss that does NOT fire: a balanced panel with complete waves for every unit; item nonresponse on a single covariate within otherwise-complete waves."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 11 concepts in >=2 draws; dropped 10 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "PANEL-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "did"
+  ],
+  "claim": "A difference-in-differences or two-way fixed-effects treatment-effect estimate is credible only if treated and untreated units would have moved along the same outcome trajectory absent treatment, so the paper must offer evidence bearing on that counterfactual-parallel-trends premise.",
+  "observable": "Whether the paper presents evidence on pre-treatment outcome trends for treated versus untreated units (a pre-period trend comparison, an event-study/leads-and-lags plot, or a placebo lead test).",
+  "pass_condition": "The paper reports a comparison of treated and untreated pre-treatment outcome trajectories, or a leads-and-lags / event-study specification whose pre-treatment coefficients it examines, as support for the parallel-counterfactual premise.",
+  "flag_condition": "The paper estimates a difference-in-differences or two-way fixed-effects treatment effect but presents no pre-treatment trend comparison, event-study, or lead/placebo evidence anywhere in the text, appendices, or supplement.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Baltagi calls parallel paths the requirement the DID estimator rests on; without it the treatment-effect estimate is not identified.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using a difference-in-differences or two-way fixed-effects design should provide evidence supporting the assumption that treated and untreated units share a common counterfactual outcome trend.",
+  "contributing_sources": [
+   "panel_baltagi_2021",
+   "panel_payson_2019"
+  ],
+  "evidence": [
+   {
+    "source_id": "panel_baltagi_2021",
+    "short_cite": "Baltagi (2021)",
+    "source_lines": "L236",
+    "quote": "The DID estimator requires that, in the absence of the treatment, the average outcomes for the treated and control groups would have followed parallel paths over time.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     41
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_payson_2019",
+    "short_cite": "Payson (2019)",
+    "source_lines": "L61",
+    "quote": "The key identifying assumption is that lobbying cities would have followed the same counterfactual revenue trend as nonlobbying cities if they had not hired lobbyists.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_payson_2019",
+    "short_cite": "Payson (2019)",
+    "source_lines": "L61",
+    "quote": "I begin by presenting visual evidence to assess the validity of the parallel trends assumption. I do this by comparing the pretreatment trends in state revenue transfers for lobbying and nonlobbying cities.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_payson_2019",
+    "short_cite": "Payson (2019)",
+    "source_lines": "L77",
+    "quote": "These specifications check for causality following Granger (1969) and demonstrate that, with city and year fixed effects, the decision to lobby predicts state revenue in the following year while future lobbying does not.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "panel_baltagi_2021",
+    "cite": "Badi H. Baltagi. (2021). Econometric Analysis of Panel Data. Springer texts in business and economics. https://doi.org/10.1007/978-3-030-53953-5",
+    "short_cite": "Baltagi (2021)",
+    "pages": "p. 23",
+    "pagination": "printed",
+    "pdf_pages": [
+     41
+    ]
+   },
+   {
+    "source_id": "panel_payson_2019",
+    "cite": "Julia Payson. (2019). Cities in the Statehouse: How Local Governments Use Lobbyists to Secure State Funding. The Journal of Politics, 82(2), 403-417. https://doi.org/10.1086/706767",
+    "short_cite": "Payson (2019)",
+    "pages": "pp. 409-410",
+    "pagination": "printed",
+    "pdf_pages": [
+     7,
+     8
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "PANEL-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "self_selected_treatment"
+  ],
+  "claim": "When units select into treatment, the panel/difference-in-differences design identifies an effect only for the units that took up treatment, so a paper must frame its estimand as an effect on the treated (or the relevant selecting subpopulation) rather than a population-average causal effect.",
+  "observable": "Whether the paper includes an explicit statement restricting its reported estimand to the units that receive/select into treatment (an effect-on-the-treated or named-subpopulation quantity), as opposed to no such restriction.",
+  "pass_condition": "The paper explicitly states that its estimate is the effect for the units that select into (or receive) treatment -- an effect-on-the-treated or named-subpopulation quantity -- and interprets its conclusions on that basis.",
+  "flag_condition": "The paper has self-selected treatment and reports a treatment/exposure effect but contains no explicit statement restricting the estimand to the treated/selecting subpopulation (it leaves the estimate as a generic causal effect).",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Arellano-Bonhomme and Payson both hold that a difference-in-differences / selection design identifies only the treated subpopulation's effect; presenting it as a population average overstates external reach.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper with self-selected treatment should include an explicit statement restricting its estimand to the treated/selecting units rather than leaving it as a generic or population-average effect.",
+  "contributing_sources": [
+   "panel_payson_2019",
+   "panel_arellano_2011"
+  ],
+  "evidence": [
+   {
+    "source_id": "panel_arellano_2011",
+    "short_cite": "Arellano (2011)",
+    "source_lines": "L69",
+    "quote": "This is the familiar result that a difference-in-differences assumption only identifies the average treatment effect on the treated.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_payson_2019",
+    "short_cite": "Payson (2019)",
+    "source_lines": "L80",
+    "quote": "identifies the effect of hiring a lobbyist for the set of cities that select into lobbying",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_arellano_2011",
+    "short_cite": "Arellano (2011)",
+    "source_lines": "L68",
+    "quote": "The fixed-effects approach delivers identification results for the subpopulation S only.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "panel_arellano_2011",
+    "cite": "Manuel Arellano & Stéphane Bonhomme. (2011). Identifying Distributional Characteristics in Random Coefficients Panel Data Models. The Review of Economic Studies, 79(3), 987-1020. https://doi.org/10.1093/restud/rdr045",
+    "short_cite": "Arellano (2011)",
+    "pages": "p. 991",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "panel_payson_2019",
+    "cite": "Julia Payson. (2019). Cities in the Statehouse: How Local Governments Use Lobbyists to Secure State Funding. The Journal of Politics, 82(2), 403-417. https://doi.org/10.1086/706767",
+    "short_cite": "Payson (2019)",
+    "pages": "p. 411",
+    "pagination": "printed",
+    "pdf_pages": [
+     9
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "PANEL-EST-01",
+  "category": "EST",
+  "scope": [
+   "dynamic_panel"
+  ],
+  "claim": "In a dynamic panel with a lagged dependent variable, ordinary least squares and the within-groups (fixed-effects) estimator are biased for the autoregressive coefficient when the time dimension is short, so a paper reporting a lagged-outcome coefficient must use a bias-aware estimator or justify that its time dimension is long enough for within-groups to be reliable.",
+  "observable": "Which estimator the paper uses for the lagged-dependent-variable coefficient, and whether it addresses the short-panel dynamic bias (via GMM/IV, a bias-corrected or LIML-type estimator, or an explicit large-T argument).",
+  "pass_condition": "The paper estimates the lagged-outcome coefficient with a method that addresses dynamic-panel bias (GMM/IV on lagged instruments, an analytic bias correction, or a LIML-type estimator), OR explicitly argues that its time dimension is long enough for within-groups bias to be negligible.",
+  "flag_condition": "The paper reports a lagged-dependent-variable coefficient estimated by plain OLS or plain within-groups/fixed-effects, with neither a bias-aware estimator NOR an explicit large-T (long-time-series) justification anywhere in the text, appendices, or supplement.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Alvarez, Arellano-Bond, Blundell-Bond, and Anderson-Hsiao all establish that OLS and within-groups are inconsistent/severely biased for the autoregressive parameter at short T, so an uncorrected estimate is unreliable.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A dynamic (lagged-outcome) panel paper should either estimate the autoregressive coefficient with a bias-aware method or make an explicit argument that its time dimension is long enough that within-groups bias is negligible.",
+  "contributing_sources": [
+   "panel_lvarez_2003",
+   "panel_arellano_1991",
+   "panel_blundell_1998",
+   "panel_anderson_1982"
+  ],
+  "evidence": [
+   {
+    "source_id": "panel_lvarez_2003",
+    "short_cite": "Álvarez (2003)",
+    "source_lines": "L6",
+    "quote": "the within-groups (WG) estimator can be severely downward biased when the time series (T ) is short regardless of the cross-sectional size of the panel (N)",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_arellano_1991",
+    "short_cite": "Arellano (1991)",
+    "source_lines": "L192",
+    "quote": "the OLS and the within-group (WG) estimators of a exhibit large biases in opposite directions (i.e. upward bias in OLS whose size depends on (J2; downward bias in WG whose size depends on T)",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_blundell_1998",
+    "short_cite": "Blundell (1998)",
+    "source_lines": "L180",
+    "quote": "the standard OLS, Within Groups and GLS estimators are all inconsistent",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_anderson_1982",
+    "short_cite": "Anderson (1982)",
+    "source_lines": "L62",
+    "quote": "N is fixed or tends to infinity) and inconsistent when T is fixed but N tends to infinity.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     35
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "panel_anderson_1982",
+    "cite": "T. W. Anderson & Chêng Hsiao. (1982). Formulation and estimation of dynamic models using panel data. Journal of Econometrics, 18(1), 47-82. https://doi.org/10.1016/0304-4076(82)90095-1",
+    "short_cite": "Anderson (1982)",
+    "pages": "p. 81",
+    "pagination": "printed",
+    "pdf_pages": [
+     35
+    ]
+   },
+   {
+    "source_id": "panel_arellano_1991",
+    "cite": "Manuel Arellano & Stephen Bond. (1991). Some Tests of Specification for Panel Data: Monte Carlo Evidence and an Application to Employment Equations. The Review of Economic Studies, 58(2), 277. https://doi.org/10.2307/2297968",
+    "short_cite": "Arellano (1991)",
+    "pages": "p. 285",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   },
+   {
+    "source_id": "panel_blundell_1998",
+    "cite": "Richard Blundell & Stephen Bond. (1998). Initial conditions and moment restrictions in dynamic panel data models. Journal of Econometrics, 87(1), 115-143. https://doi.org/10.1016/s0304-4076(98)00009-8",
+    "short_cite": "Blundell (1998)",
+    "pages": "p. 128",
+    "pagination": "printed",
+    "pdf_pages": [
+     14
+    ]
+   },
+   {
+    "source_id": "panel_lvarez_2003",
+    "cite": "Javier Álvarez & Manuel Arellano. (2003). The Time Series and Cross-Section Asymptotics of Dynamic Panel Data Estimators. Econometrica, 71(4), 1121-1159. https://doi.org/10.1111/1468-0262.00441",
+    "short_cite": "Álvarez (2003)",
+    "pages": "p. 1121",
+    "pagination": "printed",
+    "pdf_pages": [
+     1
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "PANEL-EST-02",
+  "category": "EST",
+  "scope": [
+   "nonlinear_fe"
+  ],
+  "claim": "A nonlinear panel model (for example a binary probit or logit) that treats each unit's fixed effect as a parameter is inconsistent when the time dimension is short because of the incidental-parameters problem, so a paper estimating such a model on a short panel must use a method that avoids that inconsistency (conditional likelihood or an incidental-parameters bias correction).",
+  "observable": "Whether a nonlinear fixed-effects model on a short panel is estimated by a conditional-likelihood / sufficiency approach or an incidental-parameters bias correction, rather than by unconditional maximum likelihood that estimates every individual effect directly.",
+  "pass_condition": "The paper estimates its nonlinear fixed-effects model with a conditional-likelihood estimator, a bias-corrected (analytic or jackknife) estimator, or another named method it identifies as handling the incidental-parameters problem, OR explicitly argues its time dimension is long enough for the bias to be negligible.",
+  "flag_condition": "The paper estimates a nonlinear fixed-effects model by unconditional maximum likelihood that estimates each individual effect directly, with neither a conditional-likelihood/incidental-parameters bias correction NOR an explicit large-T justification.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Chamberlain, Honore-Kyriazidou, and Hahn-Kuersteiner establish that the unconditional fixed-effects MLE is inconsistent for fixed T, so an uncorrected nonlinear FE estimate is biased.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A nonlinear fixed-effects panel paper should estimate by conditional likelihood or an incidental-parameters bias correction, or else explicitly justify a time dimension long enough that the incidental-parameters bias is negligible.",
+  "contributing_sources": [
+   "panel_chamberlain_1984",
+   "panel_honor_2000",
+   "panel_hahn_2004"
+  ],
+  "evidence": [
+   {
+    "source_id": "panel_hahn_2004",
+    "short_cite": "Hahn (2004)",
+    "source_lines": "L4",
+    "quote": "The estimators of the parameters of interest will be inconsistent if the number of individuals n goes to infinity while the number of time periods T is held fixed",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_chamberlain_1984",
+    "short_cite": "Chamberlain (1984)",
+    "source_lines": "L69",
+    "quote": "The consistency of the maximum likelihood estimator re- quires that T ~ ~, but we want to do asymptotic inference with N ~ ~ for fixed",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_honor_2000",
+    "short_cite": "Honoré (2000)",
+    "source_lines": "L278",
+    "quote": "This estimator is consistent as T with n fixed, which suggests that its behavior will depend crucially on the number of",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     21
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "panel_chamberlain_1984",
+    "cite": "Gary Chamberlain. (1984). Chapter 22 Panel data. Handbook of econometrics, 1247-1318. https://doi.org/10.1016/s1573-4412(84)02014-6",
+    "short_cite": "Chamberlain (1984)",
+    "pages": "p. 1250",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "panel_hahn_2004",
+    "cite": "Jinyong Hahn & Whitney K. Newey. (2004). Jackknife and Analytical Bias Reduction for Nonlinear Panel Models. Econometrica, 72(4), 1295-1319. https://doi.org/10.1111/j.1468-0262.2004.00533.x",
+    "short_cite": "Hahn (2004)",
+    "pages": "p. 1295",
+    "pagination": "printed",
+    "pdf_pages": [
+     1
+    ]
+   },
+   {
+    "source_id": "panel_honor_2000",
+    "cite": "Bo E. Honoré & Ekaterini Kyriazidou. (2000). Panel Data Discrete Choice Models with Lagged Dependent Variables. Econometrica, 68(4), 839-874. https://doi.org/10.1111/1468-0262.00139",
+    "short_cite": "Honoré (2000)",
+    "pages": "p. 859",
+    "pagination": "printed",
+    "pdf_pages": [
+     21
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "PANEL-EST-03",
+  "category": "EST",
+  "scope": [
+   "random_effects"
+  ],
+  "claim": "A random-effects / error-components estimator is valid only if the regressors are uncorrelated with the individual effects, so a paper that adopts random effects must report a test or argument justifying that exogeneity rather than defaulting to it.",
+  "observable": "Whether a random-effects paper reports a specification test (for example a Hausman test comparing fixed and random effects) or an explicit argument for why the regressors are uncorrelated with the individual effects.",
+  "pass_condition": "The paper reports a Hausman-type comparison of fixed versus random effects, or another test/argument, supporting the assumption that its regressors are uncorrelated with the individual effects before using the random-effects estimates.",
+  "flag_condition": "The paper reports random-effects estimates without any test or explicit justification of the assumption that the regressors are uncorrelated with the individual effects.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Baltagi states the random-effects model presumes exogeneity of all regressors with the individual effects, an all-or-nothing condition whose failure makes the estimator inconsistent.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A random-effects panel paper should justify, by a specification test or explicit argument, that its regressors are uncorrelated with the individual effects.",
+  "contributing_sources": [
+   "panel_baltagi_2021"
+  ],
+  "evidence": [
+   {
+    "source_id": "panel_baltagi_2021",
+    "short_cite": "Baltagi (2021)",
+    "source_lines": "L317",
+    "quote": "the random effects model assumes exogeneity of all the regressors with the random individual effects",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     47
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_baltagi_2021",
+    "short_cite": "Baltagi (2021)",
+    "source_lines": "L317",
+    "quote": "Do not stop here. Test the restrictions implied by the fixed effects model",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     47
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "panel_baltagi_2021",
+    "cite": "Badi H. Baltagi. (2021). Econometric Analysis of Panel Data. Springer texts in business and economics. https://doi.org/10.1007/978-3-030-53953-5",
+    "short_cite": "Baltagi (2021)",
+    "pages": "p. 29",
+    "pagination": "printed",
+    "pdf_pages": [
+     47
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "PANEL-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "panel_tscs"
+  ],
+  "claim": "Because repeated observations on the same unit are serially correlated, standard errors that assume independent errors are size-distorted, so a panel paper must report standard errors robust to within-unit serial correlation (clustered at the unit or a higher level, or an equivalent correction).",
+  "observable": "Whether the reported standard errors are clustered at the unit level or above, or otherwise explicitly made robust to within-unit serial correlation, as opposed to default OLS / independence-assuming standard errors.",
+  "pass_condition": "The paper reports standard errors clustered at the unit (or higher) level, or another correction it identifies as accommodating within-unit serial correlation of the errors.",
+  "flag_condition": "The paper reports default or independence-assuming standard errors on panel data with no clustering and no other stated correction for within-unit serial correlation.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Hansen shows uncorrected inference on serially correlated panel errors is severely size-distorted and ordinary OLS standard errors are consistent only under i.i.d. errors.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A panel/time-series-cross-section paper should report standard errors robust to within-unit serial correlation, typically by clustering at the unit level or above.",
+  "contributing_sources": [
+   "panel_hansen_2006",
+   "panel_baltagi_2021",
+   "panel_payson_2019",
+   "panel_o_grady_2017",
+   "panel_mendelberg_2016"
+  ],
+  "evidence": [
+   {
+    "source_id": "panel_hansen_2006",
+    "short_cite": "Hansen (2006)",
+    "source_lines": "L19",
+    "quote": "inference procedures which fail to account for within individual serial correlation may be severely size distorted",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_hansen_2006",
+    "short_cite": "Hansen (2006)",
+    "source_lines": "L308",
+    "quote": "bsOLS is consistent only in the iid case",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_baltagi_2021",
+    "short_cite": "Baltagi (2021)",
+    "source_lines": "L233",
+    "quote": "serial correlation will understate the standard error of the estimated treatment effects, leading to overestimation of t-statistics and significance levels",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     40
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_payson_2019",
+    "short_cite": "Payson (2019)",
+    "source_lines": "L66",
+    "quote": "The standard errors presented in the following results are always clustered at the city level to correct for correlation across within-city error terms over time.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_o_grady_2017",
+    "short_cite": "O’Grady (2017)",
+    "source_lines": "L217",
+    "quote": "Standard errors are therefore clustered at the household level in all models, which also accounts for clustering at the lower level of individuals within households",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "panel_baltagi_2021",
+    "cite": "Badi H. Baltagi. (2021). Econometric Analysis of Panel Data. Springer texts in business and economics. https://doi.org/10.1007/978-3-030-53953-5",
+    "short_cite": "Baltagi (2021)",
+    "pages": "p. 22",
+    "pagination": "printed",
+    "pdf_pages": [
+     40
+    ]
+   },
+   {
+    "source_id": "panel_hansen_2006",
+    "cite": "Christian Hansen. (2006). Asymptotic properties of a robust variance matrix estimator for panel data when is large. Journal of Econometrics, 141(2), 597-620. https://doi.org/10.1016/j.jeconom.2006.10.009",
+    "short_cite": "Hansen (2006)",
+    "pages": "pp. 598, 611",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     15
+    ]
+   },
+   {
+    "source_id": "panel_o_grady_2017",
+    "cite": "Tom O’Grady. (2017). How do Economic Circumstances Determine Preferences? Evidence from Long-run Panel Data. British Journal of Political Science, 49(4), 1381-1406. https://doi.org/10.1017/s0007123417000242",
+    "short_cite": "O’Grady (2017)",
+    "pages": "p. 1393",
+    "pagination": "printed",
+    "pdf_pages": [
+     13
+    ]
+   },
+   {
+    "source_id": "panel_payson_2019",
+    "cite": "Julia Payson. (2019). Cities in the Statehouse: How Local Governments Use Lobbyists to Secure State Funding. The Journal of Politics, 82(2), 403-417. https://doi.org/10.1086/706767",
+    "short_cite": "Payson (2019)",
+    "pages": "p. 409",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "PANEL-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "dynamic_gmm"
+  ],
+  "claim": "Two-step GMM asymptotic standard errors understate the true finite-sample dispersion of the estimates, making tests over-reject, so a paper reporting two-step GMM must base inference on a finite-sample correction to those standard errors or on the one-step estimator.",
+  "observable": "Whether a paper reporting two-step GMM estimates uses a finite-sample standard-error correction, or reports inference from the one-step estimator, rather than relying on uncorrected two-step asymptotic standard errors.",
+  "pass_condition": "The paper draws its inference either from one-step GMM or from two-step GMM with a stated finite-sample correction to the standard errors.",
+  "flag_condition": "The paper reports two-step GMM estimates and bases its inference on the uncorrected two-step asymptotic standard errors, with no finite-sample correction and no one-step results.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Arellano-Bond and Blundell-Bond document a roughly twenty-percent downward bias in two-step standard errors and consequent over-rejection, so uncorrected two-step inference is unreliable.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A dynamic-panel GMM paper reporting two-step estimates should correct the two-step standard errors for finite-sample bias or report one-step inference.",
+  "contributing_sources": [
+   "panel_arellano_1991",
+   "panel_blundell_1998"
+  ],
+  "evidence": [
+   {
+    "source_id": "panel_arellano_1991",
+    "short_cite": "Arellano (1991)",
+    "source_lines": "L197",
+    "quote": "the estimator of the asymptotic standard errors of GMM2 in the last column shows a downward bias of around 20 percent relative to the finite-sample standard deviations",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_blundell_1998",
+    "short_cite": "Blundell (1998)",
+    "source_lines": "L275",
+    "quote": "the asymptotic standard errors for the two-step GMM estimators tend to underestimate the true dispersion of these estimators in finite samples",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     25
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_blundell_1998",
+    "short_cite": "Blundell (1998)",
+    "source_lines": "L322",
+    "quote": "Inference based on the one-step GMM estimators appears to be much more reliable when either non-normality or heteroskedasticity is suspected",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     28
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "panel_arellano_1991",
+    "cite": "Manuel Arellano & Stephen Bond. (1991). Some Tests of Specification for Panel Data: Monte Carlo Evidence and an Application to Employment Equations. The Review of Economic Studies, 58(2), 277. https://doi.org/10.2307/2297968",
+    "short_cite": "Arellano (1991)",
+    "pages": "p. 285",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   },
+   {
+    "source_id": "panel_blundell_1998",
+    "cite": "Richard Blundell & Stephen Bond. (1998). Initial conditions and moment restrictions in dynamic panel data models. Journal of Econometrics, 87(1), 115-143. https://doi.org/10.1016/s0304-4076(98)00009-8",
+    "short_cite": "Blundell (1998)",
+    "pages": "pp. 139, 142",
+    "pagination": "printed",
+    "pdf_pages": [
+     25,
+     28
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "PANEL-ROBUST-01",
+  "category": "ROBUST",
+  "scope": [
+   "dynamic_gmm"
+  ],
+  "claim": "The lagged-level and lagged-difference instruments used in dynamic-panel GMM are valid only if the idiosyncratic errors are not serially correlated at the relevant order, so a paper using such GMM must report the serial-correlation (second-order autocorrelation) test that checks instrument validity.",
+  "observable": "Whether a dynamic-panel GMM paper reports a test for serial correlation in the (differenced) residuals -- the second-order autocorrelation / instrument-validity test -- alongside its estimates.",
+  "pass_condition": "The paper reports a test for (absence of) second-order serial correlation in the differenced residuals, or an equivalent instrument-validity serial-correlation test, together with the GMM estimates.",
+  "flag_condition": "The paper reports dynamic-panel GMM estimates with no serial-correlation / second-order autocorrelation test of the instruments' validity anywhere in the text, appendices, or supplement.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Arellano-Bond states that reporting serial-correlation tests of instrument validity is essential and that GMM consistency hinges on the absence of second-order serial correlation.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A dynamic-panel GMM paper should report a test for serial correlation in the residuals (the second-order autocorrelation test) that validates its instruments.",
+  "contributing_sources": [
+   "panel_arellano_1991"
+  ],
+  "evidence": [
+   {
+    "source_id": "panel_arellano_1991",
+    "short_cite": "Arellano (1991)",
+    "source_lines": "L35",
+    "quote": "essential to satisfy oneself that this is not the case by reporting test statistics of the validity of the instrumental variables (i.e. tests of lack of serial correlation) together with the parameter estimates",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_arellano_1991",
+    "short_cite": "Arellano (1991)",
+    "source_lines": "L97",
+    "quote": "the consistency of the GMM estimators above hinges heavily upon the assumption that E(vitvi(t-2)) =0",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_arellano_1991",
+    "short_cite": "Arellano (1991)",
+    "source_lines": "L42",
+    "quote": "we assume lack of serial correlation but not necessarily independence over time. With these assumptions, values of y lagged two periods or more are valid instruments in the equations in first differences",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "panel_arellano_1991",
+    "cite": "Manuel Arellano & Stephen Bond. (1991). Some Tests of Specification for Panel Data: Monte Carlo Evidence and an Application to Employment Equations. The Review of Economic Studies, 58(2), 277. https://doi.org/10.2307/2297968",
+    "short_cite": "Arellano (1991)",
+    "pages": "pp. 278, 281",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "PANEL-ROBUST-02",
+  "category": "ROBUST",
+  "scope": [
+   "factor_model"
+  ],
+  "claim": "The validity of a factor / interactive-effects model depends on using the correct number of factors, so the paper must determine that number from the data (e.g., an information criterion designed for large panels) rather than simply assuming it.",
+  "observable": "Whether the paper reports how the number of common factors was chosen — a data-driven selection procedure (information criterion, eigenvalue-ratio, or equivalent) with its search bound — versus asserting a factor count without justification.",
+  "pass_condition": "The paper reports a data-driven procedure for selecting the number of factors (an information criterion or equivalent selection rule, with a stated maximum candidate count) or reports robustness of results to the factor count.",
+  "flag_condition": "The paper fixes the number of factors by assumption with no data-driven selection or robustness check.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources make the correct factor count central to a factor model's theoretical and empirical validity (Bai-Ng 2002).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A factor / interactive-effects paper must determine the number of factors from the data rather than assume it.",
+  "contributing_sources": [
+   "panel_bai_2002",
+   "panel_bai_2009"
+  ],
+  "evidence": [
+   {
+    "source_id": "panel_bai_2002",
+    "short_cite": "Bai (2002)",
+    "source_lines": "L5",
+    "quote": "Central to both the theoretical and the empirical validity of factor models is the correct specification of the number of factors.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_bai_2002",
+    "short_cite": "Bai (2002)",
+    "source_lines": "L268",
+    "quote": "The criteria should be useful in applications in which the number of factors has traditionally been assumed rather than determined by the data.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     19
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "panel_bai_2002",
+    "cite": "Jushan Bai & Serena Ng. (2002). Determining the Number of Factors in Approximate Factor Models. Econometrica, 70(1), 191-221. https://doi.org/10.1111/1468-0262.00273",
+    "short_cite": "Bai (2002)",
+    "pages": "pp. 191, 209",
+    "pagination": "printed",
+    "pdf_pages": [
+     1,
+     19
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "PANEL-ROBUST-03",
+  "category": "ROBUST",
+  "scope": [
+   "macro_panel"
+  ],
+  "claim": "In a panel with a large cross-section and a long time series, errors correlated across units bias slope estimates and distort test size, so a macro-panel paper must test for or otherwise account for cross-sectional dependence in its residuals.",
+  "observable": "Whether a macro-panel paper reports a test for cross-sectional (cross-unit) error dependence, or uses an estimator/correction it identifies as accommodating such dependence.",
+  "pass_condition": "The paper reports a cross-sectional-dependence test on its residuals, or adopts an estimator/standard-error correction it states accounts for cross-unit error dependence.",
+  "flag_condition": "The paper analyzes a large-N large-T macro panel with no cross-sectional-dependence test and no estimator or correction addressing cross-unit error dependence.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Baltagi warns that ignoring cross-country dependence in long macro panels can mislead inference, and Pesaran documents substantial bias and size distortion when cross-section dependence is ignored.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A macro-panel paper (large cross-section and long time series) should report a cross-sectional-dependence test on its residuals, or adopt an estimator/standard-error correction it states accounts for cross-unit error dependence.",
+  "contributing_sources": [
+   "panel_baltagi_2021",
+   "panel_pesaran_2006"
+  ],
+  "evidence": [
+   {
+    "source_id": "panel_baltagi_2021",
+    "short_cite": "Baltagi (2021)",
+    "source_lines": "L136",
+    "quote": "Macro-panels on countries or regions with long time series that do not account for cross-country dependence may lead to misleading inference.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     30
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_pesaran_2006",
+    "short_cite": "Pesaran (2006)",
+    "source_lines": "L22",
+    "quote": "the substantial bias and size distortions that result if error cross-section dependence is ignored",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_pesaran_2006",
+    "short_cite": "Pesaran (2006)",
+    "source_lines": "L25",
+    "quote": "highlight the importance of testing for error cross-section dependence in panel data models",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "panel_baltagi_2021",
+    "cite": "Badi H. Baltagi. (2021). Econometric Analysis of Panel Data. Springer texts in business and economics. https://doi.org/10.1007/978-3-030-53953-5",
+    "short_cite": "Baltagi (2021)",
+    "pages": "p. 12",
+    "pagination": "printed",
+    "pdf_pages": [
+     30
+    ]
+   },
+   {
+    "source_id": "panel_pesaran_2006",
+    "cite": "M. Hashem Pesaran. (2006). Estimation and Inference in Large Heterogeneous Panels with a Multifactor Error Structure. Econometrica, 74(4), 967-1012. https://doi.org/10.1111/j.1468-0262.2006.00692.x",
+    "short_cite": "Pesaran (2006)",
+    "pages": "p. 970",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "PANEL-DATA-01",
+  "category": "DATA",
+  "scope": [
+   "attrition_panel"
+  ],
+  "claim": "Selective (biasing) attrition is the most damaging threat to panel-data validity, so a paper whose panel loses units across waves must assess whether attrition is selective (e.g., compare retained units to those observed only once / dropped).",
+  "observable": "Whether the paper reports an assessment of selective attrition — for example, comparing the retained analysis sample to units observed in fewer / only one wave on key variables.",
+  "pass_condition": "The paper reports an attrition assessment, such as comparing retained units to dropped / once-observed units on key characteristics, or a model-based correction for selective dropout.",
+  "flag_condition": "The paper's panel is unbalanced / subject to attrition but it reports no assessment of whether the dropout is selective.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Source calls biasing attrition the most potentially damaging threat to the value of panel data (Baltagi 2021).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A panel paper with attrition/dropout must assess whether the attrition is selective.",
+  "contributing_sources": [
+   "panel_baltagi_2021",
+   "panel_o_grady_2017",
+   "panel_mendelberg_2016"
+  ],
+  "evidence": [
+   {
+    "source_id": "panel_baltagi_2021",
+    "short_cite": "Baltagi (2021)",
+    "source_lines": "L132",
+    "quote": "The most potentially damaging threat to the value of panel data is the presence of biasing attrition.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     29
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "panel_o_grady_2017",
+    "short_cite": "O'Grady (2017)",
+    "source_lines": "L146",
+    "quote": "Table S1 in the Supplementary Material compares summary statistics for the sample to people who appeared in one wave only",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "panel_baltagi_2021",
+    "cite": "Badi H. Baltagi. (2021). Econometric Analysis of Panel Data. Springer texts in business and economics. https://doi.org/10.1007/978-3-030-53953-5",
+    "short_cite": "Baltagi (2021)",
+    "pages": "p. 11",
+    "pagination": "printed",
+    "pdf_pages": [
+     29
+    ]
+   },
+   {
+    "source_id": "panel_o_grady_2017",
+    "cite": "Tom O’Grady. (2017). How do Economic Circumstances Determine Preferences? Evidence from Long-run Panel Data. British Journal of Political Science, 49(4), 1381-1406. https://doi.org/10.1017/s0007123417000242",
+    "short_cite": "O’Grady (2017)",
+    "pages": "p. 1391",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

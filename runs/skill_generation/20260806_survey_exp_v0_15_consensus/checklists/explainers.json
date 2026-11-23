@@ -1,0 +1,154 @@
+{
+ "module": "survey_exp",
+ "run": "20260806_survey_exp_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-11-11",
+ "explainers": [
+  {
+   "check_id": "SURVEY_EXP-IDENT-01",
+   "plain": "The paper should state that respondents were assigned to experimental conditions (such as arms, lists, or profiles) at random.",
+   "why": "Random assignment makes the groups alike on average, so a difference in outcomes can be read as the effect of the treatment.",
+   "done": "states that respondents were randomly assigned to conditions"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-02",
+   "plain": "A paper using a list experiment (where respondents report how many items on a list apply to them) should state or address the assumption that adding the sensitive item does not change answers to the other items.",
+   "why": "The estimate of how common the sensitive item is holds only if adding it leaves each respondent's count of the other items unchanged; otherwise the estimate is mismeasured.",
+   "done": "states or addresses that adding the sensitive item leaves answers to the other list items unchanged"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-03",
+   "plain": "A list-experiment paper should acknowledge that respondents shown the sensitive item must count it truthfully, and should discuss whether truthful reporting is plausible for its item.",
+   "why": "The list-experiment estimate is valid only if respondents report the sensitive item honestly within their count.",
+   "done": "acknowledges that respondents must count the sensitive item truthfully and discusses whether that is plausible"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-04",
+   "plain": "When the paper reads the effect of a variable that was not randomly assigned as causal, it should state the assumption that no unmeasured factor drives both that variable and the outcome, or label the relationship as not causal.",
+   "why": "Random assignment supports causal claims only about the randomized treatment, so causal claims about other variables rest on this further assumption.",
+   "done": "states the no-hidden-confounding assumption behind causal claims about non-randomized variables, or labels them non-causal"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-05",
+   "plain": "A conjoint paper (where respondents choose among profiles with randomly varied attributes) that gives each respondent several tasks should state or address the assumption that answers in one task are unaffected by profiles seen in other tasks.",
+   "why": "Estimating attribute effects from several tasks per respondent requires that responses stay stable across tasks and do not carry over from other tasks.",
+   "done": "states or addresses that answers in one conjoint task are unaffected by profiles in other tasks"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-06",
+   "plain": "A conjoint paper should limit its causal claims to attribute combinations that the randomization could actually produce, or acknowledge where some combinations were excluded.",
+   "why": "Effects can be estimated only for combinations that had a chance of being shown; going beyond them requires extra assumptions.",
+   "done": "limits its claims to attribute combinations its randomization could produce, or acknowledges excluded combinations"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-07",
+   "plain": "When the paper credits an effect to one factor, it should defend that the compared conditions differ only on that factor (or that the effect works only through the intended channel), or acknowledge that the conditions differ in several ways and limit its claims.",
+   "why": "If the conditions differ in more than one way, the effect cannot be credited to the single intended factor.",
+   "done": "defends that conditions differ only on the named factor, or acknowledges bundled differences and limits its claims"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-08",
+   "plain": "A paper using an endorsement experiment (where a policy is shown with or without a group's endorsement) should state or address the assumption that the endorsement does not change how respondents understand the policy.",
+   "why": "If the endorsement changes how respondents understand the policy, the measured shift reflects that changed understanding rather than support for the endorser.",
+   "done": "states or addresses that the endorsement shifts support without changing how respondents understand the policy"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-09",
+   "plain": "An endorsement-experiment paper that combines several policy items into one measure should state, or test, the assumption that the items share a single underlying dimension.",
+   "why": "Combining the items presumes they belong to one policy domain, and standard difference-in-means and regression cannot properly combine them.",
+   "done": "states or tests that its pooled endorsement policy items share a single dimension"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-10",
+   "plain": "A paper that reads its manipulation as an effect of respondents' beliefs should state the information-equivalence assumption: that the conditions are equivalent on background features.",
+   "why": "Random assignment alone does not support a claim that the effect works through beliefs about the focal factor; that claim also requires the conditions to be equivalent on background features.",
+   "done": "states that its conditions are equivalent on background features as a condition for its belief-effect reading"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-11",
+   "plain": "A paper that studies how an effect passes through a measured, not randomized, intermediate variable (a mediator) should state the sequential-ignorability assumption: that nothing beyond the treatment and pretreatment covariates confounds the link between the mediator and the outcome.",
+   "why": "Because the mediator was not randomized, this analysis reintroduces the risk of omitted-variable bias.",
+   "done": "states the no-confounding (sequential-ignorability) assumption for its measured mediator"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-12",
+   "plain": "Variables used to split the sample or define subgroups should be measured before treatment, or the paper should show the treatment did not affect them.",
+   "why": "Conditioning on a variable measured after treatment can bias results and change what is being estimated.",
+   "done": "uses subgroup variables measured before treatment, or shows treatment did not affect them"
+  },
+  {
+   "check_id": "SURVEY_EXP-IDENT-13",
+   "plain": "A paper reading the gap between list-experiment and direct-question estimates as sensitivity bias should state the assumptions this needs (the list assumptions, no differences in nonresponse, no order or wording effects, and a common population), or note that without them the gap may reflect only the measurement methods.",
+   "why": "Without these assumptions, the gap may reflect only the difference between the two measurement methods.",
+   "done": "states the assumptions behind reading the list-versus-direct gap as sensitivity bias, or notes the gap may reflect only measurement methods"
+  },
+  {
+   "check_id": "SURVEY_EXP-EST-01",
+   "plain": "A list-experiment paper should not model how the sensitive trait relates to several respondent characteristics, without a caveat, when the estimated share holding the trait is negative or not distinguishable from zero.",
+   "why": "A trait must actually be present to vary with respondent characteristics, so such models are unreliable when almost no one holds it.",
+   "done": "models the sensitive trait only when its estimated share is clearly positive, or adds a caveat"
+  },
+  {
+   "check_id": "SURVEY_EXP-EST-02",
+   "plain": "A paper using survey weights to estimate a population-wide effect should state that this assumes correct, known weights and treatment assignment independent of selection into the sample, or acknowledge bias from wrong weights.",
+   "why": "If an unmodeled selection process makes the weights wrong, the weighted estimate can be badly biased.",
+   "done": "states the assumptions behind its weighted population estimate or acknowledges bias from wrong weights"
+  },
+  {
+   "check_id": "SURVEY_EXP-INFER-01",
+   "plain": "A list-experiment paper using linear regression should report heteroskedasticity-robust standard errors, which allow the spread of errors to differ across groups.",
+   "why": "The error spread differs by treatment status in this regression, so ordinary standard errors are wrong.",
+   "done": "reports heteroskedasticity-robust standard errors for its list-experiment regression"
+  },
+  {
+   "check_id": "SURVEY_EXP-INFER-02",
+   "plain": "When the paper uses a list-experiment estimate as an input to a second model, its standard errors should include the uncertainty from the first estimate.",
+   "why": "Plugging in first-stage estimates as if they were known gets neither the coefficient nor the standard error right.",
+   "done": "includes uncertainty from both the list-experiment and outcome stages in its standard errors"
+  },
+  {
+   "check_id": "SURVEY_EXP-INFER-03",
+   "plain": "When each respondent gives several answers, the standard errors should account for this, by clustering on respondent or using a respondent-level bootstrap.",
+   "why": "Answers from the same respondent are related, so default standard errors that treat them as independent are not valid.",
+   "done": "clusters standard errors by respondent or uses a respondent-level bootstrap"
+  },
+  {
+   "check_id": "SURVEY_EXP-ROBUST-01",
+   "plain": "A list-experiment paper should report a check on its key assumptions, such as estimated shares of respondent types or a formal test for design effects (the sensitive item changing answers to other items).",
+   "why": "A negative estimated share of a respondent type signals that an assumption fails, and a formal test can detect a violation.",
+   "done": "reports respondent-type shares or a design-effect test for its list experiment"
+  },
+  {
+   "check_id": "SURVEY_EXP-ROBUST-02",
+   "plain": "A paper claiming an effect through beliefs should report placebo or balance tests showing whether background beliefs or attributes are similar across conditions.",
+   "why": "These tests check information equivalence; if background features differ, the result can no longer be read as a belief effect.",
+   "done": "reports placebo or balance tests on background beliefs across conditions"
+  },
+  {
+   "check_id": "SURVEY_EXP-REPORT-01",
+   "plain": "A conjoint paper reporting AMCEs (average marginal component effects, the average effect of one attribute level) should state and justify the distribution of the other attributes used to average them.",
+   "why": "An AMCE depends on that distribution, and any target distribution should lie within the combinations the experiment actually used.",
+   "done": "states and justifies the distribution of other attributes used to average its AMCEs"
+  },
+  {
+   "check_id": "SURVEY_EXP-REPORT-02",
+   "plain": "A paper that generalizes its result to a population should state the basis: a probability sample with proper weights, or an explicit assumption it argues for, such as representativeness or similar effects across people.",
+   "why": "How a convenience sample relates to the population is generally unknown, and matching or reweighting on demographics does not settle it.",
+   "done": "states the sampling or assumption basis for generalizing its result to a population"
+  },
+  {
+   "check_id": "SURVEY_EXP-DATA-01",
+   "plain": "A list-experiment paper should address ceiling and floor effects (respondents who would say yes to all or none of the items), through its choice of items or a correction or diagnostic.",
+   "why": "These effects bias the estimated share downward and remove the privacy the design relies on.",
+   "done": "addresses ceiling and floor effects through item choice, a correction, or a diagnostic"
+  },
+  {
+   "check_id": "SURVEY_EXP-DATA-02",
+   "plain": "A framing or wording experiment should include a no-treatment control group, or qualify its conclusions if it deliberately leaves one out.",
+   "why": "Without a control, a difference between frames cannot show which frame moved attitudes.",
+   "done": "includes a no-treatment control group, or qualifies its conclusions without one"
+  }
+ ],
+ "reviewed": "2026-11-11: 2 field(s) revised after an Opus review against the check text"
+}

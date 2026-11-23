@@ -1,0 +1,745 @@
+[
+ {
+  "_module": "MULTILEVEL",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "panel_tscs",
+   "detection_survey",
+   "bayesian_mcmc",
+   "tscs_panel",
+   "multilevel_model",
+   "count_binomial_multilevel",
+   "mixed_model_prediction"
+  ],
+  "_scope_definitions": {
+   "panel_tscs": "The paper states it observes the same units repeatedly over multiple time periods and models them across time (panel / time-series-cross-sectional / longitudinal). Fires on that self-description. Does NOT fire: a single cross-section; one long time series of a single unit; repeated cross-sections of different individuals the paper does not describe as tracking the same units.",
+   "detection_survey": "The paper states it analyzes an occupancy or abundance survey in which present individuals or species can go undetected on a given visit (detection/non-detection or repeated-count survey). Fires on that declared design. Does NOT fire: a census or a survey the paper treats as perfectly observed.",
+   "bayesian_mcmc": "The paper states it estimates the model by Bayesian MCMC / posterior sampling (e.g. Stan, JAGS, BUGS, brms, or a named Gibbs / HMC / NUTS sampler). Fires on the declared estimation engine. Does NOT fire: a frequentist REML/ML fit (e.g. lme4) with no posterior sampling; a Bayesian model the paper says it fit by a non-sampling approximation.",
+   "tscs_panel": "Fires when the paper states its data are time-series cross-sectional / panel: the same cross-sectional units observed over multiple time periods. Does NOT fire on a single wave of cross-national data, nor on repeated cross-sections drawn from different individuals each period.",
+   "multilevel_model": "The paper explicitly states it fits a multilevel / hierarchical / mixed-effects / random-effects model — it names that method or reports coefficients (intercepts or slopes) that vary across a named grouping factor as its analytic model. Fires only on that self-description. Does NOT fire: a random intercept mentioned only as a nuisance absorbing term with no group-level interpretation; clustered/robust standard errors shown in a table with no declared multilevel model; a single-level OLS/GLM.",
+   "count_binomial_multilevel": "The paper states its multilevel/mixed model has a count or binomial-proportion outcome fit with a Poisson, binomial, or negative-binomial family (grouped counts / proportions from trials). Fires on that declared family. Does NOT fire: a binary 0/1 Bernoulli logistic outcome (which cannot be overdispersed); a continuous Gaussian outcome.",
+   "mixed_model_prediction": "The paper reports predicted, fitted, or forecast outcome values generated from its mixed/multilevel model. Fires when such predicted values are presented. Does NOT fire: reporting only estimated coefficients and variance components with no predicted outcome values."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 10 concepts in >=2 draws; dropped 5 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "MULTILEVEL-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "panel_tscs"
+  ],
+  "claim": "Panel / time-series-cross-sectional data should be modeled with time-period structure so that shocks common to all units in a period are captured, not left in the errors.",
+  "observable": "Whether the model includes a time-period component — year/period indicators, a period-level random effect, or an explicit modeled time trend — in addition to whatever unit structure it carries.",
+  "pass_condition": "The model includes an explicit time-period component (period indicators, a period-level random effect, or a modeled common time trend) capturing period-common variation.",
+  "flag_condition": "The panel/TSCS model contains no time-period component, leaving year-common shocks unmodeled in the error term.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Gelman & Hill treat state-year data as clustered within years as well as units; Shor shows omitting a time indicator misses effects common to all units in a year.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A panel/TSCS model must include a time-period component so that period-common shocks are captured rather than left in the errors.",
+  "contributing_sources": [
+   "multilevel_gelman_2006",
+   "multilevel_shor_2007"
+  ],
+  "evidence": [
+   {
+    "source_id": "multilevel_gelman_2006",
+    "short_cite": "Gelman & Hill (2006)",
+    "source_lines": "L4026",
+    "quote": "one must consider the state-year data as clustered within states and also within years",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     270
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "multilevel_shor_2007",
+    "short_cite": "Shor et al. (2007)",
+    "source_lines": "L19",
+    "quote": "Failure to include a time indicator leads to missing the common effects of particular years across all cross-sectional units for that year.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "multilevel_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "p. 244",
+    "pagination": "printed",
+    "pdf_pages": [
+     270
+    ]
+   },
+   {
+    "source_id": "multilevel_shor_2007",
+    "cite": "Boris Shor, Joseph Bafumi, Luke Keele, & David S. Park. (2007). A Bayesian Multilevel Modeling Approach to Time-Series Cross-Sectional Data. Political Analysis, 15(2), 165-181. https://doi.org/10.1093/pan/mpm006",
+    "short_cite": "Shor (2007)",
+    "pages": "p. 166",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MULTILEVEL-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "detection_survey"
+  ],
+  "claim": "In occupancy or abundance surveys where a present individual or species can be missed on a visit, the model must include a detection-probability process, and detection is separable from occupancy only with more than one replicate visit per site.",
+  "observable": "Whether the model specifies a detection (observation) process distinct from the occupancy/abundance (state) process, and whether the design provides replicate visits per site to identify it.",
+  "pass_condition": "The model includes an explicit detection-probability parameter for the observation process separate from the occupancy/abundance state, and the design records more than one replicate visit per site.",
+  "flag_condition": "The survey treats non-detections as true absences (no detection parameter), or reports a single visit per site so detection cannot be separated from occupancy.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Fiske & Chandler state that ignoring imperfect detection introduces measurement error and obscures ecological relationships, and that replicate visits are what separate detection from occupancy.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "An occupancy/abundance survey with imperfect detection must model a detection process separate from the state process and use replicate visits to identify it.",
+  "contributing_sources": [
+   "multilevel_fiske_2011"
+  ],
+  "evidence": [
+   {
+    "source_id": "multilevel_fiske_2011",
+    "short_cite": "Fiske & Chandler (2011)",
+    "source_lines": "L9",
+    "quote": "imperfect detection can introduce substantial measurement error and obscure underlying ecological relationships if ignored.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "multilevel_fiske_2011",
+    "short_cite": "Fiske & Chandler (2011)",
+    "source_lines": "L43",
+    "quote": "A key feature of species occurrence surveys is that false absences are possible, so that a species might go undetected (Yij = 0) even if it is present (Zi = 1).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "multilevel_fiske_2011",
+    "short_cite": "Fiske & Chandler (2011)",
+    "source_lines": "L44",
+    "quote": "Replicate samples (i.e., J > 1) provide information about the detection rate separate from the occupancy rate.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "multilevel_fiske_2011",
+    "cite": "Ian Fiske & Richard B. Chandler. (2011). <b>unmarked</b>: An<i>R</i>Package for Fitting Hierarchical Models of Wildlife Occurrence and Abundance. Journal of Statistical Software, 43(10). https://doi.org/10.18637/jss.v043.i10",
+    "short_cite": "Fiske (2011)",
+    "pages": "pp. 1, 4",
+    "pagination": "pdf",
+    "pdf_pages": [
+     1,
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MULTILEVEL-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "bayesian_mcmc"
+  ],
+  "claim": "A Bayesian multilevel model fit by MCMC must demonstrate convergence with a mixing diagnostic; the potential-scale-reduction statistic Rhat must be at or below roughly 1.1 for all parameters, with values well above 1 signaling non-convergence.",
+  "observable": "Whether the paper reports a convergence/mixing diagnostic (Rhat / R-hat / potential scale reduction) and the reported values relative to 1.1.",
+  "pass_condition": "The paper reports Rhat (or an equivalent named mixing diagnostic) and states or shows it is at or below the cutoff for all parameters.",
+  "flag_condition": "The paper reports Rhat above the cutoff, reports it for only a subset of parameters, or fits by MCMC without reporting any convergence diagnostic.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Gelman & Hill judge convergence only when Rhat is below 1.1 for all parameters; Bürkner states Rhat above ~1.1 means the chains have not converged and results are not usable.",
+  "prevalence_aggravator": null,
+  "threshold": {
+   "cutoff": 1.1,
+   "border_band": [
+    1.05,
+    1.1
+   ],
+   "provenance": "rule_of_thumb",
+   "band_rule": "All reported Rhat at or below 1.05: PASS. Any parameter's Rhat in (1.05, 1.10]: PASS only if Rhat is reported for all parameters and the paper states convergence was reached; borderline flag mandatory. Any Rhat above 1.10, or Rhat given for only some parameters with the rest unstated: FLAG."
+  },
+  "coder_decidable": true,
+  "requirement_statement": "A Bayesian MCMC multilevel fit must report a convergence diagnostic with Rhat at or below ~1.1 for all parameters.",
+  "contributing_sources": [
+   "multilevel_gelman_2006",
+   "multilevel_b_rkner_2017"
+  ],
+  "evidence": [
+   {
+    "source_id": "multilevel_gelman_2006",
+    "short_cite": "Gelman & Hill (2006)",
+    "source_lines": "L6062",
+    "quote": "If Rhat is less than 1.1 for all parameters, then we judge the algorithm to have approximately converged, in the sense that the parallel chains have mixed well",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     378
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "multilevel_b_rkner_2017",
+    "short_cite": "Bürkner (2017)",
+    "source_lines": "L118",
+    "quote": "Rhat is considerably greater than 1 (i.e., > 1.1), the chains have not yet converged and it is necessary to run more iterations and/or set stronger priors.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "multilevel_b_rkner_2017",
+    "cite": "Paul‐Christian Bürkner. (2017). <b>brms</b> : An <i>R</i> Package for Bayesian Multilevel Models Using <i>Stan</i>. Journal of Statistical Software, 80(1). https://doi.org/10.18637/jss.v080.i01",
+    "short_cite": "Bürkner (2017)",
+    "pages": "p. 11",
+    "pagination": "pdf",
+    "pdf_pages": [
+     11
+    ]
+   },
+   {
+    "source_id": "multilevel_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "p. 352",
+    "pagination": "printed",
+    "pdf_pages": [
+     378
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MULTILEVEL-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "bayesian_mcmc"
+  ],
+  "claim": "Assessing MCMC convergence by whether chains mix requires running more than one chain, since a single chain cannot reveal failure to explore the full posterior.",
+  "observable": "The number of independent MCMC chains the paper states it ran.",
+  "pass_condition": "The paper states it ran at least two independent chains.",
+  "flag_condition": "The paper states it ran a single chain, or fits by MCMC without stating the number of chains.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Gelman & Hill require at least two chains to assess mixing; Bürkner states a single chain cannot be trusted to explore the whole posterior.",
+  "prevalence_aggravator": null,
+  "threshold": {
+   "cutoff": 2,
+   "border_band": [
+    2,
+    2
+   ],
+   "provenance": "rule_of_thumb",
+   "band_rule": "1 chain (or number unstated): FLAG. Exactly 2 chains: PASS (the minimum needed to assess mixing). 3 or more chains: PASS."
+  },
+  "coder_decidable": true,
+  "requirement_statement": "A Bayesian MCMC multilevel fit must run at least two independent chains.",
+  "contributing_sources": [
+   "multilevel_gelman_2006",
+   "multilevel_b_rkner_2017"
+  ],
+  "evidence": [
+   {
+    "source_id": "multilevel_gelman_2006",
+    "short_cite": "Gelman & Hill (2006)",
+    "source_lines": "L6118",
+    "quote": "we thus need to simulate at least 2 chains",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     382
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "multilevel_b_rkner_2017",
+    "short_cite": "Bürkner (2017)",
+    "source_lines": "L323",
+    "quote": "One should always aim at running multiple chains as one cannot be sure that a single chain really explores the whole posterior distribution.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     19
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "multilevel_b_rkner_2017",
+    "cite": "Paul‐Christian Bürkner. (2017). <b>brms</b> : An <i>R</i> Package for Bayesian Multilevel Models Using <i>Stan</i>. Journal of Statistical Software, 80(1). https://doi.org/10.18637/jss.v080.i01",
+    "short_cite": "Bürkner (2017)",
+    "pages": "p. 19",
+    "pagination": "pdf",
+    "pdf_pages": [
+     19
+    ]
+   },
+   {
+    "source_id": "multilevel_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "p. 356",
+    "pagination": "printed",
+    "pdf_pages": [
+     382
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MULTILEVEL-INFER-03",
+  "category": "INFER",
+  "scope": [
+   "tscs_panel"
+  ],
+  "claim": "Time-series cross-sectional data typically carry a nonspherical error structure (serial correlation, contemporaneous correlation, panel heteroscedasticity); leaving it unaddressed yields incorrect standard errors, and fitting a multilevel model does not by itself fix it.",
+  "observable": "Whether the TSCS/panel paper reports an explicit correction for its error structure, from any of: a lagged dependent variable, an AR/Prais-Winsten/Cochrane-Orcutt transformation or explicit serial-correlation model, panel-corrected standard errors, time/period indicators for common shocks, or a stated heteroscedasticity correction.",
+  "pass_condition": "The paper reports at least one enumerated correction for its error structure (lagged dependent variable; AR/Prais-Winsten/Cochrane-Orcutt or explicit serial-correlation model; panel-corrected standard errors; time/period indicators for common shocks; or a stated heteroscedasticity correction) anywhere in the paper or its appendices.",
+  "flag_condition": "The paper fits a TSCS/panel model (including a multilevel one) and reports no correction for any of serial correlation, contemporaneous correlation, or panel heteroscedasticity.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Shor (2007): panel heteroskedasticity and contemporaneous correlation are serious enough to cause incorrect SE estimates, and uncorrected OLS/FE standard errors are overmodest, risking type II errors.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A TSCS/panel analysis must apply and report at least one explicit correction for the nonspherical error structure of its data, since a multilevel specification does not supply that correction on its own. A single enumerated correction present anywhere is sufficient to PASS; total silence FLAGs.",
+  "contributing_sources": [
+   "Shor (2007)"
+  ],
+  "evidence": [
+   {
+    "source_id": "multilevel_shor_2007",
+    "short_cite": "Shor (2007)",
+    "source_lines": "L62",
+    "quote": "TSCS data typically exhibit nonspherical errors that make OLS regressions problematic.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "multilevel_shor_2007",
+    "short_cite": "Shor (2007)",
+    "source_lines": "L62",
+    "quote": "multilevel modeling does not by itself correct for serial correlation and the same corrections must be applied.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "multilevel_shor_2007",
+    "short_cite": "Shor (2007)",
+    "source_lines": "L86",
+    "quote": "panel heteroskedasticity and contemporaneous correlation serious enough to cause incorrect estimates of the SEs, if not taken into account.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "multilevel_shor_2007",
+    "cite": "Boris Shor, Joseph Bafumi, Luke Keele, & David S. Park. (2007). A Bayesian Multilevel Modeling Approach to Time-Series Cross-Sectional Data. Political Analysis, 15(2), 165-181. https://doi.org/10.1093/pan/mpm006",
+    "short_cite": "Shor (2007)",
+    "pages": "pp. 171, 173",
+    "pagination": "printed",
+    "pdf_pages": [
+     7,
+     9
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MULTILEVEL-ROBUST-01",
+  "category": "ROBUST",
+  "scope": [
+   "multilevel_model"
+  ],
+  "claim": "After fitting a multilevel model its fit to the data must be checked; a graphical or posterior-predictive check should compare the observed data against replicated data from the model rather than accept the fit unexamined.",
+  "observable": "Whether the paper reports a model-fit or adequacy check for the fitted multilevel model.",
+  "pass_condition": "The paper reports at least one fit/adequacy check from the corpus set — a posterior predictive check comparing observed to replicated data, residual or binned-residual plots, a comparison of model-implied to observed summaries, or a fake-data parameter-recovery check.",
+  "flag_condition": "The paper reports a fitted multilevel model with no fit or adequacy check of any kind.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Gelman & Hill state that once a model is fit it is important to check its fit to data, and that a posterior predictive check should compare the data to several replicated draws.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A fitted multilevel model must be accompanied by at least one reported check of its fit to the data.",
+  "contributing_sources": [
+   "multilevel_gelman_2006"
+  ],
+  "evidence": [
+   {
+    "source_id": "multilevel_gelman_2006",
+    "short_cite": "Gelman & Hill (2006)",
+    "source_lines": "L8809",
+    "quote": "once we have successfully fit a model, it is important to check its fit to data",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     539
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "multilevel_gelman_2006",
+    "short_cite": "Gelman & Hill (2006)",
+    "source_lines": "L8861",
+    "quote": "a posterior predictive check should compare y to several draws of yrep",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     545
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "multilevel_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "pp. 513, 519",
+    "pagination": "printed",
+    "pdf_pages": [
+     539,
+     545
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MULTILEVEL-ROBUST-02",
+  "category": "ROBUST",
+  "scope": [
+   "count_binomial_multilevel"
+  ],
+  "claim": "Poisson and binomial multilevel models have no free variance parameter and are prone to overdispersion; the paper must check for or accommodate overdispersion, since leaving it uncorrected makes the confidence intervals too narrow. Binary 0/1 outcomes are exempt because they cannot be overdispersed.",
+  "observable": "Whether a grouped-count or binomial-proportion multilevel model reports an overdispersion check or an overdispersion-accommodating specification.",
+  "pass_condition": "The paper reports an overdispersion diagnostic (e.g. a dispersion statistic or test) or fits an overdispersion-accommodating specification from the corpus set — a negative-binomial or beta-binomial family, a quasi-likelihood dispersion adjustment, or an observation-level random effect.",
+  "flag_condition": "A Poisson/binomial grouped-count multilevel model is fit with neither an overdispersion check nor an overdispersion-accommodating specification.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Gelman & Hill state binomial and Poisson models are subject to overdispersion because they lack a variance parameter, and that without adjustment the confidence intervals are too narrow and inferences overconfident.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A Poisson/binomial grouped-count multilevel model must report an overdispersion check or an overdispersion-accommodating specification.",
+  "contributing_sources": [
+   "multilevel_gelman_2006"
+  ],
+  "evidence": [
+   {
+    "source_id": "multilevel_gelman_2006",
+    "short_cite": "Gelman & Hill (2006)",
+    "source_lines": "L5614",
+    "quote": "Binomial and Poisson regression models are subject to overdispersion because these models do not have variance parameters to capture the variation in the data",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     351
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "multilevel_gelman_2006",
+    "short_cite": "Gelman & Hill (2006)",
+    "source_lines": "L2044",
+    "quote": "Without this adjustment, the confidence intervals would be too narrow, and inferences would be overconfident",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     143
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "multilevel_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "pp. 117, 325",
+    "pagination": "printed",
+    "pdf_pages": [
+     143,
+     351
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MULTILEVEL-REPORT-01",
+  "category": "REPORT",
+  "scope": [
+   "mixed_model_prediction"
+  ],
+  "claim": "Because a mixed model carries random coefficients, any prediction it reports must state whether it is marginal (population-level, random effects set to zero) or conditional on the estimated random-effect values for specific groups.",
+  "observable": "Whether reported predictions/fitted values are labeled as marginal/population-level or as conditional on particular groups' random effects.",
+  "pass_condition": "The paper states, for its reported predictions, whether they are marginal (population-level) or conditional on the estimated group random effects.",
+  "flag_condition": "The paper presents predictions from the mixed model without stating whether they are marginal or group-conditional.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Bates et al. state one must always clarify whether a mixed-model prediction is based on the marginal distribution or the distribution conditional on the random-effect modes.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "clarity_check": true,
+  "author_guidance": "State for every predicted or fitted value whether it is a marginal (population-level, random effects at zero) prediction or a prediction conditional on a specific group's estimated random effects.",
+  "requirement_statement": "Predictions from a mixed model must be labeled marginal or conditional on the random effects.",
+  "contributing_sources": [
+   "multilevel_bates_2015"
+  ],
+  "evidence": [
+   {
+    "source_id": "multilevel_bates_2015",
+    "short_cite": "Bates et al. (2015)",
+    "source_lines": "L848",
+    "quote": "Because mixed models involve random coefficients, one must always clarify whether predictions should be based on the marginal distribution of the response variable or on the distribution that is conditional on the modes of the random effects",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     36
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "multilevel_bates_2015",
+    "cite": "Douglas M. Bates, Martin Mächler, Benjamin M. Bolker, & Steve Walker. (2015). Fitting Linear Mixed-Effects Models Using <b>lme4</b>. Journal of Statistical Software, 67(1). https://doi.org/10.18637/jss.v067.i01",
+    "short_cite": "Bates (2015)",
+    "pages": "p. 36",
+    "pagination": "pdf",
+    "pdf_pages": [
+     36
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MULTILEVEL-REPORT-02",
+  "category": "REPORT",
+  "scope": [
+   "multilevel_model"
+  ],
+  "claim": "A multilevel model should state the number of higher-level units (groups) for each grouping factor, because the reliability of the variance-component and hyperparameter estimates hinges on how many groups there are — while no fixed minimum-groups rule applies.",
+  "observable": "Whether the paper states the number of groups (levels of each grouping factor) contributing to the model.",
+  "pass_condition": "The paper states the number of higher-level units for each grouping factor in the model (a count, or a table from which the count is directly readable).",
+  "flag_condition": "The paper fits a multilevel model without stating how many groups each grouping factor has.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "LOW",
+  "severity_basis": "Shor et al. state the number of higher-level units is usually key to whether large-sample properties apply; Gelman & Hill reject any hard minimum-groups threshold, so the group count is reported for the reader to judge rather than used as a gate.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "clarity_check": true,
+  "author_guidance": "State the number of groups (levels) for each grouping factor in the model, so readers can judge how well the group-level variance and coefficients are identified.",
+  "requirement_statement": "A multilevel model must state the number of groups for each grouping factor.",
+  "contributing_sources": [
+   "multilevel_shor_2007",
+   "multilevel_gelman_2006"
+  ],
+  "evidence": [
+   {
+    "source_id": "multilevel_shor_2007",
+    "short_cite": "Shor et al. (2007)",
+    "source_lines": "L44",
+    "quote": "the number of higher-level units . . . is usually key in determining whether these large-sample properties (of ML) will apply",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "multilevel_gelman_2006",
+    "short_cite": "Gelman & Hill (2006)",
+    "source_lines": "L4564",
+    "quote": "Advice is sometimes given that multilevel models can only be used if the number of groups is higher than some threshold",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     301
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "multilevel_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "p. 275",
+    "pagination": "printed",
+    "pdf_pages": [
+     301
+    ]
+   },
+   {
+    "source_id": "multilevel_shor_2007",
+    "cite": "Boris Shor, Joseph Bafumi, Luke Keele, & David S. Park. (2007). A Bayesian Multilevel Modeling Approach to Time-Series Cross-Sectional Data. Political Analysis, 15(2), 165-181. https://doi.org/10.1093/pan/mpm006",
+    "short_cite": "Shor (2007)",
+    "pages": "p. 169",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "MULTILEVEL-REPORT-03",
+  "category": "REPORT",
+  "scope": [
+   "bayesian_mcmc"
+  ],
+  "claim": "In a Bayesian multilevel model every parameter has a prior, so the paper must state the priors it used; software defaults do not guarantee sensible priors, so relying on them silently is not enough.",
+  "observable": "Whether the paper states the prior distributions placed on the model's parameters (including variance/hyperparameters), rather than leaving them unstated or as unnamed software defaults.",
+  "pass_condition": "The paper states the prior distributions used for its parameters (coefficients and variance/hyperparameters), whether chosen or explicitly adopted defaults it names.",
+  "flag_condition": "The paper fits a Bayesian multilevel model without stating the priors used for its parameters.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Gelman & Hill state that in a Bayesian framework all parameters must have prior distributions; Bürkner warns software acceptance does not guarantee the priors are reasonable, leaving the analyst responsible for checking them.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A Bayesian multilevel model must state the priors placed on its parameters.",
+  "contributing_sources": [
+   "multilevel_gelman_2006",
+   "multilevel_b_rkner_2017"
+  ],
+  "evidence": [
+   {
+    "source_id": "multilevel_gelman_2006",
+    "short_cite": "Gelman & Hill (2006)",
+    "source_lines": "L5949",
+    "quote": "In a Bayesian framework, all parameters must have prior distributions",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     372
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "multilevel_b_rkner_2017",
+    "short_cite": "Bürkner (2017)",
+    "source_lines": "L101",
+    "quote": "Although brms tries to find common problems (e.g., setting bounded priors on unbounded parameters), there is no guarantee that the defined priors are reasonable for the model.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "multilevel_b_rkner_2017",
+    "cite": "Paul‐Christian Bürkner. (2017). <b>brms</b> : An <i>R</i> Package for Bayesian Multilevel Models Using <i>Stan</i>. Journal of Statistical Software, 80(1). https://doi.org/10.18637/jss.v080.i01",
+    "short_cite": "Bürkner (2017)",
+    "pages": "p. 10",
+    "pagination": "pdf",
+    "pdf_pages": [
+     10
+    ]
+   },
+   {
+    "source_id": "multilevel_gelman_2006",
+    "cite": "Andrew Gelman & Jennifer Hill. (2006). Data Analysis Using Regression and Multilevel/Hierarchical Models. Cambridge University Press eBooks. https://doi.org/10.1017/cbo9780511790942",
+    "short_cite": "Gelman (2006)",
+    "pages": "p. 346",
+    "pagination": "printed",
+    "pdf_pages": [
+     372
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

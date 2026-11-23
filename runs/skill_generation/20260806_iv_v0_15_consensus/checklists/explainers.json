@@ -1,0 +1,88 @@
+{
+ "module": "iv",
+ "run": "20260806_iv_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-11-11",
+ "explainers": [
+  {
+   "check_id": "IV-IDENT-01",
+   "plain": "The paper should state in words which causal effect its instrumental variable (IV) estimate is meant to capture and, if that effect applies only to a particular group, name that group.",
+   "why": "Without a stated target, readers cannot tell what quantity the estimate represents or whom it describes.",
+   "done": "names the causal effect it estimates and, if that effect is specific to a group, names the group"
+  },
+  {
+   "check_id": "IV-IDENT-02",
+   "plain": "The paper should give a reasoned argument, not a statistical test, for why the instrument affects the outcome only through the treatment (the exclusion restriction); a regression of the outcome on the instrument does not count.",
+   "why": "This assumption cannot be tested with the data, so the estimate is only as credible as the argument for it.",
+   "done": "argues why the instrument affects the outcome only through the treatment"
+  },
+  {
+   "check_id": "IV-IDENT-03",
+   "plain": "The paper should argue that the instrument is unrelated to hidden factors that affect the outcome, as if randomly assigned, making this case explicitly when it was not actually randomized and naming any covariates it conditions on.",
+   "why": "IV relies on this independence, and outside a true randomization it cannot simply be assumed.",
+   "done": "argues the instrument is as good as randomly assigned, naming the covariates it relies on"
+  },
+  {
+   "check_id": "IV-IDENT-04",
+   "plain": "If the paper claims the instrument is (conditionally) randomly assigned, it should check that the instrument is unrelated to characteristics fixed before assignment, using the same covariates as in its estimates.",
+   "why": "Random assignment implies the instrument should be unrelated to such characteristics, so this check tests the claim directly.",
+   "done": "reports a balance check comparing pre-assignment characteristics across instrument values"
+  },
+  {
+   "check_id": "IV-IDENT-05",
+   "plain": "When the paper reads its IV estimate as an average treatment effect, it should justify, by argument or design, that the instrument pushes no unit's treatment in the opposite direction (no \"defiers\", also called monotonicity).",
+   "why": "Without this condition, the IV estimate cannot be read as an average effect when effects may vary across units.",
+   "done": "justifies that the instrument moves no unit's treatment in the opposite direction"
+  },
+  {
+   "check_id": "IV-IDENT-06",
+   "plain": "The paper should address whether one unit's outcome could be affected by other units' instrument or treatment (interference, or spillovers), either by arguing it does not happen or by modeling it where expected.",
+   "why": "IV assumes no interference between units, and spillovers between treated and untreated units bias the estimate.",
+   "done": "argues there are no spillovers between units, or models them where expected"
+  },
+  {
+   "check_id": "IV-IDENT-07",
+   "plain": "When reading its IV estimate causally, the paper should acknowledge that it applies only to units whose treatment the instrument changes (compliers), not automatically to the whole population.",
+   "why": "When effects vary across units, the effect for compliers need not equal the population effect, which limits how far the result generalizes.",
+   "done": "states that its estimate applies to the units the instrument moves and notes the limit on generalizing"
+  },
+  {
+   "check_id": "IV-INFER-01",
+   "plain": "The paper should report how strongly the instrument predicts the treatment in the first stage, using an F statistic or partial R-squared for the excluded instruments after accounting for covariates.",
+   "why": "Readers need this statistic to judge whether the instrument is strong enough to support the IV estimate.",
+   "done": "reports a first-stage F statistic or partial R-squared for its instruments"
+  },
+  {
+   "check_id": "IV-INFER-02",
+   "plain": "If the instrument is weak or borderline (an effective F below 23.1), the paper should add inference that stays valid with weak instruments, such as an Anderson-Rubin confidence set, rather than relying only on conventional standard errors.",
+   "why": "With a weak first stage, conventional confidence intervals contain the true value less often than claimed, and rescaling standard errors does not fix this.",
+   "done": "shows a strong first stage (effective F of 23.1 or more) or reports inference valid with a weak instrument"
+  },
+  {
+   "check_id": "IV-INFER-03",
+   "plain": "When errors are clustered, correlated over time, or uneven in spread, the paper should judge instrument strength with a statistic that accounts for this (the effective F), not an ordinary F compared to standard Stock-Yogo cutoffs.",
+   "why": "Those standard cutoffs assume errors of even spread, so applying them under other error patterns can misjudge whether the instrument is strong enough.",
+   "done": "judges instrument strength with an effective F matched to its error structure"
+  },
+  {
+   "check_id": "IV-INFER-04",
+   "plain": "The paper should not keep or drop specifications, samples, or instruments based on whether their first-stage F statistic passes a cutoff.",
+   "why": "Screening on the F statistic biases the estimates that survive and distorts the error rates of the tests.",
+   "done": "does not select specifications, samples, or instruments by a first-stage F cutoff"
+  },
+  {
+   "check_id": "IV-INFER-05",
+   "plain": "The paper should compute standard errors suited to the data's structure, for example clustering at the level where observations are related or correcting for correlation over time, and account for the two estimation stages.",
+   "why": "Standard errors that ignore this structure or the two-stage estimation can misstate uncertainty, so the reported IV standard errors may not be valid.",
+   "done": "reports standard errors matched to its clustering, time structure, and two-stage design"
+  },
+  {
+   "check_id": "IV-INFER-06",
+   "plain": "With more than one treatment variable needing an instrument, the paper should assess joint instrument strength with a statistic built for that case, such as Cragg-Donald or conditional (Sanderson-Windmeijer) F, rather than each first stage's own F.",
+   "why": "Separate first-stage F statistics are not designed to show whether the instruments jointly identify the effects of all the treatments.",
+   "done": "reports a Cragg-Donald or conditional first-stage statistic for its multiple treatment variables"
+  }
+ ],
+ "reviewed": "2026-11-11: 2 field(s) revised after an Opus review against the check text"
+}

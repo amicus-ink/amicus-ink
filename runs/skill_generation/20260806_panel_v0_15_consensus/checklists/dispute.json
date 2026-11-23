@@ -1,0 +1,57 @@
+{
+ "PANEL-IDENT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "PANEL-IDENT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "PANEL-EST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "PANEL-EST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "PANEL-EST-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "PANEL-INFER-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 5
+ },
+ "PANEL-INFER-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "PANEL-ROBUST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "PANEL-ROBUST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "PANEL-ROBUST-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "PANEL-DATA-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ }
+}

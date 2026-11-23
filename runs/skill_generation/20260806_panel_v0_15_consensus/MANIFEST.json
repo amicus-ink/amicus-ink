@@ -1,0 +1,200 @@
+{
+ "module": "panel",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-4-8",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "panel_anderson_1982",
+   "sha256_pdf": "b7b266a267648f94172874c775aac9ded6c964ca7db0594b1dbea81ee8d7204f",
+   "claims": 29,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_chamberlain_1984",
+   "sha256_pdf": "0525731819c8864fb1c29e0d8360d220d5e4b0c85d0c4e04da79fb343a2d7404",
+   "claims": 72,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_arellano_1991",
+   "sha256_pdf": "2c6691f194454926e1f9e0cea65187dbdca646804a569872937bf6ede4275908",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_blundell_1998",
+   "sha256_pdf": "b49c83f90643b84b46b6ac649c48de53eb25ac659ab0f5a33e71ff799be1cf1c",
+   "claims": 42,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_honor_2000",
+   "sha256_pdf": "40d254b86140e6e5a4ef1aa01e071bc7aaa52fccdf2a4a92dce07823eeb6fa0c",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_bai_2002",
+   "sha256_pdf": "b21dd695d920e75ced96548c7d5168288237c97c1b1739d1345914d62b17a343",
+   "claims": 37,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_lvarez_2003",
+   "sha256_pdf": "1854cb35640ffa314648ca144d3acc9ae04f96e78b52fdfd006c734e16ff7a0f",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_hahn_2004",
+   "sha256_pdf": "1af34bdca3d35ce0c7f2b3039b79a0178fb18b7ee03e5c28e39b7cc5ffaa10a4",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_hansen_2006",
+   "sha256_pdf": "dd6914deb3bf2c8a86c2ad5b289ff90406c3857271bbcce06084742af978b30e",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_pesaran_2006",
+   "sha256_pdf": "4bf6c4d25c35a98a76f8f5b4edadc6b3579288dce9bbffcdc8c3af4f0e8139e9",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_kasahara_2008",
+   "sha256_pdf": "93109d082218d414559f60d0ff309ecf3fcfc433721998db597c34fbe90c75e0",
+   "claims": 34,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_bai_2009",
+   "sha256_pdf": "dbc5f893f7224176bc9f3165b6d0756d4711cf83582ebec6fcd7b864dd556d7b",
+   "claims": 35,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_arellano_2011",
+   "sha256_pdf": "228d860d3c17a7367ab1bc3a2ccb23ac787b84bccf8b2c98113466b376fcf2f1",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_mendelberg_2016",
+   "sha256_pdf": "f4a6ebdb3174308775dab6cce00b282f4510bc04d9a9731e8c8777b0709ac3a4",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_o_grady_2017",
+   "sha256_pdf": "7bd9b9312c0a72c9f55aceacfc84166e08624d830d9ace860a4d151cd1424a0e",
+   "claims": 34,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_evans_2018",
+   "sha256_pdf": "24834b15cb5507c96d76bdad04e6f0a0e33bfe17d2482a6763cb8e222d7b77aa",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_bonhomme_2019",
+   "sha256_pdf": "7ce1544d10c0194efcd9ff6220aaf228b67acfd24fea9473da1de4d9a18120ee",
+   "claims": 46,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_payson_2019",
+   "sha256_pdf": "ead0fee78b6cf5e1fa97457558aff1d19431f2804f4c3a85fca69c2e4966d884",
+   "claims": 17,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "panel_baltagi_2021",
+   "sha256_pdf": "690c02ac2f081cd308fe1d52cb73ca0a642835648b08e7047eab23627c0e1e0a",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 11,
+ "categories": {
+  "IDENT": 2,
+  "EST": 3,
+  "INFER": 2,
+  "ROBUST": 3,
+  "DATA": 1
+ },
+ "single_source_checks": 2,
+ "sha256_checklist": "88d8dfb4cf5abe268fd6df8482636d473b1d818c62cf2ae94d2a5c6171dbc870",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 11,
+  "categories": {
+   "IDENT": 2,
+   "EST": 3,
+   "INFER": 2,
+   "ROBUST": 3,
+   "DATA": 1
+  },
+  "single_source_checks": 3,
+  "sha256_checklist": "8c3738b455e2e1d9fc7840ff718ea58c71c95d4a8a3ea7ab077e9394168931cf"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release (v0.1)",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 93.2,
+   "pilot_pairwise_agreement_pct": 100.0
+  },
+  "meets_95pct_diagnostic_bar": false,
+  "reason": "Ships since 2026-11-11 in place of this module's single-draw artifact, so that every module of the release is a three-draw consensus build. Figures are this artifact's own decidability block below. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 4,
+   "codings_per_paper": 2,
+   "core_stability": "44/44 = 100.0%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 4,
+   "codings_per_paper": 5,
+   "core_stability": "41/44 = 93.2%",
+   "judgment_call_bucket": null
+  }
+ }
+}

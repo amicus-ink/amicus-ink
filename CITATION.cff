@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use AMICUS, please cite the paper below."
+title: "AMICUS: source-grounded methods checklists for empirical social science"
+version: "0.1.0"
+date-released: "2026-11-21"
+type: software
+authors:
+  - family-names: Chau
+    given-names: Tak-Huen
+  - family-names: Little
+    given-names: Andrew T.
+repository-code: "https://github.com/amicus-ink/amicus-ink"
+url: "https://amicus.ink"
+license:
+  - GPL-3.0-only
+  - CC-BY-SA-4.0
+keywords:
+  - research methods
+  - causal inference
+  - social science
+  - checklists
+preferred-citation:
+  type: generic
+  title: "Peer Review and the Technical Soundness of Research: Evidence from Automated Audits of Political Science Working Papers"
+  authors:
+    - family-names: Chau
+      given-names: Tak-Huen
+    - family-names: Little
+      given-names: "Andrew T"
+  year: 2026
+  url: "https://osf.io/preprints/socarxiv/zk26u"

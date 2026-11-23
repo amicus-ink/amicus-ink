@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AMICUS questions</title>
+<meta name="description" content="Questions about AMICUS: what it reads, what it judges, which models, consistency, privacy, cost, citing and contributing.">
+<script src="./theme.js"></script>
+<link rel="stylesheet" href="./fonts/newsreader.css">
+<link rel="stylesheet" href="./style.css">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<nav class="topnav"><div class="navwrap"><a class="wordmark" href="./index.html"><svg class="mark" viewBox="0 0 64 64" width="26" height="26" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="14"/><path d="M32 15H25.5a10.5 10.5 0 0 0 0 21H32V49h5.5V20.5H41.5V49H47V20.5h2.5V15z"/></svg>AMICUS</a><div class="navlinks"><a href="./how-it-works.html">How it works</a><a href="./checklists.html">Checklists</a><a href="./run.html">Run it</a><a href="./faq.html" class="active">Questions</a><a href="./next.html">Next</a><a href="{{REPO_URL}}">Source</a><button type="button" class="themetoggle" id="theme-toggle" aria-label="Switch to dark mode" title="Switch light or dark"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div></div></nav>
+
+<main>
+<header class="pagehead wrap narrow">
+  <h1>Questions</h1>
+</header>
+
+<section class="wrap narrow faq">
+  <details id="name"><summary>Why the name?</summary>
+  <p>AMICUS is named for the amicus brief: outside expert input offered to help judges make a decision. Like in that scenario, it is a friend of the paper; you are the judge. It reads your draft, tells you how it thinks the methods literature applies, and leaves every decision to you. The name also expands: <strong>A</strong>uthor/AI <strong>M</strong>ethods <strong>I</strong>nterlocutor: <strong>C</strong>ompanion to <strong>U</strong>pgrade <strong>S</strong>cholarship. The interlocutor is the author’s, and it is run by AI.</p>
+  </details>
+
+  <details><summary>Is this a referee report?</summary>
+  <p>No. AMICUS purposefully gives no score, no assessment of whether a paper is interesting, and no overall verdict. It primarily checks whether your paper reports what the methods literature for your method asks papers to report. Ultimately, whether that matters for your paper is your call.</p>
+  </details>
+
+  <details><summary>What does it read?</summary>
+  <p>Only what you upload. It does not read your data or code (yet!), and it does not run anything. If something is in your replication files, an old draft, emails among your coauthors, or in your brain, AMICUS will not see it.</p>
+  </details>
+
+  <details><summary>Why did it flag something my paper does?</summary>
+  <p>Usually because the paper does not say so in a place the coder could find, or because it is in an appendix that was not attached. The high-importance flags quote the evidence it used, so you can check. It can also simply be wrong: the verdicts are a model’s judgments. Close calls are marked as judgment calls.</p>
+  </details>
+
+  <details><summary>My method is not covered.</summary>
+  <p>AMICUS covers fourteen methods so far, plus a universal checklist for every paper. A fifteenth, causal machine learning, is in development. A paper whose main method is not yet covered gets a reading only for the methods we cover. More are being built; see <a href="./next.html">what comes next</a>.</p>
+  </details>
+
+  <details><summary>Is it only for political science?</summary>
+  <p>The sources were chosen from what articles in political science and economics journals rely on, and the checklists were primarily tested on political science papers. The requirements themselves are about the methods, so they apply to any paper that uses these methods.</p>
+  </details>
+
+  <details id="models"><summary>Which model should I use?</summary>
+  <p>We run it with Claude Opus 5.5 in Claude Code and GPT-6.1 Sol in Codex. The results in our working paper use Claude Sonnet 5.5. We compared models on 25 pairs of working papers and their published versions. Against Opus, Claude Sonnet 5.5 agreed on 90% of checks and GPT-6.1 Sol on 86%. GPT-6 Luna, a smaller model, agreed on 83% and differed more on which papers it flagged most. We are aiming to explore whether different (and cheaper and faster!) models might perform well soon.</p>
+  </details>
+
+  <details><summary>How consistent is it?</summary>
+  <p>We coded each method’s test papers five times with the same model. For three of the fourteen methods, the five runs gave the same verdict on at least 95% of checks; the other eleven came in between 85% and 95%. The figures for each method are in the <a href="{{REPO_URL}}#the-modules">README</a>. Different models mostly agree with each other too; see <a href="#models">which model to use</a>. None of this shows that the verdicts are correct, or that a paper meeting every check is a better paper.</p>
+  </details>
+
+  <details><summary>Where does my paper go?</summary>
+  <p>Only to the model provider you already use: your chatbot, Claude Code or Codex. We do not run a server, and we never see your paper or your report.</p>
+  </details>
+
+  <details><summary>What do I have to pay to run it?</summary>
+  <p>Nothing! It runs on your own subscription or API access. A full reading of a paper with several methods is a long task, so expect it to use a noticeable share of a session’s allowance.</p>
+  </details>
+
+  <details><summary>A check is wrong, or something is missing.</summary>
+  <p>Please <a href="{{REPO_URL}}/issues">open an issue</a> and quote the check. Every check traces to specific pages, so a disagreement should be able to be settled against the source. The system will certainly make mistakes and will improve faster with feedback.</p>
+  </details>
+
+  <details><summary>Can I modify the checklists, or use them for teaching/research?</summary>
+  <p>Yes. The checklists and documentation are licensed CC BY-SA 4.0: you can copy and adapt them, with credit, as long as what you share is under the same license. The code is licensed GPL-3.0.</p>
+  </details>
+
+  <details id="cite"><summary>How do I cite it?</summary>
+  <p>Chau, Tak-Huen, and Andrew T Little. 2026. "Peer Review and the Technical Soundness of Research: Evidence from Automated Audits of Political Science Working Papers". <a href="https://osf.io/preprints/socarxiv/zk26u">https://osf.io/preprints/socarxiv/zk26u</a>.</p>
+  <p>Our working paper uses versions of these checklists limited to sources published by 2020. The repository also has a CITATION.cff file.</p>
+  </details>
+</section>
+</main>
+
+<footer><div class="wrap"><span>Tak-Huen Chau and Andrew T. Little. <a href="{{REPO_URL}}/issues">Open an issue</a> to reach us.</span><span class="footer-links"><span>Code: GPL-3.0. Checklists and documentation: CC BY-SA 4.0.</span><a href="{{REPO_URL}}">Source</a><a href="./faq.html#cite">Cite</a></span></div></footer>
+</body>
+</html>

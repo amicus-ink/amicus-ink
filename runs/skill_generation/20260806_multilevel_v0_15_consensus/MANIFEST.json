@@ -1,0 +1,108 @@
+{
+ "module": "multilevel",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-4-8",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "multilevel_gelman_2006",
+   "sha256_pdf": "126909dd5fe8aa3692e06b7f804a365cf520ba1f290d1720275dc3edfb051c1c",
+   "claims": 709,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "multilevel_shor_2007",
+   "sha256_pdf": "0d373615d5be499ff374e32f4b21aa17b969186ff0d7717dab3dd7edf10f5177",
+   "claims": 34,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "multilevel_park_2008",
+   "sha256_pdf": "f36e9b62ef6736d0ad34d569489e439cdea12ab7e8de37f40fa4dd536bec5fdb",
+   "claims": 16,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "multilevel_fiske_2011",
+   "sha256_pdf": "f15c8f3f175f1673a108abad1001bf2c11217583a1d92df47e36e440a4898488",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "multilevel_bates_2015",
+   "sha256_pdf": "a9ae8934fbe46ac4c3a6d333a75c2c815f9d2ed7725d7613ddce1d5a5244bbff",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "multilevel_b_rkner_2017",
+   "sha256_pdf": "35757e85ffb002fcb6c5dc34fec0daa6a84302d552e7555f2551838c4599fffb",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 10,
+ "categories": {
+  "IDENT": 2,
+  "INFER": 3,
+  "ROBUST": 2,
+  "REPORT": 3
+ },
+ "single_source_checks": 5,
+ "sha256_checklist": "82788c854c384f313a45d8fabbdbe1b77d4ef6a7bbd59ddffcbc8ec48506be25",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 11,
+  "categories": {
+   "REPORT": 2,
+   "INFER": 3,
+   "ROBUST": 3,
+   "EST": 2,
+   "DATA": 1
+  },
+  "single_source_checks": 7,
+  "sha256_checklist": "6d298e554f41376e227f81808fcb2bb0a6980ffc667e82d1c367d74228cfbb85"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release, October 2026",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 97.5,
+   "pilot_pairwise_agreement_pct": 97.5
+  },
+  "meets_95pct_diagnostic_bar": true,
+  "reason": "Shipped as one of the 14 modules of the first public release. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 4,
+   "codings_per_paper": 2,
+   "core_stability": "39/40 = 97.5%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 4,
+   "codings_per_paper": 5,
+   "core_stability": "39/40 = 97.5%",
+   "judgment_call_bucket": null
+  }
+ }
+}

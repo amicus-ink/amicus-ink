@@ -1,0 +1,72 @@
+{
+ "CONJOINT-IDENT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "CONJOINT-IDENT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "CONJOINT-IDENT-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "CONJOINT-EST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "CONJOINT-EST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 7
+ },
+ "CONJOINT-EST-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "CONJOINT-EST-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 8
+ },
+ "CONJOINT-EST-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "CONJOINT-INFER-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 7
+ },
+ "CONJOINT-INFER-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "CONJOINT-ROBUST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "CONJOINT-REPORT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "CONJOINT-REPORT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "CONJOINT-DATA-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ }
+}

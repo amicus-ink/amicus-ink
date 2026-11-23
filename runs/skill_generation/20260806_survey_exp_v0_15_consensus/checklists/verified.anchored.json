@@ -1,0 +1,2063 @@
+[
+ {
+  "_module": "SURVEY_EXP",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "all",
+   "list_experiment",
+   "nonrandomized_moderator",
+   "conjoint",
+   "factor_isolation_claim",
+   "endorsement_experiment",
+   "belief_effect",
+   "mediation",
+   "subgroup_or_conditioning",
+   "direct_list_comparison",
+   "survey_weights",
+   "list_regression",
+   "list_predictor",
+   "repeated_tasks",
+   "population_inference",
+   "framing_treatment"
+  ],
+  "_scope_definitions": {
+   "all": "Every survey experiment in the corpus.",
+   "list_experiment": "The paper states it uses a list experiment / item-count technique — respondents in a treatment group receive a list containing a sensitive item and report only a count. Fires on the paper's own naming of a list/item-count/unmatched-count design. Does NOT fire on a direct sensitive question, a randomized-response design, or an endorsement design.",
+   "nonrandomized_moderator": "The paper states it estimates or interprets the effect of a variable it did NOT randomly assign — a measured respondent characteristic, attitude, exposure, or covariate used as an explanatory, moderating, or mediating variable in a causal claim. Fires when the paper reads a non-randomized variable's association as its effect. Does NOT fire on effects of the randomized treatment itself, nor on associations the paper explicitly labels non-causal.",
+   "conjoint": "The paper states it uses a conjoint / fully-randomized attribute design in which respondents evaluate profiles whose attributes are independently randomized. Fires on the paper's own naming of a conjoint or randomized-attribute profile design. Does NOT fire on a single-vignette design that manipulates one or two features, nor on a list/endorsement design.",
+   "factor_isolation_claim": "The paper states its manipulation isolates the effect of one specific factor, attributing the treatment-control difference to that single factor. A design presented only as estimating the combined effect of a bundled treatment, with no claim to isolate one factor, does NOT fire it.",
+   "endorsement_experiment": "The paper states it uses an endorsement experiment — respondents rate policies, and a randomly assigned subset sees the policy endorsed by an actor. Fires on the paper's own naming of an endorsement design. Does NOT fire on a list experiment or a direct actor-approval question.",
+   "belief_effect": "The paper states its estimand is the effect of a belief or of respondents' understanding of a manipulated attribute (an epistemic effect) — it interprets its manipulation as changing what respondents believe about a focal factor. Fires on the paper's own framing of the quantity of interest as a belief/attribute effect. Does NOT fire on a design that interprets its manipulation only as the effect of the message/wording itself, with no belief-level claim.",
+   "mediation": "The paper states it performs a mediation analysis or decomposes an effect through a mediator that it measured rather than randomized. Fires on the paper's own naming of a mediator / indirect effect with an observed mediator. Does NOT fire on a design that randomizes the mediator in a factorial arm, nor on a paper with no mediation claim.",
+   "subgroup_or_conditioning": "The paper states it estimates a subgroup, conditional, or moderated effect, or conditions/subsets its estimate on a respondent-measured variable. Fires when the paper reports heterogeneous effects by a respondent variable, interacts treatment with a covariate, or conditions on a post-treatment quantity. Does NOT fire on a paper reporting only a single overall treatment effect with no conditioning.",
+   "direct_list_comparison": "The paper states it reads the gap between a direct-question estimate and a list-experiment (or other indirect) estimate as a measure of sensitivity or social-desirability bias. A list experiment alone, a direct question alone, or using both only to triangulate a prevalence without interpreting their difference as bias, does NOT fire it.",
+   "survey_weights": "The paper states it applies survey/selection/sampling weights in estimating a population-level (PATE) effect. Reporting demographics or design features without using weights in estimation does NOT fire it.",
+   "list_regression": "The paper states it estimates a regression model (linear least squares, nonlinear least squares, or maximum likelihood) relating respondent covariates to list-experiment responses. Fires when the paper names such a multivariate list-experiment estimator. Does NOT fire on a paper reporting only a difference-in-means prevalence or unadjusted subgroup means.",
+   "list_predictor": "The paper states it uses a list-experiment quantity (a predicted/fitted sensitive-item value or estimated proportion) as an explanatory variable in a further outcome model — a two-step or multi-stage procedure. Fires on the paper's own description of feeding a list-experiment estimate into a downstream regression. Does NOT fire on a one-stage list-experiment analysis that reports prevalence or covariate associations directly.",
+   "repeated_tasks": "The paper states each respondent contributes more than one observation to the analysis — multiple conjoint tasks, repeated rating/choice tasks, repeated vignettes, or multiple items analyzed jointly per respondent. Fires on the paper's own description of a within-respondent repeated-measures structure. Does NOT fire on a between-subjects design where each respondent contributes a single observation.",
+   "population_inference": "The paper states it generalizes its treatment-effect estimate to a real-world or target population — it describes its estimand as a population effect, claims representativeness, or applies survey weights to a population. Fires on the paper's own generalization/representativeness language. Does NOT fire on a paper that explicitly confines its claims to the study sample or presents itself as an internal-validity demonstration.",
+   "framing_treatment": "The paper states it compares two or more substantive framing/wording/message arms to estimate a treatment effect on attitudes. Fires when the design contrasts message or frame conditions. Does NOT fire on list/conjoint/endorsement measurement designs where a control list or reference category is intrinsic to the method."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 24 concepts in >=2 draws; dropped 9 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "Causal attribution in a survey experiment rests on random assignment of the treatment, which is what equalizes the groups in expectation so an outcome difference can be read as the treatment's effect.",
+  "observable": "Whether the paper states that respondents were assigned to conditions (arms, lists, profiles) at random.",
+  "pass_condition": "The paper states that assignment to experimental conditions was randomized.",
+  "flag_condition": "The paper reports an experimental contrast but never states that assignment was random.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources treat randomization as the sole warrant for attributing the group difference to the manipulation.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A survey experiment must state that assignment to its conditions was random.",
+  "contributing_sources": [
+   "survey_exp_anduiza_2013",
+   "survey_exp_gonz_lez_2023",
+   "survey_exp_imai_2011",
+   "survey_exp_kane_2004",
+   "survey_exp_imai_2014"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_anduiza_2013",
+    "short_cite": "Anduiza (2013)",
+    "source_lines": "L45",
+    "quote": "Randomization of treatment assignment assures attaining covariate balance in individual characteristics.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_imai_2011",
+    "short_cite": "Imai (2011)",
+    "source_lines": "L50",
+    "quote": "Assumption 1 is guaranteed to hold because researchers conduct the randomization of respondents into the treatment and control groups.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_kane_2004",
+    "short_cite": "Kane (2004)",
+    "source_lines": "L23",
+    "quote": "With random selection of half samples, respondents’ answers should produce an equivalent mean number of anger-generating statements for the four items that the two groups have in common. Any difference between means for the two halves can therefore be attributed to the additional item presented to the second subsample",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_anduiza_2013",
+    "cite": "Eva Anduiza, Aina Gallego, & Jordi Muñoz. (2013). Turning a Blind Eye. Comparative Political Studies, 46(12), 1664-1692. https://doi.org/10.1177/0010414013489081",
+    "short_cite": "Anduiza (2013)",
+    "pages": "p. 1671",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "survey_exp_imai_2011",
+    "cite": "Kosuke Imai. (2011). Multivariate Regression Analysis for the Item Count Technique. Journal of the American Statistical Association, 106(494), 407-416. https://doi.org/10.1198/jasa.2011.ap10415",
+    "short_cite": "Imai (2011)",
+    "pages": "p. 409",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "survey_exp_kane_2004",
+    "cite": "James G. Kane, Stephen C. Craig, & Kenneth D. Wald. (2004). Religion and Presidential Politics in Florida: A List Experiment<sup>*</sup>. Social Science Quarterly, 85(2), 281-293. https://doi.org/10.1111/j.0038-4941.2004.08502004.x",
+    "short_cite": "Kane (2004)",
+    "pages": "p. 284",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "list_experiment"
+  ],
+  "claim": "A list experiment identifies the sensitive-item prevalence only if adding the sensitive item leaves each respondent's count of affirmative control-item answers unchanged; without this the estimate is mismeasured.",
+  "observable": "Whether the paper states, or otherwise addresses, the assumption that the sensitive item does not shift control-item answers.",
+  "pass_condition": "The paper states the no-design-effect assumption (that appending the sensitive item leaves control-item responses unchanged) or otherwise addresses it.",
+  "flag_condition": "The paper analyzes a list experiment without ever stating or addressing the no-design-effect assumption.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Multiple independent sources name no-design-effect as a core identifying condition whose violation biases the estimate.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A list-experiment paper must state or address the no-design-effect identifying assumption.",
+  "contributing_sources": [
+   "survey_exp_gonz_lez_2023",
+   "survey_exp_imai_2011",
+   "survey_exp_blair_2012a",
+   "survey_exp_blair_2019",
+   "survey_exp_rosenfeld_2015",
+   "survey_exp_aronow_2015",
+   "survey_exp_blair_2014",
+   "survey_exp_blair_2010"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_gonz_lez_2023",
+    "short_cite": "González (2023)",
+    "source_lines": "L71",
+    "quote": "the presence of the sensitive item does not affect the answers to the remaining control items",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_imai_2011",
+    "short_cite": "Imai (2011)",
+    "source_lines": "L50",
+    "quote": "Assumption 2 may be violated if respondents give different answers to control items depending on whether or not the sensitive item is included in the list.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "short_cite": "Blair (2012a)",
+    "source_lines": "L43",
+    "quote": "we only assume that the addition of the sensitive item does not change the sum of affirmative answers to the control items. We call this the no design effect assumption",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "cite": "Graeme Blair & Kosuke Imai. (2012). Statistical Analysis of List Experiments. Political Analysis, 20(1), 47-77. https://doi.org/10.1093/pan/mpr048",
+    "short_cite": "Blair (2012a)",
+    "pages": "p. 51",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "survey_exp_gonz_lez_2023",
+    "cite": "Belén González & Richard Traunmüller. (2023). The political consequences of wartime sexual violence: Evidence from a list experiment. Journal of Peace Research, 61(6), 1035-1050. https://doi.org/10.1177/00223433231183992",
+    "short_cite": "González (2023)",
+    "pages": "p. 1041",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   },
+   {
+    "source_id": "survey_exp_imai_2011",
+    "cite": "Kosuke Imai. (2011). Multivariate Regression Analysis for the Item Count Technique. Journal of the American Statistical Association, 106(494), 407-416. https://doi.org/10.1198/jasa.2011.ap10415",
+    "short_cite": "Imai (2011)",
+    "pages": "p. 409",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 8,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-03",
+  "category": "IDENT",
+  "scope": [
+   "list_experiment"
+  ],
+  "claim": "List-experiment identification also requires that treated respondents report the sensitive item truthfully within their count (the no-liars condition); the paper must acknowledge this condition and speak to its plausibility.",
+  "observable": "Whether the paper states the no-liars / truthful-response condition for the sensitive item.",
+  "pass_condition": "The paper names the no-liars condition and addresses whether truthful reporting is plausible for its item.",
+  "flag_condition": "The paper analyzes a list experiment without acknowledging that its validity depends on truthful reporting of the sensitive item.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources name no-liars as a required identifying assumption; any misreporting biases the estimators (Blair 2012a; Imai 2011; Blair 2019).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "List-experiment identification also requires that treated respondents report the sensitive item truthfully within their count (the no-liars condition); the paper must acknowledge this condition and speak to its plausibility.",
+  "contributing_sources": [
+   "Aronow (2015)",
+   "Blair (2010)",
+   "Blair (2012a)",
+   "Blair (2012b)",
+   "Blair (2014)",
+   "Blair (2019)",
+   "Glynn (2013)",
+   "González (2023)",
+   "Imai (2011)",
+   "Imai (2014)"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "short_cite": "Blair (2012a)",
+    "source_lines": "L54",
+    "quote": "The second assumption is that respondents give truthful answers for the sensitive item. We call this the no liars assumption",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_imai_2011",
+    "short_cite": "Imai (2011)",
+    "source_lines": "L50",
+    "quote": "Assumption 3 implies that respondents give truthful answers about the sensitive item when asked indirectly about it using the item count technique.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_glynn_2013",
+    "short_cite": "Glynn (2013)",
+    "source_lines": "L42",
+    "quote": "The use of the list experiment relies on the assumption that respondents answer the list questions honestly.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2019",
+    "short_cite": "Blair (2019)",
+    "source_lines": "L33",
+    "quote": "Two identification assumptions are required for DiM, NLSreg, and MLreg. First, respondents in the treatment group are assumed not to lie about the sensitive item, i.e., no liars.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "cite": "Graeme Blair & Kosuke Imai. (2012). Statistical Analysis of List Experiments. Political Analysis, 20(1), 47-77. https://doi.org/10.1093/pan/mpr048",
+    "short_cite": "Blair (2012a)",
+    "pages": "p. 52",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   },
+   {
+    "source_id": "survey_exp_blair_2019",
+    "cite": "Graeme Blair, Winston Chou, & Kosuke Imai. (2019). List Experiments with Measurement Error. Political Analysis, 27(4), 455-480. https://doi.org/10.1017/pan.2018.56",
+    "short_cite": "Blair (2019)",
+    "pages": "p. 458",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "survey_exp_glynn_2013",
+    "cite": "Adam Glynn. (2013). What Can We Learn with Statistical Truth Serum?. Public Opinion Quarterly, 77(S1), 159-172. https://doi.org/10.1093/poq/nfs070",
+    "short_cite": "Glynn (2013)",
+    "pages": "p. 162",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "survey_exp_imai_2011",
+    "cite": "Kosuke Imai. (2011). Multivariate Regression Analysis for the Item Count Technique. Journal of the American Statistical Association, 106(494), 407-416. https://doi.org/10.1198/jasa.2011.ap10415",
+    "short_cite": "Imai (2011)",
+    "pages": "p. 409",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 10,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-04",
+  "category": "IDENT",
+  "scope": [
+   "nonrandomized_moderator"
+  ],
+  "claim": "Randomization licenses causal claims only about the randomized treatment; reading the effect of a non-randomized covariate, moderator, or exposure as causal requires a further identifying assumption (exogeneity / no unobserved confounding) that must be stated.",
+  "observable": "Whether, when the paper interprets a non-randomized variable's effect causally, it states the identifying assumption (no unobserved confounding / exogeneity) that would license that reading.",
+  "pass_condition": "The paper states the identifying assumption (exogeneity / no unobserved confounding) that would license the causal reading of the non-randomized variable, or explicitly labels the relationship as non-causal.",
+  "flag_condition": "The paper interprets a non-randomized variable's effect causally without stating any exogeneity / no-confounding assumption.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources state that list-experiment and analogous covariate relationships do not support causal claims absent exogeneity assumptions.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A causal claim about a non-randomized covariate or moderator must state the exogeneity / no-unobserved-confounding assumption it rests on.",
+  "contributing_sources": [
+   "survey_exp_morse_2022",
+   "survey_exp_blair_2012a",
+   "survey_exp_gonz_lez_2023"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_morse_2022",
+    "short_cite": "Morse (2022)",
+    "source_lines": "L94",
+    "quote": "these tests can establish correlations consistent with our theoretical mechanism, but they are not causally identified",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "short_cite": "Blair (2012a)",
+    "source_lines": "L33",
+    "quote": "list experiments in general, do not permit causal inference unless additional assumptions, such as exogeneity of causal variables of interest, are satisfied.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_gonz_lez_2023",
+    "short_cite": "González (2023)",
+    "source_lines": "L99",
+    "quote": "rests on the assumption of no unobserved confounding",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "cite": "Graeme Blair & Kosuke Imai. (2012). Statistical Analysis of List Experiments. Political Analysis, 20(1), 47-77. https://doi.org/10.1093/pan/mpr048",
+    "short_cite": "Blair (2012a)",
+    "pages": "p. 50",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "survey_exp_gonz_lez_2023",
+    "cite": "Belén González & Richard Traunmüller. (2023). The political consequences of wartime sexual violence: Evidence from a list experiment. Journal of Peace Research, 61(6), 1035-1050. https://doi.org/10.1177/00223433231183992",
+    "short_cite": "González (2023)",
+    "pages": "p. 1044",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   },
+   {
+    "source_id": "survey_exp_morse_2022",
+    "cite": "Julia C. Morse & Tyler Pratt. (2022). Strategies of Contestation: International Law, Domestic Audiences, and Image Management. The Journal of Politics, 84(4), 2080-2093. https://doi.org/10.1086/719418",
+    "short_cite": "Morse (2022)",
+    "pages": "p. 2090",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-05",
+  "category": "IDENT",
+  "scope": [
+   "conjoint"
+  ],
+  "claim": "Identifying component effects from a multi-task conjoint requires that a respondent's potential outcomes be stable across tasks and unaffected by the profiles seen in her other tasks (stability / no carryover).",
+  "observable": "Whether the paper states or addresses the stability / no-carryover assumption across a respondent's tasks.",
+  "pass_condition": "The paper states or addresses the stability / no-carryover assumption (potential outcomes stable across tasks, unaffected by other tasks' profiles).",
+  "flag_condition": "The paper analyzes a multi-task conjoint without stating or addressing stability / no-carryover across tasks.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "The source names stability and no-carryover as an identifying condition for multi-task conjoint estimation.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A multi-task conjoint paper must state or address the stability / no-carryover assumption.",
+  "contributing_sources": [
+   "survey_exp_hainmueller_2013",
+   "survey_exp_acharya_2018"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L59",
+    "quote": "we assume stability and no carryover effects for the potential outcomes. This means that the potential outcomes remain stable across the choice tasks (i.e., no period effect) and that treatments given to a respondent in her other choice tasks do not affect her response in the current task.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_hainmueller_2013",
+    "cite": "Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2013). Causal Inference in Conjoint Analysis: Understanding Multidimensional Choices via Stated Preference Experiments. Political Analysis, 22(1), 1-30. https://doi.org/10.1093/pan/mpt024",
+    "short_cite": "Hainmueller (2013)",
+    "pages": "p. 8",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-06",
+  "category": "IDENT",
+  "scope": [
+   "conjoint"
+  ],
+  "claim": "A conjoint effect is identified only over attribute combinations that the randomization actually assigns with positive probability; combinations excluded or given zero probability cannot be analyzed without extra assumptions, so estimation must not extrapolate beyond the assigned support.",
+  "observable": "Whether the paper's randomization assigns positive probability to every attribute combination whose effect it analyzes (or the paper acknowledges the restricted support where combinations are excluded).",
+  "pass_condition": "The paper's attributes are randomized so that every analyzed attribute combination has positive assignment probability, or the paper restricts its causal claims to the combinations actually assigned.",
+  "flag_condition": "The paper analyzes conjoint effects over attribute combinations that its randomization excludes or never assigns, without acknowledging the restricted support.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state that causal quantities over excluded combinations are unidentifiable absent added assumptions.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A conjoint paper must confine its causal quantities to attribute combinations the randomization assigns positive probability, or acknowledge the restriction.",
+  "contributing_sources": [
+   "survey_exp_hainmueller_2013",
+   "survey_exp_heinrich_2018",
+   "survey_exp_banerjee_2014"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L74",
+    "quote": "the randomization scheme must assign a non-zero probability to all the possible attribute combinations for which the potential outcomes are defined.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L74",
+    "quote": "if some attribute combinations are removed from the set of possible profiles due to theoretical concerns (as in our immigration experiment), it will be impossible to analyze causal quantities involving these combinations (unless we impose additional assumptions such as constant treatment effects).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L282",
+    "quote": "it is important to use a randomization scheme in the actual experiment that covers all attribute combinations that the analyst might be interested in, to avoid extrapolation outside the support of the treatment distribution.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     20
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_hainmueller_2013",
+    "cite": "Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2013). Causal Inference in Conjoint Analysis: Understanding Multidimensional Choices via Stated Preference Experiments. Political Analysis, 22(1), 1-30. https://doi.org/10.1093/pan/mpt024",
+    "short_cite": "Hainmueller (2013)",
+    "pages": "pp. 9, 20",
+    "pagination": "printed",
+    "pdf_pages": [
+     9,
+     20
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-07",
+  "category": "IDENT",
+  "scope": [
+   "factor_isolation_claim"
+  ],
+  "claim": "A contrast can be attributed to one intended factor only if the compared conditions differ solely on that factor (or the effect operates only through the intended channel); a paper that claims to isolate one factor must either state/defend that single-factor (single-channel) isolation or acknowledge that the contrast bundles several differences and limit its attribution accordingly.",
+  "observable": "Whether the paper, when it attributes an effect to one intended factor, either states/defends that its conditions differ only on that factor (or that the effect operates only through the intended channel) or acknowledges that the contrast bundles multiple differences.",
+  "pass_condition": "The paper states or defends that its compared conditions differ only on the named factor (or that the effect operates only through the intended causal channel), or acknowledges that the contrast bundles multiple differences and limits its attribution accordingly.",
+  "flag_condition": "The paper attributes the effect to one intended factor without either defending single-factor/single-channel isolation or acknowledging that its conditions differ on additional dimensions it does not account for.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Chaudoin (2014) and Press (2013) exhibit contrasts that bundle multiple differences; Dafoe (2018) frames single-channel isolation as an assumption to be stated and defended (“we must assume that the experimental effect only operates through the intended causal channel”).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A contrast can be attributed to one intended factor only if the compared conditions differ solely on that factor (or the effect operates only through the intended channel); a paper that claims to isolate one factor must either state/defend that single-factor (single-channel) isolation or acknowledge that the contrast bundles several differences and limit its attribution accordingly.",
+  "contributing_sources": [
+   "Anduiza (2013)",
+   "Chaudoin (2014)",
+   "Christenson (2016)",
+   "Dafoe (2018)",
+   "Press (2013)",
+   "Samuels (2013)",
+   "Zvobgo (2019)"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_chaudoin_2014",
+    "short_cite": "Chaudoin (2014)",
+    "source_lines": "L33",
+    "quote": "This approach, however, involves two differences between the treatment and control groups—one pertaining to consistency and one pertaining to an important policy decision",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_chaudoin_2014",
+    "short_cite": "Chaudoin (2014)",
+    "source_lines": "L37",
+    "quote": "This difference between treatment and control groups creates the possibility that disapproval stems from the respondent’s dislike of inconsistency, of policy, or of both",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_dafoe_2018",
+    "short_cite": "Dafoe (2018)",
+    "source_lines": "L123",
+    "quote": "To do so we must assume that the experimental effect only operates through the intended causal channel.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_press_2013",
+    "short_cite": "Press (2013)",
+    "source_lines": "L371",
+    "quote": "our experimental design does not effectively isolate normative concerns about nuclear use from military utility",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_chaudoin_2014",
+    "cite": "Stephen Chaudoin. (2014). Promises or Policies? An Experimental Analysis of International Agreements and Audience Reactions. International Organization, 68(1), 235-256. https://doi.org/10.1017/s0020818313000386",
+    "short_cite": "Chaudoin (2014)",
+    "pages": "pp. 239-240",
+    "pagination": "printed",
+    "pdf_pages": [
+     5,
+     6
+    ]
+   },
+   {
+    "source_id": "survey_exp_dafoe_2018",
+    "cite": "Allan Dafoe, Baobao Zhang, & Devin Caughey. (2018). Information Equivalence in Survey Experiments. Political Analysis, 26(4), 399-416. https://doi.org/10.1017/pan.2018.9",
+    "short_cite": "Dafoe (2018)",
+    "pages": "p. 414",
+    "pagination": "printed",
+    "pdf_pages": [
+     16
+    ]
+   },
+   {
+    "source_id": "survey_exp_press_2013",
+    "cite": "Daryl G. Press, Scott D. Sagan, & Benjamin Valentino. (2013). Atomic Aversion: Experimental Evidence on Taboos, Traditions, and the Non-Use of Nuclear Weapons. American Political Science Review, 107(1), 188-206. https://doi.org/10.1017/s0003055412000597",
+    "short_cite": "Press (2013)",
+    "pages": "p. 201",
+    "pagination": "printed",
+    "pdf_pages": [
+     14
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 7,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-08",
+  "category": "IDENT",
+  "scope": [
+   "endorsement_experiment"
+  ],
+  "claim": "Reading an endorsement effect as support for the endorser requires assuming the endorsement leaves respondents' understanding of the policy unchanged; if it instead alters their interpretation, the measured shift reflects changed understanding rather than support.",
+  "observable": "Whether the paper states or addresses the assumption that the endorsement does not change respondents' interpretation of the policy.",
+  "pass_condition": "The paper states or addresses the no-interpretation-change identifying assumption (endorsement shifts support, not policy understanding).",
+  "flag_condition": "The paper interprets endorsement effects as support without stating or addressing the no-interpretation-change assumption.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "The source names no-interpretation-change as the core identifying assumption, untestable and needing design support.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "An endorsement-experiment paper must state or address the no-interpretation-change identifying assumption.",
+  "contributing_sources": [
+   "survey_exp_bullock_2011",
+   "survey_exp_lyall_2013",
+   "survey_exp_rosenfeld_2015"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_bullock_2011",
+    "short_cite": "Bullock (2011)",
+    "source_lines": "L68",
+    "quote": "endorsements are assumed to have no influence on respondents’ interpretations of policy questions (relative to their interpretations in the absence of such endorsements).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_bullock_2011",
+    "short_cite": "Bullock (2011)",
+    "source_lines": "L68",
+    "quote": "If this assumption does not hold, the changes in responses induced by endorsements may reflect differences in question interpretations rather than support for endorsers.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_bullock_2011",
+    "short_cite": "Bullock (2011)",
+    "source_lines": "L68",
+    "quote": "this assumption can neither be relaxed nor tested",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_bullock_2011",
+    "cite": "Will Bullock, Kosuke Imai, & Jacob N. Shapiro. (2011). Statistical Analysis of Endorsement Experiments: Measuring Support for Militant Groups in Pakistan. Political Analysis, 19(4), 363-384. https://doi.org/10.1093/pan/mpr031",
+    "short_cite": "Bullock (2011)",
+    "pages": "p. 370",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-09",
+  "category": "IDENT",
+  "scope": [
+   "endorsement_experiment"
+  ],
+  "claim": "Pooling responses across several endorsement policy items into one measure presumes those items share a single policy domain / latent dimension; standard difference-in-means and regression cannot properly combine them, and the shared-dimension assumption should be stated and, where possible, tested.",
+  "observable": "Whether the paper that pools multiple endorsement policy items states (or tests) the assumption that they share a single dimension/domain.",
+  "pass_condition": "The paper states the single-dimension / shared-domain assumption behind pooling its endorsement items, or reports a test of it.",
+  "flag_condition": "The paper pools multiple endorsement policy items into one measure without stating or testing that they share a single dimension.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state that pooled policy items must occupy one domain / load on one latent dimension for the combination to be valid.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "An endorsement paper pooling multiple policy items must state or test the single-dimension assumption.",
+  "contributing_sources": [
+   "survey_exp_lyall_2013",
+   "survey_exp_bullock_2011",
+   "survey_exp_blair_2014",
+   "survey_exp_rosenfeld_2015"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_lyall_2013",
+    "short_cite": "Lyall (2013)",
+    "source_lines": "L46",
+    "quote": "selected initiatives should be in the same policy space so that they can be combined for statistical analysis.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2014",
+    "short_cite": "Blair (2014)",
+    "source_lines": "L64",
+    "quote": "assumes, however, that these policies are actually comparable and occupy the same policy domain.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_blair_2014",
+    "cite": "Graeme Blair, Kosuke Imai, & Jason Lyall. (2014). Comparing and Combining List and Endorsement Experiments: Evidence from Afghanistan. American Journal of Political Science, 58(4), 1043-1063. https://doi.org/10.1111/ajps.12086",
+    "short_cite": "Blair (2014)",
+    "pages": "p. 1047",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "survey_exp_lyall_2013",
+    "cite": "Jason Lyall, Graeme Blair, & Kosuke Imai. (2013). Explaining Support for Combatants during Wartime: A Survey Experiment in Afghanistan. American Political Science Review, 107(4), 679-705. https://doi.org/10.1017/s0003055413000403",
+    "short_cite": "Lyall (2013)",
+    "pages": "p. 682",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-10",
+  "category": "IDENT",
+  "scope": [
+   "belief_effect"
+  ],
+  "claim": "Attributing a survey-manipulation effect to respondents' beliefs about a focal factor requires information equivalence: the conditions must be equivalent with respect to background features, so that random assignment alone does not suffice for an epistemic-effect claim.",
+  "observable": "Whether the paper states the information-equivalence assumption when it interprets its manipulation as a belief/epistemic effect.",
+  "pass_condition": "The paper states the information-equivalence assumption (conditions equivalent on background features) as a condition for its belief-effect interpretation.",
+  "flag_condition": "The paper interprets its manipulation as the effect of a belief without stating the information-equivalence assumption.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "The source establishes information equivalence as a required, underappreciated assumption beyond random assignment for epistemic-effect claims.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper claiming a belief/epistemic effect must state the information-equivalence assumption.",
+  "contributing_sources": [
+   "survey_exp_dafoe_2018"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_dafoe_2018",
+    "short_cite": "Dafoe (2018)",
+    "source_lines": "L5",
+    "quote": "Such inferences rely on an underappreciated assumption: experimental conditions must be information equivalent (IE) with respect to background features of the scenario.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_dafoe_2018",
+    "short_cite": "Dafoe (2018)",
+    "source_lines": "L17",
+    "quote": "Random assignment of survey versions, however, is not sufficient to make inferences about epistemic effects. Rather, an additional assumption is required: the assumption that the survey manipulation is information equivalent (IE) with respect to relevant background features of the scenario",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_dafoe_2018",
+    "short_cite": "Dafoe (2018)",
+    "source_lines": "L17",
+    "quote": "Only if the IE assumption holds can response differences between versions of the survey be attributed to differences in subjects’ beliefs about the factor of interest.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_dafoe_2018",
+    "cite": "Allan Dafoe, Baobao Zhang, & Devin Caughey. (2018). Information Equivalence in Survey Experiments. Political Analysis, 26(4), 399-416. https://doi.org/10.1017/pan.2018.9",
+    "short_cite": "Dafoe (2018)",
+    "pages": "pp. 399-400",
+    "pagination": "printed",
+    "pdf_pages": [
+     1,
+     2
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-11",
+  "category": "IDENT",
+  "scope": [
+   "mediation"
+  ],
+  "claim": "Isolating an effect through a mediator that was measured rather than randomized requires a sequential-ignorability / selection-on-observables assumption — no mediator-outcome confounders beyond treatment and pretreatment covariates — which reintroduces omitted-variable bias and must be stated.",
+  "observable": "Whether the paper states the sequential-ignorability / no-unmeasured-mediator-outcome-confounding assumption for its observed mediator.",
+  "pass_condition": "The paper states the sequential-ignorability / no-unmeasured-confounding assumption required for its observed-mediator analysis.",
+  "flag_condition": "The paper performs mediation with an observed mediator without stating the sequential-ignorability / no-confounding assumption.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "The source states standard mediation requires no unmeasured mediator-outcome confounders and treats the observed mediator as if randomized.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A mediation analysis with an observed mediator must state its sequential-ignorability assumption.",
+  "contributing_sources": [
+   "survey_exp_acharya_2018",
+   "survey_exp_gonz_lez_2023",
+   "survey_exp_dafoe_2018"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_acharya_2018",
+    "short_cite": "Acharya (2018)",
+    "source_lines": "L34",
+    "quote": "these assumptions requires no mediator– outcome confounders (observed or unobserved) other than the treatment and any pretreatment covariates",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_acharya_2018",
+    "short_cite": "Acharya (2018)",
+    "source_lines": "L50",
+    "quote": "Those assumptions require the potential mediator itself to be as good as randomly assigned even though the mediator is only observed, not manipulated, in that setting.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_acharya_2018",
+    "short_cite": "Acharya (2018)",
+    "source_lines": "L50",
+    "quote": "If we cannot properly measure and control for all of these potential confounders, then the basic assumptions of the mediation approach will be violated and conducting such an analysis is not possible.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_acharya_2018",
+    "cite": "Avidit Acharya, Matthew Blackwell, & Maya Sen. (2018). Analyzing Causal Mechanisms in Survey Experiments. Political Analysis, 26(4), 357-378. https://doi.org/10.1017/pan.2018.19",
+    "short_cite": "Acharya (2018)",
+    "pages": "pp. 361, 363",
+    "pagination": "printed",
+    "pdf_pages": [
+     5,
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-12",
+  "category": "IDENT",
+  "scope": [
+   "subgroup_or_conditioning"
+  ],
+  "claim": "Conditioning on or subsetting by a variable measured after treatment induces post-treatment (collider/selection) bias and can shift the estimand, so subgroup, moderator, and conditioning analyses must key off pretreatment variables, or show the treatment did not affect the conditioning variable.",
+  "observable": "Whether the variable the paper conditions/subsets on is pretreatment, or, if measured post-treatment, whether the paper shows treatment did not affect it.",
+  "pass_condition": "The conditioning/moderating variable is measured pretreatment, or the paper demonstrates that treatment did not affect a post-treatment conditioning variable.",
+  "flag_condition": "The paper conditions on or subsets by a variable measured after treatment without showing the treatment left it uncontaminated.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources state that splitting or conditioning on post-treatment variables induces post-treatment bias and shifts the estimand.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Subgroup/conditioning variables must be pretreatment, or shown unaffected by treatment.",
+  "contributing_sources": [
+   "survey_exp_mummolo_2018",
+   "survey_exp_chaudoin_2014",
+   "survey_exp_acharya_2018",
+   "survey_exp_hainmueller_2013"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_mummolo_2018",
+    "short_cite": "Mummolo (2018)",
+    "source_lines": "L122",
+    "quote": "we avoid the threat of post-treatment bias that would be present if we compared treatment effects between correct and incorrect guessers within an experiment",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_chaudoin_2014",
+    "short_cite": "Chaudoin (2014)",
+    "source_lines": "L82",
+    "quote": "Since the trade policy question was asked after the main experiment, I checked for evidence that treatment assignment “contaminated” respondents’ answers to the free trade question",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_acharya_2018",
+    "short_cite": "Acharya (2018)",
+    "source_lines": "L126",
+    "quote": "conditioning on a posttreatment variable will generally change the quantity of interest under study from the ATE to the ACDE",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_acharya_2018",
+    "cite": "Avidit Acharya, Matthew Blackwell, & Maya Sen. (2018). Analyzing Causal Mechanisms in Survey Experiments. Political Analysis, 26(4), 357-378. https://doi.org/10.1017/pan.2018.19",
+    "short_cite": "Acharya (2018)",
+    "pages": "p. 370",
+    "pagination": "printed",
+    "pdf_pages": [
+     14
+    ]
+   },
+   {
+    "source_id": "survey_exp_chaudoin_2014",
+    "cite": "Stephen Chaudoin. (2014). Promises or Policies? An Experimental Analysis of International Agreements and Audience Reactions. International Organization, 68(1), 235-256. https://doi.org/10.1017/s0020818313000386",
+    "short_cite": "Chaudoin (2014)",
+    "pages": "p. 246",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   },
+   {
+    "source_id": "survey_exp_mummolo_2018",
+    "cite": "Jonathan Mummolo & Erik Peterson. (2018). Demand Effects in Survey Experiments: An Empirical Assessment. American Political Science Review, 113(2), 517-529. https://doi.org/10.1017/s0003055418000837",
+    "short_cite": "Mummolo (2018)",
+    "pages": "p. 527",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-IDENT-13",
+  "category": "IDENT",
+  "scope": [
+   "direct_list_comparison"
+  ],
+  "claim": "The gap between a list-experiment estimate and a direct-question estimate can be read as sensitivity/social-desirability bias only if the list assumptions hold and, further, there is no differential nonresponse, no order or wording effects, and a common population; a paper making this interpretation must state those auxiliary assumptions.",
+  "observable": "Whether the paper interpreting the list-minus-direct gap as sensitivity bias states the required auxiliary assumptions (list assumptions plus no differential nonresponse/order/wording, common population).",
+  "pass_condition": "The paper states the auxiliary assumptions its bias interpretation needs, or notes that without them the gap only reflects the measurement technology.",
+  "flag_condition": "The paper reads the list-versus-direct difference as sensitivity bias without stating the auxiliary assumptions it requires.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Blair (2012a) and Blair (2020a/b) show the direct-list difference measures sensitivity bias only under the list assumptions plus no differential nonresponse, order, or wording effects and a common population.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The gap between a list-experiment estimate and a direct-question estimate can be read as sensitivity/social-desirability bias only if the list assumptions hold and, further, there is no differential nonresponse, no order or wording effects, and a common population; a paper making this interpretation must state those auxiliary assumptions.",
+  "contributing_sources": [
+   "Blair (2012a)",
+   "Blair (2012b)",
+   "Blair (2020a)",
+   "Blair (2020b)"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_blair_2020a",
+    "short_cite": "Blair (2020a)",
+    "source_lines": "L196",
+    "quote": "If these assumptions do not hold, the difference between list and direct estimates simply represents the difference in the answer obtained depending on which measurement technology is used.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2020a",
+    "short_cite": "Blair (2020a)",
+    "source_lines": "L146",
+    "quote": "We assume no differential nonresponse between questions. We assume there are no order effects. We assume that differences in question wording of the sensitive item do not affect responses. Finally, we assume that the list experiment and direct question were asked of the same sample or of two samples from the same population. If these additional assumptions are violated, the difference is still meaningful, but the difference itself can no longer be considered an estimate of sensitivity bias.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "short_cite": "Blair (2012a)",
+    "source_lines": "L197",
+    "quote": "If these assumptions are violated, then the estimates based on list experiments are invalid and hence the difference between responses to direct questioning and list experiments no longer represent the degree of social desirability bias.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "cite": "Graeme Blair & Kosuke Imai. (2012). Statistical Analysis of List Experiments. Political Analysis, 20(1), 47-77. https://doi.org/10.1093/pan/mpr048",
+    "short_cite": "Blair (2012a)",
+    "pages": "p. 62",
+    "pagination": "printed",
+    "pdf_pages": [
+     16
+    ]
+   },
+   {
+    "source_id": "survey_exp_blair_2020a",
+    "cite": "Graeme Blair, Alexander Coppock, & Margaret Moor. (2020). When to Worry about Sensitivity Bias: A Social Reference Theory and Evidence from 30 Years of List Experiments. American Political Science Review, 114(4), 1297-1315. https://doi.org/10.1017/s0003055420000374",
+    "short_cite": "Blair (2020a)",
+    "pages": "pp. 1307, 1311",
+    "pagination": "printed",
+    "pdf_pages": [
+     11,
+     15
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-EST-01",
+  "category": "EST",
+  "scope": [
+   "list_experiment"
+  ],
+  "claim": "Multivariate covariate modeling of a sensitive trait is unreliable when almost no respondents hold the trait, because a trait must actually be present to covary with respondent characteristics; the sources caution, as a rule of thumb, against such modeling when the estimated prevalence sits at or near zero.",
+  "observable": "Whether the paper presents a multivariate covariate model of the sensitive trait while its estimated prevalence is negative or not distinguishable from zero.",
+  "pass_condition": "Either the paper presents no multivariate covariate model of the sensitive trait, or where it does the estimated prevalence is clearly positive (point estimate positive and not statistically indistinguishable from zero).",
+  "flag_condition": "The paper presents a multivariate covariate model of the sensitive trait while its estimated prevalence is negative or statistically indistinguishable from zero, with no stated caveat about the trait's rarity limiting model reliability.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "The sources caution, as an explicit rule of thumb, against multivariate covariate models of a sensitive trait whose estimated prevalence is near zero, since a near-absent trait cannot reliably covary with characteristics.",
+  "prevalence_aggravator": null,
+  "threshold": {
+   "cutoff": 0.0,
+   "border_band": [
+    0.0,
+    0.05
+   ],
+   "provenance": "rule_of_thumb",
+   "band_rule": "Below the cutoff (estimated prevalence negative): FLAG if a multivariate covariate model is presented without a caveat about unreliability. In the border band (prevalence non-negative but statistically indistinguishable from zero, i.e. its confidence interval includes zero): FLAG if a multivariate model is presented without a stated caveat about the trait's rarity limiting model reliability. Above the band (prevalence point estimate positive and its interval excludes zero): PASS."
+  },
+  "coder_decidable": true,
+  "requirement_statement": "A list-experiment paper should not present multivariate covariate models of the sensitive trait, without caveat, when the estimated prevalence is negative or indistinguishable from zero.",
+  "contributing_sources": [
+   "survey_exp_blair_2019",
+   "survey_exp_blair_2010"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_blair_2019",
+    "short_cite": "Blair (2019)",
+    "source_lines": "L21",
+    "quote": "We caution that multivariate analysis of such list experiments is bound to be unreliable, as a trait needs to exist for it to covary with respondent characteristics.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2019",
+    "short_cite": "Blair (2019)",
+    "source_lines": "L186",
+    "quote": "As a general rule of thumb, we caution against the use of multivariate regression models when studying extremely rare or even nonexistent sensitive traits.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2010",
+    "short_cite": "Blair (2010)",
+    "source_lines": "L21",
+    "quote": "We caution that multivariate analysis of such list experiments is bound to be unreliable, as a trait needs to exist for it to covary with respondent characteristics.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_blair_2010",
+    "cite": "Graeme Blair, Winston Chou, & Kosuke Imai. (2010). list: Statistical Methods for the Item Count Technique and List Experiment. CRAN: Contributed Packages. https://doi.org/10.32614/cran.package.list",
+    "short_cite": "Blair (2010)",
+    "pages": "p. 457",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "survey_exp_blair_2019",
+    "cite": "Graeme Blair, Winston Chou, & Kosuke Imai. (2019). List Experiments with Measurement Error. Political Analysis, 27(4), 455-480. https://doi.org/10.1017/pan.2018.56",
+    "short_cite": "Blair (2019)",
+    "pages": "pp. 457, 468",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     14
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-EST-02",
+  "category": "EST",
+  "scope": [
+   "survey_weights"
+  ],
+  "claim": "A survey-weighted population (PATE) estimator is derived assuming the weights are correct and known and that treatment assignment is independent of selection, and it can be arbitrarily biased when an unmodeled selection mechanism makes the weights wrong; a paper using weights to estimate a population effect must state these assumptions or acknowledge weight-misspecification bias.",
+  "observable": "Whether the paper using survey weights for a population effect states the assumptions its weighted estimator relies on (correct/known weights, assignment independent of selection) or acknowledges weight-misspecification bias.",
+  "pass_condition": "The paper states the selection/weighting assumptions behind its weighted PATE estimate, or acknowledges the bias possible when the weights are misspecified.",
+  "flag_condition": "The paper reports a survey-weighted population effect without stating the weighting/selection assumptions or acknowledging weight-misspecification bias.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Miratrix (2018) derives weighted population estimators under exact-and-known weights with assignment independent of selection, and shows unmodeled selection can bias them arbitrarily.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A survey-weighted population (PATE) estimator is derived assuming the weights are correct and known and that treatment assignment is independent of selection, and it can be arbitrarily biased when an unmodeled selection mechanism makes the weights wrong; a paper using weights to estimate a population effect must state these assumptions or acknowledge weight-misspecification bias.",
+  "contributing_sources": [
+   "BARABAS (2010)",
+   "Bullock (2011)",
+   "Miratrix (2018)"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_miratrix_2018",
+    "short_cite": "Miratrix (2018)",
+    "source_lines": "L356",
+    "quote": "this paper assumes the weights are exact, correct, and",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_miratrix_2018",
+    "short_cite": "Miratrix (2018)",
+    "source_lines": "L234",
+    "quote": "if the treatment impacts are not correlated with the weights, then there will be no",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_miratrix_2018",
+    "short_cite": "Miratrix (2018)",
+    "source_lines": "L383",
+    "quote": "if the weights are systematically inaccurate due to some selection mechanism that has not been",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_miratrix_2018",
+    "short_cite": "Miratrix (2018)",
+    "source_lines": "L416",
+    "quote": "Generalization assumes we know the assignment mechanism, but not necessarily the sampling",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_miratrix_2018",
+    "cite": "Luke Miratrix, Jasjeet S. Sekhon, Alexander G. Theodoridis, & Luis Fernando Reglero Campos. (2018). Worth Weighting? How to Think About and Use Weights in Survey Experiments. Political Analysis, 26(3), 275-291. https://doi.org/10.1017/pan.2018.1",
+    "short_cite": "Miratrix (2018)",
+    "pages": "pp. 283, 287-289",
+    "pagination": "printed",
+    "pdf_pages": [
+     9,
+     13,
+     14,
+     15
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "list_regression"
+  ],
+  "claim": "In a linear regression estimator for a list experiment the error variance differs by treatment status, so ordinary standard errors are wrong and heteroskedasticity-consistent robust standard errors are required.",
+  "observable": "Whether the reported standard errors for the list-experiment regression are heteroskedasticity-robust.",
+  "pass_condition": "The paper reports heteroskedasticity-robust (heteroskedasticity-consistent) standard errors for its linear list-experiment regression.",
+  "flag_condition": "The paper reports a linear list-experiment regression with ordinary (non-robust) standard errors.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state the error variance depends on treatment status, so robust standard errors are needed for the linear model.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A linear-regression list-experiment analysis must use heteroskedasticity-robust standard errors.",
+  "contributing_sources": [
+   "survey_exp_imai_2011",
+   "survey_exp_blair_2012a"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_imai_2011",
+    "short_cite": "Imai (2011)",
+    "source_lines": "L74",
+    "quote": "Note that the heteroscedasticity-consistent robust standard errors must be computed for this model.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "short_cite": "Blair (2012a)",
+    "source_lines": "L79",
+    "quote": "heteroskedasticity-consistent robust standard errors should be used because the error variance necessarily depends on the treatment variable.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "cite": "Graeme Blair & Kosuke Imai. (2012). Statistical Analysis of List Experiments. Political Analysis, 20(1), 47-77. https://doi.org/10.1093/pan/mpr048",
+    "short_cite": "Blair (2012a)",
+    "pages": "p. 53",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   },
+   {
+    "source_id": "survey_exp_imai_2011",
+    "cite": "Kosuke Imai. (2011). Multivariate Regression Analysis for the Item Count Technique. Journal of the American Statistical Association, 106(494), 407-416. https://doi.org/10.1198/jasa.2011.ap10415",
+    "short_cite": "Imai (2011)",
+    "pages": "p. 409",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "list_predictor"
+  ],
+  "claim": "When a list-experiment estimate is carried into a second-stage outcome model, the standard errors must propagate the first-stage estimation uncertainty; plugging in fitted values naively recovers neither the right coefficient nor the right standard error.",
+  "observable": "Whether the paper's standard errors for the downstream model incorporate first-stage (list-experiment) estimation uncertainty, via bootstrap or an analytic multi-stage variance.",
+  "pass_condition": "The paper's two-stage standard errors incorporate the uncertainty from both the list-experiment stage and the outcome stage.",
+  "flag_condition": "The paper feeds a list-experiment estimate into an outcome model but reports standard errors that ignore the first-stage uncertainty.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources show that naive plug-in two-step estimation understates standard errors by ignoring first-stage uncertainty.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A two-step list-experiment-as-predictor analysis must propagate first-stage uncertainty into its standard errors.",
+  "contributing_sources": [
+   "survey_exp_blair_2012a",
+   "survey_exp_imai_2014"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "short_cite": "Blair (2012a)",
+    "source_lines": "L143",
+    "quote": "Like any two-step estimator, the calculation of valid standard errors must take into account the estimation uncertainty from both the first and second steps.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_imai_2014",
+    "short_cite": "Imai (2014)",
+    "source_lines": "L22",
+    "quote": "simply taking the predicted probabilities from these models and using them as an explanatory variable in the outcome regression, as shown later, fail to recover the true coefficient and result in the underestimation of standard error.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_imai_2014",
+    "short_cite": "Imai (2014)",
+    "source_lines": "L86",
+    "quote": "The standard errors that incorporate the first-stage estimation uncertainty can be calculated using either the bootstrap resampling method or analytically based on the (straightforward but tedious) method of moments framework (Imai 2011).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "cite": "Graeme Blair & Kosuke Imai. (2012). Statistical Analysis of List Experiments. Political Analysis, 20(1), 47-77. https://doi.org/10.1093/pan/mpr048",
+    "short_cite": "Blair (2012a)",
+    "pages": "p. 57",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   },
+   {
+    "source_id": "survey_exp_imai_2014",
+    "cite": "Kosuke Imai, Bethany Park, & Kenneth F. Greene. (2014). Using the Predicted Responses from List Experiments as Explanatory Variables in Regression Models. Political Analysis, 23(2), 180-196. https://doi.org/10.1093/pan/mpu017",
+    "short_cite": "Imai (2014)",
+    "pages": "pp. 182, 187",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     8
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-INFER-03",
+  "category": "INFER",
+  "scope": [
+   "repeated_tasks"
+  ],
+  "claim": "When each respondent contributes several observations, those observations are correlated within respondent, so valid inference must account for the dependence — via standard errors clustered on the respondent or a respondent-level block bootstrap — rather than default standard errors.",
+  "observable": "Whether the paper's standard errors account for within-respondent dependence (respondent-clustered SEs or a respondent-level block bootstrap).",
+  "pass_condition": "The paper reports respondent-clustered standard errors or a respondent-level block bootstrap for its repeated-measures analysis.",
+  "flag_condition": "The paper analyzes repeated within-respondent observations with default standard errors that ignore the within-respondent correlation.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state within-respondent outcomes are correlated and that default standard errors are biased, requiring clustering or a block bootstrap.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A repeated-within-respondent design must account for within-respondent dependence in its standard errors.",
+  "contributing_sources": [
+   "survey_exp_hainmueller_2013",
+   "survey_exp_acharya_2018",
+   "survey_exp_heinrich_2018",
+   "survey_exp_lyall_2013"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L201",
+    "quote": "both potential choice and rating outcomes within respondents are likely to be positively correlated because of unobserved respondent characteristics influencing their preferences.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L224",
+    "quote": "the estimates based on the default standard errors for regression coefficients or differences in means are likely to be substantially biased.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_acharya_2018",
+    "short_cite": "Acharya (2018)",
+    "source_lines": "L134",
+    "quote": "there is within-respondent clustering and so variance estimation should be done either with cluster-robust standard errors or with a block bootstrap, where respondents are resampled with replacement.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_acharya_2018",
+    "cite": "Avidit Acharya, Matthew Blackwell, & Maya Sen. (2018). Analyzing Causal Mechanisms in Survey Experiments. Political Analysis, 26(4), 357-378. https://doi.org/10.1017/pan.2018.19",
+    "short_cite": "Acharya (2018)",
+    "pages": "p. 371",
+    "pagination": "printed",
+    "pdf_pages": [
+     15
+    ]
+   },
+   {
+    "source_id": "survey_exp_hainmueller_2013",
+    "cite": "Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2013). Causal Inference in Conjoint Analysis: Understanding Multidimensional Choices via Stated Preference Experiments. Political Analysis, 22(1), 1-30. https://doi.org/10.1093/pan/mpt024",
+    "short_cite": "Hainmueller (2013)",
+    "pages": "pp. 16-17",
+    "pagination": "printed",
+    "pdf_pages": [
+     16,
+     17
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-ROBUST-01",
+  "category": "ROBUST",
+  "scope": [
+   "list_experiment"
+  ],
+  "claim": "List-experiment identifying assumptions leave observable traces: an estimated respondent-type proportion below zero signals that no-design-effect fails, and a formal design-effect test can detect a violation. Applied guidance recommends estimating the type proportions and, where one is negative, running the test.",
+  "observable": "Whether the paper reports a diagnostic for identification-assumption violations — estimated respondent-type proportions and/or a formal design-effect test.",
+  "pass_condition": "The paper reports estimated respondent-type proportions and/or a formal design-effect (assumption-violation) test as a diagnostic on its list-experiment identifying assumptions.",
+  "flag_condition": "The paper reports a list-experiment estimate but no proportion-based or test-based diagnostic for the identifying assumptions.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Applied guidance in the sources recommends estimating respondent-type proportions and running a design-effect test; a negative proportion is decisive evidence of a design-effect violation.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A list-experiment paper should report a diagnostic (respondent-type proportions or a design-effect test) bearing on its identifying assumptions.",
+  "contributing_sources": [
+   "survey_exp_blair_2012a",
+   "survey_exp_blair_2019",
+   "survey_exp_blair_2010",
+   "survey_exp_glynn_2013",
+   "survey_exp_rosenfeld_2015",
+   "survey_exp_gonz_lez_2023",
+   "survey_exp_imai_2014"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "short_cite": "Blair (2012)",
+    "source_lines": "L215",
+    "quote": "If at least one of these proportions is negative, the assumption of no design effect is necessarily violated",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     18
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "short_cite": "Blair (2012)",
+    "source_lines": "L317",
+    "quote": "If there is a negative value, conduct the proposed statistical test for detecting design effects",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     26
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "cite": "Graeme Blair & Kosuke Imai. (2012). Statistical Analysis of List Experiments. Political Analysis, 20(1), 47-77. https://doi.org/10.1093/pan/mpr048",
+    "short_cite": "Blair (2012a)",
+    "pages": "pp. 64, 72",
+    "pagination": "printed",
+    "pdf_pages": [
+     18,
+     26
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 7,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-ROBUST-02",
+  "category": "ROBUST",
+  "scope": [
+   "belief_effect"
+  ],
+  "claim": "Information equivalence has a testable implication — background attributes should be balanced across conditions — that can and should be checked with placebo tests on background beliefs; failing it severs the link between the estimand and the belief effect.",
+  "observable": "Whether the paper reports a placebo / balance test on background beliefs or attributes to probe information equivalence.",
+  "pass_condition": "The paper reports a placebo or balance test on background beliefs/attributes bearing on information equivalence.",
+  "flag_condition": "The paper claims a belief effect but reports no placebo/balance test on background beliefs.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "The source states IE implies background-attribute balance that can and should be evaluated with placebo tests.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A belief-effect paper should report placebo/balance tests on background beliefs to probe information equivalence.",
+  "contributing_sources": [
+   "survey_exp_dafoe_2018",
+   "survey_exp_zvobgo_2019"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_dafoe_2018",
+    "short_cite": "Dafoe (2018)",
+    "source_lines": "L22",
+    "quote": "We further show that the IE assumption has testable implications—that background attributes of the scenario should be balanced across experimental conditions—which can and should be evaluated using placebo tests.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_dafoe_2018",
+    "short_cite": "Dafoe (2018)",
+    "source_lines": "L50",
+    "quote": "If the IE assumption in (6) holds, then all background beliefs should be balanced in expectation across randomized treatment conditions. If IE fails, neither the ITT nor the estimated CACE has any necessary relationship to the epistemic QOI",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_dafoe_2018",
+    "cite": "Allan Dafoe, Baobao Zhang, & Devin Caughey. (2018). Information Equivalence in Survey Experiments. Political Analysis, 26(4), 399-416. https://doi.org/10.1017/pan.2018.9",
+    "short_cite": "Dafoe (2018)",
+    "pages": "pp. 401, 404",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-REPORT-01",
+  "category": "REPORT",
+  "scope": [
+   "conjoint"
+  ],
+  "claim": "An AMCE is defined relative to a distribution over the other treatment components used to average it; that distribution must be stated explicitly and justified, and any target distribution must lie within the support the experiment actually implemented.",
+  "observable": "Whether the paper states the distribution of the other attributes used to average its reported AMCEs.",
+  "pass_condition": "The paper states (and justifies) the distribution over the remaining attributes used to compute its AMCEs.",
+  "flag_condition": "The paper reports AMCEs without stating the attribute distribution used to average them.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "LOW",
+  "severity_basis": "The source requires the averaging distribution to be made explicit and justified.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A conjoint paper reporting AMCEs must state the attribute distribution used to average them.",
+  "contributing_sources": [
+   "survey_exp_hainmueller_2013",
+   "survey_exp_heinrich_2018"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_hainmueller_2013",
+    "short_cite": "Hainmueller (2013)",
+    "source_lines": "L127",
+    "quote": "It should always be made clear what weighting distribution of the treatment components was used in calculating the AMCE, and the choice should be convincingly justified.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_hainmueller_2013",
+    "cite": "Jens Hainmueller, Daniel J. Hopkins, & Teppei Yamamoto. (2013). Causal Inference in Conjoint Analysis: Understanding Multidimensional Choices via Stated Preference Experiments. Political Analysis, 22(1), 1-30. https://doi.org/10.1093/pan/mpt024",
+    "short_cite": "Hainmueller (2013)",
+    "pages": "p. 12",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-REPORT-02",
+  "category": "REPORT",
+  "scope": [
+   "population_inference"
+  ],
+  "claim": "Generalizing an experimental estimate to a target population is warranted only on a stated basis — a probability sample with appropriate weights, or an explicit assumption (representativeness / homogeneous effects). A convenience sample's relation to the population is generally unknowable, and demographic matching or reweighting does not establish it.",
+  "observable": "Whether the paper that generalizes to a population states the basis for the generalization (probability sampling + weights, or an explicit assumption), rather than generalizing from a convenience/non-probability sample without justification.",
+  "pass_condition": "The paper states the basis for its population claim — a probability sample with appropriate weighting, or an explicit representativeness / effect-homogeneity assumption it argues for.",
+  "flag_condition": "The paper generalizes its estimate to a population from a convenience or non-probability sample without stating a supporting assumption or design basis.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state a convenience sample's relation to the population is unknowable and that population claims require justified design/analysis choices.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper generalizing to a population must state its sampling/weighting basis or an explicit generalization assumption.",
+  "contributing_sources": [
+   "survey_exp_mullinix_2015",
+   "survey_exp_hainmueller_2015",
+   "survey_exp_glynn_2013",
+   "survey_exp_zvobgo_2019",
+   "survey_exp_heinrich_2018",
+   "survey_exp_barabas_2010",
+   "survey_exp_gaines_2006"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_mullinix_2015",
+    "short_cite": "Mullinix (2015)",
+    "source_lines": "L133",
+    "quote": "when one uses a convenience sample, its relationship to the population of interest is unknown and typically unknowable. Thus, one cannot assuredly conclude it generalizes, even if the demographics of the sample seem to match the demographics of the larger population of interest (e.g. U.S. citizens) or if data are reweighted to match population distributions.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_mullinix_2015",
+    "short_cite": "Mullinix (2015)",
+    "source_lines": "L143",
+    "quote": "it is increasingly difficult to claim purely design-based population inferences from any sample. Such challenges highlight the need in all survey-based research of thinking through and justifying design and analytic decisions if the inferential goal is to make claims about a given population as a whole.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_mullinix_2015",
+    "short_cite": "Mullinix (2015)",
+    "source_lines": "L49",
+    "quote": "Due to probability sampling of participants from the U.S. population, the experimental effects drawn from the weighted TESS sample should provide unbiased estimates of treatment effects for the U.S. adult population as a whole.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_mullinix_2015",
+    "cite": "Kevin Mullinix, Thomas J. Leeper, James Druckman, & Jeremy Freese. (2015). The Generalizability of Survey Experiments. Journal of Experimental Political Science, 2(2), 109-138. https://doi.org/10.1017/xps.2015.19",
+    "short_cite": "Mullinix (2015)",
+    "pages": "pp. 114, 123-124",
+    "pagination": "printed",
+    "pdf_pages": [
+     6,
+     15,
+     16
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 7,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-DATA-01",
+  "category": "DATA",
+  "scope": [
+   "list_experiment"
+  ],
+  "claim": "Ceiling and floor effects — treated respondents who would affirm all or none of the items — both bias the estimated prevalence downward and strip away the privacy the design depends on, so the design or analysis must guard against them.",
+  "observable": "Whether the paper addresses ceiling/floor effects, through control-item selection that avoids uniform response patterns or through a statistical correction or diagnostic.",
+  "pass_condition": "The paper addresses ceiling/floor effects — via control-item choice designed to avoid all-yes/all-no patterns, or via a correction or diagnostic for them.",
+  "flag_condition": "The paper analyzes a list experiment without addressing ceiling or floor effects in design or analysis.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources establish that ceiling/floor effects bias prevalence downward and defeat the privacy protection.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A list-experiment paper should address ceiling and floor effects in its design or analysis.",
+  "contributing_sources": [
+   "survey_exp_imai_2011",
+   "survey_exp_blair_2012a",
+   "survey_exp_rosenfeld_2015",
+   "survey_exp_blair_2020a",
+   "survey_exp_blair_2014",
+   "survey_exp_gonz_lez_2023",
+   "survey_exp_glynn_2013"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_imai_2011",
+    "short_cite": "Imai (2011)",
+    "source_lines": "L33",
+    "quote": "the privacy is no longer protected if respondents in the treatment group wish to answer all sensitive and control questions either affirmatively or negatively.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "short_cite": "Blair (2012)",
+    "source_lines": "L245",
+    "quote": "the presence of such ceiling and floor effects would lead to the underestimation of the population proportion of those who would answer affirmatively for the sensitive item.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     20
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "short_cite": "Blair (2012)",
+    "source_lines": "L319",
+    "quote": "Investigate the robustness of any conclusions to the potential existence of ceiling and/or floor effects.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     26
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_blair_2012a",
+    "cite": "Graeme Blair & Kosuke Imai. (2012). Statistical Analysis of List Experiments. Political Analysis, 20(1), 47-77. https://doi.org/10.1093/pan/mpr048",
+    "short_cite": "Blair (2012a)",
+    "pages": "pp. 66, 72",
+    "pagination": "printed",
+    "pdf_pages": [
+     20,
+     26
+    ]
+   },
+   {
+    "source_id": "survey_exp_imai_2011",
+    "cite": "Kosuke Imai. (2011). Multivariate Regression Analysis for the Item Count Technique. Journal of the American Statistical Association, 106(494), 407-416. https://doi.org/10.1198/jasa.2011.ap10415",
+    "short_cite": "Imai (2011)",
+    "pages": "p. 408",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 7,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "SURVEY_EXP-DATA-02",
+  "category": "DATA",
+  "scope": [
+   "framing_treatment"
+  ],
+  "claim": "A framing/wording experiment that compares only treatment arms without a no-treatment control yields an ambiguous contrast — a difference between arms cannot reveal which frame moved attitudes; omitting the control obliges the authors to qualify their conclusions.",
+  "observable": "Whether the design includes a no-treatment control/baseline condition, or, if it is deliberately omitted, whether the paper qualifies its conclusions.",
+  "pass_condition": "The paper includes a no-treatment control/baseline arm, or, where one is deliberately omitted, qualifies its conclusions accordingly.",
+  "flag_condition": "The paper compares treatment/framing arms with no control baseline and does not qualify its conclusions.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "The source states arm-only comparisons are ambiguous and deliberate omission of a control obliges qualification.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A framing/wording experiment must include a control baseline or qualify conclusions when one is omitted.",
+  "contributing_sources": [
+   "survey_exp_gaines_2006",
+   "survey_exp_morse_2022"
+  ],
+  "evidence": [
+   {
+    "source_id": "survey_exp_gaines_2006",
+    "short_cite": "Gaines (2006)",
+    "source_lines": "L18",
+    "quote": "Surprisingly many studies lack control groups, rendering their results ambiguous.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_gaines_2006",
+    "short_cite": "Gaines (2006)",
+    "source_lines": "L68",
+    "quote": "With no baseline, the researcher confronted with a significant difference between responses across treatments cannot know whether one frame or the other (or both) shapes attitudes.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "survey_exp_gaines_2006",
+    "short_cite": "Gaines (2006)",
+    "source_lines": "L165",
+    "quote": "When researchers choose deliberately to omit a control, they must qualify their findings appropriately.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "survey_exp_gaines_2006",
+    "cite": "Brian J. Gaines, James H. Kuklinski, & Paul J. Quirk. (2006). The Logic of the Survey Experiment Reexamined. Political Analysis, 15(1), 1-20. https://doi.org/10.1093/pan/mpl008",
+    "short_cite": "Gaines (2006)",
+    "pages": "pp. 3, 9, 17",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     9,
+     17
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

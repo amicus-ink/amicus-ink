@@ -1,0 +1,74 @@
+# Deploy site/ to GitHub Pages (custom domain: site/CNAME).
+#
+# Before the first run, enable Pages in the repository settings with Source set to
+# "GitHub Actions" (Settings, Pages, Build and deployment, Source).
+#
+# Triggered by workflow_dispatch only: a person decides when the site goes public.
+# Do not add push triggers without an owner decision.
+#
+# The internal export script (scripts/export_public.py, not in this tree) fills the repo URL, raw URL and contact tokens in .md files only,
+# so this workflow fills them in the site HTML before upload. Set the repository variable
+# AMICUS_CONTACT (Settings, Secrets and variables, Actions, Variables) to change the contact line.
+
+name: Deploy site to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+# Two jobs, as in GitHub's Pages template: deploy-pages lists the run's artifacts, and an artifact
+# uploaded earlier in the same job was not yet listed (launch, 20 Nov 2026: "Found 0 artifact(s)").
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Fill site tokens
+        env:
+          REPO_URL: https://github.com/${{ github.repository }}
+          RAW_URL: https://raw.githubusercontent.com/${{ github.repository }}/main
+          CONTACT: ${{ vars.AMICUS_CONTACT || 'see the repository' }}
+        run: |
+          set -eu
+          mkdir -p _site
+          cp -R site/. _site/
+          python3 - <<'PY'
+          import os, pathlib
+          tokens = {"{{" + k + "}}": os.environ[k] for k in ("REPO_URL", "RAW_URL", "CONTACT")}
+          for p in [q for q in pathlib.Path("_site").rglob("*") if q.suffix in (".html", ".md")]:
+              t = p.read_text()
+              for k, v in tokens.items():
+                  t = t.replace(k, v)
+              p.write_text(t)
+          left = [str(p) for p in [q for q in pathlib.Path("_site").rglob("*") if q.suffix in (".html", ".md")] if "{{" in p.read_text()]
+          assert not left, "unresolved tokens in " + ", ".join(left)
+          PY
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

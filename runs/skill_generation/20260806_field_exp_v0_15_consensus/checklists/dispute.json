@@ -1,0 +1,117 @@
+{
+ "FIELD_EXP-IDENT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "FIELD_EXP-IDENT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 4
+ },
+ "FIELD_EXP-IDENT-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 4
+ },
+ "FIELD_EXP-IDENT-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "FIELD_EXP-IDENT-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-IDENT-06": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "FIELD_EXP-IDENT-07": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-IDENT-08": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "FIELD_EXP-IDENT-09": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-IDENT-10": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-IDENT-11": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-IDENT-12": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-IDENT-13": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-EST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-EST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-INFER-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-INFER-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-INFER-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-ROBUST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "FIELD_EXP-REPORT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-REPORT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "FIELD_EXP-DATA-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 5
+ },
+ "FIELD_EXP-DATA-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ }
+}

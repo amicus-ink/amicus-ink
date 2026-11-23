@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Run AMICUS on a draft</title>
+<meta name="description" content="Two ways to run AMICUS: in an online chatbot, or with a coding agent on your computer (Claude Code, Codex or OpenCode).">
+<script src="./theme.js"></script>
+<link rel="stylesheet" href="./fonts/newsreader.css">
+<link rel="stylesheet" href="./style.css">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+</head>
+<body>
+
+<nav class="topnav"><div class="navwrap"><a class="wordmark" href="./index.html"><svg class="mark" viewBox="0 0 64 64" width="26" height="26" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="14"/><path d="M32 15H25.5a10.5 10.5 0 0 0 0 21H32V49h5.5V20.5H41.5V49H47V20.5h2.5V15z"/></svg>AMICUS</a><div class="navlinks"><a href="./how-it-works.html">How it works</a><a href="./checklists.html">Checklists</a><a href="./run.html" class="active">Run it</a><a href="./faq.html">Questions</a><a href="./next.html">Next</a><a href="{{REPO_URL}}">Source</a><button type="button" class="themetoggle" id="theme-toggle" aria-label="Switch to dark mode" title="Switch light or dark"><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div></div></nav>
+
+<main>
+<header class="pagehead wrap narrow">
+  <h1>Run it</h1>
+  <p class="lede">So far there are two ways to run AMICUS: in an online chatbot, or with a coding agent on your own computer. Both use the same checklists, and your paper goes only to the model provider which you already use.</p>
+</header>
+
+<section class="wrap narrow ways">
+  <div class="way" id="chat">
+    <h3>1. In an online chatbot</h3>
+    <p class="who">Claude, ChatGPT, Gemini or any other chatbot. Nothing to install.</p>
+    <p>Attach your paper, and any appendix, and write:</p>
+    <pre class="cmd">Run the checklist at https://amicus.ink/AMICUS.md. If a link fails to open, retry it and open each checklist link directly; do not stop after one error.</pre>
+    <p>The chatbot reads that file, decides which methods your paper uses, opens only those checklists, and writes the report in the conversation. A long paper with several methods may take more than one reply. If your chatbot cannot open links, download <a href="./AMICUS.md">AMICUS.md</a> and the checklist for your method from the <a href="./checklists.html">checklists page</a>, and attach them instead.</p>
+  </div>
+
+  <div class="way" id="agent">
+    <h3>2. With a coding agent on your computer</h3>
+    <p class="who">Claude Code, Codex or OpenCode. The report is saved as <code>AMICUS_REPORT.md</code> next to your paper.</p>
+
+    <h4 id="plugin">Claude Code</h4>
+    <pre class="cmd">/plugin marketplace add amicus-ink/amicus-ink
+/plugin install amicus@amicus
+/amicus draft.pdf appendix.pdf</pre>
+    <p>If another plugin also has an <code>/amicus</code> command, type <code>/amicus:amicus</code>.</p>
+
+    <h4 id="codex">Codex</h4>
+    <pre class="cmd">codex plugin marketplace add amicus-ink/amicus-ink
+codex plugin add amicus@amicus</pre>
+    <p>Then open Codex in your paper’s folder and ask it to <em>“Run AMICUS on draft.pdf”</em>.</p>
+
+    <h4 id="opencode">OpenCode and other agents</h4>
+    <p>Any agent that reads <a href="https://agentskills.io">Agent Skills</a> can use the same skill. Copy its folder into the agent’s skills folder, then ask the same thing:</p>
+    <pre class="cmd">git clone --depth 1 {{REPO_URL}} /tmp/amicus-ink
+mkdir -p ~/.agents/skills &amp;&amp; cp -R /tmp/amicus-ink/plugins/amicus/skills/amicus-audit ~/.agents/skills/</pre>
+
+    <h4 id="python">For the most consistent results: the Python script</h4>
+    <p>The plugin works through the checklists in one session. The script instead reads each method in a separate call, checks every verdict against the checklist, and stops with a clear error if anything fails. It uses Claude Code or Codex, whichever you have installed and logged in, so it runs on your own subscription.</p>
+    <pre class="cmd">git clone {{REPO_URL}} amicus &amp;&amp; cd amicus
+python3 -m venv .venv &amp;&amp; . .venv/bin/activate
+pip install -r requirements.txt
+python3 scripts/skillgen/paper_only_audit.py --paper draft.pdf --agent claude</pre>
+    <p>Use <code>--agent codex</code> to run it with Codex instead. Add <code>--modules did,panel</code> to choose the methods yourself.</p>
+  </div>
+</section>
+
+<div class="band">
+  <div class="wrap narrow">
+    <h2>Which model?</h2>
+    <p>Any capable model will do the reading. We run AMICUS with Claude Opus 5.5 in Claude Code and GPT-6.1 Sol, at high reasoning effort, in Codex. The results in our working paper use Claude Sonnet 5.5. In our comparison on 25 pairs of working papers and their published versions, Claude Sonnet 5.5 agreed with Opus on 90% of checks and GPT-6.1 Sol on 86%. GPT-6 Luna, a smaller model, agreed on 83%. <a href="./faq.html#models">More on models</a>.</p>
+    <p style="margin:0">A version that runs in your browser with your own key is planned. <a href="./next.html">What comes next</a>.</p>
+  </div>
+</div>
+</main>
+
+<footer><div class="wrap"><span>Tak-Huen Chau and Andrew T. Little. <a href="{{REPO_URL}}/issues">Open an issue</a> to reach us.</span><span class="footer-links"><span>Code: GPL-3.0. Checklists and documentation: CC BY-SA 4.0.</span><a href="{{REPO_URL}}">Source</a><a href="./faq.html#cite">Cite</a></span></div></footer>
+</body>
+</html>

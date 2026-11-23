@@ -1,0 +1,1554 @@
+[
+ {
+  "_module": "DID",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "all",
+   "covariate_adjusted",
+   "staggered_timing",
+   "fuzzy_did",
+   "few_treated_clusters",
+   "repeated_cross_sections"
+  ],
+  "_scope_definitions": {
+   "all": "Any paper that declares a difference-in-differences / two-way-fixed-effects design: it states it compares the change in an outcome for a treated group against the change for a control/comparison group across time. Fires on the paper's own naming of the design (DiD, difference-in-differences, TWFE, event study around a treatment date). Does NOT fire for a pure cross-sectional comparison or a single-group before/after with no comparison group.",
+   "covariate_adjusted": "Fires only when the paper states it conditions its DiD estimate on covariates: it adds control variables to the regression, matches on covariates, invokes conditional parallel trends, or reweights on a propensity score. Near-miss that does NOT fire: mentioning covariates only to describe the sample; including unit and time fixed effects alone (those define the base DiD, not covariate adjustment). If the paper never states it adjusts for covariates, the trigger is not fired and the gated check is NA.",
+   "staggered_timing": "Fires only when the paper states that its treated units begin treatment at different times (words the paper uses: staggered adoption, differential/variable treatment timing, rollout, cohorts first treated in different periods). Near-miss that does NOT fire: the paper states all treated units are treated at one common date (single-onset / block design); a two-period two-group design; or an event study built around one shared adoption date. If the paper never describes its own timing as varying across units, the trigger is not fired and the gated check is NA.",
+   "fuzzy_did": "Fires only when the paper states its treatment is not a sharp 0/1 switch that all treated units share: it describes a fuzzy design, a treatment rate/intensity/dose that changes partially, a continuous or ordered or multi-valued treatment, or heterogeneous-adoption exposure. Near-miss that does NOT fire: a sharp binary treatment that some units switch on at different dates (that is staggered_timing, not fuzzy); describing treatment 'intensity' only in prose while estimating a binary indicator. If the paper never describes a non-sharp treatment, the trigger is not fired and the gated check is NA.",
+   "few_treated_clusters": "Fires only when the paper states that a small number of units (or clusters) are treated or change treatment status — e.g. it reports one, or a handful of, treated states/regions/firms, or says few units switch. Near-miss that does NOT fire: a large treated group described with clustered standard errors; many treated units clustered into a few groups for inference only. If the paper does not state that few units are treated, the trigger is not fired and the gated check is NA.",
+   "repeated_cross_sections": "Fires only when the paper states its data are repeated cross-sections — a fresh sample of individuals drawn each period rather than the same units followed over time. Near-miss that does NOT fire: a balanced or unbalanced panel of the same units; pooled panel data. If the paper does not describe its data as repeated cross-sections, the trigger is not fired and the gated check is NA."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 16 concepts in >=2 draws; dropped 8 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "DID-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "Identifying the treatment effect requires that units are not affected by the treatment before it takes effect; without a no-anticipation condition the pre-treatment periods cannot serve as valid reference periods.",
+  "observable": "Whether the paper states a no-anticipation assumption (or defines an anticipation horizon it will allow) for its treated units.",
+  "pass_condition": "The paper states that treatment has no effect before its onset, or explicitly specifies and defends an anticipation window it permits.",
+  "flag_condition": "The paper estimates a DiD effect without stating any no-anticipation assumption or anticipation horizon.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources state no-anticipation is necessary for DiD identification because treated units otherwise have no valid reference periods (Borusyak 2024 L61; Roth 2023 L80).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A DiD paper must state a no-anticipation assumption (or the anticipation horizon it allows).",
+  "contributing_sources": [
+   "did_roth_2023",
+   "did_callaway_2020",
+   "did_borusyak_2024",
+   "did_rambachan_2023",
+   "did_baker_2022"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L80",
+    "quote": "the no-anticipation assumption, which states that the treatment has no causal effect prior to its implementation",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_borusyak_2024",
+    "short_cite": "Borusyak (2024)",
+    "source_lines": "L61",
+    "quote": "some form of this assumption is necessary for DiD identification, as there would be no reference periods for treated units otherwise.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_callaway_2020",
+    "short_cite": "Callaway (2020)",
+    "source_lines": "L248-250",
+    "quote": "Assumption 3 restricts anticipation of the treatment for all “eventually treated” groups.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_borusyak_2024",
+    "cite": "Kirill Borusyak, Xavier Jaravel, & Jann Spiess. (2024). Revisiting Event-Study Designs: Robust and Efficient Estimation. The Review of Economic Studies, 91(6), 3253-3285. https://doi.org/10.1093/restud/rdae007",
+    "short_cite": "Borusyak (2024)",
+    "pages": "p. 3260",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "did_callaway_2020",
+    "cite": "Brantly Callaway & Pedro H. C. Sant’Anna. (2020). Difference-in-Differences with multiple time periods. Journal of Econometrics, 225(2), 200-230. https://doi.org/10.1016/j.jeconom.2020.12.001",
+    "short_cite": "Callaway (2020)",
+    "pages": "p. 207",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2222",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "The potential-outcomes framework underlying DiD assumes one unit's outcomes do not depend on other units' treatment (SUTVA / no interference), which rules out spillovers and general-equilibrium effects.",
+  "observable": "Whether the paper acknowledges the no-interference / no-spillover (SUTVA) assumption, or discusses whether treatment of some units could affect the outcomes of others.",
+  "pass_condition": "The paper states the no-interference / SUTVA assumption, or explicitly discusses whether spillovers between treated and comparison units could contaminate the estimate.",
+  "flag_condition": "The paper estimates a DiD effect without acknowledging the no-interference / no-spillover assumption at all.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state that a SUTVA violation means neither potential outcome is observed, invalidating the DiD estimate (Baker 2022 L56; Roth 2023 L61).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A DiD paper must acknowledge the no-interference / no-spillover (SUTVA) assumption its estimate relies on.",
+  "contributing_sources": [
+   "did_roth_2023",
+   "did_baker_2022",
+   "did_imai_2021",
+   "did_garside_2022"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L61",
+    "quote": "which rules out spillover and general equilibrium effects.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_baker_2022",
+    "short_cite": "Baker (2022)",
+    "source_lines": "L56",
+    "quote": "If SUTVA is violated, then we may observe neither of the potential outcomes, invali- dating the DID estimate.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_imai_2021",
+    "short_cite": "Imai (2021)",
+    "source_lines": "L116",
+    "quote": "We assume the absence of spillover effect but allow for some carryover effects (up to L time periods).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_baker_2022",
+    "cite": "Andrew C. Baker, David F. Larcker, & Charles C. Y. Wang. (2022). How much should we trust staggered difference-in-differences estimates?. Journal of Financial Economics, 144(2), 370-395. https://doi.org/10.1016/j.jfineco.2022.01.004",
+    "short_cite": "Baker (2022)",
+    "pages": "p. 373",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "did_imai_2021",
+    "cite": "Kosuke Imai, In Song Kim, & Erik Wang. (2021). Matching Methods for Causal Inference with Time‐Series Cross‐Sectional Data. American Journal of Political Science, 67(3), 587-605. https://doi.org/10.1111/ajps.12685",
+    "short_cite": "Imai (2021)",
+    "pages": "p. 593",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2221",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-IDENT-03",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "A DiD analysis must name its parallel/common-trends (or equivalent strict-exogeneity) identifying assumption; because that assumption is untestable, a paper that applies DiD without articulating it leaves its identification unstated. Offering a setting-specific reason to expect the assumption is recommended practice.",
+  "observable": "Whether the paper names its parallel/common-trends (or strict-exogeneity) identifying assumption; as recommended practice it also offers a setting-specific reason to expect treated and comparison units would have moved together absent treatment.",
+  "pass_condition": "The paper states the parallel/common-trends (or strict-exogeneity) identifying assumption it relies on for identification.",
+  "flag_condition": "The paper applies DiD without naming any parallel/common-trends or strict-exogeneity identifying assumption.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Wing (2018), Choi (2021), Baker (2022) and Sant'Anna (2020) establish parallel/common trends (untestable) as the core DiD identifying assumption.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A DiD analysis must name its parallel/common-trends (or equivalent strict-exogeneity) identifying assumption; because that assumption is untestable, a paper that applies DiD without articulating it leaves its identification unstated. Offering a setting-specific reason to expect the assumption is recommended practice.",
+  "contributing_sources": [
+   "Wing (2018)",
+   "Choi (2021)",
+   "Baker (2022)",
+   "Sant’Anna (2020)",
+   "Roth (2023)"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_wing_2018",
+    "short_cite": "Wing (2018)",
+    "source_lines": "L29",
+    "quote": "DID designs assume that confounders varying across the groups are time invariant, and time-varying confounders are group invariant",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_choi_2021",
+    "short_cite": "Choi (2021)",
+    "source_lines": "L959",
+    "quote": "national identification in treated and untreated areas would have followed similar patterns absent treatment",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     48
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_baker_2022",
+    "short_cite": "Baker (2022)",
+    "source_lines": "L48",
+    "quote": "do not capture the counterfactual outcome trends for treatment firms, the DiD estimate will be biased.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_sant_anna_2020",
+    "short_cite": "Sant’Anna (2020)",
+    "source_lines": "L22",
+    "quote": "the PTA is fundamentally untestable",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L399",
+    "quote": "researchers should therefore provide a justification for why we might expect the two groups to have similar trends.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     19
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_baker_2022",
+    "cite": "Andrew C. Baker, David F. Larcker, & Charles C. Y. Wang. (2022). How much should we trust staggered difference-in-differences estimates?. Journal of Financial Economics, 144(2), 370-395. https://doi.org/10.1016/j.jfineco.2022.01.004",
+    "short_cite": "Baker (2022)",
+    "pages": "p. 373",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "did_choi_2021",
+    "cite": "Donghyun Danny Choi, Benjamin Laughlin, & Anna Charlotte Schultz. (2021). Mobile Communication Technology and National Identity in Sub-Saharan Africa. https://doi.org/10.31219/osf.io/k4djn",
+    "short_cite": "Choi (2021)",
+    "pages": "p. 47",
+    "pagination": "printed",
+    "pdf_pages": [
+     48
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2236",
+    "pagination": "printed",
+    "pdf_pages": [
+     19
+    ]
+   },
+   {
+    "source_id": "did_sant_anna_2020",
+    "cite": "Pedro H. C. Sant’Anna & Jun B. Zhao. (2020). Doubly robust difference-in-differences estimators. Journal of Econometrics, 219(1), 101-122. https://doi.org/10.1016/j.jeconom.2020.06.003",
+    "short_cite": "Sant’Anna (2020)",
+    "pages": "p. 102",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   },
+   {
+    "source_id": "did_wing_2018",
+    "cite": "Coady Wing, Kosali Simon, & Ricardo A. Bello-Gómez. (2018). Designing Difference in Difference Studies: Best Practices for Public Health Policy Research. Annual Review of Public Health, 39(1), 453-469. https://doi.org/10.1146/annurev-publhealth-040617-013507",
+    "short_cite": "Wing (2018)",
+    "pages": "p. 455",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-IDENT-04",
+  "category": "IDENT",
+  "scope": [
+   "covariate_adjusted"
+  ],
+  "claim": "Covariates used to make parallel trends more credible must be measured before treatment and unaffected by it; conditioning on a covariate that the treatment itself can move induces bad-control (post-treatment) bias.",
+  "observable": "For a paper that conditions on covariates, whether any control it uses is measured or realized after treatment onset (or is itself a plausible outcome of the treatment).",
+  "pass_condition": "The controls the paper conditions on are pre-treatment (measured before onset) or otherwise argued to be unaffected by the treatment.",
+  "flag_condition": "The paper conditions its estimate on at least one covariate measured after treatment onset, or on a variable it acknowledges the treatment can affect, without treating that as a limitation.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources require conditioning covariates to be pre-treatment and unaffected by treatment (Roth 2023 L322; Callaway 2020 L476-478; Borusyak 2024 L59); conditioning on affected covariates biases the ATT.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A covariate-adjusted DiD must not condition on covariates measured after treatment onset or affected by the treatment.",
+  "contributing_sources": [
+   "did_roth_2023",
+   "did_callaway_2020",
+   "did_borusyak_2024",
+   "did_choi_2021"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L322",
+    "quote": "we assume that the covariates Xi were measured prior to the introduction of the intervention and are, therefore, unaffected by it.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_callaway_2020",
+    "short_cite": "Callaway (2020)",
+    "source_lines": "L476-478",
+    "quote": "incorporating post-treatment covariates as they can potentially be affected by the treatment",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_borusyak_2024",
+    "short_cite": "Borusyak (2024)",
+    "source_lines": "L59",
+    "quote": "Xit have to be unaffected by treatment and strictly exogenous to be included in the specification.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_borusyak_2024",
+    "cite": "Kirill Borusyak, Xavier Jaravel, & Jann Spiess. (2024). Revisiting Event-Study Designs: Robust and Efficient Estimation. The Review of Economic Studies, 91(6), 3253-3285. https://doi.org/10.1093/restud/rdae007",
+    "short_cite": "Borusyak (2024)",
+    "pages": "p. 3260",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "did_callaway_2020",
+    "cite": "Brantly Callaway & Pedro H. C. Sant’Anna. (2020). Difference-in-Differences with multiple time periods. Journal of Econometrics, 225(2), 200-230. https://doi.org/10.1016/j.jeconom.2020.12.001",
+    "short_cite": "Callaway (2020)",
+    "pages": "p. 212",
+    "pagination": "printed",
+    "pdf_pages": [
+     13
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2232",
+    "pagination": "printed",
+    "pdf_pages": [
+     15
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-IDENT-05",
+  "category": "IDENT",
+  "scope": [
+   "covariate_adjusted"
+  ],
+  "claim": "Conditional-on-covariates DiD additionally requires an overlap (positivity) condition: for the covariate values present, both treated and comparison units must exist so the comparison group can stand in for the treated group.",
+  "observable": "For a paper conditioning on covariates, whether it reports or discusses common support / overlap of covariates between treated and comparison units (e.g. propensity scores bounded away from 0/1, a support/trimming discussion, a balance table over the conditioning set).",
+  "pass_condition": "The paper reports or discusses overlap of the conditioning covariates between treated and comparison groups (common support, bounded propensity scores, or an explicit overlap check).",
+  "flag_condition": "The paper conditions on covariates for identification but reports no evidence or discussion of overlap / common support between treated and comparison units.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources impose overlap/positivity as a required condition for conditional DiD and note it is particularly important for valid inference (Roth 2023 L251; Callaway 2020 L308-312; Sant’Anna 2020 L172).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A covariate-adjusted DiD should report or discuss overlap (positivity) of the conditioning covariates across treated and comparison units.",
+  "contributing_sources": [
+   "did_roth_2023",
+   "did_callaway_2020",
+   "did_sant_anna_2020"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L251",
+    "quote": "This overlap assumption is particularly important for using standard inference procedures",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_callaway_2020",
+    "short_cite": "Callaway (2020)",
+    "source_lines": "L308-312",
+    "quote": "score is uniformly bounded away from one. Assumption 6 rules out “irregular identification”",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_sant_anna_2020",
+    "short_cite": "Sant’Anna (2020)",
+    "source_lines": "L172",
+    "quote": "Assumption 3 is an overlap condition and states that at least a small fraction of the population is treated",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_callaway_2020",
+    "cite": "Brantly Callaway & Pedro H. C. Sant’Anna. (2020). Difference-in-Differences with multiple time periods. Journal of Econometrics, 225(2), 200-230. https://doi.org/10.1016/j.jeconom.2020.12.001",
+    "short_cite": "Callaway (2020)",
+    "pages": "p. 208",
+    "pagination": "printed",
+    "pdf_pages": [
+     9
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2230",
+    "pagination": "printed",
+    "pdf_pages": [
+     13
+    ]
+   },
+   {
+    "source_id": "did_sant_anna_2020",
+    "cite": "Pedro H. C. Sant’Anna & Jun B. Zhao. (2020). Doubly robust difference-in-differences estimators. Journal of Econometrics, 219(1), 101-122. https://doi.org/10.1016/j.jeconom.2020.06.003",
+    "short_cite": "Sant’Anna (2020)",
+    "pages": "p. 106",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-EST-01",
+  "category": "EST",
+  "scope": [
+   "staggered_timing"
+  ],
+  "claim": "When treatment timing is staggered and treatment effects vary across groups or over time, a single-coefficient or dynamic two-way-fixed-effects regression is biased for the average effect, because already-treated units serve as controls and some group-time effects receive negative weights. Papers with staggered timing must therefore either use a heterogeneity-robust estimator or state an ex-ante justification for restricting effect heterogeneity.",
+  "observable": "For a paper that declares staggered timing, whether its main effect estimate comes from a heterogeneity-robust estimator (e.g. one that only compares newly-treated to not-yet-/never-treated units) OR is accompanied by a stated theoretical justification for assuming homogeneous effects.",
+  "pass_condition": "The paper reports a heterogeneity-robust estimate for its staggered design (a group-time / imputation / stacked / not-yet-treated-control estimator), or plain TWFE accompanied by an explicit ex-ante argument that treatment effects are homogeneous across groups and time.",
+  "flag_condition": "The paper's staggered-timing effect rests on a single-coefficient or dynamic TWFE regression with no heterogeneity-robust estimate reported and no stated justification for a homogeneity restriction.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources show staggered TWFE can be wrong-signed relative to every underlying effect (Goodman-Bacon 2021 L69; Roth 2023 L143; Baker 2022 L119; Chaisemartin 2022 L7), so an unaddressed staggered TWFE estimate can reverse the reported conclusion.",
+  "prevalence_aggravator": "Several sources note the bias grows with the spread of adoption dates and shrinks with the share of never-treated units, so it is most severe in designs with wide timing variation and few never-treated units.",
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A staggered-timing DiD must report a heterogeneity-robust estimate or state an ex-ante justification for assuming homogeneous treatment effects.",
+  "contributing_sources": [
+   "did_baker_2022",
+   "did_roth_2023",
+   "did_goodman_bacon_2021",
+   "did_goodman_bacon_2018",
+   "did_chaisemartin_2020",
+   "did_chaisemartin_2022",
+   "did_borusyak_2024",
+   "did_callaway_2020"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_baker_2022",
+    "short_cite": "Baker (2022)",
+    "source_lines": "L119",
+    "quote": "the combination of stag- gered treatment timing and treatment effect heterogeneity, either across groups or over time, leads to biased TWFE",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_goodman_bacon_2021",
+    "short_cite": "Goodman-Bacon (2021)",
+    "source_lines": "L69",
+    "quote": "treatment effects vary over time, in which case it typically biases regression DD estimates away",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_borusyak_2024",
+    "short_cite": "Borusyak (2024)",
+    "source_lines": "L5",
+    "quote": "We show that conventional regression-based estimators fail to provide unbiased estimates of relevant estimands absent strong restrictions on treatment-effect homogeneity.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L143",
+    "quote": "longer-run treatment effects will often receive negative weights.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_baker_2022",
+    "cite": "Andrew C. Baker, David F. Larcker, & Charles C. Y. Wang. (2022). How much should we trust staggered difference-in-differences estimates?. Journal of Financial Economics, 144(2), 370-395. https://doi.org/10.1016/j.jfineco.2022.01.004",
+    "short_cite": "Baker (2022)",
+    "pages": "p. 377",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "did_borusyak_2024",
+    "cite": "Kirill Borusyak, Xavier Jaravel, & Jann Spiess. (2024). Revisiting Event-Study Designs: Robust and Efficient Estimation. The Review of Economic Studies, 91(6), 3253-3285. https://doi.org/10.1093/restud/rdae007",
+    "short_cite": "Borusyak (2024)",
+    "pages": "p. 3253",
+    "pagination": "printed",
+    "pdf_pages": [
+     1
+    ]
+   },
+   {
+    "source_id": "did_goodman_bacon_2021",
+    "cite": "Andrew Goodman-Bacon. (2021). Difference-in-differences with variation in treatment timing. Journal of Econometrics, 225(2), 254-277. https://doi.org/10.1016/j.jeconom.2021.03.014",
+    "short_cite": "Goodman-Bacon (2021)",
+    "pages": "p. 258",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2224",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 8,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-EST-02",
+  "category": "EST",
+  "scope": [
+   "staggered_timing"
+  ],
+  "claim": "Units already treated before the first observed period have no observed untreated baseline, so they cannot identify a treatment effect nor serve as a valid comparison group; a paper must not retain them as treated or control units as if that baseline existed.",
+  "observable": "Whether the paper affirmatively retains units already treated before the first observed period as treated or comparison units as if their untreated baseline were observed.",
+  "pass_condition": "The paper does not retain units already treated before the first observed period as treated or comparison units. Designs with no such units comply; undisclosed pre-window treatment status defaults to PASS.",
+  "flag_condition": "The paper affirmatively retains units already treated before the first observed period as treated or control units, with no note that their untreated outcomes are never observed.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Callaway (2020) shows treatment effects are unidentified for units treated before the first period, and they are invalid as a comparison group.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Units already treated before the first observed period have no observed untreated baseline, so they cannot identify a treatment effect nor serve as a valid comparison group; a paper must not retain them as treated or control units as if that baseline existed.",
+  "contributing_sources": [
+   "Callaway (2020)"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_callaway_2020",
+    "short_cite": "Callaway (2020)",
+    "source_lines": "L163-164",
+    "quote": "untreated potential outcomes are never observed for this group which will imply that treatment effects are not identified for this group nor are they useful as a comparison group under a parallel trends assumption.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_callaway_2020",
+    "cite": "Brantly Callaway & Pedro H. C. Sant’Anna. (2020). Difference-in-Differences with multiple time periods. Journal of Econometrics, 225(2), 200-230. https://doi.org/10.1016/j.jeconom.2020.12.001",
+    "short_cite": "Callaway (2020)",
+    "pages": "p. 204",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-EST-03",
+  "category": "EST",
+  "scope": [
+   "fuzzy_did"
+  ],
+  "claim": "For a non-sharp (fuzzy / continuous / heterogeneous-adoption) treatment, the Wald-DiD ratio identifies a causal effect only under extra treatment-effect homogeneity assumptions, and assumption-free fuzzy estimands require a control group whose treatment exposure is stable over time; a fuzzy-design paper must state which of these it relies on.",
+  "observable": "For a paper that declares a non-sharp treatment, whether it states the additional assumption its fuzzy/continuous estimand needs — either a treatment-effect homogeneity condition or a control group with stable treatment exposure across periods.",
+  "pass_condition": "The paper states the homogeneity assumption behind its Wald-DiD estimate, or identifies a control group whose treatment exposure is stable over time for an assumption-free fuzzy estimand.",
+  "flag_condition": "The paper estimates a fuzzy / continuous / heterogeneous-adoption DiD effect without stating either the required treatment-effect homogeneity assumption or a stable-exposure control group.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources show the Wald-DiD identifies a LATE only if homogeneity assumptions hold and can otherwise reverse sign (Chaisemartin 2017 L2, L72, L74); assumption-free estimands need a stable-exposure control group (Chaisemartin 2017 L23).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A fuzzy / continuous-treatment DiD must state the treatment-effect homogeneity assumption behind its Wald-DiD estimate or identify a stable-exposure control group.",
+  "contributing_sources": [
+   "did_chaisemartin_2017",
+   "did_chaisemartin_2020",
+   "did_chaisemartin_2022"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_chaisemartin_2017",
+    "short_cite": "Chaisemartin (2017)",
+    "source_lines": "L2",
+    "quote": "We show that this ratio identifies a local average treatment effect only if two homogeneous treatment effect assumptions are satisfied",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_chaisemartin_2017",
+    "short_cite": "Chaisemartin (2017)",
+    "source_lines": "L74",
+    "quote": "the Wald-DID relies on a treatment effect homogeneity assumption: in both groups, the average treatment effect among units treated at T = 0 should remain stable over time. This assumption is necessary.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_chaisemartin_2017",
+    "short_cite": "Chaisemartin (2017)",
+    "source_lines": "L23",
+    "quote": "provided they can find a control group whose exposure to the treatment does not change over time",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_chaisemartin_2017",
+    "cite": "Clément de Chaisemartin & Xavier D’Haultfœuille. (2017). Fuzzy Differences-in-Differences. The Review of Economic Studies, 85(2), 999-1028. https://doi.org/10.1093/restud/rdx049",
+    "short_cite": "Chaisemartin (2017)",
+    "pages": "pp. 999, 1001, 1005",
+    "pagination": "printed",
+    "pdf_pages": [
+     1,
+     3,
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "all"
+  ],
+  "claim": "DiD outcomes are typically serially correlated and treatment status changes little within a group over time, so treating observations as independent understates the standard errors and over-rejects the null; inference must account for within-group serial correlation and clustering.",
+  "observable": "Whether the paper's reported inference accounts for within-group correlation — e.g. standard errors clustered at the group level, a block bootstrap, aggregation to pre/post, or another serial-correlation-robust procedure — rather than assuming independent errors.",
+  "pass_condition": "The paper reports standard errors that account for within-group serial correlation and clustering (cluster-robust at the assignment level, block bootstrap, pre/post aggregation, or an equivalent serial-correlation-robust method).",
+  "flag_condition": "The paper reports conventional/independent-observation standard errors (or does not describe how it handles serial correlation and clustering) for a multi-period DiD.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources find conventional DiD standard errors reject a false null in up to 45% of placebo runs (Bertrand 2004 L3) and that ignoring grouped errors yields inconsistent standard errors (Bertrand 2004 L17; Wing 2018 L96).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A multi-period DiD must report inference that accounts for within-group serial correlation and clustering.",
+  "contributing_sources": [
+   "did_bertrand_2004",
+   "did_wing_2018",
+   "did_garside_2022",
+   "did_chaisemartin_2017"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_bertrand_2004",
+    "short_cite": "Bertrand (2004)",
+    "source_lines": "L3",
+    "quote": "These conventional DD standard errors severely understate the standard deviation of the estimators: we find an “effect” significant at the 5 percent level for up to 45 percent of the placebo interventions.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_bertrand_2004",
+    "short_cite": "Bertrand (2004)",
+    "source_lines": "L17",
+    "quote": "Ignoring this grouped data problem can lead to inconsistent standard errors.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_wing_2018",
+    "short_cite": "Wing (2018)",
+    "source_lines": "L96",
+    "quote": "standard errors estimated under the assumption that errors are independent across observations are often biased downwards, which leads to overrejection of the null hypothesis",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_bertrand_2004",
+    "cite": "M. Bertrand, Esther Duflo, & Sendhil Mullainathan. (2004). How Much Should We Trust Differences-In-Differences Estimates?. The Quarterly Journal of Economics, 119(1), 249-275. https://doi.org/10.1162/003355304772839588",
+    "short_cite": "Bertrand (2004)",
+    "pages": "pp. 249-250",
+    "pagination": "printed",
+    "pdf_pages": [
+     1,
+     2
+    ]
+   },
+   {
+    "source_id": "did_wing_2018",
+    "cite": "Coady Wing, Kosali Simon, & Ricardo A. Bello-Gómez. (2018). Designing Difference in Difference Studies: Best Practices for Public Health Policy Research. Annual Review of Public Health, 39(1), 453-469. https://doi.org/10.1146/annurev-publhealth-040617-013507",
+    "short_cite": "Wing (2018)",
+    "pages": "p. 462",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "few_treated_clusters"
+  ],
+  "claim": "When only a small number of units are treated or change treatment status, large-sample cluster-robust inference is unreliable — it understates uncertainty and over-rejects — and a small-cluster-appropriate procedure is needed instead.",
+  "observable": "For a paper that states it has few treated units/clusters, whether it uses an inference method suited to that case (randomization/permutation or Conley-Taber-type inference, pre/post aggregation with a small-sample-adjusted threshold, a wild-cluster bootstrap with stated caveats, or reported wider intervals) rather than routine large-sample cluster-robust standard errors.",
+  "pass_condition": "The paper uses a small-cluster-appropriate inference procedure for its few treated units (randomization/permutation, Conley-Taber, aggregated inference with adjusted critical values, or an explicitly caveated wild bootstrap).",
+  "flag_condition": "The paper has few treated units/clusters yet reports only routine large-sample cluster-robust standard errors, with no small-sample adjustment or alternative method.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources state cluster-robust standard errors are very misleading with few changers (Conley 2010 L252), the cluster CLT is a poor approximation with few treated clusters (Roth 2023 L401), and the bias worsens for the near-constant treatment variables typical of DiD (Bertrand 2004 L219).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A DiD with few treated units/clusters must use inference designed for the small-cluster case rather than routine large-sample cluster-robust standard errors.",
+  "contributing_sources": [
+   "did_roth_2023",
+   "did_conley_2010",
+   "did_bertrand_2004",
+   "did_callaway_2020",
+   "did_arkhangelsky_2021"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_conley_2010",
+    "short_cite": "Conley (2010)",
+    "source_lines": "L252",
+    "quote": "cluster standard errors can be very misleading when the number of groups changing status is small.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L401",
+    "quote": "the central limit theorem based on a growing number of clusters may provide a poor approximation.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     19
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_bertrand_2004",
+    "short_cite": "Bertrand (2004)",
+    "source_lines": "L219",
+    "quote": "They show that this bias is larger for variables that are constant or nearly constant within cluster (which is the case of the treatment variables in the DD model).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     25
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_bertrand_2004",
+    "cite": "M. Bertrand, Esther Duflo, & Sendhil Mullainathan. (2004). How Much Should We Trust Differences-In-Differences Estimates?. The Quarterly Journal of Economics, 119(1), 249-275. https://doi.org/10.1162/003355304772839588",
+    "short_cite": "Bertrand (2004)",
+    "pages": "p. 273",
+    "pagination": "printed",
+    "pdf_pages": [
+     25
+    ]
+   },
+   {
+    "source_id": "did_conley_2010",
+    "cite": "Timothy G. Conley & Christopher Taber. (2010). Inference with “Difference in Differences” with a Small Number of Policy Changes. The Review of Economics and Statistics, 93(1), 113-125. https://doi.org/10.1162/rest_a_00049",
+    "short_cite": "Conley (2010)",
+    "pages": "p. 122",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2236",
+    "pagination": "printed",
+    "pdf_pages": [
+     19
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-ROBUST-01",
+  "category": "ROBUST",
+  "scope": [
+   "all"
+  ],
+  "claim": "Because parallel trends is untestable and pre-trends tests can miss meaningful violations, conventional confidence intervals can badly undercover; a credible DiD should probe how sensitive its conclusion is to plausible violations of parallel trends.",
+  "observable": "Whether the paper reports at least one item from an enumerated set of parallel-trends robustness artifacts: (a) a formal parallel-trends sensitivity analysis or robust confidence set (e.g. one that bounds the post-treatment trend violation by the pre-treatment violation); (b) a placebo or pre-period test aimed at detecting trend violations; (c) estimates under at least one alternative comparison/control group; or (d) estimates under at least one alternative specification that the paper presents as a check on the trend assumption. Presence of any one item is readable from the paper's tables, figures, or text.",
+  "pass_condition": "The paper reports at least one of the enumerated artifacts (a)–(d).",
+  "flag_condition": "The paper reports its DiD estimate and none of the enumerated artifacts (a)–(d) appears anywhere in the paper, appendix, or supplement.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state that underpowered pre-trends tests can leave conventional confidence intervals severely undercovering the true effect (Rambachan 2023 L40), motivating inference and reporting that account for possible trend violations; Roth 2023 (Table 1, L37) lists formal sensitivity analyses among recommended DiD reporting steps.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A DiD paper should report at least one of the enumerated parallel-trends robustness artifacts (formal sensitivity analysis / robust confidence set, placebo or pre-period test, alternative comparison group, or a trend-robustness specification check).",
+  "contributing_sources": [
+   "did_rambachan_2023",
+   "did_roth_2023",
+   "did_egli_2022",
+   "did_wing_2018"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_rambachan_2023",
+    "short_cite": "Rambachan (2023)",
+    "source_lines": "L40",
+    "quote": "pre-trends tests may be underpowered against meaningful violations of parallel trends, potentially leading to severe undercoverage of conventional confidence intervals",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_rambachan_2023",
+    "short_cite": "Rambachan (2023)",
+    "source_lines": "L18",
+    "quote": "It is therefore important to introduce inference methods that account for the statistical uncertainty",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L368",
+    "quote": "using these approaches does not provide any formal guarantees that ensure the validity of confidence intervals for the treatment effect",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_rambachan_2023",
+    "cite": "Ashesh Rambachan & Jonathan Roth. (2023). A More Credible Approach to Parallel Trends. The Review of Economic Studies, 90(5), 2555-2591. https://doi.org/10.1093/restud/rdad018",
+    "short_cite": "Rambachan (2023)",
+    "pages": "pp. 2556, 2559",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     5
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2234",
+    "pagination": "printed",
+    "pdf_pages": [
+     17
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-ROBUST-02",
+  "category": "ROBUST",
+  "scope": [
+   "all"
+  ],
+  "claim": "A DiD analysis should present pre-treatment trend evidence bearing on parallel trends -- an event-study/leads plot, pre-period effect estimates, or plotted group means -- since visibly divergent pre-trends make the estimate suspect; such evidence is necessary but not conclusive (pre-trend tests can be underpowered and pre-period parallelism does not guarantee post-period parallelism).",
+  "observable": "Whether the paper presents pre-treatment trend evidence: an event-study/leads plot, pre-period (placebo) effect estimates, or plotted group means over pre-periods.",
+  "pass_condition": "The paper shows pre-treatment trend evidence bearing on parallel trends.",
+  "flag_condition": "The paper reports a DiD estimate with no pre-treatment trend evidence of any kind.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Arkhangelsky (2021) says visibly non-parallel pre-trends make the DID estimate suspect; Choi (2021) reads divergent pre-trends as evidence of confounding.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A DiD analysis should present pre-treatment trend evidence bearing on parallel trends -- an event-study/leads plot, pre-period effect estimates, or plotted group means -- since visibly divergent pre-trends make the estimate suspect; such evidence is necessary but not conclusive (pre-trend tests can be underpowered and pre-period parallelism does not guarantee post-period parallelism).",
+  "contributing_sources": [
+   "Arkhangelsky (2021)",
+   "Choi (2021)",
+   "Roth (2023)",
+   "Wing (2018)"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_arkhangelsky_2021",
+    "short_cite": "Arkhangelsky (2021)",
+    "source_lines": "L279",
+    "quote": "obviously not parallel, so the DID estimate should be considered suspect. In contrast, SC re-",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_choi_2021",
+    "short_cite": "Choi (2021)",
+    "source_lines": "L959",
+    "quote": "Differential trends between treatment and control groups prior to actual changes in coverage would suggest that differential trends during the treatment period could be driven by other factors.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     48
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L390",
+    "quote": "that allow for a visual evaluation of pre-existing trends.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     18
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_wing_2018",
+    "short_cite": "Wing (2018)",
+    "source_lines": "L61",
+    "quote": "researchers often plot the mean outcomes by group and time period and then ask whether the lines appear to be approximately parallel",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_arkhangelsky_2021",
+    "cite": "Dmitry Arkhangelsky, Susan Athey, David A. Hirshberg, Guido W. Imbens, & Stefan Wager. (2021). Synthetic Difference-in-Differences. American Economic Review, 111(12), 4088-4118. https://doi.org/10.1257/aer.20190159",
+    "short_cite": "Arkhangelsky (2021)",
+    "pages": "p. 4096",
+    "pagination": "printed",
+    "pdf_pages": [
+     9
+    ]
+   },
+   {
+    "source_id": "did_choi_2021",
+    "cite": "Donghyun Danny Choi, Benjamin Laughlin, & Anna Charlotte Schultz. (2021). Mobile Communication Technology and National Identity in Sub-Saharan Africa. https://doi.org/10.31219/osf.io/k4djn",
+    "short_cite": "Choi (2021)",
+    "pages": "p. 47",
+    "pagination": "printed",
+    "pdf_pages": [
+     48
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2235",
+    "pagination": "printed",
+    "pdf_pages": [
+     18
+    ]
+   },
+   {
+    "source_id": "did_wing_2018",
+    "cite": "Coady Wing, Kosali Simon, & Ricardo A. Bello-Gómez. (2018). Designing Difference in Difference Studies: Best Practices for Public Health Policy Research. Annual Review of Public Health, 39(1), 453-469. https://doi.org/10.1146/annurev-publhealth-040617-013507",
+    "short_cite": "Wing (2018)",
+    "pages": "p. 459",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-ROBUST-03",
+  "category": "ROBUST",
+  "scope": [
+   "all"
+  ],
+  "claim": "Parallel pre-treatment trends do not prove that parallel trends holds after treatment, pre-trends tests often have low power, and conditioning the analysis on passing a pre-trends test induces pre-test selection bias; a paper must not treat a passed pre-trends test as proof of identification or filter its analysis on that test.",
+  "observable": "Whether the paper (a) claims that observing parallel pre-trends establishes the parallel-trends assumption, or (b) states it selected its sample, specification, or decision to proceed on the basis of passing a pre-trends test.",
+  "pass_condition": "The paper does not treat parallel pre-trends as proof of the assumption and does not condition its analysis on passing a pre-trends test (silence about pre-testing counts as compliance here).",
+  "flag_condition": "The paper asserts that parallel pre-trends establish the parallel-trends assumption, or states it retained/dropped the design or filtered results based on the outcome of a pre-trends test.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state pre-trends tests may fail to reject owing to low power (Roth 2023 L344) and that conditioning on passing them induces pre-test bias (Roth 2023 L348); parallel trends itself is not directly testable (Baker 2022 L154).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A DiD paper must not treat passed pre-trends as proof of parallel trends, nor condition its analysis on the outcome of a pre-trends test.",
+  "contributing_sources": [
+   "did_roth_2023",
+   "did_rambachan_2023",
+   "did_baker_2022",
+   "did_callaway_2020",
+   "did_goodman_bacon_2018"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L344",
+    "quote": "the tests described above may fail to reject owing to low power",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L348",
+    "quote": "induces a selection bias known as pre-test bias",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_baker_2022",
+    "short_cite": "Baker (2022)",
+    "source_lines": "L154",
+    "quote": "the parallel-trends assumption, which is not directly testable.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_baker_2022",
+    "cite": "Andrew C. Baker, David F. Larcker, & Charles C. Y. Wang. (2022). How much should we trust staggered difference-in-differences estimates?. Journal of Financial Economics, 144(2), 370-395. https://doi.org/10.1016/j.jfineco.2022.01.004",
+    "short_cite": "Baker (2022)",
+    "pages": "p. 381",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2233",
+    "pagination": "printed",
+    "pdf_pages": [
+     16
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-ROBUST-04",
+  "category": "ROBUST",
+  "scope": [
+   "staggered_timing"
+  ],
+  "claim": "Under staggered timing with heterogeneous effects, the lead coefficients of a two-way-fixed-effects event study are contaminated by the treatment effects of other periods and cohorts, so they are not a valid test of pre-trends; a staggered-design paper must not rely on TWFE event-study leads as its pre-trends test.",
+  "observable": "For a paper that declares staggered timing, whether the pre-trends evidence it relies on comes from the lead coefficients of a plain TWFE event-study regression, rather than from a heterogeneity-robust pre-trends test (leads from a robust group-time/imputation estimator, or a test run on untreated observations only).",
+  "pass_condition": "The paper either uses a heterogeneity-robust pre-trends test for its staggered design, or does not present TWFE event-study lead coefficients as evidence for parallel trends.",
+  "flag_condition": "The paper relies on the lead coefficients of a plain TWFE event-study regression as its pre-trends test in a staggered-timing design.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources show TWFE event-study leads can be nonzero even when parallel trends holds and are contaminated across cohorts, making pre-trend evaluation from them misleading (Roth 2023 L174; Baker 2022 L174; Chaisemartin 2022 L149).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A staggered-timing DiD must not use plain TWFE event-study lead coefficients as its test of pre-trends.",
+  "contributing_sources": [
+   "did_roth_2023",
+   "did_baker_2022",
+   "did_chaisemartin_2022",
+   "did_callaway_2020",
+   "did_borusyak_2024",
+   "did_goodman_bacon_2021"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L174",
+    "quote": "evaluation of pre-trends based on these coefficients can be very misleading.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_baker_2022",
+    "short_cite": "Baker (2022)",
+    "source_lines": "L174",
+    "quote": "the common practice of testing pre-trends using the coeffi- cients on the leads (e.g., the in the first summation term of Eq. (12) ) is not generally valid.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_chaisemartin_2022",
+    "short_cite": "Chaisemartin (2022)",
+    "source_lines": "L149",
+    "quote": "in the presence of heterogeneous treatment effects, ( 2.11 ) cannot be used to test for parallel trends.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_baker_2022",
+    "cite": "Andrew C. Baker, David F. Larcker, & Charles C. Y. Wang. (2022). How much should we trust staggered difference-in-differences estimates?. Journal of Financial Economics, 144(2), 370-395. https://doi.org/10.1016/j.jfineco.2022.01.004",
+    "short_cite": "Baker (2022)",
+    "pages": "p. 381",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   },
+   {
+    "source_id": "did_chaisemartin_2022",
+    "cite": "Clément de Chaisemartin & Xavier D’Haultfœuille. (2022). Two-way fixed effects and differences-in-differences with heterogeneous treatment effects: a survey. Econometrics Journal, 26(3), C1-C30. https://doi.org/10.1093/ectj/utac017",
+    "short_cite": "Chaisemartin (2022)",
+    "pages": "p. -1",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2226",
+    "pagination": "printed",
+    "pdf_pages": [
+     9
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 6,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-REPORT-01",
+  "category": "REPORT",
+  "scope": [
+   "all"
+  ],
+  "clarity_check": true,
+  "author_guidance": "State the target estimand you are after (e.g. the ATT, or an event-study path of effects) and which units and periods identify it — the comparison group and the time frame. Making the estimand and the identifying comparison explicit, rather than letting a regression specification implicitly impose them, lets a reader see what your coefficient represents.",
+  "claim": "A central source of DiD estimation problems is imposing an estimand implicitly through a regression specification instead of naming the target parameter and the comparison groups that identify it; papers should make the estimand and comparison explicit.",
+  "observable": "Whether the paper states its target estimand (e.g. the ATT or an event-study path) and identifies the comparison group(s) and time frame used to identify it.",
+  "pass_condition": "The paper names its target estimand and identifies the comparison group(s) and time frame that identify it.",
+  "flag_condition": "The paper reports a DiD coefficient without stating the estimand it targets or the comparison group(s) identifying it.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "LOW",
+  "severity_basis": "Sources identify imposing implicit homogeneity instead of specifying a target estimand as a central danger (Borusyak 2024 L23) and recommend transparency about the estimand and comparison groups (Roth 2023 L43).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A DiD paper should state its target estimand and the comparison groups and time frame that identify it.",
+  "contributing_sources": [
+   "did_borusyak_2024",
+   "did_roth_2023"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_borusyak_2024",
+    "short_cite": "Borusyak (2024)",
+    "source_lines": "L23",
+    "quote": "The last two challenges highlight the danger of imposing implicit treatment effect homogeneity assumptions instead of allowing for heterogeneity and explicitly specifying the target estimand.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_roth_2023",
+    "short_cite": "Roth (2023)",
+    "source_lines": "L43",
+    "quote": "comparison group and time frame selection, causal estimands, estimation methods, and robustness checks.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_borusyak_2024",
+    "cite": "Kirill Borusyak, Xavier Jaravel, & Jann Spiess. (2024). Revisiting Event-Study Designs: Robust and Efficient Estimation. The Review of Economic Studies, 91(6), 3253-3285. https://doi.org/10.1093/restud/rdae007",
+    "short_cite": "Borusyak (2024)",
+    "pages": "p. 3255",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "did_roth_2023",
+    "cite": "Jonathan Roth, Pedro H. C. Sant’Anna, Alyssa Bilinski, & John Poe. (2023). What’s trending in difference-in-differences? A synthesis of the recent econometrics literature. Journal of Econometrics, 235(2), 2218-2244. https://doi.org/10.1016/j.jeconom.2023.03.008",
+    "short_cite": "Roth (2023)",
+    "pages": "p. 2220",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "DID-DATA-01",
+  "category": "DATA",
+  "scope": [
+   "repeated_cross_sections"
+  ],
+  "claim": "With repeated cross-sections, identification requires that the joint distribution of group membership and covariates be stable across periods; unaddressed compositional change across periods biases the estimate.",
+  "observable": "For a paper stating it uses repeated cross-sections, whether it addresses the stability of group composition and covariate distribution across periods (states the stable-composition assumption, or reports evidence that composition does not shift with treatment).",
+  "pass_condition": "The paper states or examines that group membership and the covariate distribution are stable across periods (no compositional change confounding the comparison).",
+  "flag_condition": "The paper uses repeated cross-sections but never addresses whether group composition or the covariate distribution shifts across periods.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Sources state repeated-cross-section identification rules out compositional changes over time (Callaway 2020 L1653-1654; Sant’Anna 2020 L160) and that stability of group membership is required (Chaisemartin 2017 L170).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A repeated-cross-section DiD must address the stability of group composition and covariate distribution across periods.",
+  "contributing_sources": [
+   "did_callaway_2020",
+   "did_sant_anna_2020",
+   "did_chaisemartin_2017"
+  ],
+  "evidence": [
+   {
+    "source_id": "did_callaway_2020",
+    "short_cite": "Callaway (2020)",
+    "source_lines": "L1653-1654",
+    "quote": "It also rules-out compositional changes across time.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     40
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_sant_anna_2020",
+    "short_cite": "Sant’Anna (2020)",
+    "source_lines": "L160",
+    "quote": "with compositional changes in (D,X), see e.g. Hong (2013) for a discussion.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "did_chaisemartin_2017",
+    "short_cite": "Chaisemartin (2017)",
+    "source_lines": "L170",
+    "quote": "This requires that the distribution of groups be stable over time.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "did_callaway_2020",
+    "cite": "Brantly Callaway & Pedro H. C. Sant’Anna. (2020). Difference-in-Differences with multiple time periods. Journal of Econometrics, 225(2), 200-230. https://doi.org/10.1016/j.jeconom.2020.12.001",
+    "short_cite": "Callaway (2020)",
+    "pages": "p. 239",
+    "pagination": "printed",
+    "pdf_pages": [
+     40
+    ]
+   },
+   {
+    "source_id": "did_chaisemartin_2017",
+    "cite": "Clément de Chaisemartin & Xavier D’Haultfœuille. (2017). Fuzzy Differences-in-Differences. The Review of Economic Studies, 85(2), 999-1028. https://doi.org/10.1093/restud/rdx049",
+    "short_cite": "Chaisemartin (2017)",
+    "pages": "p. 1012",
+    "pagination": "printed",
+    "pdf_pages": [
+     14
+    ]
+   },
+   {
+    "source_id": "did_sant_anna_2020",
+    "cite": "Pedro H. C. Sant’Anna & Jun B. Zhao. (2020). Doubly robust difference-in-differences estimators. Journal of Econometrics, 219(1), 101-122. https://doi.org/10.1016/j.jeconom.2020.06.003",
+    "short_cite": "Sant’Anna (2020)",
+    "pages": "p. 106",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

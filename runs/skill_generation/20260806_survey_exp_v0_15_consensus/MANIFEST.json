@@ -1,0 +1,314 @@
+{
+ "module": "survey_exp",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-4-8",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "survey_exp_kane_2004",
+   "sha256_pdf": "1ac99fded365c6508c3b3147470d88e041d4dedd0dbf807ff9b82d6d261d5900",
+   "claims": 14,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_gaines_2006",
+   "sha256_pdf": "c25750a8669c09522c18b8e94c7f2a8ce4c7facac6474b237b7a353540bc5ca5",
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_corstange_2008",
+   "sha256_pdf": "4edf694a8120ae320eeb1f8b3da6ee5c27d39ed6e3e01985fb822705d6deb7ec",
+   "claims": 33,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_barabas_2010",
+   "sha256_pdf": "f5e193912ecad33c2df678d77d9709d757abb8f531558745249186fa9be9fb9a",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_blair_2010",
+   "sha256_pdf": "80621d836092898c392d26775fd445b5731e07d09523e94eb67cb2c12cd98f41",
+   "claims": 36,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_imai_2011",
+   "sha256_pdf": "57b8be87f2313caec159994d2dbefb298977c8fe749290eb7a6f4cb895534cdd",
+   "claims": 18,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_bullock_2011",
+   "sha256_pdf": "2c64db5bc28b2fe5f8ea735d635da1f3ee9e37a59b48f1db06a95d151013fc88",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_blair_2012a",
+   "sha256_pdf": "79f272b22ff5d924b92bfd444fb3f48de8a6e705461fbc66581af92e4daad8bf",
+   "claims": 45,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_blair_2012b",
+   "sha256_pdf": "79f272b22ff5d924b92bfd444fb3f48de8a6e705461fbc66581af92e4daad8bf",
+   "claims": 45,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_press_2013",
+   "sha256_pdf": "f5e128a114eda5ac3f7d6de1f028f6b23b8c5ab552ceae5026ea0d7925970a86",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_hainmueller_2013",
+   "sha256_pdf": "89ee5520ec2f3e819c3e1051c657c59768054b8340e025d73d05f00614473e66",
+   "claims": 43,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_lyall_2013",
+   "sha256_pdf": "40be7f963d199cf3ac8eb5da58bb26ebbbde51303fa8183f09dbb3582bf2e47a",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_samuels_2013",
+   "sha256_pdf": "a87c14de731602d1afc1461341a10f7baaa7568736248c4ebc3815dfa19d8491",
+   "claims": 15,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_anduiza_2013",
+   "sha256_pdf": "39ecef85a8fa0113141907bdf73642c5ddd54328e3379ddd5bed38dd48bf4f11",
+   "claims": 17,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_glynn_2013",
+   "sha256_pdf": "1ab4db04eceb44b7fd6c9ee4f7263e6f80cdd373baa8795e26bf16d1d7b5a232",
+   "claims": 33,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_banerjee_2014",
+   "sha256_pdf": "fe074f4d226136ea174a74682fca7d77bc68b9e5b29a1c0203f8fc9f609eaca9",
+   "claims": 13,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_blair_2014",
+   "sha256_pdf": "0283f5638cc36cca662630a791ee9ad1137a3bf04b44e6af7f7144e4c5a72005",
+   "claims": 39,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_chaudoin_2014",
+   "sha256_pdf": "1efe41d50cb8b43700e8610bf61252b1e9f74dd05314990627b76deaa6a299fe",
+   "claims": 14,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_imai_2014",
+   "sha256_pdf": "d0e24aaa7e8f78ee36873211fe5939dd3d77ed8907244142de7d24d0a78698d4",
+   "claims": 19,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_rosenfeld_2015",
+   "sha256_pdf": "06ee2411b5766c1e6ef051bdd09228e85c8ead53a69e9f1d5c88d52009b48e77",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_aronow_2015",
+   "sha256_pdf": "4df57672582cc5fdda73f1372aa66b33de4251b4fe3e959a977addfeafb8c9f5",
+   "claims": 32,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_mullinix_2015",
+   "sha256_pdf": "6a94ffea9837b2085da1a2132fe9ef78af610824481277683c441f0fabd3ac0e",
+   "claims": 18,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_hainmueller_2015",
+   "sha256_pdf": "f3476f7a28cd3053d16acd9a0fae42384bcf603f8ccab64b68e599f79adf1e6c",
+   "claims": 17,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_christenson_2016",
+   "sha256_pdf": "d8e0d7269deb68969828fc18cca14d72db4132570ba78463fe8c35f161717dc9",
+   "claims": 12,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_acharya_2018",
+   "sha256_pdf": "76ced33355a17ff3e7c8b47c9ab21cbb5f94156bb715b372f7c8611dde7bba2c",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_mummolo_2018",
+   "sha256_pdf": "b920b3fbf7221219c71832b9d294d76a1682eb74840c3c86a5abc1dbe2cd989f",
+   "claims": 13,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_heinrich_2018",
+   "sha256_pdf": "900261dff35659ccb9af3733ddc0ba54e36fb9c1cd7b8b45f98895c6e09a5252",
+   "claims": 15,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_dafoe_2018",
+   "sha256_pdf": "4657b20d92e6f272c4be4904d5085f86b33b04bdf1072b3696ad329a0514dac8",
+   "claims": 40,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_miratrix_2018",
+   "sha256_pdf": "106a0e7017852a87457def80d02c1f84807e14a0c32cadc773ef986c7cfc5ca8",
+   "claims": 29,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_zvobgo_2019",
+   "sha256_pdf": "90c5c3885a868a4826f9c978c6488c5e5f3d76243770e791d1a98ee184305511",
+   "claims": 8,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_blair_2019",
+   "sha256_pdf": "234c0899daa44b93bd26b6cd133caadd389c4f4475f56fb6b29d47328ab9d7cb",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_blair_2020b",
+   "sha256_pdf": "6d984bb4f94f5870272875ecc957836117f10ab5003730fa39a76171a93471ba",
+   "claims": 30,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_blair_2020a",
+   "sha256_pdf": "6d984bb4f94f5870272875ecc957836117f10ab5003730fa39a76171a93471ba",
+   "claims": 30,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_morse_2022",
+   "sha256_pdf": "8fe168bc38547081feda479ee5872f1b4e09def5dc132fb3cad5ec6ef73060cf",
+   "claims": 12,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "survey_exp_gonz_lez_2023",
+   "sha256_pdf": "e3a4e710ad3487a3b3d35ce6a6eb1533de076cb37a43a8413bcc56e94f645ace",
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 24,
+ "categories": {
+  "IDENT": 13,
+  "EST": 2,
+  "INFER": 3,
+  "ROBUST": 2,
+  "REPORT": 2,
+  "DATA": 2
+ },
+ "single_source_checks": 1,
+ "sha256_checklist": "c9e3673375e6fb5dc2077523a5c7e59d04b3f96345288029f7335ca4c758a2f1",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 24,
+  "categories": {
+   "IDENT": 13,
+   "EST": 2,
+   "INFER": 3,
+   "ROBUST": 2,
+   "REPORT": 2,
+   "DATA": 2
+  },
+  "single_source_checks": 11,
+  "sha256_checklist": "770750c1be3e79a408247ae9bf3b6276de619b419a0bb209a66b551a33971c27"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release (v0.1)",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 89.6,
+   "pilot_pairwise_agreement_pct": 93.8
+  },
+  "meets_95pct_diagnostic_bar": false,
+  "reason": "Ships since 2026-11-11 in place of this module's single-draw artifact, so that every module of the release is a three-draw consensus build. Figures are this artifact's own decidability block below. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 2,
+   "codings_per_paper": 2,
+   "core_stability": "45/48 = 93.8%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 2,
+   "codings_per_paper": 5,
+   "core_stability": "43/48 = 89.6%",
+   "judgment_call_bucket": null
+  }
+ }
+}

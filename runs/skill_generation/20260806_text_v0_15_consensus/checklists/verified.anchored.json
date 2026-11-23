@@ -1,0 +1,1307 @@
+[
+ {
+  "_module": "TEXT",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "unsupervised_topic",
+   "topic_covariate_effect",
+   "topic_covariate_effects",
+   "topic_treatment_effect",
+   "supervised_classification",
+   "cross_validated_performance",
+   "dictionary",
+   "scaling",
+   "embeddings",
+   "word_embeddings",
+   "llm_synthetic",
+   "multilingual",
+   "all"
+  ],
+  "_scope_definitions": {
+   "unsupervised_topic": "Fires only when the paper states it fits a topic model or clustering method it names (e.g., LDA, STM, CTM, K-means) to discover themes/categories from text rather than assigning predetermined ones. Does NOT fire for applying predetermined categories with a supervised classifier, or for a dictionary. Ambiguous cases are NA.",
+   "topic_covariate_effect": "Fires only when the paper states it estimates how an observed covariate or an experimental treatment relates to topic prevalence or topic content (e.g., regresses topic proportions on metadata, or an STM prevalence covariate). Does NOT fire when the paper fits a topic model and only labels/reads topics without relating them to a covariate. Ambiguous cases are NA.",
+   "topic_covariate_effects": "Fires when the paper states it estimates a relationship between document metadata/covariates and estimated topic proportions (a covariate-topic effect it reports with inference). Does NOT fire when a topic model is reported only descriptively with no covariate-topic relationship, nor when covariates are used only to label documents.",
+   "topic_treatment_effect": "Fires when the paper states that an experimentally assigned or otherwise treatment variable is the covariate whose effect on estimated topics it reports. Does NOT fire for an observational (non-assigned) covariate, nor for a treatment whose effect is estimated on a non-text outcome.",
+   "supervised_classification": "Fires only when the paper states in its own words that it trains a supervised learning model on labeled/hand-coded documents to assign documents to predetermined categories. Does NOT fire for: applying a pre-built dictionary to score documents (that is `dictionary`); fitting a topic model or clustering to discover categories (that is `unsupervised_topic`); a coder never infers 'supervised' from the mere presence of categories in the paper. Undeclared or ambiguous cases are out of scope (NA).",
+   "cross_validated_performance": "Fires only when the paper states it estimates a classifier's accuracy using cross-validation or an explicit train/test split. Does NOT fire when the paper reports only in-sample fit, or reports accuracy computed on the full labeled set with no held-out partition. Ambiguous cases are NA.",
+   "dictionary": "Fires only when the paper states it measures a quantity by applying a word list, dictionary, or lexicon (counting or scoring words against a fixed list). Does NOT fire for a supervised classifier trained on labeled text, or for embeddings. Ambiguous cases are NA.",
+   "scaling": "Fires only when the paper states it places texts or actors on a latent dimension using a text-scaling method it names (e.g., wordscores, wordfish). Does NOT fire for estimating topic proportions, or for a supervised classifier. Ambiguous cases are NA.",
+   "embeddings": "Fires only when the paper states it uses word or document embeddings it names (e.g., word2vec, GloVe) as a measure of meaning or similarity. Does NOT fire for a bag-of-words topic model, or when embeddings are used purely as black-box input features to a supervised task whose outputs are validated separately. Ambiguous cases are NA.",
+   "word_embeddings": "Fires when the paper states it uses word embeddings to measure meaning or similarity — it names word2vec, GloVe, fastText, or 'word embeddings'. Does NOT fire for a bag-of-words topic model, nor for using a large language model to classify text without embedding vectors.",
+   "llm_synthetic": "Fires only when the paper states it uses a large language model to generate synthetic survey, opinion, or respondent data that it then analyzes as if it were data. Does NOT fire when an LLM is used to classify or annotate existing human-authored texts, or only as a writing aid. Ambiguous cases are NA.",
+   "multilingual": "Fires only when the paper states its source corpus contains documents in more than one language and analyzes them jointly (whether or not they are first translated into a common language). Does NOT fire for a single-language corpus, even a non-English one. Ambiguous cases are NA.",
+   "all": "Every paper that uses an automated or quantitative text-analysis method (dictionary, supervised classifier, topic model/clustering, scaling, embeddings, or LLM generation) to produce a measure or quantity from a body of text."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 17 concepts in >=2 draws; dropped 1 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "TEXT-EST-01",
+  "category": "EST",
+  "scope": [
+   "unsupervised_topic"
+  ],
+  "claim": "The number of topics/clusters and the choice among fitted models must be justified by substantive fit (interpretability, coherence-and-exclusivity, external validation), not by a statistical fit statistic alone.",
+  "observable": "The basis the paper gives for its number of topics/clusters and its choice among candidate models.",
+  "pass_condition": "The paper reports selecting the topic/cluster count and model on a substantive basis — interpretability, reading of exemplars, joint coherence-and-exclusivity, covariate/label validation, or a pre-registered word-set criterion.",
+  "flag_condition": "The paper selects the number of topics or the model solely by a statistical fit statistic (held-out likelihood, perplexity, or marginal likelihood) with no substantive check, or states no basis at all for the count it used.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Grimmer/Roberts: selecting by fit 'maximizes model fit and not substantive interpretation' and 'can select substantively inferior models', so model selection should measure substantive fit.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using an unsupervised topic/cluster model must justify its topic count and model choice on substantive grounds, not statistical fit alone.",
+  "contributing_sources": [
+   "Grimmer (2013a)",
+   "Grimmer (2013c)",
+   "Roberts (2014a)",
+   "Roberts (2014b)",
+   "Roberts (2019)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_grimmer_2013c",
+    "short_cite": "Grimmer (2013c)",
+    "source_lines": "L196",
+    "quote": "Rather than statistical fit, model selection should be recast as a problem of measuring substantive fit.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     20
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_roberts_2014b",
+    "short_cite": "Roberts (2014b)",
+    "source_lines": "L106",
+    "quote": "It is tempting to compute an approximation to the marginal likelihood and calculate a model selection statistic, but we echo previous studies in emphasizing that this maximizes model fit and not substantive interpretation (Chang et al. 2009).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L30",
+    "quote": "Alternative model evaluations that rely on model fit or predicting the content of new texts can select substantively inferior models",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013a)",
+    "pages": "p. 270",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "text_grimmer_2013c",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013c)",
+    "pages": "p. 286",
+    "pagination": "printed",
+    "pdf_pages": [
+     20
+    ]
+   },
+   {
+    "source_id": "text_roberts_2014b",
+    "cite": "Margaret E. Roberts, Brandon Stewart, Dustin Tingley, Christopher Lucas, Jetson Leder‐Luis, Shana Kushner Gadarian, Bethany Albertson, & David G. Rand. (2014). Structural Topic Models for Open‐Ended Survey Responses. American Journal of Political Science, 58(4), 1064-1082. https://doi.org/10.1111/ajps.12103",
+    "short_cite": "Roberts (2014b)",
+    "pages": "p. 1069",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": true,
+  "dispute_basis": "Grün (2011) recommends choosing the topic count in a data-driven way, using held-out perplexity, which treats statistical fit alone as sufficient."
+ },
+ {
+  "check_id": "TEXT-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "topic_covariate_effect"
+  ],
+  "claim": "Topic proportions are estimated, not observed, so a paper relating them to covariates must carry that estimation uncertainty into its reported intervals; ignoring it understates uncertainty.",
+  "observable": "Whether the paper, when it reports intervals/standard errors for topic-covariate relationships, states or uses a mechanism that carries the uncertainty of the estimated topic proportions into those intervals, rather than plugging in point estimates as if the proportions were known.",
+  "pass_condition": "The paper states it propagates topic-estimation uncertainty into its downstream intervals (e.g., a method-of-composition / uncertainty-propagating estimator, or the default uncertainty-carrying setting of its estimator).",
+  "flag_condition": "The paper reports intervals or tests for topic-covariate effects and neither states nor uses any mechanism carrying topic-estimation uncertainty — i.e., it treats the estimated topic proportions as fixed and known.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Roberts: failing to include estimation uncertainty 'will generally result in narrower confidence intervals because it will not include the additional estimation uncertainty'.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper estimating covariate effects on topic proportions must propagate topic-estimation uncertainty into its reported intervals.",
+  "contributing_sources": [
+   "Roberts (2019)",
+   "Roberts (2014b)",
+   "Grimmer (2013b)",
+   "Grimmer (2013c)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_roberts_2019",
+    "short_cite": "Roberts (2019)",
+    "source_lines": "L366",
+    "quote": "which will generally result in narrower confidence intervals because it will not include the additional estimation uncertainty.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_roberts_2019",
+    "cite": "Margaret E. Roberts, Brandon Stewart, & Dustin Tingley. (2019). <b>stm</b>: An <i>R</i> Package for Structural Topic Models. Journal of Statistical Software, 91(2). https://doi.org/10.18637/jss.v091.i02",
+    "short_cite": "Roberts (2019)",
+    "pages": "p. 15",
+    "pagination": "pdf",
+    "pdf_pages": [
+     15
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "topic_covariate_effects"
+  ],
+  "claim": "Estimating and testing covariate/treatment effects across many topics does not by itself yield accurate p-values, so significance selected from many topic-level tests without a multiplicity safeguard is unreliable; a paper testing effects over many topics must address the multiplicity (e.g., false-discovery-rate control or a pre-analysis plan).",
+  "observable": "Whether the paper, when it reports significance of effects across many topics, applies a multiple-testing correction or a pre-analysis plan that limits the number of hypotheses tested.",
+  "pass_condition": "The paper reports a multiple-testing safeguard (FDR control, a pre-analysis plan, or an equivalent) for its topic-level effect tests, or does not select significant effects from a large family of topic-level tests.",
+  "flag_condition": "The paper reports significant covariate/treatment effects selected from many topic-level tests with no correction for multiplicity.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Roberts et al. state the framework does not address accurate p-values under multiple testing and point to false-discovery-rate and pre-experiment-plan approaches to do so.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper testing effects across many topics must address multiple testing via FDR control or a pre-analysis plan.",
+  "contributing_sources": [
+   "Roberts (2014a)",
+   "Roberts (2014b)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_roberts_2014b",
+    "short_cite": "Roberts (2014b)",
+    "source_lines": "L126",
+    "quote": "it does not address concerns of accurate p-values in the presence of multiple testing. In the appendix, we discuss how false discovery rate methods and preexperiment plan approaches can be incorporated into the topic model framework to address these concerns.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_roberts_2014a",
+    "short_cite": "Roberts (2014a)",
+    "source_lines": "L126",
+    "quote": "it does not address concerns of accurate p-values in the presence of multiple testing.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_roberts_2014a",
+    "cite": "Margaret E. Roberts, Brandon M. Stewart, Dustin Tingley, Christopher Lucas, Jetson Leder‐Luis, Shana Kushner Gadarian, Bethany Albertson, & David G. Rand. (2014). Structural Topic Models for Open‐Ended Survey Responses. American Journal of Political Science, 58(4), 1064-1082. https://doi.org/10.1111/ajps.12103",
+    "short_cite": "Roberts (2014a)",
+    "pages": "p. 1070",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   },
+   {
+    "source_id": "text_roberts_2014b",
+    "cite": "Margaret E. Roberts, Brandon Stewart, Dustin Tingley, Christopher Lucas, Jetson Leder‐Luis, Shana Kushner Gadarian, Bethany Albertson, & David G. Rand. (2014). Structural Topic Models for Open‐Ended Survey Responses. American Journal of Political Science, 58(4), 1064-1082. https://doi.org/10.1111/ajps.12103",
+    "short_cite": "Roberts (2014b)",
+    "pages": "p. 1070",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-INFER-03",
+  "category": "INFER",
+  "scope": [
+   "topic_treatment_effect"
+  ],
+  "claim": "Using the treatment assignment both to estimate the topics (measurement) and to estimate the treatment's effect can bake the conclusion into the measurement and manufacture false positives, so a paper doing this must report a safeguard against a spurious effect — a permutation test that reshuffles the treatment label and refits being the canonical instance.",
+  "observable": "Whether the paper, when the treatment variable is used both in fitting the topics and in estimating the effect, reports a check that the estimated effect is not spurious — e.g., a permutation test that reshuffles the treatment label and refits, finding no spurious effect.",
+  "pass_condition": "The paper reports a permutation test or an equivalent safeguard against a baked-in/false-positive effect when the treatment is used for both measurement and effect estimation.",
+  "flag_condition": "The paper uses the treatment for both topic estimation and effect estimation and reports the effect with no safeguard against circularity.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Roberts et al. flag false positives arising from using treatment assignment for both measurement and effect estimation and describe a permutation test as the safeguard.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "When a treatment is used to both estimate topics and estimate its effect, the paper must report a safeguard against a spurious, baked-in effect.",
+  "contributing_sources": [
+   "Roberts (2014b)",
+   "Roberts (2019)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_roberts_2014b",
+    "short_cite": "Roberts (2014b)",
+    "source_lines": "L464",
+    "quote": "such as concerns about false positives arising from the use of treatment assignment for both measurement and effect estimation",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     18
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_roberts_2019",
+    "short_cite": "Roberts (2019)",
+    "source_lines": "L838",
+    "quote": "A related concern is that by combining the measurement model with the estimation of an effect, the user is “baking in” the conclusion.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     39
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_roberts_2014b",
+    "cite": "Margaret E. Roberts, Brandon Stewart, Dustin Tingley, Christopher Lucas, Jetson Leder‐Luis, Shana Kushner Gadarian, Bethany Albertson, & David G. Rand. (2014). Structural Topic Models for Open‐Ended Survey Responses. American Journal of Political Science, 58(4), 1064-1082. https://doi.org/10.1111/ajps.12103",
+    "short_cite": "Roberts (2014b)",
+    "pages": "p. 1081",
+    "pagination": "printed",
+    "pdf_pages": [
+     18
+    ]
+   },
+   {
+    "source_id": "text_roberts_2019",
+    "cite": "Margaret E. Roberts, Brandon Stewart, & Dustin Tingley. (2019). <b>stm</b>: An <i>R</i> Package for Structural Topic Models. Journal of Statistical Software, 91(2). https://doi.org/10.18637/jss.v091.i02",
+    "short_cite": "Roberts (2019)",
+    "pages": "p. 39",
+    "pagination": "pdf",
+    "pdf_pages": [
+     39
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-01",
+  "category": "ROBUST",
+  "scope": [
+   "supervised_classification"
+  ],
+  "claim": "A supervised classifier's labels may be trusted only after the paper shows the machine reproduces human coding on documents it was not trained on.",
+  "observable": "Whether the paper reports the agreement between the classifier's labels and human/hand-coded labels, computed on documents held out of training (an out-of-sample or cross-validated comparison).",
+  "pass_condition": "The paper reports an out-of-sample agreement between machine labels and human coding (e.g., held-out accuracy, precision/recall, or agreement on a test set not used to fit the model).",
+  "flag_condition": "The paper reports no comparison to human coding, or reports agreement computed only on the training documents (in-sample) with no held-out check. If only in-sample agreement is given, treat as a FLAG — the out-of-sample demonstration is the requirement, and a held-out figure in an appendix or supplement counts as satisfying it.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Grimmer: a classifier's accuracy varies substantially across contexts, so validation of accuracy is 'essential to establish the reliability of supervised learning methods'.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using a supervised classifier must demonstrate, on held-out documents, that its automated labels reproduce human coding.",
+  "contributing_sources": [
+   "Grimmer (2013a)",
+   "Grimmer (2013b)",
+   "Grimmer (2013c)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L39",
+    "quote": "scholars must demonstrate that the supervised methods are able to reliably replicate human coding",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L20",
+    "quote": "validation of a classifier’s accuracy is essential to establish the reliability of supervised learning methods",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L113",
+    "quote": "ensuring all predictions are made on data out of sample",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013a)",
+    "pages": "pp. 269, 271, 279",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     5,
+     13
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-02",
+  "category": "ROBUST",
+  "scope": [
+   "cross_validated_performance"
+  ],
+  "claim": "Cross-validated accuracy is only a valid performance estimate when every modeling step, including feature/predictor selection, happens inside each training fold rather than on the full labeled data.",
+  "observable": "Whether a paper that reports cross-validated (or train/test) classifier accuracy states that feature/predictor selection and tuning were done within each training fold, not on all labeled documents before splitting.",
+  "pass_condition": "The paper states that all modeling steps that touch the outcome — feature/predictor selection, tuning — were performed inside the training portion of each cross-validation fold.",
+  "flag_condition": "The paper reports cross-validated accuracy but selects predictors or tunes on the full labeled set before cross-validating, or does not indicate where selection occurred so leakage cannot be ruled out.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Grimmer: the properties of cross-validation 'only apply when all steps (including selection of relevant predictors) are handled within the training set of the cross-validation and not within the full-labeled data'.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper reporting cross-validated classifier performance must perform predictor selection and tuning within the folds, not on the full labeled data.",
+  "contributing_sources": [
+   "Grimmer (2013a)",
+   "Grimmer (2013b)",
+   "Grimmer (2013c)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L116",
+    "quote": "These properties only apply when all steps (including selection of relevant predictors) are handled within the training set of the cross-validation and not within the full-labeled data.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 0.966
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013a)",
+    "pages": "p. 279",
+    "pagination": "printed",
+    "pdf_pages": [
+     13
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-03",
+  "category": "ROBUST",
+  "scope": [
+   "supervised_classification"
+  ],
+  "claim": "Because classifiers assume the training set is a random sample of the target corpus, the paper must show its training documents were drawn to represent that corpus.",
+  "observable": "How the paper describes the selection of its training/hand-coded documents, and whether that selection is a random or otherwise representative sample of the corpus the classifier will label.",
+  "pass_condition": "The paper states its training documents were randomly sampled from, or otherwise shown to represent, the population of documents to be coded.",
+  "flag_condition": "The paper draws training documents by a non-representative route (keyword hits, convenience, one time period) or does not describe how training documents were selected.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Grimmer: 'no statistical model can repair a poorly constructed training set', and classifiers 'implicitly assume that the training set is a random sample from the population of documents to be coded'.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using a supervised classifier must show its training documents are a random or representative sample of the corpus to be coded.",
+  "contributing_sources": [
+   "Grimmer (2013a)",
+   "Grimmer (2013b)",
+   "Grimmer (2013c)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L76",
+    "quote": "almost all classification methods implicitly assume that the training set is a random sample from the population of documents to be coded",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L76",
+    "quote": "no statistical model can repair a poorly constructed training set",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013a)",
+    "pages": "p. 276",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-04",
+  "category": "ROBUST",
+  "scope": [
+   "dictionary"
+  ],
+  "claim": "A dictionary produces valid measures only when its word scores match how the words are used in the target corpus, so the paper must either show a borrowed list fits its domain or build a domain-specific one — and validate the result.",
+  "observable": "Whether the paper presents evidence that its dictionary measures the intended quantity in the target corpus: validation against hand-coding/exemplars, or that the list was constructed or shown to fit this domain.",
+  "pass_condition": "The paper reports validating its dictionary measures against the target corpus (e.g., checking scored documents against hand reading/coding), OR states it built a problem-specific dictionary for this corpus.",
+  "flag_condition": "The paper applies an off-the-shelf dictionary developed for another domain and treats its output as correct with no evidence that the word scores fit the target texts.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Grimmer: 'applying dictionaries outside the domain for which they were developed can lead to serious errors'.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using a dictionary must establish that its word list fits the target domain (or build a domain-specific one) and validate the resulting measures.",
+  "contributing_sources": [
+   "Grimmer (2013a)",
+   "Grimmer (2013b)",
+   "Grimmer (2013c)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_grimmer_2013b",
+    "short_cite": "Grimmer (2013b)",
+    "source_lines": "L70",
+    "quote": "When applying dictionaries, scholars should directly establish that word lists created in other contexts are applicable to a particular domain, or create a problem-specific dictionary. In either instance, scholars must validate their results.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L15",
+    "quote": "applying dictionaries outside the domain for which they were developed can lead to serious errors",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L62",
+    "quote": "For dictionary methods to work well, the scores attached to words must closely align with how the words are used in a particular context.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013a)",
+    "pages": "pp. 268, 274",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     8
+    ]
+   },
+   {
+    "source_id": "text_grimmer_2013b",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013b)",
+    "pages": "p. 275",
+    "pagination": "printed",
+    "pdf_pages": [
+     9
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-05",
+  "category": "ROBUST",
+  "scope": [
+   "scaling"
+  ],
+  "claim": "Scaling methods recover whatever variation dominates the language, so the paper must validate that the dimension it recovered is the intended concept (e.g., ideology) rather than style or other content.",
+  "observable": "Whether the paper presents evidence that the recovered scale corresponds to the concept it is claimed to measure — comparison to external placements/expert scores, or reading of texts at the extremes.",
+  "pass_condition": "The paper reports validating the recovered dimension against an external benchmark or substantive reading that confirms it is the intended concept.",
+  "flag_condition": "The paper interprets the scaling output as the intended dimension (e.g., ideology) with no validation that the recovered space is that dimension and not another dominant source of variation.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Grimmer: when the ideology-dominance assumption is violated 'the model will place actors in a different and non-ideological space', so scaling requires validation that the intended space was identified.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using a text-scaling method must validate that the recovered dimension is the concept it claims to measure.",
+  "contributing_sources": [
+   "Grimmer (2013a)",
+   "Grimmer (2013b)",
+   "Grimmer (2013c)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_grimmer_2013c",
+    "short_cite": "Grimmer (2013c)",
+    "source_lines": "L251",
+    "quote": "Therefore when applying scaling algorithms, careful validation is needed to confirm that the intended space has been identified.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     28
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L244",
+    "quote": "one should not assume that wordfish output measures an ideological location without careful validation",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     27
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013a)",
+    "pages": "p. 293",
+    "pagination": "printed",
+    "pdf_pages": [
+     27
+    ]
+   },
+   {
+    "source_id": "text_grimmer_2013c",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013c)",
+    "pages": "p. 294",
+    "pagination": "printed",
+    "pdf_pages": [
+     28
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-06",
+  "category": "ROBUST",
+  "scope": [
+   "unsupervised_topic"
+  ],
+  "claim": "An unsupervised clustering or topic model is not guaranteed to return substantively meaningful categories, so the paper must present evidence that its discovered categories correspond to the concepts claimed.",
+  "observable": "Whether the paper reports at least one activity establishing that its topics/clusters measure what it says they do, drawn from: (a) reading the documents most associated with each topic/cluster; (b) checking topic word lists against exemplar documents; (c) comparing topics to external labels, human coding, or metadata; (d) assembling experimental, substantive, and statistical evidence of conceptual validity.",
+  "pass_condition": "The paper reports at least one of the enumerated validation activities for the topics/clusters it uses as measures.",
+  "flag_condition": "The paper uses topics/clusters as measures while reporting nothing beyond the top-word lists the model produces — no reading of documents, no external comparison, no other validity evidence.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Grimmer: 'Before using a clustering, validating the clustering is essential for demonstrating that the output of an unsupervised method is useful.'",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using unsupervised topics/clusters as measures must validate that they correspond to the concepts claimed, via reading exemplars, external comparison, or combined substantive evidence.",
+  "contributing_sources": [
+   "Grimmer (2013a)",
+   "Grimmer (2013b)",
+   "Grimmer (2013c)",
+   "Lucas (2015)",
+   "Roberts (2014a)",
+   "Roberts (2014b)",
+   "Grün (2011)",
+   "Roberts (2019)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L136",
+    "quote": "Before using a clustering, validating the clustering is essential for demonstrating that the output of an unsupervised method is useful.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_grimmer_2013c",
+    "short_cite": "Grimmer (2013c)",
+    "source_lines": "L39",
+    "quote": "To validate the output of an unsupervised method, scholars must combine experimental, substantive, and statistical evidence to demonstrate that the measures are as conceptually valid as measures from an equivalent supervised model.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_roberts_2014b",
+    "short_cite": "Roberts (2014b)",
+    "source_lines": "L113",
+    "quote": "While this simple measure is computationally efficient and interpretable, it cannot replace human judgment. The insight of the investigator is paramount here, and we strongly suggest careful reading of example texts.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013a)",
+    "pages": "p. 281",
+    "pagination": "printed",
+    "pdf_pages": [
+     15
+    ]
+   },
+   {
+    "source_id": "text_grimmer_2013c",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013c)",
+    "pages": "p. 271",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "text_roberts_2014b",
+    "cite": "Margaret E. Roberts, Brandon Stewart, Dustin Tingley, Christopher Lucas, Jetson Leder‐Luis, Shana Kushner Gadarian, Bethany Albertson, & David G. Rand. (2014). Structural Topic Models for Open‐Ended Survey Responses. American Journal of Political Science, 58(4), 1064-1082. https://doi.org/10.1111/ajps.12103",
+    "short_cite": "Roberts (2014b)",
+    "pages": "p. 1070",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 8,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-07",
+  "category": "ROBUST",
+  "scope": [
+   "unsupervised_topic",
+   "embeddings"
+  ],
+  "claim": "Topic models and embeddings optimize non-convex, multimodal objectives, so results depend on initialization; the paper must address that instability or its inferences may be non-replicable.",
+  "observable": "Whether the paper addresses sensitivity of its fitted model to initialization/run-to-run variability, via one of: a deterministic (spectral) initialization; fitting from multiple starts and selecting/diagnosing among runs; or, for embeddings, averaging the quantity of interest over multiple randomly initialized runs (or showing the chosen specification is stable).",
+  "pass_condition": "The paper reports at least one of the enumerated remedies for estimation instability.",
+  "flag_condition": "The paper reports a single fit from a single (random) initialization and does not mention multimodality, initialization sensitivity, or run-to-run stability.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Rodríguez: run-to-run variability 'if unaccounted for, can lead to mistaken and nonreplicable inferences'; Roberts: the posterior is multi-modal and 'sensitive to initialization'.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper fitting a topic model or embeddings must address multimodality/initialization sensitivity through deterministic initialization, multiple starts, or averaging over runs.",
+  "contributing_sources": [
+   "Roberts (2014a)",
+   "Roberts (2014b)",
+   "Roberts (2019)",
+   "Rodríguez (2021)",
+   "Grün (2011)",
+   "Blei (2007)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_roberts_2019",
+    "short_cite": "Roberts (2019)",
+    "source_lines": "L208",
+    "quote": "the posterior is intractable and non-convex, which creates a multi-modal estimation problem that can be sensitive to initialization.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_rodr_guez_2021",
+    "short_cite": "Rodríguez (2021)",
+    "source_lines": "L112",
+    "quote": "This produces additional variability beyond sampling error that, if unaccounted for, can lead to mistaken and nonreplicable inferences.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_roberts_2019",
+    "cite": "Margaret E. Roberts, Brandon Stewart, & Dustin Tingley. (2019). <b>stm</b>: An <i>R</i> Package for Structural Topic Models. Journal of Statistical Software, 91(2). https://doi.org/10.18637/jss.v091.i02",
+    "short_cite": "Roberts (2019)",
+    "pages": "p. 9",
+    "pagination": "pdf",
+    "pdf_pages": [
+     9
+    ]
+   },
+   {
+    "source_id": "text_rodr_guez_2021",
+    "cite": "Pedro L. Rodríguez & Arthur Spirling. (2021). Word Embeddings: What Works, What Doesn’t, and How to Tell the Difference for Applied Research. The Journal of Politics, 84(1), 101-115. https://doi.org/10.1086/715162",
+    "short_cite": "Rodríguez (2021)",
+    "pages": "p. 114",
+    "pagination": "printed",
+    "pdf_pages": [
+     14
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 6,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-08",
+  "category": "ROBUST",
+  "scope": [
+   "word_embeddings"
+  ],
+  "claim": "Locally fit word embeddings are not reproducible across runs on the same corpus: multiple local optima and finite-corpus sampling add variability beyond sampling error that, left unaccounted, yields mistaken and non-replicable inferences. A paper that trains embeddings locally must account for this instability rather than report a single run; a paper that instead relies on pretrained embeddings from a large external corpus is using a specification the source treats as adequately stable.",
+  "observable": "When the paper trains embeddings locally on its own corpus: whether it reports fitting them multiple times from different random initializations and aggregating (e.g., averaging the distance/similarity metric) or otherwise assessing run-to-run stability. When the paper instead relies on pretrained/off-the-shelf embeddings: whether it identifies that choice.",
+  "pass_condition": "The paper reports averaging/aggregating across several local embedding runs or a stability assessment; OR it relies on pretrained embeddings trained on a large external corpus; OR it otherwise justifies that repeated fits are unnecessary for its specification.",
+  "flag_condition": "The paper trains embeddings locally on its own corpus and draws substantive conclusions from a single run with no treatment of estimation instability.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Rodríguez & Spirling state that unaccounted-for variability from multiple local optima can lead to mistaken and non-replicable inferences.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper that trains embeddings locally must account for run-to-run estimation instability rather than rely on a single fit; a paper using pretrained large-corpus embeddings satisfies this.",
+  "contributing_sources": [
+   "Rodríguez (2021)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_rodr_guez_2021",
+    "short_cite": "Rodríguez (2021)",
+    "source_lines": "L112",
+    "quote": "This produces additional variability beyond sampling error that, if unaccounted for, can lead to mistaken and nonreplicable inferences.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_rodr_guez_2021",
+    "short_cite": "Rodríguez (2021)",
+    "source_lines": "L18",
+    "quote": "the issue is that vectors learned on the same corpus, even with the same technique for the same word, need not be identical for every run of the model. This is partly about inevitable stochastic behavior of algorithms in this field, but it is also connected with fundamental sampling uncertainty in (small) finite corpora (Antoniak and Mimno 2018).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_rodr_guez_2021",
+    "short_cite": "Rodríguez (2021)",
+    "source_lines": "L112",
+    "quote": "we endorse estimating the same model several times, each with different randomly drawn initial word vectors and use an average of the distance metric of choice",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_rodr_guez_2021",
+    "cite": "Pedro L. Rodríguez & Arthur Spirling. (2021). Word Embeddings: What Works, What Doesn’t, and How to Tell the Difference for Applied Research. The Journal of Politics, 84(1), 101-115. https://doi.org/10.1086/715162",
+    "short_cite": "Rodríguez (2021)",
+    "pages": "pp. 103, 114",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     14
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-09",
+  "category": "ROBUST",
+  "scope": [
+   "llm_synthetic"
+  ],
+  "claim": "LLM-generated synthetic survey data are unreliable for inference and worse on conditional relationships than on marginal means, so a paper using them must validate them against real human data on the associational quantities it studies, not just on averages.",
+  "observable": "Whether the paper benchmarks its LLM synthetic data against real survey/human data on the conditional relationships (regression coefficients, subgroup differences) it relies on — not only on marginal means.",
+  "pass_condition": "The paper compares its synthetic data to real human data on the specific conditional/associational relationships it uses, and its inferences rest on that comparison.",
+  "flag_condition": "The paper uses LLM synthetic responses for inference while validating them only on aggregate means, or without benchmarking them against real human data at all.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Bisbee: synthetic data 'perform poorly' for associational questions and 'fare worse when we examine higher-order relationships', so aggregate agreement does not establish validity.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using LLM synthetic responses for inference must validate them against real human data on the conditional relationships it studies, not just on marginal means.",
+  "contributing_sources": [
+   "Bisbee (2024)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_bisbee_2024",
+    "short_cite": "Bisbee (2024)",
+    "source_lines": "L18",
+    "quote": "The synthetic sample fares worse when we examine higher-order relationships.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_bisbee_2024",
+    "short_cite": "Bisbee (2024)",
+    "source_lines": "L5",
+    "quote": "sampling by ChatGPT is not reliable for statistical inference: there is less variation in responses than in the real surveys, and regression coefficients often differ significantly from equivalent estimates obtained using ANES data",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_bisbee_2024",
+    "short_cite": "Bisbee (2024)",
+    "source_lines": "L63",
+    "quote": "For the kinds of associational questions that social scientists care about, synthetic survey data perform poorly even under the favorable conditions we examine.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_bisbee_2024",
+    "cite": "James Bisbee, Joshua D. Clinton, Cassy Dorff, Brenton Kenkel, & Jennifer Larson. (2024). Synthetic Replacements for Human Survey Data? The Perils of Large Language Models. Political Analysis, 32(4), 401-416. https://doi.org/10.1017/pan.2024.5",
+    "short_cite": "Bisbee (2024)",
+    "pages": "pp. 401-402, 406",
+    "pagination": "printed",
+    "pdf_pages": [
+     1,
+     2,
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-10",
+  "category": "ROBUST",
+  "scope": [
+   "multilingual"
+  ],
+  "claim": "Standard methods assume one language, so a paper analyzing a multilingual corpus jointly must validate that its topics/measures are comparable across languages and not artifacts of translation or linguistic style.",
+  "observable": "Whether the paper reports a cross-language comparability check on its topics/measures, drawn from: verifying no topic is confined to a single source language; reading native-language documents for a topic to confirm meaning survives; or modeling original language as a content covariate to separate semantics from translation artifacts.",
+  "pass_condition": "The paper reports at least one of the enumerated cross-language comparability checks for the multilingual measures it uses.",
+  "flag_condition": "The paper pools multiple languages (via translation or joint modeling) and interprets the resulting topics/measures with no check that they are comparable across languages rather than translation/language artifacts.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Lucas: cross-language topic correspondence 'needs to be validated', and the analysis must ensure topics reflect 'differences in semantic content rather than linguistic idiosyncrasies'.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper jointly analyzing a multilingual corpus must validate that its topics/measures are comparable across languages and not translation or style artifacts.",
+  "contributing_sources": [
+   "Lucas (2015)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_lucas_2015",
+    "short_cite": "Lucas (2015)",
+    "source_lines": "L75",
+    "quote": "For each topic, the user needs to verify that the topic word distributions are comparable across languages.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_lucas_2015",
+    "short_cite": "Lucas (2015)",
+    "source_lines": "L178",
+    "quote": "we need to use some type of external alignment between languages to analyze the two corpora within the same model",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_lucas_2015",
+    "short_cite": "Lucas (2015)",
+    "source_lines": "L191",
+    "quote": "We want to ensure that the topics are uncovering differences in semantic content rather than linguistic idiosyncrasies in describing that content.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_lucas_2015",
+    "cite": "Christopher Lucas, Richard A. Nielsen, Margaret E. Roberts, Brandon Stewart, Alex Storer, & Dustin Tingley. (2015). Computer-Assisted Text Analysis for Comparative Politics. Political Analysis, 23(2), 254-277. https://doi.org/10.1093/pan/mpu019",
+    "short_cite": "Lucas (2015)",
+    "pages": "pp. 262, 268, 270",
+    "pagination": "printed",
+    "pdf_pages": [
+     9,
+     15,
+     17
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-11",
+  "category": "ROBUST",
+  "scope": [
+   "embeddings"
+  ],
+  "claim": "An embedding that works as a downstream feature need not work as a measure of meaning, so a paper using embeddings as a measure must evaluate them for that intended use rather than assume off-the-shelf quality.",
+  "observable": "Whether the paper reports any evaluation of its embeddings' fitness for its intended measurement task — e.g., query/nearest-neighbor ranking correlations, comparison to human judgments, comparison to a model known to perform well, or another task-appropriate check on domain-relevant queries.",
+  "pass_condition": "The paper reports an evaluation of whether its embeddings are fit for the intended measurement use (any task-appropriate check — e.g., query/nearest-neighbor ranking, a human comparison, or a known-good-model comparison), rather than assuming off-the-shelf quality.",
+  "flag_condition": "The paper uses embeddings as a measure of meaning/similarity and reports no evaluation of their quality for that purpose.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Rodríguez: performance as a feature 'need not correlate with' performance as a measure of meaning, so embeddings must be evaluated for the purpose actually intended.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using embeddings as a measure of meaning must evaluate their quality for that intended use.",
+  "contributing_sources": [
+   "Rodríguez (2021)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_rodr_guez_2021",
+    "short_cite": "Rodríguez (2021)",
+    "source_lines": "L12",
+    "quote": "Good performance in the former need not correlate with good performance in the latter (Chiu, Korhonen, and Pyysalo 2016).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_rodr_guez_2021",
+    "short_cite": "Rodríguez (2021)",
+    "source_lines": "L108",
+    "quote": "To discriminate between models resulting in very different embedding spaces, both can be compared to a baseline, either a model known to perform well or, as we do, a human baseline.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_rodr_guez_2021",
+    "cite": "Pedro L. Rodríguez & Arthur Spirling. (2021). Word Embeddings: What Works, What Doesn’t, and How to Tell the Difference for Applied Research. The Journal of Politics, 84(1), 101-115. https://doi.org/10.1086/715162",
+    "short_cite": "Rodríguez (2021)",
+    "pages": "pp. 102, 113",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     13
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-ROBUST-12",
+  "category": "ROBUST",
+  "scope": [
+   "all"
+  ],
+  "claim": "Every automated text method is a known-wrong model of language whose performance on a new corpus cannot be assumed, so any paper using one must report some validation of its measure in its own application rather than apply the method blindly.",
+  "observable": "Whether the paper reports any validation of the automated text measure it uses — appropriate to its method — rather than treating the method's output as correct without a validation step.",
+  "pass_condition": "The paper reports at least one validation of its automated text measure in this application (a method-specific validation under checks 01/04/05/06/09/10/11 satisfies this).",
+  "flag_condition": "The paper applies an automated text method and treats its output as valid with no validation step of any kind.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Grimmer: 'the performance of any one method on a new data set cannot be guaranteed, and therefore validation is essential when applying automated content methods'; blind use without a validation step is 'to be avoided'.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using any automated text method must report validation of its measure in its own application.",
+  "contributing_sources": [
+   "Grimmer (2013a)",
+   "Grimmer (2013b)",
+   "Grimmer (2013c)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_grimmer_2013b",
+    "short_cite": "Grimmer (2013b)",
+    "source_lines": "L29",
+    "quote": "automated content methods are incorrect models of language. This means that the performance of any one method on a new data set cannot be guaranteed, and therefore validation is essential when applying automated content methods.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_grimmer_2013a",
+    "short_cite": "Grimmer (2013a)",
+    "source_lines": "L39",
+    "quote": "What should be avoided, then, is the blind use of any method without a validation step.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_grimmer_2013a",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013a)",
+    "pages": "p. 271",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "text_grimmer_2013b",
+    "cite": "Justin Grimmer & Brandon Stewart. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. Political Analysis, 21(3), 267-297. https://doi.org/10.1093/pan/mps028",
+    "short_cite": "Grimmer (2013b)",
+    "pages": "p. 268",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "TEXT-REPORT-01",
+  "category": "REPORT",
+  "scope": [
+   "llm_synthetic"
+  ],
+  "claim": "Because LLM output shifts with prompt wording and with model updates outside the researcher's control, a paper using synthetic LLM data must report the exact prompts and the specific model version/date so the analysis can be reproduced.",
+  "observable": "Whether the paper reports the verbatim prompt(s) used to generate the synthetic data and the specific model identifier/version and date it was queried.",
+  "pass_condition": "The paper reports both the exact prompt text and the model version/date (in the paper or its replication materials).",
+  "flag_condition": "The paper omits the exact prompt(s) or the specific model version/date used to generate the synthetic data.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Bisbee: results are 'sensitive to small differences in the prompt' and the same prompts change over time 'because of changes being made to the LLM that are beyond the control of the researcher', threatening replication.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using LLM-generated data must report the exact prompts and the specific model version/date used.",
+  "contributing_sources": [
+   "Bisbee (2024)"
+  ],
+  "evidence": [
+   {
+    "source_id": "text_bisbee_2024",
+    "short_cite": "Bisbee (2024)",
+    "source_lines": "L198",
+    "quote": "the variation in the changes we observe across various prompts highlights the importance of the prompt being used and the unknown associations that the LLM leverages to generate those responses",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "text_bisbee_2024",
+    "short_cite": "Bisbee (2024)",
+    "source_lines": "L239",
+    "quote": "the same prompts may produce different synthetic responses because of changes being made to the LLM that are beyond the control of the researcher",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "text_bisbee_2024",
+    "cite": "James Bisbee, Joshua D. Clinton, Cassy Dorff, Brenton Kenkel, & Jennifer Larson. (2024). Synthetic Replacements for Human Survey Data? The Perils of Large Language Models. Political Analysis, 32(4), 401-416. https://doi.org/10.1017/pan.2024.5",
+    "short_cite": "Bisbee (2024)",
+    "pages": "pp. 411, 413",
+    "pagination": "printed",
+    "pdf_pages": [
+     11,
+     13
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

@@ -1,0 +1,2042 @@
+[
+ {
+  "_module": "HTE",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "all",
+   "observational",
+   "iv",
+   "generalization",
+   "interaction_model",
+   "nonlinear_interaction",
+   "multiple_hypotheses",
+   "heterogeneity_test",
+   "causal_forest",
+   "quantile_distributional",
+   "clustered",
+   "subgroup_analysis",
+   "data_driven_hte",
+   "linear_interaction",
+   "subgroup_heterogeneity",
+   "risk_modeling",
+   "trimming",
+   "attrition"
+  ],
+  "_scope_definitions": {
+   "all": "Every paper in the module (all are causal / potential-outcomes analyses of treatment effects). Fires unconditionally.",
+   "observational": "The paper states that its treatment-effect estimates come from non-randomized data and relies on a selection-on-observables / unconfoundedness identifying assumption. Does NOT fire for: a randomized experiment (even one that also runs adjusted regressions), or a design whose identification the paper attributes to randomization or an instrument.",
+   "iv": "The paper states it identifies effects through an instrumental variable, or a fuzzy regression-discontinuity estimated by two-stage least squares. Does NOT fire when: the paper merely calls a policy an 'instrument' informally with no IV identification claim; a variable is used only as a control; standard errors happen to be clustered.",
+   "generalization": "The paper states it carries an estimate from its study sample to a different or broader target population (population effect, transportability, external target). Does NOT fire for: a passing remark about external validity; reporting subgroup effects that stay within the study sample.",
+   "interaction_model": "The paper states it estimates a multiplicative interaction / product term (treatment x moderator, or X x Z) to test a conditional or moderating hypothesis. Does NOT fire for: adding a covariate as a control with no product term; reporting means by subgroup with no product term; a stratified analysis with no interaction coefficient.",
+   "nonlinear_interaction": "interaction_model AND the outcome model is a nonlinear / limited-dependent model the paper names (logit, probit, tobit, Poisson or other count, duration/hazard, ordered, multinomial). Does NOT fire for: a linear/OLS interaction; a nonlinear model that contains no product or higher-order term.",
+   "multiple_hypotheses": "The paper states it tests a family of several hypotheses at once -- treatment effects on multiple outcomes, or across multiple subgroups/treatments -- and reports the tests together. Does NOT fire for: a single pre-specified primary outcome/hypothesis; incidental coefficients from one model that the paper does not treat as a tested family.",
+   "heterogeneity_test": "Fires when the paper states it performs a statistical test for the presence of effect variation (an omnibus or constant-effect test, a variance-ratio test, a shifted-CDF/KS test, or a randomization test of no heterogeneity). Near-miss that does NOT fire: comparing two subgroup point estimates with no test; a test of the overall average effect.",
+   "causal_forest": "The paper states it uses a random / causal / regression forest to estimate treatment effects and to build confidence intervals. Does NOT fire for: a single descriptive regression tree; a random-effects (multilevel) model; a forest used only for propensity or nuisance prediction that the paper does not use for effect inference.",
+   "quantile_distributional": "The paper states a quantile treatment effect or a distributional / CDF treatment effect as an estimand it reports. Does NOT fire for: reporting subgroup means; a single median regression the paper does not frame as a distributional-effect claim.",
+   "clustered": "The paper states its observations are clustered or otherwise dependent (e.g., pupils within classrooms, siblings, repeated measures on a unit) and describes that grouping. Does NOT fire for: a single cross-section the paper treats as independent units; time fixed effects alone.",
+   "subgroup_analysis": "Fires when the paper states it reports or tests treatment effects for subgroups defined by covariates. Near-miss that does NOT fire: reporting only the overall average effect; adjusting for a covariate without any subgroup-specific effect.",
+   "data_driven_hte": "Fires when the paper states it uses a data-adaptive/machine-learning method to discover or estimate heterogeneity (causal forest, penalized/LASSO selection, ensemble/super-learner, causal or recursive-partitioning trees, BART). Near-miss that does NOT fire: pre-registered fixed subgroups fit by OLS.",
+   "linear_interaction": "interaction_model estimated by a linear (OLS-type) specification in which at least one interacted variable is continuous. Does NOT fire for: a fully saturated dummy-by-dummy model with no continuous interacted variable; a nonlinear-link model.",
+   "subgroup_heterogeneity": "The paper states that variation of the treatment effect across subpopulations (heterogeneous / conditional / effect-modified effects) is a quantity it targets and reports. Does NOT fire for: a single robustness split the paper does not frame as a heterogeneity estimand; reporting only an overall average effect.",
+   "risk_modeling": "The paper states it stratifies or predicts treatment effects using a baseline-risk / prognostic model or risk score. Does NOT fire for: one-variable-at-a-time subgroup analysis; adjusting for baseline covariates without forming a risk score.",
+   "trimming": "The paper states it discards or trims units by their estimated propensity score, or restricts the analysis to a common-support / overlap region. Does NOT fire for: dropping units for item-missing data; winsorizing or trimming the outcome variable.",
+   "attrition": "The paper states it has non-trivial follow-up attrition or missing outcome data. Does NOT fire for: complete outcome data; missingness confined to covariates."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 24 concepts in >=2 draws; dropped 3 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "HTE-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "Estimating a treatment effect in the potential-outcomes framework relies on a no-interference / stable-unit-treatment assumption; where one unit's outcome can depend on another's treatment (e.g., within households), the analysis must move to the level at which no-interference holds.",
+  "observable": "Whether the paper states a no-interference or SUTVA assumption, or otherwise addresses spillover between units (including by choosing the unit of analysis to rule it out).",
+  "pass_condition": "The paper names a no-interference / SUTVA assumption, or explains how its unit of analysis or design removes cross-unit spillover.",
+  "flag_condition": "The paper reports treatment-effect estimates with no statement of a no-interference / SUTVA assumption and no treatment of possible spillover between units.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Athey (2021) and Bargagli (2022) treat no-interference/SUTVA as a maintained condition for the effects to be defined; Imai (2010) requires re-leveling the analysis when interference is present.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper should state the no-interference / SUTVA assumption its effect estimates rely on, or show how the design rules interference out.",
+  "contributing_sources": [
+   "Athey (2021)",
+   "Bargagli (2022)",
+   "Ding (2015)",
+   "Imai (2010)",
+   "Imai (2013)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_athey_2021_policy",
+    "short_cite": "Athey (2021)",
+    "source_lines": "L153-154",
+    "quote": "we assume that there is no interference, that is, assigning one unit to treatment",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_bargagli_2022_heterogeneous",
+    "short_cite": "Bargagli (2022)",
+    "source_lines": "L161",
+    "quote": "Given the Stable Unit Treatment Value Assumption (SUTVA) that excludes interference between the",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_ding_2015_randomization",
+    "short_cite": "Ding (2015)",
+    "source_lines": "L127",
+    "quote": "we invoke the stable unit treatment value assumption, which states that there is only",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_athey_2021_policy",
+    "cite": "Athey et al. (2021). \"Policy Learning With Observational Data.\" DOI 10.3982/ecta15732.",
+    "short_cite": "Athey (2021)",
+    "pages": "p. 135",
+    "pagination": "printed",
+    "pdf_pages": [
+     3
+    ]
+   },
+   {
+    "source_id": "hte_bargagli_2022_heterogeneous",
+    "cite": "Bargagli et al. (2022). \"Heterogeneous causal effects with imperfect compliance: A Bayesian machine learning approach.\" DOI 10.1214/21-aoas1579.",
+    "short_cite": "Bargagli (2022)",
+    "pages": "p. 1989",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "hte_ding_2015_randomization",
+    "cite": "Ding et al. (2015). \"Randomization Inference for Treatment Effect Variation.\" DOI 10.1111/rssb.12124.",
+    "short_cite": "Ding (2015)",
+    "pages": "p. 657",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 5,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "observational"
+  ],
+  "claim": "When effects are identified from non-randomized data, a selection-on-observables / unconfoundedness assumption (no unmeasured confounders given covariates) must be invoked; unlike randomized designs it does not hold by construction.",
+  "observable": "Whether the paper states an unconfoundedness / strong-ignorability / no-unmeasured-confounders assumption for its observational identification.",
+  "pass_condition": "The paper names an unconfoundedness / conditional-ignorability / no-unmeasured-confounders condition as the basis for its observational effect estimates.",
+  "flag_condition": "The paper estimates effects from non-randomized data but states no conditional-independence / unconfoundedness assumption.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Bargagli (2022) and Wager (2018) make unconfoundedness the precondition for any causal reading of observational estimates; Imai (2013) notes unmeasured confounders otherwise threaten them.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper identifying effects from observational data should state its unconfoundedness / selection-on-observables assumption.",
+  "contributing_sources": [
+   "Bargagli (2022)",
+   "Wager (2018)",
+   "Imai (2013)",
+   "Crump (2009)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_bargagli_2022_heterogeneous",
+    "short_cite": "Bargagli (2022)",
+    "source_lines": "L168",
+    "quote": "In order to draw proper causal inference in observational studies, researchers need to assume strong ignorability to hold.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_bargagli_2022_heterogeneous",
+    "short_cite": "Bargagli (2022)",
+    "source_lines": "L181",
+    "quote": "The first assumption (unconfoundedness) rules out the presence of unmeasured confounders while the second condition (common support) needs to be",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_wager_2018_estimation",
+    "short_cite": "Wager (2018)",
+    "source_lines": "L1331",
+    "quote": "assignment is unconfounded (2) and has overlap (6).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_bargagli_2022_heterogeneous",
+    "cite": "Bargagli et al. (2022). \"Heterogeneous causal effects with imperfect compliance: A Bayesian machine learning approach.\" DOI 10.1214/21-aoas1579.",
+    "short_cite": "Bargagli (2022)",
+    "pages": "p. 1989",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "hte_wager_2018_estimation",
+    "cite": "Wager et al. (2018). \"Estimation and Inference of Heterogeneous Treatment Effects using Random Forests.\" DOI 10.1080/01621459.2017.1319839.",
+    "short_cite": "Wager (2018)",
+    "pages": "p. 1237",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-IDENT-03",
+  "category": "IDENT",
+  "scope": [
+   "observational"
+  ],
+  "claim": "Identification and precise estimation require overlap / common support -- the propensity of treatment bounded away from zero and one -- because covariate regions with few treated or few control units make conventional estimators biased, imprecise, and specification-sensitive.",
+  "observable": "Whether the paper states an overlap / common-support condition or reports checking/handling limited overlap in the covariate distribution across treatment arms.",
+  "pass_condition": "The paper states an overlap / common-support assumption or reports a diagnostic or restriction addressing limited overlap.",
+  "flag_condition": "The paper conditions effect estimates on covariates without any statement or check of overlap / common support.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Crump (2009) and Wager (2018) treat overlap as a maintained assumption whose failure yields bias and large variance.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper estimating conditional effects from observational data should state or check overlap / common support.",
+  "contributing_sources": [
+   "Crump (2009)",
+   "Wager (2018)",
+   "Athey (2021)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_crump_2009_dealing",
+    "short_cite": "Crump (2009)",
+    "source_lines": "L24-27",
+    "quote": "This lack of overlap can lead to imprecise estimates, and can make commonly used estimators",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_crump_2009_dealing",
+    "short_cite": "Crump (2009)",
+    "source_lines": "L145-153",
+    "quote": "Assumption 2. For some c > 0, and all x ∈ X, c ⩽ e(x) ⩽ 1 − c.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_wager_2018_estimation",
+    "short_cite": "Wager (2018)",
+    "source_lines": "L440",
+    "quote": "we also need to assume that we have overlap",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_crump_2009_dealing",
+    "cite": "Crump et al. (2009). \"Dealing with limited overlap in estimation of average treatment effects.\" DOI 10.1093/biomet/asn055.",
+    "short_cite": "Crump (2009)",
+    "pages": "pp. 187, 189",
+    "pagination": "printed",
+    "pdf_pages": [
+     1,
+     3
+    ]
+   },
+   {
+    "source_id": "hte_wager_2018_estimation",
+    "cite": "Wager et al. (2018). \"Estimation and Inference of Heterogeneous Treatment Effects using Random Forests.\" DOI 10.1080/01621459.2017.1319839.",
+    "short_cite": "Wager (2018)",
+    "pages": "p. 1231",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-IDENT-04",
+  "category": "IDENT",
+  "scope": [
+   "iv"
+  ],
+  "claim": "An instrumental-variable identification requires the instrument's core validity conditions -- an exclusion restriction and monotonicity (no defiers), alongside relevance -- and a bounded first stage that rules out weak instruments.",
+  "observable": "Whether the paper states the IV validity conditions (exclusion restriction, monotonicity/no-defiers, relevance / a non-weak first stage).",
+  "pass_condition": "The paper names the exclusion restriction and monotonicity (or no-defiers) as maintained IV assumptions and speaks to first-stage strength.",
+  "flag_condition": "The paper identifies effects via an instrument but states none of the exclusion restriction, monotonicity, or first-stage strength.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Bargagli (2022) lists the four IV conditions as necessary for a causal reading of the estimand; Athey (2021) shows the bounded-weights requirement rules out weak instruments.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "An IV design should state its exclusion restriction, monotonicity, and first-stage-strength conditions.",
+  "contributing_sources": [
+   "Bargagli (2022)",
+   "Athey (2021)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_bargagli_2022_heterogeneous",
+    "short_cite": "Bargagli (2022)",
+    "source_lines": "L226",
+    "quote": "monotonicity, existence of compliers, unconfoundedness of the IV, exclusion restriction—to hold. These assumptions need to hold to interpret the estimands proposed below as",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_athey_2021_policy",
+    "short_cite": "Athey (2021)",
+    "source_lines": "L288-289",
+    "quote": "When instruments are present, we always assume that the exclusion restriction",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_athey_2021_policy",
+    "short_cite": "Athey (2021)",
+    "source_lines": "L578-580",
+    "quote": "be bounded, which implicitly rules out the case of weak instruments (since if approaches",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_athey_2021_policy",
+    "cite": "Athey et al. (2021). \"Policy Learning With Observational Data.\" DOI 10.3982/ecta15732.",
+    "short_cite": "Athey (2021)",
+    "pages": "pp. 138, 142",
+    "pagination": "printed",
+    "pdf_pages": [
+     6,
+     10
+    ]
+   },
+   {
+    "source_id": "hte_bargagli_2022_heterogeneous",
+    "cite": "Bargagli et al. (2022). \"Heterogeneous causal effects with imperfect compliance: A Bayesian machine learning approach.\" DOI 10.1214/21-aoas1579.",
+    "short_cite": "Bargagli (2022)",
+    "pages": "p. 1990",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-IDENT-05",
+  "category": "IDENT",
+  "scope": [
+   "iv"
+  ],
+  "claim": "An instrument identifies the effect only for the complier subpopulation, so estimates are local (LATE/CACE); reading them as a population or conditional-average effect additionally requires an effect-homogeneity condition equating the two.",
+  "observable": "Whether the paper interprets its instrumented estimate as a complier-local effect, or states the homogeneity assumption needed to generalize it beyond compliers.",
+  "pass_condition": "The paper labels its IV estimate a local / complier effect, or states an effect-homogeneity assumption when reading it as a broader-population effect.",
+  "flag_condition": "The paper reports an IV estimate as a population or conditional-average effect with no complier-local caveat and no homogeneity assumption stated.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Bargagli (2022) states the identified effect is local to compliers; Athey (2021) requires a homogeneity condition to equate the conditional-LATE with the CATE.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper reporting IV estimates should interpret them as complier-local, or justify a broader reading with a homogeneity assumption.",
+  "contributing_sources": [
+   "Bargagli (2022)",
+   "Athey (2021)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_bargagli_2022_heterogeneous",
+    "short_cite": "Bargagli (2022)",
+    "source_lines": "L231",
+    "quote": "IV can then be used to identify the causal effect in the subset of units that",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_athey_2021_policy",
+    "short_cite": "Athey (2021)",
+    "source_lines": "L553-556",
+    "quote": "Suppose moreover that treatment effects are homogenous, meaning that the conditional average treatment effect matches the",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_athey_2021_policy",
+    "cite": "Athey et al. (2021). \"Policy Learning With Observational Data.\" DOI 10.3982/ecta15732.",
+    "short_cite": "Athey (2021)",
+    "pages": "p. 142",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   },
+   {
+    "source_id": "hte_bargagli_2022_heterogeneous",
+    "cite": "Bargagli et al. (2022). \"Heterogeneous causal effects with imperfect compliance: A Bayesian machine learning approach.\" DOI 10.1214/21-aoas1579.",
+    "short_cite": "Bargagli (2022)",
+    "pages": "p. 1990",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-IDENT-06",
+  "category": "IDENT",
+  "scope": [
+   "generalization"
+  ],
+  "claim": "Transporting an estimate to a target population the study did not sample requires unconfounded sample selection: the covariate set must contain every variable that both modifies the effect and differs in distribution between sample and target, and stable-unit conditions must hold for the selection process as well as the treatment.",
+  "observable": "Whether the paper states the sample-selection assumptions and names the effect-modifying covariates on which it reweights or stratifies to the target.",
+  "pass_condition": "The paper states its transport rests on unconfounded sample selection and identifies the effect-modifying covariates (that differ between sample and target) used to reweight or stratify.",
+  "flag_condition": "The paper generalizes to a non-sampled target without stating the sample-selection assumption or the effect-modifying covariates it adjusts for.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Tipton (2012) shows that omitting an effect-modifying covariate that differs between sample and population leaves the propensity-based generalization biased.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Generalization to a non-sampled target must state sample-selection unconfoundedness and the effect-modifying covariates adjusted for.",
+  "contributing_sources": [
+   "Tipton (2012)",
+   "Imai (2010)",
+   "Imai (2013)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_tipton_2012_improving",
+    "short_cite": "Tipton (2012)",
+    "source_lines": "L256-258",
+    "quote": "This condition says that X must include all covariates that both explain variation",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_tipton_2012_improving",
+    "short_cite": "Tipton (2012)",
+    "source_lines": "L185-186",
+    "quote": "There are three assumptions needed in order to use propensity scores for generalization. Importantly, these same assumptions would be needed even under",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_tipton_2012_improving",
+    "cite": "Tipton et al. (2012). \"Improving Generalizations From Experiments Using Propensity Score Subclassification.\" DOI 10.3102/1076998612441947.",
+    "short_cite": "Tipton (2012)",
+    "pages": "pp. 243, 245",
+    "pagination": "printed",
+    "pdf_pages": [
+     5,
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-EST-01",
+  "category": "EST",
+  "scope": [
+   "interaction_model"
+  ],
+  "claim": "A multiplicative interaction specification must include all constitutive (lower-order) terms of the product; dropping one produces omitted-variable bias, and neither a belief that a variable has zero average effect, nor multicollinearity, nor centering justifies the omission.",
+  "observable": "Whether the reported interaction model includes each interacted variable as its own lower-order term alongside the product term.",
+  "pass_condition": "The specification includes every constitutive term of the interaction together with the product term.",
+  "flag_condition": "The model reports a product term while omitting one or more of its constitutive terms.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Brambor (2006) shows omitting a constitutive term correlated with the product yields biased and inconsistent estimates; Mize (2019) states all constituent terms are needed.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "An interaction model should include all constitutive terms of the product.",
+  "contributing_sources": [
+   "Brambor (2006)",
+   "Mize (2019)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_brambor_2006_understanding",
+    "short_cite": "Brambor (2006)",
+    "source_lines": "L228",
+    "quote": "term Z will result in biased (and inconsistent) estimates of b0, b1, and b3.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_brambor_2006_understanding",
+    "short_cite": "Brambor (2006)",
+    "source_lines": "L207",
+    "quote": "is zero is never a justification for omitting the constitutive term.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_mize_2019_best",
+    "short_cite": "Mize (2019)",
+    "source_lines": "L472",
+    "quote": "that all constituent terms are needed (Brambor, Clark, and Golder 2006)",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_brambor_2006_understanding",
+    "cite": "Brambor et al. (2006). \"Understanding Interaction Models: Improving Empirical Analyses.\" DOI 10.1093/pan/mpi014.",
+    "short_cite": "Brambor (2006)",
+    "pages": "pp. 66-67",
+    "pagination": "printed",
+    "pdf_pages": [
+     4,
+     5
+    ]
+   },
+   {
+    "source_id": "hte_mize_2019_best",
+    "cite": "Mize et al. (2019). \"Best Practices for Estimating, Interpreting, and Presenting Nonlinear Interaction Effects.\" DOI 10.15195/v6.a4.",
+    "short_cite": "Mize (2019)",
+    "pages": "p. 88",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-EST-02",
+  "category": "EST",
+  "scope": [
+   "nonlinear_interaction"
+  ],
+  "claim": "In a nonlinear / limited-dependent model the interaction effect is the cross-partial derivative (or cross-difference) of the predicted outcome, not the coefficient on the product term; the coefficient can be zero while the effect is nonzero, its sign can differ from the effect's, and the effect varies across observations -- so magnitude must be computed from the cross-partial, and tools that return a single coefficient-based marginal effect for an interacted variable give the wrong answer.",
+  "observable": "How the paper obtains the interaction effect's magnitude: from the estimated cross-partial derivative/difference of predicted outcomes, or by reading the product-term coefficient.",
+  "pass_condition": "The paper computes the interaction effect as a cross-partial derivative or discrete cross-difference of the predicted outcome (or as marginal effects on the predicted scale), at stated covariate values or averaged over units.",
+  "flag_condition": "The paper reports the product-term coefficient (its size or sign) as the interaction effect in a nonlinear model, or reads the effect off a single tool-generated marginal effect for the interacted variable.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Ai (2003) and Norton (2004) show the interaction effect must be computed as the cross derivative and can be nonzero when the coefficient is zero; Mize (2019) calls the product-term coefficient a misleading representation.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A nonlinear-model interaction effect should be computed from the cross-partial of the predicted outcome, not the product-term coefficient.",
+  "contributing_sources": [
+   "Ai (2003)",
+   "Norton (2004)",
+   "Mize (2019)",
+   "Berry (2012)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_ai_2003_interaction",
+    "short_cite": "Ai (2003)",
+    "source_lines": "L350",
+    "quote": "interaction term when the model is nonlinear. Instead, the interaction effect requires computing the",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_norton_2004_computing",
+    "short_cite": "Norton (2004)",
+    "source_lines": "L124-125",
+    "quote": "one must compute the cross derivative of the expected value of the dependent variable.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_ai_2003_interaction",
+    "short_cite": "Ai (2003)",
+    "source_lines": "L82",
+    "quote": "could be nonzero, even if b12 5 0. For the probit model with b12 5 0, the interaction effect is",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_ai_2003_interaction",
+    "cite": "Ai et al. (2003). \"Interaction terms in logit and probit models.\" DOI 10.1016/S0165-1765(03)00032-6.",
+    "short_cite": "Ai (2003)",
+    "pages": "pp. 124, 129",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     7
+    ]
+   },
+   {
+    "source_id": "hte_norton_2004_computing",
+    "cite": "Norton et al. (2004). \"Computing Interaction Effects and Standard Errors in Logit and Probit Models.\" DOI 10.1177/1536867X0400400206.",
+    "short_cite": "Norton (2004)",
+    "pages": "p. 3",
+    "pagination": "pdf",
+    "pdf_pages": [
+     3
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "nonlinear_interaction"
+  ],
+  "claim": "The statistical significance of a nonlinear-model interaction effect must be judged from the estimated cross-partial (e.g., by the delta method or simulation/bootstrap), not from the t- or z-statistic on the product-term coefficient, and because the effect is covariate-dependent significance is assessed at covariate values rather than once for the whole sample.",
+  "observable": "How the paper tests the significance of the interaction effect: from the cross-partial's standard error, or from the product-term coefficient's test statistic.",
+  "pass_condition": "The paper reports uncertainty / significance for the interaction effect derived from the cross-partial (delta method, simulation, or bootstrap), at specified covariate values or as an average.",
+  "flag_condition": "The paper judges interaction significance in a nonlinear model from the z/t-test on the product-term coefficient alone.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Ai (2003) states significance cannot be tested with a t-test on the product-term coefficient; Norton (2004) requires the test to be based on the estimated cross-partial.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Significance of a nonlinear interaction effect should come from the cross-partial's standard error, not the coefficient's test statistic.",
+  "contributing_sources": [
+   "Ai (2003)",
+   "Norton (2004)",
+   "Mize (2019)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_ai_2003_interaction",
+    "short_cite": "Ai (2003)",
+    "source_lines": "L95",
+    "quote": "Secondly, the statistical significance of the interaction effect cannot be tested with a simple t-test on",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_norton_2004_computing",
+    "short_cite": "Norton (2004)",
+    "source_lines": "L115-127",
+    "quote": "The test for the statistical signiﬁcance of the interaction eﬀect must be based on the",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_mize_2019_best",
+    "short_cite": "Mize (2019)",
+    "source_lines": "L75",
+    "quote": "the interaction term to draw conclusions about significance of statistical interaction",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_ai_2003_interaction",
+    "cite": "Ai et al. (2003). \"Interaction terms in logit and probit models.\" DOI 10.1016/S0165-1765(03)00032-6.",
+    "short_cite": "Ai (2003)",
+    "pages": "p. 124",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   },
+   {
+    "source_id": "hte_mize_2019_best",
+    "cite": "Mize et al. (2019). \"Best Practices for Estimating, Interpreting, and Presenting Nonlinear Interaction Effects.\" DOI 10.15195/v6.a4.",
+    "short_cite": "Mize (2019)",
+    "pages": "p. 82",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   },
+   {
+    "source_id": "hte_norton_2004_computing",
+    "cite": "Norton et al. (2004). \"Computing Interaction Effects and Standard Errors in Logit and Probit Models.\" DOI 10.1177/1536867X0400400206.",
+    "short_cite": "Norton (2004)",
+    "pages": "p. 3",
+    "pagination": "pdf",
+    "pdf_pages": [
+     3
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "interaction_model"
+  ],
+  "claim": "The statistical significance of the product-term coefficient is neither necessary nor sufficient for a conditional relationship; conclusions about interaction (including whether to keep the term) must rest on the conditional marginal effects, and constitutive coefficients must not be read as unconditional/main/average effects.",
+  "observable": "Whether the paper's interaction conclusions turn on conditional marginal effects, or instead on the significance of the product-term coefficient (or on reading a constitutive coefficient as a main effect).",
+  "pass_condition": "The paper bases its interaction conclusions on the conditional marginal effect(s) across the modifier and does not equate a constitutive coefficient with an unconditional effect.",
+  "flag_condition": "The paper decides interaction presence/absence, or keeps/drops the product term, from the product-term coefficient's significance, or interprets a constitutive coefficient as a main/average effect.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Esarey (2017) states the product-term coefficient is neither necessary nor sufficient; Brambor (2006) shows a marginal effect can be significant when the coefficient is not; Berry (2012) shows one coefficient/plot cannot fix the other conditional effect.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Interaction conclusions should rest on conditional marginal effects, not the significance of the product-term coefficient, and constitutive coefficients should not be read as main effects.",
+  "contributing_sources": [
+   "Esarey (2017)",
+   "Brambor (2006)",
+   "Berry (2012)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_esarey_2017_marginal",
+    "short_cite": "Esarey (2017)",
+    "source_lines": "L68",
+    "quote": "multiplicative interaction term is seen as neither necessary nor sufficient for",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_brambor_2006_understanding",
+    "short_cite": "Brambor (2006)",
+    "source_lines": "L655",
+    "quote": "for substantively relevant values of the modifying variable Z even if the coefficient on the",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_berry_2012_improving",
+    "short_cite": "Berry (2012)",
+    "source_lines": "L301",
+    "quote": "marginal effect plot for X does not establish the sign",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_berry_2012_improving",
+    "cite": "Berry et al. (2012). \"Improving Tests of Theories Positing Interaction.\" DOI 10.1017/S0022381612000199.",
+    "short_cite": "Berry (2012)",
+    "pages": "p. 656",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "hte_brambor_2006_understanding",
+    "cite": "Brambor et al. (2006). \"Understanding Interaction Models: Improving Empirical Analyses.\" DOI 10.1093/pan/mpi014.",
+    "short_cite": "Brambor (2006)",
+    "pages": "p. 74",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   },
+   {
+    "source_id": "hte_esarey_2017_marginal",
+    "cite": "Esarey et al. (2017). \"Marginal Effects in Interaction Models: Determining and Controlling the False Positive Rate.\" DOI 10.1177/0010414017730080.",
+    "short_cite": "Esarey (2017)",
+    "pages": "p. 1145",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-INFER-03",
+  "category": "INFER",
+  "scope": [
+   "multiple_hypotheses"
+  ],
+  "claim": "When a family of hypotheses, outcomes, or subgroups is tested at once, the chance of at least one false rejection far exceeds the nominal level, so inference must account for multiplicity -- through a correction (Bonferroni/Holm, resampling-based FWER, or an FDR procedure), a summary index, or by reporting adjusted alongside unadjusted results -- rather than emphasizing whichever tests happened to reach significance.",
+  "observable": "Whether the paper adjusts inference for the number of tests in the family, or reports a summary index, versus reporting only per-test unadjusted significance.",
+  "pass_condition": "For the tested family the paper reports a named multiplicity adjustment (Bonferroni, Holm, FWER resampling, Benjamini-Hochberg/FDR) or a summary index, or presents adjusted results alongside unadjusted ones.",
+  "flag_condition": "The paper reports only per-test unadjusted p-values / significance for a family of hypotheses or outcomes and highlights the significant subset with no multiplicity adjustment.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "List (2019) and Anderson (2008) state that with many tests some are significant by chance and inference must account for multiplicity; Anderson (2008) calls emphasizing the unadjusted significant subset unreliable.",
+  "prevalence_aggravator": "Anderson (2008) reports most surveyed randomized evaluations tested five or more outcomes, so unadjusted multiple testing is widespread.",
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper testing a family of hypotheses/outcomes should report multiplicity-adjusted inference or a summary index.",
+  "contributing_sources": [
+   "List (2019)",
+   "Anderson (2008)",
+   "Esarey (2017)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_list_2019_multiple",
+    "short_cite": "List (2019)",
+    "source_lines": "L86",
+    "quote": "control the probability of a false rejection, it is therefore important to account appropriately for multiplicity of null hypotheses being tested.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_anderson_2008_multiple",
+    "short_cite": "Anderson (2008)",
+    "source_lines": "L360",
+    "quote": "Because each study examines hundreds of outcomes, some outcomes should display significance even if no effect exists.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_anderson_2008_multiple",
+    "short_cite": "Anderson (2008)",
+    "source_lines": "L2939",
+    "quote": "researchers have emphasized the subset of unadjusted significant",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_anderson_2008_multiple",
+    "cite": "Anderson et al. (2008). \"Multiple Inference and Gender Differences in the Effects of Early Intervention: A Reevaluation of the Abecedarian, Perry Preschool, and Early Training Projects.\" DOI 10.1198/016214508000000841.",
+    "short_cite": "Anderson (2008)",
+    "pages": "pp. 1484, 1494",
+    "pagination": "printed",
+    "pdf_pages": [
+     5,
+     15
+    ]
+   },
+   {
+    "source_id": "hte_list_2019_multiple",
+    "cite": "List et al. (2019). \"Multiple Hypothesis Testing in Experimental Economics.\" DOI 10.1007/s10683-018-09597-5.",
+    "short_cite": "List (2019)",
+    "pages": "p. 774",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-INFER-04",
+  "category": "INFER",
+  "scope": [
+   "heterogeneity_test"
+  ],
+  "claim": "A valid test for the presence of treatment-effect variation must separate heterogeneity from a constant mean shift (align the outcome distributions by the average effect) and must account for the unknown average effect as a nuisance parameter rather than plugging a point estimate into the ordinary null distribution, which yields invalid p-values.",
+  "observable": "Whether the paper's variation test aligns for the average effect and handles the unknown ATE nuisance validly (e.g., a randomization test maximized over an ATE confidence interval), versus a naive distributional test compared to an unadjusted null.",
+  "pass_condition": "The paper's heterogeneity test aligns for the mean effect and uses a null that accounts for the estimated-ATE nuisance (e.g., FRT over an ATE confidence interval).",
+  "flag_condition": "The paper tests for heterogeneity with a naive distributional statistic (e.g., a plain or plug-in shifted Kolmogorov-Smirnov test) compared to the ordinary null distribution.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Plugging the estimated ATE into the ordinary null yields invalid p-values (Ding 2015).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A test for effect variation must isolate variation from the mean shift and validly handle the unknown-ATE nuisance.",
+  "contributing_sources": [
+   "Ding (2015)",
+   "Bitler (2006)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_ding_2015_randomization",
+    "short_cite": "Ding (2015)",
+    "source_lines": "L251",
+    "quote": "To focus on heterogeneous treatment effects, we want to shift one of the CDFs by the ATE",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_ding_2015_randomization",
+    "short_cite": "Ding (2015)",
+    "source_lines": "L80",
+    "quote": "it is a nuisance parameter that we must estimate",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_ding_2015_randomization",
+    "cite": "Ding et al. (2015). \"Randomization Inference for Treatment Effect Variation.\" DOI 10.1111/rssb.12124.",
+    "short_cite": "Ding (2015)",
+    "pages": "pp. 656, 659",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw2",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-INFER-05",
+  "category": "INFER",
+  "scope": [
+   "interaction_model"
+  ],
+  "claim": "Scanning the conditional marginal effect across values of a moderator is itself a multiple-comparison problem: standard pointwise intervals are miscalibrated for the intended test, so reporting any single significant marginal effect across the moderator produces excess false positives, and joint tests of pre-specified predictions need a corrected (e.g., bootstrap-derived) critical value.",
+  "observable": "Whether the paper corrects for the many implied comparisons when reporting marginal-effect significance across a moderator, or reports whichever value of the moderator yielded significance using pointwise intervals.",
+  "pass_condition": "The paper reports marginal-effect significance across the moderator using a multiplicity- or joint-test-corrected procedure (FWER/FDR control or a bootstrap critical value), or tests pre-specified predictions jointly.",
+  "flag_condition": "The paper reports a significant conditional marginal effect found by scanning values of the moderator with uncorrected pointwise intervals.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Esarey (2017) shows an interaction implicitly splits the sample by the moderator, making pointwise intervals too wide or too narrow and any-value reporting overconfident.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Marginal-effect significance scanned across a moderator should be corrected for the implied multiple comparisons.",
+  "contributing_sources": [
+   "Esarey (2017)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_esarey_2017_marginal",
+    "short_cite": "Esarey (2017)",
+    "source_lines": "L494",
+    "quote": "The multiple comparison problem and resulting overconfidence in hypothesis tests for marginal effects can be worsened when a linear model interacts a",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     9
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_esarey_2017_marginal",
+    "short_cite": "Esarey (2017)",
+    "source_lines": "L117",
+    "quote": "Plotting ∂y / ∂x over values of z and reporting any statistically significant relationship tend to result in overconfident",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_esarey_2017_marginal",
+    "short_cite": "Esarey (2017)",
+    "source_lines": "L116",
+    "quote": "As a result, these CIs can either be too wide or too narrow to conduct the tests",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_esarey_2017_marginal",
+    "cite": "Esarey et al. (2017). \"Marginal Effects in Interaction Models: Determining and Controlling the False Positive Rate.\" DOI 10.1177/0010414017730080.",
+    "short_cite": "Esarey (2017)",
+    "pages": "pp. 1146, 1152",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     9
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-INFER-06",
+  "category": "INFER",
+  "scope": [
+   "causal_forest"
+  ],
+  "claim": "Valid confidence intervals from a causal/random forest require honest trees (each observation used either to place splits or to estimate leaf effects, not both) grown on subsamples rather than bootstrap draws; without this the intervals do not cover the truth.",
+  "observable": "Whether the paper states the forest was built with honesty and subsampling when it reports forest confidence intervals or standard errors.",
+  "pass_condition": "The paper states its forest uses honest trees (split-versus-estimate sample separation) and subsampling of the training data for the intervals it reports.",
+  "flag_condition": "The paper reports forest confidence intervals or standard errors while stating (or leaving standard) an adaptive/bootstrap forest without honesty.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Wager (2018) shows honesty and subsampling are what license the Gaussian limit; without them the forest is biased and intervals fail to cover.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Forest-based confidence intervals must rest on honest, subsampled trees.",
+  "contributing_sources": [
+   "Wager (2018)",
+   "Bargagli (2022)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_wager_2018_estimation",
+    "short_cite": "Wager (2018)",
+    "source_lines": "L509",
+    "quote": "a tree is honest if, for each training example i, it",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_wager_2018_estimation",
+    "short_cite": "Wager (2018)",
+    "source_lines": "L420",
+    "quote": "the trees used to build the forest must be grown on",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     11
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_wager_2018_estimation",
+    "cite": "Wager et al. (2018). \"Estimation and Inference of Heterogeneous Treatment Effects using Random Forests.\" DOI 10.1080/01621459.2017.1319839.",
+    "short_cite": "Wager (2018)",
+    "pages": "p. 1237",
+    "pagination": "printed",
+    "pdf_pages": [
+     11
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-INFER-07",
+  "category": "INFER",
+  "scope": [
+   "quantile_distributional"
+  ],
+  "claim": "Quantile / distributional treatment effects describe differences between the two marginal outcome distributions and cannot be read as the effect for specific individuals or as who-gains-and-who-loses, because ranks can reverse across arms; identifying individual winners and losers, or relating a composite outcome's quantile effects to its components, needs extra assumptions such as rank preservation.",
+  "observable": "Whether the paper interprets quantile/distributional effects as statements about the marginal distributions, or reads them as individual-level gains/losses without a rank-preservation (or similar) assumption.",
+  "pass_condition": "The paper interprets quantile/distributional effects as differences between marginal distributions, and any individual-level or winners/losers claim is qualified by a stated rank-preservation (or equivalent) assumption.",
+  "flag_condition": "The paper reads quantile/distributional effects as the effect on particular individuals, or identifies winners and losers, without stating the extra assumption that requires.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Bitler (2006) states quantile effects do not identify the impact for given people and that isolating winners/losers or decomposing composite outcomes requires assumptions such as rank preservation.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Quantile/distributional effects should be interpreted as distributional, not individual, absent a rank-preservation assumption.",
+  "contributing_sources": [
+   "Bitler (2006)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_bitler_2006_what",
+    "short_cite": "Bitler (2006)",
+    "source_lines": "L1337",
+    "quote": "do not necessarily identify the impact of treatment for given people. For example, if Jobs",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_bitler_2006_what",
+    "short_cite": "Bitler (2006)",
+    "source_lines": "L1664",
+    "quote": "Without further assumptions, the possibility of rank",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_bitler_2006_what",
+    "short_cite": "Bitler (2006)",
+    "source_lines": "L1588",
+    "quote": "strong assumptions (e.g., rank preservation), it",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_bitler_2006_what",
+    "cite": "Bitler et al. (2006). \"What Mean Impacts Miss: Distributional Effects of Welfare Reform Experiments.\" DOI 10.1257/aer.96.4.988.",
+    "short_cite": "Bitler (2006)",
+    "pages": "pp. 999, 1003-1004",
+    "pagination": "printed",
+    "pdf_pages": [
+     12,
+     16,
+     17
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-INFER-08",
+  "category": "INFER",
+  "scope": [
+   "clustered"
+  ],
+  "claim": "When observations are clustered or otherwise dependent, standard errors that ignore the dependence are too small; the paper must adjust for clustering (and with few clusters a block bootstrap is preferable to cluster-robust asymptotics).",
+  "observable": "Whether the paper adjusts its standard errors for the clustered/dependent structure it describes.",
+  "pass_condition": "The paper reports standard errors that account for the clustering/dependence (cluster-robust errors, or a block bootstrap when clusters are few).",
+  "flag_condition": "The paper describes clustered/dependent data but reports standard errors that treat observations as independent.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Anderson (2008) states dependence among observations makes standard errors too small unless adjusted for clustering; Hainmueller (2018) notes cluster-robust errors understate uncertainty with few clusters.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper with clustered/dependent data should adjust standard errors for that structure.",
+  "contributing_sources": [
+   "Anderson (2008)",
+   "Hainmueller (2018)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_anderson_2008_multiple",
+    "short_cite": "Anderson (2008)",
+    "source_lines": "L3064",
+    "quote": "A final complication is the possibility of dependence between observations, or clustering.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     16
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_hainmueller_2018_how",
+    "short_cite": "Hainmueller (2018)",
+    "source_lines": "L1013-1016",
+    "quote": "fewer in the right tail), cluster-robust standard errors can severely underestimate uncertainty",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     19
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_anderson_2008_multiple",
+    "cite": "Anderson et al. (2008). \"Multiple Inference and Gender Differences in the Effects of Early Intervention: A Reevaluation of the Abecedarian, Perry Preschool, and Early Training Projects.\" DOI 10.1198/016214508000000841.",
+    "short_cite": "Anderson (2008)",
+    "pages": "p. 1495",
+    "pagination": "printed",
+    "pdf_pages": [
+     16
+    ]
+   },
+   {
+    "source_id": "hte_hainmueller_2018_how",
+    "cite": "Hainmueller et al. (2018). \"How Much Should We Trust Estimates from Multiplicative Interaction Models? Simple Tools to Improve Empirical Practice.\" DOI 10.1017/pan.2018.46.",
+    "short_cite": "Hainmueller (2018)",
+    "pages": "p. 181",
+    "pagination": "printed",
+    "pdf_pages": [
+     19
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-ROBUST-01",
+  "category": "ROBUST",
+  "scope": [
+   "subgroup_analysis",
+   "data_driven_hte"
+  ],
+  "claim": "Subgroups or heterogeneity variables chosen after seeing the outcomes produce spurious findings, so heterogeneity claims must rest on pre-specified subgroups or on a discovery/inference separation (sample splitting, a held-out test set, or cross-validated tuning).",
+  "observable": "Whether the reported heterogeneity was pre-specified or protected by a discovery-versus-inference data split.",
+  "pass_condition": "The paper states the subgroups / heterogeneity variables were specified before analysis, OR that discovery and final inference use separate data (sample splitting, a held-out test set, or cross-validation for model/tuning selection).",
+  "flag_condition": "The paper reports subgroup or data-driven heterogeneity formed after examining outcomes with no pre-specification and no discovery/inference split.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Imai (2010) and Wager (2018) tie post-hoc subgrouping to spurious significant findings and require subgroups be fixed in advance or validated out of sample.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Heterogeneity claims must be pre-specified or protected by a discovery/inference data split.",
+  "contributing_sources": [
+   "Imai (2010)",
+   "Wager (2018)",
+   "Grimmer (2017)",
+   "Bargagli (2022)",
+   "Bitler (2006)",
+   "Kent (2019)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_imai_2010_estimation",
+    "short_cite": "Imai (2010)",
+    "source_lines": "L66",
+    "quote": "after the experiment is conducted in an ad hoc manner, such an analysis runs a risk of finding statistically",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_wager_2018_estimation",
+    "short_cite": "Wager (2018)",
+    "source_lines": "L74",
+    "quote": "must specify in advance which subgroups will be analyzed",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_bargagli_2022_heterogeneous",
+    "short_cite": "Bargagli (2022)",
+    "source_lines": "L367",
+    "quote": "sample-splitting enables an honest inference for effect modification.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_bargagli_2022_heterogeneous",
+    "cite": "Bargagli et al. (2022). \"Heterogeneous causal effects with imperfect compliance: A Bayesian machine learning approach.\" DOI 10.1214/21-aoas1579.",
+    "short_cite": "Bargagli (2022)",
+    "pages": "p. 1992",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   },
+   {
+    "source_id": "hte_imai_2010_estimation",
+    "cite": "Imai et al. (2010). \"Estimation of Heterogeneous Treatment Effects from Randomized Experiments, with Application to the Optimal Planning of the Get-Out-the-Vote Campaign.\" DOI 10.1093/pan/mpq035.",
+    "short_cite": "Imai (2010)",
+    "pages": "p. 2",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   },
+   {
+    "source_id": "hte_wager_2018_estimation",
+    "cite": "Wager et al. (2018). \"Estimation and Inference of Heterogeneous Treatment Effects using Random Forests.\" DOI 10.1080/01621459.2017.1319839.",
+    "short_cite": "Wager (2018)",
+    "pages": "p. 1228",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 6,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-ROBUST-02",
+  "category": "ROBUST",
+  "scope": [
+   "linear_interaction"
+  ],
+  "claim": "A linear multiplicative interaction assumes the marginal effect changes at a constant (linear) rate with the moderator; if this fails, the conditional-effect estimates are biased and inconsistent, so the paper should assess the assumption -- via a diagnostic plot or a more flexible (binning/kernel) estimator that nests the linear model -- and where linearity is doubtful prefer the flexible estimate.",
+  "observable": "Whether the paper assesses the constant-marginal-effect (linearity) assumption of its linear interaction, e.g. through a diagnostic plot or a binning/flexible estimator, rather than assuming it.",
+  "pass_condition": "The paper reports a check of the linear-interaction assumption (diagnostic plot, or a binning/kernel/flexible estimate compared against the linear model) and interprets effects consistent with the result.",
+  "flag_condition": "The paper reports conditional effects at moderator values from a linear interaction with no assessment of the constant-marginal-effect assumption.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Hainmueller (2018) shows that when the linear-interaction assumption fails the conditional-effect estimates are inconsistent and biased, and that a binning estimator that diverges from the linear model signals invalidity.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A linear interaction with a continuous moderator should have its constant-marginal-effect assumption checked.",
+  "contributing_sources": [
+   "Hainmueller (2018)",
+   "Berry (2012)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_hainmueller_2018_how",
+    "short_cite": "Hainmueller (2018)",
+    "source_lines": "L305-306",
+    "quote": "states that the interaction effect is linear, but if this assumption fails, the conditional marginaleffect estimates are inconsistent and biased.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_hainmueller_2018_how",
+    "short_cite": "Hainmueller (2018)",
+    "source_lines": "L607-609",
+    "quote": "interaction model gives an indication the LIE assumption is invalid.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_hainmueller_2018_how",
+    "cite": "Hainmueller et al. (2018). \"How Much Should We Trust Estimates from Multiplicative Interaction Models? Simple Tools to Improve Empirical Practice.\" DOI 10.1017/pan.2018.46.",
+    "short_cite": "Hainmueller (2018)",
+    "pages": "pp. 167, 172",
+    "pagination": "printed",
+    "pdf_pages": [
+     5,
+     10
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-ROBUST-03",
+  "category": "ROBUST",
+  "scope": [
+   "subgroup_heterogeneity"
+  ],
+  "claim": "Conditional or subgroup effects should be reported only over regions of the moderator/covariate space with enough data (and treatment variation); where a region is sparse the estimate rests on extrapolation and model form rather than observations, so it is fragile and should not be presented as an evidenced effect.",
+  "observable": "Whether the paper reports conditional/subgroup effects only where data are adequate, or extends them into sparse regions without flagging the reliance on extrapolation.",
+  "pass_condition": "The paper limits reported conditional effects to regions with adequate data density (or marks sparse-region estimates as extrapolation, e.g., via a moderator histogram or observation counts).",
+  "flag_condition": "The paper reports conditional/subgroup effects in sparse regions of the moderator/covariate space without noting the reliance on extrapolation or the thinness of the data.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Hainmueller (2018) states effect estimates where data are sparse are fragile and model-dependent; Grimmer (2017) notes naive subgroup differences in sparse cells reflect chance rather than systematic effects.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "Conditional effects should be reported only where the data are adequate, and sparse-region estimates marked as extrapolation.",
+  "contributing_sources": [
+   "Hainmueller (2018)",
+   "Grimmer (2017)",
+   "Berry (2012)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_hainmueller_2018_how",
+    "short_cite": "Hainmueller (2018)",
+    "source_lines": "L152-156",
+    "quote": "there is no or only sparse data and therefore the effect estimates are fragile and model dependent",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     3
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_grimmer_2017_estimating",
+    "short_cite": "Grimmer (2017)",
+    "source_lines": "L215-223",
+    "quote": "naïve differences will be likely to reflect random variation in the sample, rather than systematic",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_hainmueller_2018_how",
+    "short_cite": "Hainmueller (2018)",
+    "source_lines": "L296-299",
+    "quote": "requires common support across the entire joint distribution of D and X . Otherwise, estimation",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_grimmer_2017_estimating",
+    "cite": "Grimmer et al. (2017). \"Estimating Heterogeneous Treatment Effects and the Effects of Heterogeneous Treatments with Ensemble Methods.\" DOI 10.1017/pan.2017.15.",
+    "short_cite": "Grimmer (2017)",
+    "pages": "p. 416",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "hte_hainmueller_2018_how",
+    "cite": "Hainmueller et al. (2018). \"How Much Should We Trust Estimates from Multiplicative Interaction Models? Simple Tools to Improve Empirical Practice.\" DOI 10.1017/pan.2018.46.",
+    "short_cite": "Hainmueller (2018)",
+    "pages": "pp. 165, 167",
+    "pagination": "printed",
+    "pdf_pages": [
+     3,
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-ROBUST-04",
+  "category": "ROBUST",
+  "scope": [
+   "risk_modeling"
+  ],
+  "claim": "A risk-based (predictive) heterogeneity analysis rests on the dependence of the absolute effect on baseline risk; the stratifying risk model must be developed blinded to treatment assignment (fit without a treatment-assignment term), and an internally developed model must use the whole trial population rather than the control arm alone, which otherwise induces or exaggerates treatment-by-risk interactions.",
+  "observable": "Whether the paper states its risk/prognostic model was fit without a treatment-assignment term and, if internal, on the full trial population rather than controls only.",
+  "pass_condition": "The paper states the risk model was developed blinded to treatment (no treatment-assignment term) and, if internally developed, on the entire trial population.",
+  "flag_condition": "The paper stratifies by a risk model without stating it was blinded to treatment, or reports an internal model fit on the control arm only.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Kent (2019) defines risk modeling by a subgrouping scheme blinded to treatment, requires fitting without a treatment term, and warns that control-only fitting exaggerates treatment-by-risk interactions.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A stratifying risk model should be fit blinded to treatment and (if internal) on the whole trial population.",
+  "contributing_sources": [
+   "Kent (2019)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_kent_2019_the",
+    "short_cite": "Kent (2019)",
+    "source_lines": "L173",
+    "quote": "“blinded” to treatment assignment.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     14
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_kent_2019_the",
+    "short_cite": "Kent (2019)",
+    "source_lines": "L168",
+    "quote": "without a term for treatment assignment",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_kent_2019_the",
+    "short_cite": "Kent (2019)",
+    "source_lines": "L606",
+    "quote": "prone to inducing or exaggerating interactions between treatment and risk because of differential",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_kent_2019_the",
+    "cite": "Kent et al. (2019). \"The Predictive Approaches to Treatment effect Heterogeneity (PATH) Statement.\" DOI 10.7326/m18-3667.",
+    "short_cite": "Kent (2019)",
+    "pages": "pp. 40, 48",
+    "pagination": "printed",
+    "pdf_pages": [
+     6,
+     14
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-ROBUST-05",
+  "category": "ROBUST",
+  "scope": [
+   "trimming"
+  ],
+  "claim": "A subsample-selection or trimming rule for handling limited overlap must be defined from the joint distribution of covariates and treatment (e.g., the propensity score) alone and must not use the outcomes, because a selection rule that depends on the outcome distribution introduces deliberate bias into the estimated effects.",
+  "observable": "Whether the paper's trimming / subsample-selection rule is defined from covariates/propensity only, or in a way that uses outcome data.",
+  "pass_condition": "The paper defines its trimming/overlap-selection rule from covariates and treatment (e.g., propensity-score bounds) without reference to outcomes.",
+  "flag_condition": "The paper defines its trimming/selection rule using the outcome distribution (e.g., dropping units by their outcomes or outcome variances).",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Crump (2009) requires the subsample-selection rule to depend only on covariates and treatment so as not to introduce deliberate bias with respect to the outcomes.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A trimming/overlap-selection rule should be based on covariates/propensity, not on outcomes.",
+  "contributing_sources": [
+   "Crump (2009)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_crump_2009_dealing",
+    "short_cite": "Crump (2009)",
+    "source_lines": "L95-100",
+    "quote": "the distribution of the outcomes. As a result, we avoid introducing deliberate bias with respect to",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_crump_2009_dealing",
+    "short_cite": "Crump (2009)",
+    "source_lines": "L302-308",
+    "quote": "First, it makes the optimal set depend on the distribution of the potential outcomes, rather than",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_crump_2009_dealing",
+    "cite": "Crump et al. (2009). \"Dealing with limited overlap in estimation of average treatment effects.\" DOI 10.1093/biomet/asn055.",
+    "short_cite": "Crump (2009)",
+    "pages": "pp. 188, 190",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     4
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-REPORT-01",
+  "category": "REPORT",
+  "scope": [
+   "nonlinear_interaction"
+  ],
+  "claim": "Because the interaction effect in a nonlinear model varies in sign and magnitude across observations, a single summary number is inadequate; the paper should convey the effect's distribution -- reporting predicted outcomes/probabilities for the focal variables, and where a focal variable is continuous a visualization of the effect across its values.",
+  "observable": "Whether the paper reports predicted values/probabilities or the distribution of the interaction effect across observations, rather than only one summary number.",
+  "pass_condition": "The paper reports predicted outcomes/probabilities for the interacting variables, or the distribution of the interaction effect across covariate values (a plot where a focal variable is continuous).",
+  "flag_condition": "The paper conveys a nonlinear interaction only through a single summary number or the product-term coefficient, with no predicted values/distribution reported.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Mize (2019) states reporting the predictions/predicted probabilities is necessary to convey the substantive interaction; Ai (2003) notes a single summary measure is inadequate because the effect differs across observations.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A nonlinear interaction should be reported as predicted values / an effect distribution, not one summary number.",
+  "contributing_sources": [
+   "Mize (2019)",
+   "Ai (2003)",
+   "Norton (2004)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_mize_2019_best",
+    "short_cite": "Mize (2019)",
+    "source_lines": "L2532",
+    "quote": "which are necessary to assess the substantive nature of the interaction effect (i.e., the",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     34
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_ai_2003_interaction",
+    "short_cite": "Ai (2003)",
+    "source_lines": "L353",
+    "quote": "different observations, making simple summary measures of the interaction effect difficult.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_ai_2003_interaction",
+    "cite": "Ai et al. (2003). \"Interaction terms in logit and probit models.\" DOI 10.1016/S0165-1765(03)00032-6.",
+    "short_cite": "Ai (2003)",
+    "pages": "p. 129",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   },
+   {
+    "source_id": "hte_mize_2019_best",
+    "cite": "Mize et al. (2019). \"Best Practices for Estimating, Interpreting, and Presenting Nonlinear Interaction Effects.\" DOI 10.15195/v6.a4.",
+    "short_cite": "Mize (2019)",
+    "pages": "p. 114",
+    "pagination": "printed",
+    "pdf_pages": [
+     34
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-REPORT-02",
+  "category": "REPORT",
+  "scope": [
+   "subgroup_heterogeneity"
+  ],
+  "claim": "Heterogeneity is scale-dependent: whether an effect is constant or varies depends on the outcome scale (e.g., absolute risk difference vs. relative effect), and a constant relative effect generally implies a varying absolute effect. A paper claiming or denying heterogeneity must therefore state the scale on which it is measured.",
+  "observable": "Whether the paper states the outcome scale (absolute vs. relative, or a named transformation) on which it assesses effect heterogeneity/constancy.",
+  "pass_condition": "The paper states the scale on which heterogeneity is measured (e.g., absolute difference, ratio, or a named transformation), or reports the effect on more than one scale.",
+  "flag_condition": "The paper claims or denies heterogeneity without stating the outcome scale it is measured on.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Kent (2019) calls heterogeneity a scale-dependent concept and notes the absolute difference varies even when the relative effect is constant; Ding (2015) states constancy depends critically on the outcome scale.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper asserting or denying heterogeneity should state the outcome scale it is measured on.",
+  "contributing_sources": [
+   "Kent (2019)",
+   "Ding (2015)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_kent_2019_the",
+    "short_cite": "Kent (2019)",
+    "source_lines": "L40",
+    "quote": "HTE is fundamentally a scale-dependent concept (that is, its presence or absence depends on the scale with which the",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_ding_2015_randomization",
+    "short_cite": "Ding (2015)",
+    "source_lines": "L189",
+    "quote": "Whether a given treatment effect is constant critically depends on the scale of the outcomes.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_kent_2019_the",
+    "short_cite": "Kent (2019)",
+    "source_lines": "L155",
+    "quote": "The absolute risk difference—the most clinically important effect measure—will generally vary across",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_ding_2015_randomization",
+    "cite": "Ding et al. (2015). \"Randomization Inference for Treatment Effect Variation.\" DOI 10.1111/rssb.12124.",
+    "short_cite": "Ding (2015)",
+    "pages": "p. 658",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "hte_kent_2019_the",
+    "cite": "Kent et al. (2019). \"The Predictive Approaches to Treatment effect Heterogeneity (PATH) Statement.\" DOI 10.7326/m18-3667.",
+    "short_cite": "Kent (2019)",
+    "pages": "pp. 35-36",
+    "pagination": "printed",
+    "pdf_pages": [
+     1,
+     2
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "HTE-DATA-01",
+  "category": "DATA",
+  "scope": [
+   "attrition"
+  ],
+  "claim": "When follow-up attrition or missing outcomes may differ by treatment status, they can bias treatment-control comparisons; the paper should assess this -- e.g., by imputing missing outcomes and examining worst-case bounds, or re-estimating after handling the attrition -- rather than analyzing complete cases without comment.",
+  "observable": "Whether the paper, given non-trivial attrition/missing outcomes, assesses the sensitivity of its results (imputation, bounds, or re-estimation) rather than reporting complete cases only.",
+  "pass_condition": "The paper reports an assessment of attrition/missing-outcome sensitivity (imputation, worst-case bounds, or a re-estimation) or evidence attrition is unrelated to treatment.",
+  "flag_condition": "The paper reports non-trivial attrition/missing outcomes but analyzes complete cases with no sensitivity assessment.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Anderson (2008) states attrition related to treatment can create systematic differences unrelated to the treatment and calls for imputation and worst-case analysis; Ding (2015) notes complete-case restriction can create inferential problems.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper with non-trivial attrition should assess its sensitivity rather than silently analyze complete cases.",
+  "contributing_sources": [
+   "Anderson (2008)",
+   "Ding (2015)",
+   "Bitler (2006)"
+  ],
+  "evidence": [
+   {
+    "source_id": "hte_anderson_2008_multiple",
+    "short_cite": "Anderson (2008)",
+    "source_lines": "L3050",
+    "quote": "by treatment status, then systematic differences unrelated to the treatment could emerge between the two groups.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   },
+   {
+    "source_id": "hte_ding_2015_randomization",
+    "short_cite": "Ding (2015)",
+    "source_lines": "L949",
+    "quote": "this restriction could lead to a range of inferential issues",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0,
+    "line_anchored": true
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "hte_anderson_2008_multiple",
+    "cite": "Anderson et al. (2008). \"Multiple Inference and Gender Differences in the Effects of Early Intervention: A Reevaluation of the Abecedarian, Perry Preschool, and Early Training Projects.\" DOI 10.1198/016214508000000841.",
+    "short_cite": "Anderson (2008)",
+    "pages": "p. 1494",
+    "pagination": "printed",
+    "pdf_pages": [
+     15
+    ]
+   },
+   {
+    "source_id": "hte_ding_2015_randomization",
+    "cite": "Ding et al. (2015). \"Randomization Inference for Treatment Effect Variation.\" DOI 10.1111/rssb.12124.",
+    "short_cite": "Ding (2015)",
+    "pages": "p. 668",
+    "pagination": "printed",
+    "pdf_pages": [
+     15
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

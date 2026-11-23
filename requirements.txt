@@ -1,0 +1,6 @@
+# AMICUS runner dependencies. Install with: pip install -r requirements.txt
+#
+# PyMuPDF reads PDF papers. It is pinned exactly because the checklists' verbatim-quote
+# gate was run on this build's text extraction; other versions emit slightly different
+# text. .docx and .txt inputs need no extra package.
+PyMuPDF==1.26.5

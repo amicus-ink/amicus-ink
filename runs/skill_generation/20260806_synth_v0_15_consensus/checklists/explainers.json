@@ -1,0 +1,64 @@
+{
+ "module": "synth",
+ "run": "20260806_synth_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-11-11",
+ "explainers": [
+  {
+   "check_id": "SYNTH-IDENT-01",
+   "plain": "The paper should state that it removed from its comparison pool any units that received the intervention or a similar one, or had a large one-off shock to the outcome, during the study period, or that it checked and found none.",
+   "why": "The comparison is meant to show what would have happened without the intervention, so units affected by it or by their own large shocks distort that picture.",
+   "done": "states it screened out comparison units exposed to the intervention, a similar event, or a large outcome shock"
+  },
+  {
+   "check_id": "SYNTH-IDENT-02",
+   "plain": "The paper should address whether the intervention could have spilled over onto the comparison units, by arguing this is unlikely, reasoning about which way it would push the estimate, or checking results against possibly affected comparison units.",
+   "why": "If the comparison units were also affected by the intervention, the estimated effect is biased.",
+   "done": "addresses whether the intervention could have spilled over onto the comparison units"
+  },
+  {
+   "check_id": "SYNTH-IDENT-03",
+   "plain": "The paper should address whether the outcome began responding before the intervention's official date, either by arguing it did not or by placing the before/after cutoff ahead of the first date the outcome could react.",
+   "why": "The method assumes no response before the official date, so an early response makes the chosen cutoff misleading and distorts the estimate.",
+   "done": "argues the outcome did not respond early or sets the cutoff before any possible response"
+  },
+  {
+   "check_id": "SYNTH-IDENT-04",
+   "plain": "The paper should name the key assumption its comparison relies on, such as parallel trends (treated and comparison units would have moved together without the intervention), and give at least one argument or piece of evidence that it holds.",
+   "why": "The estimated effect is credible only if the assumption behind the comparison holds in the application.",
+   "done": "states the key assumption behind its comparison and gives an argument or evidence that it holds"
+  },
+  {
+   "check_id": "SYNTH-EST-01",
+   "plain": "The paper should list the comparison units that make up the synthetic control (a weighted blend of untreated units) and the weight each one receives.",
+   "why": "Showing which units contribute, and how much, lets readers see that the comparison is a transparent blend of identifiable units that does not extrapolate.",
+   "done": "reports which comparison units enter the synthetic control and their weights"
+  },
+  {
+   "check_id": "SYNTH-INFER-01",
+   "plain": "The paper should measure uncertainty with a method suited to few treated units and outcomes correlated over time, such as placebo tests on untreated units or fake dates, permutation p-values, resampling that keeps time patterns, or, with several treated units, standard errors grouped by unit.",
+   "why": "Conventional standard errors that treat observations as independent understate the uncertainty in this setting.",
+   "done": "measures uncertainty with placebo tests, permutation p-values, time-preserving resampling, or unit-clustered standard errors"
+  },
+  {
+   "check_id": "SYNTH-REPORT-01",
+   "plain": "The paper should explain how it set the relative importance of each predictor (the V weights) in building the synthetic control, for example by minimizing pre-intervention prediction error, cross-validation, or a justified custom choice.",
+   "why": "An ad hoc choice can force matching on characteristics that should not be matched and change which units form the comparison.",
+   "done": "explains how it chose the importance weights for its predictors"
+  },
+  {
+   "check_id": "SYNTH-DATA-01",
+   "plain": "The paper should build its comparison only from predictors and control series measured before the intervention or argued to be unaffected by it.",
+   "why": "A variable that the intervention itself moves biases the estimated effect.",
+   "done": "uses only predictors and control series measured before the intervention or argued to be unaffected"
+  },
+  {
+   "check_id": "SYNTH-DATA-02",
+   "plain": "The paper should report how many time periods come before and after the intervention, as counts or as a dated span at the data's frequency.",
+   "why": "Readers need this to judge whether the method was used where it is credible: a long pre-intervention span reduces bias, and enough later periods are needed to capture the effect.",
+   "done": "reports the number of periods before and after the intervention"
+  }
+ ],
+ "reviewed": "2026-11-11: 1 field(s) revised after an Opus review against the check text"
+}

@@ -1,0 +1,271 @@
+{
+ "module": "iv",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-4-8",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "iv_cragg_1993",
+   "sha256_pdf": "feca26fdb231efa7b819b044a900e3ba137121f8aef08fb7890d02d1f3a33a64",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_imbens_1994",
+   "sha256_pdf": "2f96d844d66e042002f9a4c14441b37f8a8d66df965337f1a2df52f63e50359e",
+   "claims": 12,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_bound_1995",
+   "sha256_pdf": "b14986290f43228cc85bbcc4cd8728da3498aaa6569a4ef86edc4c7cc3ad876f",
+   "claims": 19,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_angrist_1996b",
+   "sha256_pdf": "62adc1fc0993cd61454e31f12bb55d988ff92a8d6e673410f12ad72a53e3205b",
+   "claims": 32,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_angrist_1996d",
+   "sha256_pdf": "62adc1fc0993cd61454e31f12bb55d988ff92a8d6e673410f12ad72a53e3205b",
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_angrist_1996c",
+   "sha256_pdf": "62adc1fc0993cd61454e31f12bb55d988ff92a8d6e673410f12ad72a53e3205b",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_angrist_1996a",
+   "sha256_pdf": "62adc1fc0993cd61454e31f12bb55d988ff92a8d6e673410f12ad72a53e3205b",
+   "claims": 32,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_staiger_1997a",
+   "sha256_pdf": "99e6df17c2bff7d828642f81c6615201006a33250cb4916d2710392a3dd984bc",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_staiger_1997b",
+   "sha256_pdf": "99e6df17c2bff7d828642f81c6615201006a33250cb4916d2710392a3dd984bc",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_angrist_2000",
+   "sha256_pdf": "5f97d96cb6cac1ed7c7b06dbbcca2ea649b4dd0776ffb4761fcab7476975120c",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_stock_2002",
+   "sha256_pdf": "07e59d16ea6181511158d9c58f637b8b461b4d5790c000457c2096076c93728f",
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_newey_2003",
+   "sha256_pdf": "98b26f63f95bb65b44f9c97b5b44981e1527dd7b280c459b5f533035ee98f092",
+   "claims": 12,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_miguel_2004b",
+   "sha256_pdf": "ecb144be676209b314de927144c873c8c6f52ca848c1393687798da5640bae07",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_miguel_2004a",
+   "sha256_pdf": "ecb144be676209b314de927144c873c8c6f52ca848c1393687798da5640bae07",
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_hall_2005",
+   "sha256_pdf": "ff09af10a0c62bd12ed465874496558d7210d0ac4d093a76e374a726663363ea",
+   "claims": 19,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_gelman_2006",
+   "sha256_pdf": "126909dd5fe8aa3692e06b7f804a365cf520ba1f290d1720275dc3edfb051c1c",
+   "claims": 54,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_sovey_2010",
+   "sha256_pdf": "2cb60850518bef46e154f6a3e6c5aec6a33b86e6728ef1d067e87c0fe9a81a42",
+   "claims": 43,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_conley_2010",
+   "sha256_pdf": "f93a8ab9f1396dc605a40014383e7aedc8ba9fd98445240306902b8326e30240",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_horowitz_2011a",
+   "sha256_pdf": "dae30b25028693c78bb55415ab031ae33f15c5de99402dd89da012a98d32ab97",
+   "claims": 35,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_horowitz_2011b",
+   "sha256_pdf": "85b78844e8a92e99ef0831d1e210f2134ae4ca93a2110fd30c8c38b76b55c730",
+   "claims": 14,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_santos_2012",
+   "sha256_pdf": "0e9c52d7aee9557220f117395314e733c4ec9784160a1c89575610434e5cbc7a",
+   "claims": 31,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_dunning_2012",
+   "sha256_pdf": "e0c0dd7d4f3c3ea64bfeb425fda6768407d514a93b85a312c54ecda56d6b7b72",
+   "claims": 33,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_olea_2013",
+   "sha256_pdf": "83b406a32677875514e018571357ed248b8a9015aa9852120bb461cdc74fb002",
+   "claims": 15,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_chen_2014",
+   "sha256_pdf": "bc18978134987a175c09dde98972dd8461ab5b8c0ff3068cef42d4a6bd865a4e",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_sanderson_2015",
+   "sha256_pdf": "818c8fd5e39c171772c7e9e3df4d69683ef4a505c198678a7473cf70ca1c9d13",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_chetverikov_2017",
+   "sha256_pdf": "a71c03fd352e87a972df2974071b8f152e3c592aa4faa88e11ef285c02c0a2e9",
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_kippersluis_2018",
+   "sha256_pdf": "f0aa5782fa911cd49563d1a97699e1de89f5334059393c174e5641c7cfca0963",
+   "claims": 30,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_stock_2018",
+   "sha256_pdf": "8ddefeb5d9122c5fec6da27550824acc5269d11cabe90601e11cecd33b57ccff",
+   "claims": 64,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_andrews_2019",
+   "sha256_pdf": "b55f44c7632f2aef1fa3c96b75bbd775a40dddce7dc5371f528322ea26a09f1e",
+   "claims": 40,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "iv_frandsen_2022",
+   "sha256_pdf": "c4d4534370116a5786e6e8357fc9cdfcade8eb2fae59a2c2273ad6acee0a5c57",
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 13,
+ "categories": {
+  "IDENT": 7,
+  "INFER": 6
+ },
+ "single_source_checks": 0,
+ "sha256_checklist": "b4b90f240bc1dc220ef5349799d65b3ce4376456cf1334029d5673cc3f5a175f",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 13,
+  "categories": {
+   "IDENT": 7,
+   "INFER": 6
+  },
+  "single_source_checks": 1,
+  "sha256_checklist": "d694659a002eefcb850d812280cf8f0d15c8f697dd3a7c6a33024df2c93df5f2"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release (v0.1)",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 87.2,
+   "pilot_pairwise_agreement_pct": 98.1
+  },
+  "meets_95pct_diagnostic_bar": false,
+  "reason": "Ships since 2026-11-11 in place of this module's single-draw artifact, so that every module of the release is a three-draw consensus build. Figures are this artifact's own decidability block below. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 4,
+   "codings_per_paper": 2,
+   "core_stability": "51/52 = 98.1%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 3,
+   "codings_per_paper": 5,
+   "core_stability": "34/39 = 87.2%",
+   "judgment_call_bucket": null
+  }
+ }
+}

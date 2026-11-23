@@ -1,0 +1,202 @@
+{
+ "module": "did",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-4-8",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "did_bertrand_2004",
+   "sha256_pdf": "37df50b7541b84c6b8e97cba04c2241f65d9256241dd9c70e9dc4045c5373ded",
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_conley_2010",
+   "sha256_pdf": "34c999e583eefa48b30365fe446d36cf376f44b800bf0df74d8704bcd565eaf6",
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_chaisemartin_2017",
+   "sha256_pdf": "62066212687c7991e9b3cdc5e4f442b15776b462b365344488d0166dda877752",
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_wing_2018",
+   "sha256_pdf": "e3df4ac61fc4b7aa278138b295fe734cb5617c44606bb0e91389461685784d7a",
+   "claims": 35,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_goodman_bacon_2018",
+   "sha256_pdf": "4f877146cba18f2d19781e2e5ea0be9275d698ef1295f166f7d1778bfc1e17fc",
+   "claims": 40,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_callaway_2020",
+   "sha256_pdf": "88cdd094589af58608a0d6675a00b57f36c8583d5f1e40e892e06a700307867f",
+   "claims": 35,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_sant_anna_2020",
+   "sha256_pdf": "944c73f2f64f6ab8a308ecb1cd55a0d87bd5e7e5fc72c2b1695af269d44f7d50",
+   "claims": 18,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_chaisemartin_2020",
+   "sha256_pdf": "ddc65e7599d8364181fd84d388ec543d57bfa51c2e66d50777af7ebac2aba3c4",
+   "claims": 29,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_goodman_bacon_2021",
+   "sha256_pdf": "4f877146cba18f2d19781e2e5ea0be9275d698ef1295f166f7d1778bfc1e17fc",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_imai_2021",
+   "sha256_pdf": "cd8f91eca86402e2113741b40594eb4ee1375d3fbb9ad81bf6f994c7c7f50369",
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_choi_2021",
+   "sha256_pdf": "4154521b03d4e17db9e7a4b12d6b16fd8eec150a0a590c807c82eb460f88b027",
+   "claims": 22,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_arkhangelsky_2021",
+   "sha256_pdf": "d6e1801da6b932940d2346744b26b9d6e1cedfab776a762101a4f086af0517b5",
+   "claims": 26,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_egli_2022",
+   "sha256_pdf": "5391e427510ab411f82615479be729146ace50cd51a463d2b42880e85818195d",
+   "claims": 15,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_baker_2022",
+   "sha256_pdf": "58e2417794dc9376034c5a8595de4a796a94ff382c98bb4ad2b9553228b8e208",
+   "claims": 44,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_garside_2022",
+   "sha256_pdf": "adc47a571d93f39b13eb8333c9a424bf2e545c7dfd87d60493d37bf3a2cfa22e",
+   "claims": 8,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_chaisemartin_2022",
+   "sha256_pdf": "7a78db3fe8f821d6f125d2a479d3cb4ecc2736f44b90a4b702c5868104f77880",
+   "claims": 46,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_rambachan_2023",
+   "sha256_pdf": "11e28fa083063ec7d9bf87776197272e52d7c9a32790e46e9153d39242690543",
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_roth_2023",
+   "sha256_pdf": "14853f06e1f8bf20039f9258608559c412b27648f16e247f45c5d05577d392f3",
+   "claims": 40,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "did_borusyak_2024",
+   "sha256_pdf": "4d17b35d24f3a095e31ebd7a36879d3039636e1afea2e04941c69b93f6507eef",
+   "claims": 27,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 16,
+ "categories": {
+  "IDENT": 5,
+  "EST": 3,
+  "INFER": 2,
+  "ROBUST": 4,
+  "REPORT": 1,
+  "DATA": 1
+ },
+ "single_source_checks": 1,
+ "sha256_checklist": "cf503be2ec27c3ae2375166807fe2febd4d727f19d78d5ba74e19eb8f7e8ed9a",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 16,
+  "categories": {
+   "IDENT": 5,
+   "EST": 3,
+   "INFER": 2,
+   "ROBUST": 3,
+   "REPORT": 2,
+   "DATA": 1
+  },
+  "single_source_checks": 1,
+  "sha256_checklist": "b347aefe37b3e31730e7d797f122bfd85cca39c7a597cb7d93cc10f860304245"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release, October 2026",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 100.0,
+   "pilot_pairwise_agreement_pct": 100.0
+  },
+  "meets_95pct_diagnostic_bar": true,
+  "reason": "Shipped as one of the 14 modules of the first public release. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 1,
+   "codings_per_paper": 2,
+   "core_stability": "16/16 = 100.0%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 1,
+   "codings_per_paper": 5,
+   "core_stability": "16/16 = 100.0%",
+   "judgment_call_bucket": null
+  }
+ }
+}

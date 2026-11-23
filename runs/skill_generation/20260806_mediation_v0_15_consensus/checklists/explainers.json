@@ -1,0 +1,82 @@
+{
+ "module": "mediation",
+ "run": "20260806_mediation_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-11-11",
+ "explainers": [
+  {
+   "check_id": "MEDIATION-IDENT-01",
+   "plain": "A paper that reads a direct or indirect effect as causal should state the assumption it relies on: that no unmeasured factor drives both the mediator (the in-between variable) and the outcome. Randomizing the treatment does not secure this assumption.",
+   "why": "Without this assumption, the estimated pathway is not a causal effect, and the assumption cannot be tested from the data.",
+   "done": "states that it assumes no unmeasured factor drives both the mediator and the outcome"
+  },
+  {
+   "check_id": "MEDIATION-IDENT-02",
+   "plain": "When a paper says a treatment-affected factor drives both mediator and outcome, or that its mediators affect one another, it should estimate an effect that stays recoverable, such as an interventional effect, or state that natural direct and indirect effects are not recoverable.",
+   "why": "In that setting, natural direct and indirect effects cannot be pinned down from the data, even in a randomized trial.",
+   "done": "states that natural direct and indirect effects cannot be recovered, or targets an effect that can"
+  },
+  {
+   "check_id": "MEDIATION-EST-01",
+   "plain": "Each control variable the paper uses should appear in both the model for the mediator and the model for the outcome.",
+   "why": "A control left out of one of the models fails to remove the confounding it was added to address.",
+   "done": "includes every control variable in both the mediator and outcome models"
+  },
+  {
+   "check_id": "MEDIATION-EST-02",
+   "plain": "In a logit or probit model of a yes/no outcome, the paper should not measure the indirect effect by how much the treatment coefficient changes when the mediator is added; it should use a method that keeps the scale fixed, such as a KHB-style decomposition or probability-scale effects.",
+   "why": "In these models, adding a variable rescales the coefficients, so that change mixes real mediation with rescaling.",
+   "done": "splits the effect using a method that keeps the model's scale fixed"
+  },
+  {
+   "check_id": "MEDIATION-EST-03",
+   "plain": "A paper that computes the indirect effect by multiplying model coefficients should include, test for, or explicitly justify ruling out a treatment-by-mediator interaction, where the mediator's effect on the outcome differs by treatment.",
+   "why": "Multiplied coefficients equal the natural indirect effect only when no such interaction exists.",
+   "done": "includes, tests, or justifies ruling out a treatment-by-mediator interaction"
+  },
+  {
+   "check_id": "MEDIATION-EST-04",
+   "plain": "The paper should not require a statistically significant total treatment effect before testing or claiming mediation.",
+   "why": "An indirect effect can be nonzero even when the total effect is zero, so using the total effect as a gate is wrong.",
+   "done": "estimates the indirect effect without first requiring a significant total effect"
+  },
+  {
+   "check_id": "MEDIATION-INFER-01",
+   "plain": "The paper should not rely only on a Sobel test, which treats the indirect effect as normally distributed; it should use a bootstrap, a simulation-based interval, or a test built for the no-mediation null.",
+   "why": "The indirect effect is a product of two estimates, so it is not normally distributed and the Sobel test is invalid and weak.",
+   "done": "tests the indirect effect with a bootstrap, simulation-based interval, or purpose-built test"
+  },
+  {
+   "check_id": "MEDIATION-INFER-02",
+   "plain": "A paper that estimates mediation by weighting should report standard errors, such as bootstrap or robust ones, that account for the weights being estimated from a fitted mediator model.",
+   "why": "Default standard errors ignore this extra uncertainty and so are too small.",
+   "done": "reports bootstrap or robust standard errors that account for estimating the weights"
+  },
+  {
+   "check_id": "MEDIATION-INFER-03",
+   "plain": "A paper that tests many indirect effects should apply a correction for multiple comparisons across that set of tests.",
+   "why": "Reporting many tests without correction raises the chance of false positive findings.",
+   "done": "corrects for multiple comparisons across its indirect-effect tests"
+  },
+  {
+   "check_id": "MEDIATION-ROBUST-01",
+   "plain": "A paper reporting a causal direct or indirect effect should include a sensitivity analysis showing how its estimate would change if unmeasured factors drove both the mediator and the outcome.",
+   "why": "This assumption cannot be tested from the data, even under randomization, so the analysis shows how much the conclusion depends on it.",
+   "done": "reports how its mediation estimate would change under unmeasured confounding"
+  },
+  {
+   "check_id": "MEDIATION-REPORT-01",
+   "plain": "When a paper induces a psychological state through an experimental manipulation, it should report a manipulation check, a measure showing the intended state was actually produced.",
+   "why": "A manipulation rarely changes only the targeted state, so readers need evidence it produced the intended one.",
+   "done": "reports a manipulation check showing the intended state was produced"
+  },
+  {
+   "check_id": "MEDIATION-DATA-01",
+   "plain": "The paper should show that its mediator is measured after the treatment and before the outcome.",
+   "why": "A valid mediator is something that occurs after the treatment and before the outcome, so the order of measurement matters.",
+   "done": "measures the mediator after the treatment and before the outcome"
+  }
+ ],
+ "reviewed": "2026-11-11: 0 field(s) revised after an Opus review against the check text"
+}

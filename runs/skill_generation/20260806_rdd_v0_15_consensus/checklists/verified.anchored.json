@@ -1,0 +1,2016 @@
+[
+ {
+  "_module": "RDD",
+  "_version": "consensus-3draw",
+  "_scope_vocabulary": [
+   "all",
+   "covariate_adjusted",
+   "fuzzy_rd",
+   "fuzzy",
+   "pcrd",
+   "local_poly_datadriven",
+   "clustered",
+   "discrete_rv",
+   "geographic_rd",
+   "multiple_tests",
+   "heaped_rv"
+  ],
+  "_scope_definitions": {
+   "all": "Every design the paper itself calls a regression-discontinuity (RD/RDD) design, i.e. it states that treatment is assigned by whether a running/forcing/assignment score crosses a fixed cutoff. Fires on the paper's own RD self-description; a paper that never claims an RD/threshold design is out of module.",
+   "covariate_adjusted": "Fires only when the paper states it adds covariates to the RD estimating specification or otherwise conditions its point estimate on covariates. Near-miss that does NOT fire: reporting covariate balance purely as a diagnostic while the headline estimate is unadjusted.",
+   "fuzzy_rd": "Fires only when the paper states its design is fuzzy / has imperfect compliance at the cutoff (the probability of treatment jumps by less than one, or it instruments received treatment with the cutoff indicator). Near-miss that does NOT fire: a sharp design the paper describes as perfect/deterministic compliance; using an instrumental variable elsewhere in the paper unrelated to the cutoff.",
+   "fuzzy": "Fires only when the paper itself describes its design as fuzzy: it states that treatment take-up changes probabilistically (not deterministically) at the cutoff, or that it uses the cutoff/assignment indicator as an instrument for treatment actually received. NOT fired by: a sharp design that mentions occasional non-compliance in passing, or a paper that merely reports imperfect data coverage. If the paper never declares probabilistic take-up or an instrumenting step, the design is out of scope (NA).",
+   "pcrd": "Fires only when the paper defines its RD treatment as a predetermined characteristic of the winning unit/candidate (a politician-characteristic RD), so the contrast is winners of differing types. Near-miss that does NOT fire: a standard party- or incumbency-status close-election RD where treatment is which party/incumbent won, not a candidate trait.",
+   "local_poly_datadriven": "Fires only when the paper states it estimates the RD effect with local polynomial (local linear/quadratic) regression using a data-driven bandwidth it names (MSE-optimal, CER-optimal, cross-validated, or a plug-in selector). Near-miss that does NOT fire: a global polynomial fit over the full range with no bandwidth; a single ad hoc window the paper picks without naming a data-driven selector.",
+   "clustered": "Fires only when the paper states its observation structure is grouped or repeated (multiple observations per unit, a panel of repeated events, or an explicit clustering/grouping level). Keys on the declared data structure, not on whether cluster-robust errors were used. NOT fired by: a single cross-section with one observation per unit. Ambiguous cases are NA.",
+   "discrete_rv": "Fires only when the paper states its running variable is discrete or has few mass points (integer counts, coarse bins). Near-miss that does NOT fire: a continuous running variable rounded only for display; a continuous variable with many distinct values.",
+   "geographic_rd": "Fires only when the paper states it uses a geographic/boundary RD with a spatial (two-dimensional) score or distance-to-a-border running variable. Near-miss that does NOT fire: a one-dimensional non-spatial score; a design that merely includes region fixed effects.",
+   "multiple_tests": "Fires only when the paper reports a battery of several covariate-balance, placebo, or multiple-outcome tests (its own stated set of two or more such tests). Near-miss that does NOT fire: a single balance test or a single outcome.",
+   "heaped_rv": "Fires only when the paper states its running variable heaps/bunches at particular (e.g. round) values. Near-miss that does NOT fire: a smooth continuous density with no reported heaping."
+  },
+  "_note": "Consensus of 3 independent v0.15 cluster draws: kept 23 concepts in >=2 draws; dropped 10 draw-specific singleton(s)."
+ },
+ {
+  "check_id": "RDD-IDENT-01",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "An RD design is credible only if the paper argues, from the substantive mechanism generating the score, that units could not precisely place themselves on the desired side of the cutoff.",
+  "observable": "Whether the paper gives a substantive account of how the running variable is generated and why precise sorting around the cutoff is implausible in this setting.",
+  "pass_condition": "The paper describes the score-generating mechanism and states a reason (institutional, timing, or informational) that units cannot finely control which side of the cutoff they land on.",
+  "flag_condition": "The paper invokes the RD design but offers no substantive argument about the assignment mechanism or the possibility of precise sorting.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Caughey (2011a) and Eggers (2014) place the burden of proof on the researcher to justify applicability, without which the whole design is unwarranted.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must justify the RD design with a substantive argument that precise sorting at the cutoff is implausible.",
+  "contributing_sources": [
+   "Caughey (2011a)",
+   "Eggers (2014)",
+   "Lee (2010)",
+   "Lee (2009)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_caughey_2011a",
+    "short_cite": "Caughey (2011a)",
+    "source_lines": "L186",
+    "quote": "But the applicability of the design cannot be assumed; it must be justified on the basis of context-specific theory and data.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     21
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_eggers_2014",
+    "short_cite": "Eggers (2014)",
+    "source_lines": "L183",
+    "quote": "The burden of proof is on the researcher to justify her assumptions and subject them to rigorous testing.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_lee_2010",
+    "short_cite": "Lee (2010)",
+    "source_lines": "L395",
+    "quote": "one must have some knowledge about the mechanism generating",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_lee_2009",
+    "short_cite": "Lee (2009)",
+    "source_lines": "L374",
+    "quote": "is probably the most important question to ask when assessing whether a particular application should be",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_caughey_2011a",
+    "cite": "Devin Caughey & Jasjeet S. Sekhon. (2011). Elections and the Regression Discontinuity Design: Lessons from Close U.S. House Races, 1942–2008. Political Analysis, 19(4), 385-408. https://doi.org/10.1093/pan/mpr032",
+    "short_cite": "Caughey (2011a)",
+    "pages": "p. 405",
+    "pagination": "printed",
+    "pdf_pages": [
+     21
+    ]
+   },
+   {
+    "source_id": "rdd_eggers_2014",
+    "cite": "Andrew C. Eggers, Anthony Fowler, Jens Hainmueller, Andrew B. Hall, & James M. Snyder. (2014). On the Validity of the Regression Discontinuity Design for Estimating Electoral Effects: New Evidence from Over 40,000 Close Races. American Journal of Political Science, 59(1), 259-274. https://doi.org/10.1111/ajps.12127",
+    "short_cite": "Eggers (2014)",
+    "pages": "p. 270",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   },
+   {
+    "source_id": "rdd_lee_2009",
+    "cite": "David S. Lee & Thomas Lemieux. (2009). Regression Discontinuity Designs in Economics. National Bureau of Economic Research. https://doi.org/10.3386/w14723",
+    "short_cite": "Lee (2009)",
+    "pages": "p. 13",
+    "pagination": "printed",
+    "pdf_pages": [
+     15
+    ]
+   },
+   {
+    "source_id": "rdd_lee_2010",
+    "cite": "David S. Lee & Thomas Lemieux. (2010). Regression Discontinuity Designs in Economics. Journal of Economic Literature, 48(2), 281-355. https://doi.org/10.1257/jel.48.2.281",
+    "short_cite": "Lee (2010)",
+    "pages": "p. 295",
+    "pagination": "printed",
+    "pdf_pages": [
+     15
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-IDENT-02",
+  "category": "IDENT",
+  "scope": [
+   "covariate_adjusted"
+  ],
+  "claim": "Any covariate the paper adds to its RD specification must be fixed before, or independently of, treatment assignment.",
+  "observable": "For each covariate entered into the estimating specification, whether the paper indicates it was determined prior to treatment.",
+  "pass_condition": "Every covariate the paper controls for is identified as predetermined (measured or fixed before treatment assignment).",
+  "flag_condition": "The paper controls for a covariate that is realized after, or could be affected by, treatment.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Pettersson-Lidbom (2008) shows conditioning on treatment-affected variables biases the RD estimate.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must not adjust for covariates that could themselves have been affected by treatment.",
+  "contributing_sources": [
+   "Pettersson‐Lidbom (2008)",
+   "Cattaneo (2019b)",
+   "Hall (2015)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_pettersson_lidbom_2008",
+    "short_cite": "Pettersson‐Lidbom (2008)",
+    "source_lines": "L35",
+    "quote": "it is important to not include variables that are themselves affected by the treatment, such as intermediate outcomes, because these will bias the estimate of the treatment effect.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "short_cite": "Cattaneo (2019b)",
+    "source_lines": "L6218",
+    "quote": "We assume that these covariates are predetermined, that is, that their values are determined prior to, or independently from, the treatment assignment and therefore that the treatment effect on them is zero by construction.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     81
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_hall_2015",
+    "short_cite": "Hall (2015)",
+    "source_lines": "L310",
+    "quote": "Using general-election contributions—though statistically efficient for many other purposes—would introduce post-treatment bias in the present setting",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "cite": "Matias D. Cattaneo, Nicolás Idrobo, & Rocío Titiunik. (2019). A Practical Introduction to Regression Discontinuity Designs. Cambridge University Press eBooks. https://doi.org/10.1017/9781108684606",
+    "short_cite": "Cattaneo (2019b)",
+    "pages": "p. 78",
+    "pagination": "printed",
+    "pdf_pages": [
+     81
+    ]
+   },
+   {
+    "source_id": "rdd_hall_2015",
+    "cite": "Andrew B. Hall. (2015). What Happens When Extremists Win Primaries?. American Political Science Review, 109(1), 18-42. https://doi.org/10.1017/s0003055414000641",
+    "short_cite": "Hall (2015)",
+    "pages": "p. 21",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "rdd_pettersson_lidbom_2008",
+    "cite": "Per Pettersson‐Lidbom. (2008). Do Parties Matter for Economic Outcomes? A Regression-Discontinuity Approach. Journal of the European Economic Association, 6(5), 1037-1056. https://doi.org/10.1162/jeea.2008.6.5.1037",
+    "short_cite": "Pettersson‐Lidbom (2008)",
+    "pages": "p. 1041",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-IDENT-03",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "A valid design implies predetermined variables are balanced at the cutoff, so the paper should test that variables treatment could not have affected show no discontinuity there.",
+  "observable": "Whether the paper reports falsification tests for a discontinuity at the cutoff in one or more qualifying predetermined variables. Qualifying variables (sourced from the corpus): pre-treatment/baseline covariates, lagged values of the outcome, lagged values of the running variable, and lagged values of the treatment.",
+  "pass_condition": "The paper reports a test for a cutoff discontinuity in at least one qualifying predetermined variable and interprets the expected result as no discontinuity.",
+  "flag_condition": "The paper reports no balance/placebo test on any predetermined covariate or pre-treatment outcome.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources treat covariate/pre-treatment-outcome balance at the cutoff as the central testable implication of the design; a jump signals a flawed design.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must report at least one balance/falsification test (in a table or figure) showing a predetermined variable does not jump at the cutoff.",
+  "contributing_sources": [
+   "Trounstine (2011)",
+   "DiNardo (2004)",
+   "Lee (2010)",
+   "Cattaneo (2019b)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_trounstine_2011",
+    "short_cite": "Trounstine (2011)",
+    "source_lines": "L28",
+    "quote": "all pretreatment characteristics should have the same distribution on either side of the threshold (just like they would in a randomized experiment).",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_dinardo_2004",
+    "short_cite": "DiNardo (2004)",
+    "source_lines": "L200",
+    "quote": "if in a nearby neighborhood of 50 percent, winning the election is randomly assigned, then any predetermined characteristic should have the same distribution on either side of the cutoff.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     30
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_dinardo_2004",
+    "short_cite": "DiNardo (2004)",
+    "source_lines": "L222",
+    "quote": "a significant discontinuity at the 50 percent cutoff would indicate that close winners and losers are systematically different before the election, which would imply a problem with the research design.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     34
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_lee_2010",
+    "short_cite": "Lee (2010)",
+    "source_lines": "L1490",
+    "quote": "the treatment variable cannot influence variables determined prior to the realization of",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     54
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_trounstine_2011",
+    "short_cite": "Trounstine (2011)",
+    "source_lines": "L28",
+    "quote": "By analyzing the degree to which pretreatment characteristics reveal any discontinuity at the threshold, the researcher can determine whether or not the RDD is valid.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_dinardo_2004",
+    "cite": "John DiNardo & David Lee. (2004). Economic Impacts of New Unionization on Private Sector Employers: 1984-2001. The Quarterly Journal of Economics, 119(4), 1383-1441. https://doi.org/10.1162/0033553042476189",
+    "short_cite": "DiNardo (2004)",
+    "pages": "pp. 1412, 1416",
+    "pagination": "printed",
+    "pdf_pages": [
+     30,
+     34
+    ]
+   },
+   {
+    "source_id": "rdd_lee_2010",
+    "cite": "David S. Lee & Thomas Lemieux. (2010). Regression Discontinuity Designs in Economics. Journal of Economic Literature, 48(2), 281-355. https://doi.org/10.1257/jel.48.2.281",
+    "short_cite": "Lee (2010)",
+    "pages": "p. 334",
+    "pagination": "printed",
+    "pdf_pages": [
+     54
+    ]
+   },
+   {
+    "source_id": "rdd_trounstine_2011",
+    "cite": "Jessica Trounstine. (2011). Evidence of a Local Incumbency Advantage. Legislative Studies Quarterly, 36(2), 255-280. https://doi.org/10.1111/j.1939-9162.2011.00013.x",
+    "short_cite": "Trounstine (2011)",
+    "pages": "p. 260",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 4,
+  "consensus_grade": "high",
+  "disputed": true,
+  "dispute_basis": "Lee (2010) argues that in age/time-based RD designs, covariate-smoothness balance tests are generally uninformative because pre-threshold characteristics are identical by construction, so the required check does not help in that common design class."
+ },
+ {
+  "check_id": "RDD-IDENT-04",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "Because anything else that switches at the same cutoff is absorbed into the estimate, the paper must address whether other policies or treatments change at that cutoff.",
+  "observable": "Whether the paper discusses whether any treatment, policy, or institutional change other than the one of interest occurs at the same cutoff value.",
+  "pass_condition": "The paper states whether other interventions coincide at the cutoff and argues the estimate reflects the treatment of interest (or defines the estimand as the bundle).",
+  "flag_condition": "The paper never considers whether other changes occur at the cutoff and attributes the discontinuity solely to its treatment.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Imbens (2007) and Keele (2014) note coincident changes are attributed to the treatment, defeating causal attribution.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must rule out, or explicitly acknowledge, other treatments changing at the same cutoff.",
+  "contributing_sources": [
+   "Imbens (2007)",
+   "Brollo (2013)",
+   "Keele (2014)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_imbens_2007",
+    "short_cite": "Imbens (2007)",
+    "source_lines": "L820",
+    "quote": "be attributed erroneously to the treatment of interest",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     27
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_brollo_2013",
+    "short_cite": "Brollo (2013)",
+    "source_lines": "L215",
+    "quote": "there are no other policies using a population discontinuity at",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     20
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_keele_2014",
+    "short_cite": "Keele (2014)",
+    "source_lines": "L66",
+    "quote": "absent any restrictions or assumptions, it will not be possible to separate the effect of the treatment of interest on the outcome from the effect of all other simultaneous",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     7
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_brollo_2013",
+    "cite": "Fernanda Brollo, Tommaso Nannicini, Roberto Perotti, & Guido Tabellini. (2013). The Political Resource Curse. American Economic Review, 103(5), 1759-1796. https://doi.org/10.1257/aer.103.5.1759",
+    "short_cite": "Brollo (2013)",
+    "pages": "p. 1778",
+    "pagination": "printed",
+    "pdf_pages": [
+     20
+    ]
+   },
+   {
+    "source_id": "rdd_imbens_2007",
+    "cite": "Guido W. Imbens & Thomas Lemieux. (2007). Regression discontinuity designs: A guide to practice. Journal of Econometrics, 142(2), 615-635. https://doi.org/10.1016/j.jeconom.2007.05.001",
+    "short_cite": "Imbens (2007)",
+    "pages": "p. 641",
+    "pagination": "printed",
+    "pdf_pages": [
+     27
+    ]
+   },
+   {
+    "source_id": "rdd_keele_2014",
+    "cite": "Luke Keele & Rocío Titiunik. (2014). Geographic Boundaries as Regression Discontinuities. Political Analysis, 23(1), 127-155. https://doi.org/10.1093/pan/mpu014",
+    "short_cite": "Keele (2014)",
+    "pages": "p. 133",
+    "pagination": "printed",
+    "pdf_pages": [
+     7
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-IDENT-05",
+  "category": "IDENT",
+  "scope": [
+   "covariate_adjusted"
+  ],
+  "claim": "Covariate adjustment may buy precision but cannot be presented as repairing a failed continuity or balance assumption.",
+  "observable": "Whether the paper claims that adding covariates fixes detected imbalance or restores identification.",
+  "pass_condition": "The paper treats covariate adjustment as an efficiency or robustness step, not as a remedy for failed identification.",
+  "flag_condition": "The paper reports imbalance or a continuity concern and asserts that covariate adjustment resolves it and restores a valid estimate.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Cattaneo (2019b) and Calonico (2018) state adjustment cannot restore identification without functional-form assumptions.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must not claim covariate adjustment repairs a failed identification or balance assumption.",
+  "contributing_sources": [
+   "Cattaneo (2019b)",
+   "Calónico (2018)",
+   "Caughey (2011a)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "short_cite": "Cattaneo (2019b)",
+    "source_lines": "L6217",
+    "quote": "covariate adjustment cannot be used to restore identification of standard RD design treatment effects when treated and control observations differ systematically at the cutoff.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     81
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_cal_nico_2018",
+    "short_cite": "Calónico (2018)",
+    "source_lines": "L27",
+    "quote": "adjusting for imbalanced covariates in order to restore identification is not possible without functional form assumptions",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_caughey_2011a",
+    "short_cite": "Caughey (2011a)",
+    "source_lines": "L146",
+    "quote": "The plausibility of this strategy, however, depends on whether the analyst has controlled for all important determinants of treatment assignment correlated with the outcome (the “selection-on-observables” assumption). In addition, either the covariate distributions must overlap sufficiently or assumptions about functional form are required.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     17
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_cal_nico_2018",
+    "cite": "Sebastián Calónico, Matias D. Cattaneo, Max H. Farrell, & Rocío Titiunik. (2018). Regression Discontinuity Designs Using Covariates. The Review of Economics and Statistics, 101(3), 442-451. https://doi.org/10.1162/rest_a_00760",
+    "short_cite": "Calónico (2018)",
+    "pages": "p. 443",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   },
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "cite": "Matias D. Cattaneo, Nicolás Idrobo, & Rocío Titiunik. (2019). A Practical Introduction to Regression Discontinuity Designs. Cambridge University Press eBooks. https://doi.org/10.1017/9781108684606",
+    "short_cite": "Cattaneo (2019b)",
+    "pages": "p. 78",
+    "pagination": "printed",
+    "pdf_pages": [
+     81
+    ]
+   },
+   {
+    "source_id": "rdd_caughey_2011a",
+    "cite": "Devin Caughey & Jasjeet S. Sekhon. (2011). Elections and the Regression Discontinuity Design: Lessons from Close U.S. House Races, 1942–2008. Political Analysis, 19(4), 385-408. https://doi.org/10.1093/pan/mpr032",
+    "short_cite": "Caughey (2011a)",
+    "pages": "p. 401",
+    "pagination": "printed",
+    "pdf_pages": [
+     17
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-IDENT-06",
+  "category": "IDENT",
+  "scope": [
+   "fuzzy_rd"
+  ],
+  "claim": "A fuzzy RD paper must show that the probability of receiving treatment actually jumps at the cutoff.",
+  "observable": "Whether the paper reports the first-stage effect of crossing the cutoff on treatment receipt (a jump in treatment probability).",
+  "pass_condition": "The paper reports the first-stage discontinuity in treatment probability at the cutoff (a figure, estimate, or first-stage coefficient).",
+  "flag_condition": "The paper declares a fuzzy design but never demonstrates that treatment receipt changes at the cutoff.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Lee (2010) and Brollo (2013): without a genuine jump in treatment there is no fuzzy-RD effect to scale.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A fuzzy-RD paper must document the first-stage jump in treatment probability at the cutoff.",
+  "contributing_sources": [
+   "Lee (2010)",
+   "Brollo (2013)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_lee_2010",
+    "short_cite": "Lee (2010)",
+    "source_lines": "L675",
+    "quote": "important to verify that a discontinuity exists in the relationship between D and X in a fuzzy RD design",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     25
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_brollo_2013",
+    "short_cite": "Brollo (2013)",
+    "source_lines": "L188",
+    "quote": "As long as actual transfers depend on theoretical transfers, however, we can use the latter as an instrument in a (fuzzy) RD setup.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     19
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_brollo_2013",
+    "cite": "Fernanda Brollo, Tommaso Nannicini, Roberto Perotti, & Guido Tabellini. (2013). The Political Resource Curse. American Economic Review, 103(5), 1759-1796. https://doi.org/10.1257/aer.103.5.1759",
+    "short_cite": "Brollo (2013)",
+    "pages": "p. 1777",
+    "pagination": "printed",
+    "pdf_pages": [
+     19
+    ]
+   },
+   {
+    "source_id": "rdd_lee_2010",
+    "cite": "David S. Lee & Thomas Lemieux. (2010). Regression Discontinuity Designs in Economics. Journal of Economic Literature, 48(2), 281-355. https://doi.org/10.1257/jel.48.2.281",
+    "short_cite": "Lee (2010)",
+    "pages": "p. 305",
+    "pagination": "printed",
+    "pdf_pages": [
+     25
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-IDENT-07",
+  "category": "IDENT",
+  "scope": [
+   "fuzzy"
+  ],
+  "claim": "Reading a fuzzy-RD ratio as a causal effect requires monotonicity: crossing the cutoff moves treatment in only one direction (no defiers).",
+  "observable": "Whether the paper states and gives a substantive argument for the monotonicity / no-defiers assumption at the cutoff. A coder decides fired-vs-not from whether the paper declares a fuzzy design; a fired trigger on a paper silent about monotonicity takes verdict_when_silent, and an unfired or ambiguous trigger is NA.",
+  "pass_condition": "The paper declares a fuzzy design and states and defends monotonicity (no defiers) at the cutoff.",
+  "flag_condition": "The paper declares a fuzzy design but never states or justifies monotonicity.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Sources make monotonicity a necessary condition for the causal interpretation of the fuzzy-RD estimand.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A fuzzy-RD paper must state and justify the monotonicity (no-defiers) assumption.",
+  "contributing_sources": [
+   "Lee (2010)",
+   "Brollo (2013)",
+   "Imbens (2008b)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_lee_2010",
+    "short_cite": "Lee (2010)",
+    "source_lines": "L661",
+    "quote": "cannot simultaneously cause some units to take up and others to reject the treatment",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     25
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_brollo_2013",
+    "short_cite": "Brollo (2013)",
+    "source_lines": "L216",
+    "quote": "The monotonicity condition states that, at each threshold, municipalities assigned below the cutoff do not effectively receive more transfers than if they had been assigned above the cutoff. This assumption is untestable because it involves potential outcomes, but it is very plausible in our context.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     21
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_brollo_2013",
+    "cite": "Fernanda Brollo, Tommaso Nannicini, Roberto Perotti, & Guido Tabellini. (2013). The Political Resource Curse. American Economic Review, 103(5), 1759-1796. https://doi.org/10.1257/aer.103.5.1759",
+    "short_cite": "Brollo (2013)",
+    "pages": "p. 1779",
+    "pagination": "printed",
+    "pdf_pages": [
+     21
+    ]
+   },
+   {
+    "source_id": "rdd_lee_2010",
+    "cite": "David S. Lee & Thomas Lemieux. (2010). Regression Discontinuity Designs in Economics. Journal of Economic Literature, 48(2), 281-355. https://doi.org/10.1257/jel.48.2.281",
+    "short_cite": "Lee (2010)",
+    "pages": "p. 305",
+    "pagination": "printed",
+    "pdf_pages": [
+     25
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-IDENT-08",
+  "category": "IDENT",
+  "scope": [
+   "fuzzy_rd"
+  ],
+  "claim": "A causal reading of a fuzzy-RD estimate requires both an exclusion restriction and monotonicity, which the paper must invoke.",
+  "observable": "Whether the paper states the exclusion restriction (crossing the cutoff affects the outcome only through treatment) and monotonicity (no defiers).",
+  "pass_condition": "The paper states and argues both the exclusion restriction and monotonicity for its fuzzy design.",
+  "flag_condition": "The paper gives a fuzzy-RD estimate a causal interpretation while stating neither exclusion nor monotonicity; state partial satisfaction as a FLAG when only one of the two is addressed.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Brollo (2013) and Cattaneo (2014) make exclusion and monotonicity the conditions for a causal fuzzy-RD estimand.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A fuzzy-RD paper must invoke both the exclusion restriction and monotonicity to interpret its estimate causally.",
+  "contributing_sources": [
+   "Brollo (2013)",
+   "Cattaneo (2014)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_brollo_2013",
+    "short_cite": "Brollo (2013)",
+    "source_lines": "L216",
+    "quote": "The causal interpretation of this IV estimand rests on two additional assumptions (see Angrist, Imbens, and Rubin 1996): (i) exclusion restriction; (ii) monotonicity.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     21
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_brollo_2013",
+    "short_cite": "Brollo (2013)",
+    "source_lines": "L216",
+    "quote": "The monotonicity condition states that, at each threshold, municipalities assigned below the cutoff do not effectively receive more transfers than if they had been assigned above the cutoff. This assumption is untestable because it involves potential outcomes, but it is very plausible in our context.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     21
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_cattaneo_2014",
+    "short_cite": "Cattaneo (2014)",
+    "source_lines": "L229",
+    "quote": "Assumption 6 means potential responses depend on placement with respect to the threshold only through its effect on treatment status.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     20
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_brollo_2013",
+    "cite": "Fernanda Brollo, Tommaso Nannicini, Roberto Perotti, & Guido Tabellini. (2013). The Political Resource Curse. American Economic Review, 103(5), 1759-1796. https://doi.org/10.1257/aer.103.5.1759",
+    "short_cite": "Brollo (2013)",
+    "pages": "p. 1779",
+    "pagination": "printed",
+    "pdf_pages": [
+     21
+    ]
+   },
+   {
+    "source_id": "rdd_cattaneo_2014",
+    "cite": "Matias D. Cattaneo, Brigham Frandsen, & Rocío Titiunik. (2014). Randomization Inference in the Regression Discontinuity Design: An Application to Party Advantages in the U.S. Senate. Journal of Causal Inference, 3(1), 1-24. https://doi.org/10.1515/jci-2013-0010",
+    "short_cite": "Cattaneo (2014)",
+    "pages": "p. 20",
+    "pagination": "printed",
+    "pdf_pages": [
+     20
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-IDENT-09",
+  "category": "IDENT",
+  "scope": [
+   "pcrd"
+  ],
+  "claim": "When treatment is a predetermined characteristic of the winner, close-election selection is post-treatment, so the paper must state the extra assumption needed to isolate that characteristic and define which correlated traits belong to the treatment.",
+  "observable": "Whether the paper acknowledges the compound/post-treatment problem and states the additional identifying assumption (or redefines the estimand as the bundle) and specifies which traits are the treatment.",
+  "pass_condition": "The paper names the extra assumption it relies on (the characteristic does not shift the victory margin, or no compensating differential affects the outcome) or explicitly targets the compound treatment, and states which correlated traits are included.",
+  "flag_condition": "The paper reports a politician-characteristic effect as if it were a standard RD, without stating the extra assumption or defining the treatment's boundaries.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Marshall (2022) shows a PCRD recovers a compound effect with post-treatment bias absent an extra, stated assumption.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A politician-characteristic RD must state the extra identifying assumption isolating the characteristic and define the treatment's scope.",
+  "contributing_sources": [
+   "Marshall (2022)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_marshall_2022",
+    "short_cite": "Marshall (2022)",
+    "source_lines": "L19",
+    "quote": "restricting attention to close elections entails conditioning on candidate vote shares that may be affected by X.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_marshall_2022",
+    "short_cite": "Marshall (2022)",
+    "source_lines": "L24",
+    "quote": "identification requires that—at the discontinuity—either (i) X does not affect the winning candidate’s victory margin or (ii) no compensating differential in Z affects the outcome of interest Y .",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_marshall_2022",
+    "short_cite": "Marshall (2022)",
+    "source_lines": "L138",
+    "quote": "To define their target estimand, researchers must decide which characteristics should and should not be included in their treatment of interest",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_marshall_2022",
+    "cite": "John Marshall. (2022). Can Close Election Regression Discontinuity Designs Identify Effects of Winning Politician Characteristics?. American Journal of Political Science, 68(2), 494-510. https://doi.org/10.1111/ajps.12741",
+    "short_cite": "Marshall (2022)",
+    "pages": "pp. 495, 501",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     8
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-IDENT-10",
+  "category": "IDENT",
+  "scope": [
+   "all"
+  ],
+  "claim": "Restricting the sample or defining the outcome on a variable realized after treatment reintroduces selection, so the paper must not condition on a post-treatment variable without showing treatment did not affect it.",
+  "observable": "Whether the paper restricts its estimation sample, or defines the outcome, on a variable that could have been affected by treatment, and if so whether it demonstrates no treatment effect on that variable.",
+  "pass_condition": "The paper either avoids conditioning the sample/outcome on any post-treatment variable, or shows treatment does not affect the conditioning variable.",
+  "flag_condition": "The paper conditions the sample or outcome on a post-treatment variable (e.g. survival, running again, an intermediate outcome) without showing treatment did not affect it.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Boas (2011) and Granzier (2023): conditioning on a post-treatment variable breaks comparability at the threshold.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must not condition its sample or outcome on a post-treatment variable without demonstrating treatment did not affect it.",
+  "contributing_sources": [
+   "Boas (2011)",
+   "DiNardo (2004)",
+   "Granzier (2023)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_boas_2011",
+    "short_cite": "Boas (2011)",
+    "source_lines": "L84",
+    "quote": "To condition on a posttreatment variable without inducing bias, we need to show that it is unaffected by the treatment (Rosenbaum 1984)",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_dinardo_2004",
+    "short_cite": "DiNardo (2004)",
+    "source_lines": "L194",
+    "quote": "If (ε,v,X) is independent of D—as in a randomized experiment—and if there is no impact of unionization on survival",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     29
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_granzier_2023",
+    "short_cite": "Granzier (2023)",
+    "source_lines": "L163",
+    "quote": "the fact that close candidates qualifying for the second round are similar at the threshold does not imply that close candidates who decide to stay in the second round are similar as well.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     18
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_boas_2011",
+    "cite": "Taylor C. Boas & F. Daniel Hidalgo. (2011). Controlling the Airwaves: Incumbency Advantage and Community Radio in Brazil. American Journal of Political Science, 55(4), 869-885. https://doi.org/10.1111/j.1540-5907.2011.00532.x",
+    "short_cite": "Boas (2011)",
+    "pages": "p. 876",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "rdd_dinardo_2004",
+    "cite": "John DiNardo & David Lee. (2004). Economic Impacts of New Unionization on Private Sector Employers: 1984-2001. The Quarterly Journal of Economics, 119(4), 1383-1441. https://doi.org/10.1162/0033553042476189",
+    "short_cite": "DiNardo (2004)",
+    "pages": "p. 1411",
+    "pagination": "printed",
+    "pdf_pages": [
+     29
+    ]
+   },
+   {
+    "source_id": "rdd_granzier_2023",
+    "cite": "Riako Granzier, Vincent Pons, & Clémence Tricaud. (2023). Coordination and Bandwagon Effects: How Past Rankings Shape the Behavior of Voters and Candidates. American Economic Journal Applied Economics, 15(4), 177-217. https://doi.org/10.1257/app.20210840",
+    "short_cite": "Granzier (2023)",
+    "pages": "p. 194",
+    "pagination": "printed",
+    "pdf_pages": [
+     18
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-EST-01",
+  "category": "EST",
+  "scope": [
+   "all"
+  ],
+  "claim": "A global high-order polynomial in the running variable fits poorly at the cutoff and produces order-sensitive, poorly-covered estimates, so it must not be the paper's primary RD estimator.",
+  "observable": "The estimator behind the paper's headline RD estimate: whether it is a local (bandwidth-restricted) estimator or a global polynomial fit over the full range, and the polynomial order of that global fit.",
+  "pass_condition": "The headline estimate comes from a local estimator, or from a global polynomial of order two or lower.",
+  "flag_condition": "The headline estimate comes from a global polynomial of order four or higher fit over the full running-variable range.",
+  "requirement_type": "prohibition",
+  "verdict_when_silent": "PASS",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Gelman (2017) shows global high-order polynomial RD estimates are noisy, order-sensitive, and undercover.",
+  "prevalence_aggravator": null,
+  "threshold": {
+   "cutoff": 4,
+   "border_band": [
+    3,
+    4
+   ],
+   "provenance": "rule_of_thumb",
+   "band_rule": "Order 3 (the border band) PASSes only if the paper also reports a local-estimator or lower-order specification giving the same conclusion; a lone order-3 global fit is a borderline FLAG. Order 4 and above FLAGs; order 2 or lower, or any local estimator, PASSes."
+  },
+  "coder_decidable": true,
+  "requirement_statement": "The paper's primary RD estimate must not rest on a global high-order (order 4+) polynomial.",
+  "contributing_sources": [
+   "Gelman (2017)",
+   "Cattaneo (2019b)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_gelman_2017",
+    "short_cite": "Gelman (2017)",
+    "source_lines": "L19",
+    "quote": "controlling for global high-order polynomials in regression discontinuity analysis is a flawed approach with three major problems: it leads to noisy estimates, sensitivity to the degree of the polynomial, and poor coverage of confidence intervals",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_gelman_2017",
+    "short_cite": "Gelman (2017)",
+    "source_lines": "L198",
+    "quote": "the global estimators combine large standard errors with under coverage for the confidence intervals, so that clearly the local polynomial estimators are superior in this setting",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "short_cite": "Cattaneo (2019b)",
+    "source_lines": "L5622",
+    "quote": "global polynomial approximations tend to deliver a good approximation overall, but a poor approximation at boundary points—a problem known as Runge’s phenomenon in approximation theory.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     43
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "cite": "Matias D. Cattaneo, Nicolás Idrobo, & Rocío Titiunik. (2019). A Practical Introduction to Regression Discontinuity Designs. Cambridge University Press eBooks. https://doi.org/10.1017/9781108684606",
+    "short_cite": "Cattaneo (2019b)",
+    "pages": "p. 40",
+    "pagination": "printed",
+    "pdf_pages": [
+     43
+    ]
+   },
+   {
+    "source_id": "rdd_gelman_2017",
+    "cite": "Andrew Gelman & Guido W. Imbens. (2017). Why High-Order Polynomials Should Not Be Used in Regression Discontinuity Designs. Journal of Business and Economic Statistics, 37(3), 447-456. https://doi.org/10.1080/07350015.2017.1366909",
+    "short_cite": "Gelman (2017)",
+    "pages": "pp. 447, 455",
+    "pagination": "printed",
+    "pdf_pages": [
+     2,
+     10
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-INFER-01",
+  "category": "INFER",
+  "scope": [
+   "local_poly_datadriven"
+  ],
+  "claim": "A data-driven MSE-optimal bandwidth leaves a first-order bias, so conventional confidence intervals at that bandwidth are invalid; the paper must instead report robust bias-corrected inference or undersmooth.",
+  "observable": "For a paper using local polynomial estimation with a data-driven bandwidth, whether its confidence intervals are robust bias-corrected (or the bandwidth is undersmoothed below the MSE-optimal rate) rather than conventional intervals at the MSE-optimal bandwidth.",
+  "pass_condition": "The paper reports robust bias-corrected confidence intervals, or states it undersmooths the bandwidth for inference.",
+  "flag_condition": "The paper forms conventional confidence intervals at a data-driven MSE-optimal bandwidth without bias correction or undersmoothing.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Calonico (2014a) and Cattaneo (2019b): conventional CIs at an MSE-optimal bandwidth are invalid.",
+  "prevalence_aggravator": "Calonico (2014a) notes the pairing of local-linear estimation with MSE-optimal bandwidths and conventional CIs plausibly affects many published RD studies.",
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper using a data-driven MSE-optimal bandwidth must report robust bias-corrected (or undersmoothed) inference, not conventional CIs.",
+  "contributing_sources": [
+   "Calónico (2014a)",
+   "Cattaneo (2019b)",
+   "Keele (2014)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_cal_nico_2014a",
+    "short_cite": "Calónico (2014a)",
+    "source_lines": "L5",
+    "quote": "mean squared error optimal bandwidths, which are by construction not valid for conventional confidence intervals but are valid with our robust approach",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     1
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "short_cite": "Cattaneo (2019b)",
+    "source_lines": "L6078",
+    "quote": "an MSE-optimal bandwidth cannot be selected in the absence of misspecification error (zero bias), and statistical inference based on standard OLS methods (ignoring the bias) cannot be valid when an MSE-optimal bandwidth is employed.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     70
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_keele_2014",
+    "short_cite": "Keele (2014)",
+    "source_lines": "L123",
+    "quote": "which in general lead to bandwidth choices that are too large for conventional confidence intervals to be valid",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_cal_nico_2014a",
+    "cite": "Sebastián Calónico, Matias D. Cattaneo, & Rocío Titiunik. (2014). Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs. Econometrica, 82(6), 2295-2326. https://doi.org/10.3982/ecta11757",
+    "short_cite": "Calónico (2014a)",
+    "pages": "p. 2295",
+    "pagination": "printed",
+    "pdf_pages": [
+     1
+    ]
+   },
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "cite": "Matias D. Cattaneo, Nicolás Idrobo, & Rocío Titiunik. (2019). A Practical Introduction to Regression Discontinuity Designs. Cambridge University Press eBooks. https://doi.org/10.1017/9781108684606",
+    "short_cite": "Cattaneo (2019b)",
+    "pages": "p. 67",
+    "pagination": "printed",
+    "pdf_pages": [
+     70
+    ]
+   },
+   {
+    "source_id": "rdd_keele_2014",
+    "cite": "Luke Keele & Rocío Titiunik. (2014). Geographic Boundaries as Regression Discontinuities. Political Analysis, 23(1), 127-155. https://doi.org/10.1093/pan/mpu014",
+    "short_cite": "Keele (2014)",
+    "pages": "p. 139",
+    "pagination": "printed",
+    "pdf_pages": [
+     13
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": true,
+  "dispute_basis": "Hall (2015) advises reporting the more conservative of robust and conventional standard errors in small samples, endorsing conventional inference contrary to the requirement's exclusion of conventional CIs."
+ },
+ {
+  "check_id": "RDD-INFER-02",
+  "category": "INFER",
+  "scope": [
+   "clustered"
+  ],
+  "claim": "When observations are grouped or repeated, ignoring within-group correlation overstates statistical significance, so standard errors should account for the grouping (e.g., be clustered at the grouping level).",
+  "observable": "Whether a paper whose data structure is grouped/repeated reports standard errors clustered at the grouping level. Fired-vs-not is decided from whether the paper declares grouped/repeated observations; a fired trigger with unclustered errors takes verdict_when_silent, an unfired or ambiguous trigger is NA.",
+  "pass_condition": "The paper with grouped/repeated observations reports standard errors clustered at the appropriate level.",
+  "flag_condition": "The paper declares grouped/repeated observations but reports standard errors that treat them as independent.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "A source records that treating grouped observations as independent overstates significance; the cited evidence is otherwise descriptions of individual papers' SE choices, so this is the weakest-grounded check (kept because the observable is a reported paper feature and the over-rejection consequence is on record).",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper with grouped/repeated observations must report standard errors that account for within-group correlation (e.g., clustered at the grouping level).",
+  "contributing_sources": [
+   "DiNardo (2004)",
+   "Leigh (2007)",
+   "Cattaneo (2019b)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_dinardo_2004",
+    "short_cite": "DiNardo (2004)",
+    "source_lines": "L341",
+    "quote": "Therefore, all standard errors are clustered at the level of the establishment.",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     53
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_leigh_2007",
+    "short_cite": "Leigh (2007)",
+    "source_lines": "L366",
+    "quote": "do not use cluster-robust standard errors, opting instead to treat each state-year observation as independent",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     21
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_dinardo_2004",
+    "cite": "John DiNardo & David Lee. (2004). Economic Impacts of New Unionization on Private Sector Employers: 1984-2001. The Quarterly Journal of Economics, 119(4), 1383-1441. https://doi.org/10.1162/0033553042476189",
+    "short_cite": "DiNardo (2004)",
+    "pages": "p. 1435",
+    "pagination": "printed",
+    "pdf_pages": [
+     53
+    ]
+   },
+   {
+    "source_id": "rdd_leigh_2007",
+    "cite": "Andrew Leigh. (2007). Estimating the impact of gubernatorial partisanship on policy settings and economic outcomes: A regression discontinuity approach. European Journal of Political Economy, 24(1), 256-268. https://doi.org/10.1016/j.ejpoleco.2007.06.003",
+    "short_cite": "Leigh (2007)",
+    "pages": "p. 276",
+    "pagination": "printed",
+    "pdf_pages": [
+     21
+    ]
+   }
+  ],
+  "consensus_of": "draw1",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-INFER-03",
+  "category": "INFER",
+  "scope": [
+   "discrete_rv"
+  ],
+  "claim": "With a discrete running variable identification leans on functional form, so inference must account for the resulting specification error rather than assume the continuous-variable results apply.",
+  "observable": "For a paper that states its running variable is discrete, whether it adjusts inference for the discreteness (e.g. grouped / specification-error standard errors) or acknowledges the functional-form dependence.",
+  "pass_condition": "The paper widens or groups its standard errors for specification error (or otherwise addresses that discreteness forces functional-form reliance).",
+  "flag_condition": "The paper has a discrete running variable but applies standard continuous-variable RD inference without acknowledging the specification-error problem.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Calonico (2014a) states the local-polynomial results do not apply directly when the running variable has few mass points.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A discrete-running-variable paper must adjust inference for specification error rather than assume continuous-variable inference holds.",
+  "contributing_sources": [
+   "Calónico (2014a)",
+   "Lee (2010)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_cal_nico_2014a",
+    "short_cite": "Calónico (2014a)",
+    "source_lines": "L34",
+    "quote": "when Xi exhibits few mass points, our results do not apply directly without further assumptions and modifications, and other assumptions and inference approaches may be more appropriate",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_lee_2010",
+    "short_cite": "Lee (2010)",
+    "source_lines": "L1659",
+    "quote": "one must use regressions to estimate the conditional expectation of",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     60
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_cal_nico_2014a",
+    "cite": "Sebastián Calónico, Matias D. Cattaneo, & Rocío Titiunik. (2014). Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs. Econometrica, 82(6), 2295-2326. https://doi.org/10.3982/ecta11757",
+    "short_cite": "Calónico (2014a)",
+    "pages": "p. 2299",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "rdd_lee_2010",
+    "cite": "David S. Lee & Thomas Lemieux. (2010). Regression Discontinuity Designs in Economics. Journal of Economic Literature, 48(2), 281-355. https://doi.org/10.1257/jel.48.2.281",
+    "short_cite": "Lee (2010)",
+    "pages": "p. 340",
+    "pagination": "printed",
+    "pdf_pages": [
+     60
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-INFER-04",
+  "category": "INFER",
+  "scope": [
+   "geographic_rd"
+  ],
+  "claim": "In a geographic RD, nearby observations are spatially correlated, so inference must account for that spatial dependence.",
+  "observable": "For a geographic/boundary RD, whether the paper's inference accounts for spatial correlation among nearby observations.",
+  "pass_condition": "The paper reports inference (clustering, spatial standard errors, or an equivalent) that accounts for spatial correlation near the boundary.",
+  "flag_condition": "The geographic RD paper reports standard errors that ignore spatial dependence among nearby units.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Keele (2014): inference on geographic RD estimates must account for possible spatial correlation.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A geographic RD paper must account for spatial correlation in its inference.",
+  "contributing_sources": [
+   "Keele (2014)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_keele_2014",
+    "short_cite": "Keele (2014)",
+    "source_lines": "L15",
+    "quote": "any method of inference applied to data from a GRD design must account for possible spatial correlation",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_keele_2014",
+    "cite": "Luke Keele & Rocío Titiunik. (2014). Geographic Boundaries as Regression Discontinuities. Political Analysis, 23(1), 127-155. https://doi.org/10.1093/pan/mpu014",
+    "short_cite": "Keele (2014)",
+    "pages": "p. 128",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-ROBUST-01",
+  "category": "ROBUST",
+  "scope": [
+   "all"
+  ],
+  "claim": "Because the bandwidth drives the estimate, the paper must show the result is not an artifact of one bandwidth by reporting it at more than one.",
+  "observable": "Whether the paper reports its RD estimate at two or more distinct bandwidths (or window widths).",
+  "pass_condition": "The paper reports the RD estimate at two or more distinct bandwidths / window widths.",
+  "flag_condition": "The paper reports the estimate at only a single bandwidth with no bandwidth-variation check.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Hall (2015): conclusions must be shown not to be driven by the somewhat arbitrary bandwidth choice.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must report its RD estimate at two or more distinct bandwidths.",
+  "contributing_sources": [
+   "Hall (2015)",
+   "Cattaneo (2019b)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_hall_2015",
+    "short_cite": "Hall (2015)",
+    "source_lines": "L2318",
+    "quote": "The choice of RDD bandwidth and specification is somewhat arbitrary, so it is important to demonstrate that conclusions are not driven by these choices.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     18
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "short_cite": "Cattaneo (2019b)",
+    "source_lines": "L7025",
+    "quote": "choosing the bandwidth is one of the most consequential decisions in RD analysis, because the bandwidth may affect the results and conclusions.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     109
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "cite": "Matias D. Cattaneo, Nicolás Idrobo, & Rocío Titiunik. (2019). A Practical Introduction to Regression Discontinuity Designs. Cambridge University Press eBooks. https://doi.org/10.1017/9781108684606",
+    "short_cite": "Cattaneo (2019b)",
+    "pages": "p. 106",
+    "pagination": "printed",
+    "pdf_pages": [
+     109
+    ]
+   },
+   {
+    "source_id": "rdd_hall_2015",
+    "cite": "Andrew B. Hall. (2015). What Happens When Extremists Win Primaries?. American Political Science Review, 109(1), 18-42. https://doi.org/10.1017/s0003055414000641",
+    "short_cite": "Hall (2015)",
+    "pages": "p. 35",
+    "pagination": "printed",
+    "pdf_pages": [
+     18
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-ROBUST-02",
+  "category": "ROBUST",
+  "scope": [
+   "all"
+  ],
+  "claim": "Because the fitted shape of the running variable drives the estimate, the paper must show the result holds under more than one functional form / polynomial order.",
+  "observable": "Whether the paper reports its RD estimate under two or more functional-form specifications (e.g. two polynomial orders or a local-vs-parametric comparison).",
+  "pass_condition": "The paper reports the estimate under two or more distinct functional-form or polynomial-order specifications.",
+  "flag_condition": "The paper reports the estimate under a single functional form with no specification-variation check.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Hall (2015) and Gelman (2017): estimates are sensitive to functional form / polynomial order and must be shown insensitive.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must report its RD estimate under two or more functional-form specifications.",
+  "contributing_sources": [
+   "Hall (2015)",
+   "Gelman (2017)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_hall_2015",
+    "short_cite": "Hall (2015)",
+    "source_lines": "L744",
+    "quote": "it is also important to show that the RDD estimate is not sensitive to choices over the size of the bandwidth and the functional form of the running variable’s specification.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_gelman_2017",
+    "short_cite": "Gelman (2017)",
+    "source_lines": "L25",
+    "quote": "Results for the causal effects of interest based on global high-order polynomial regressions are sensitive to the order of the polynomial. Moreover, we do not have good methods for choosing that order in a way that is optimal for the objective of a good estimator for the causal effect of interest",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_gelman_2017",
+    "cite": "Andrew Gelman & Guido W. Imbens. (2017). Why High-Order Polynomials Should Not Be Used in Regression Discontinuity Designs. Journal of Business and Economic Statistics, 37(3), 447-456. https://doi.org/10.1080/07350015.2017.1366909",
+    "short_cite": "Gelman (2017)",
+    "pages": "p. 447",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   },
+   {
+    "source_id": "rdd_hall_2015",
+    "cite": "Andrew B. Hall. (2015). What Happens When Extremists Win Primaries?. American Political Science Review, 109(1), 18-42. https://doi.org/10.1017/s0003055414000641",
+    "short_cite": "Hall (2015)",
+    "pages": "p. 23",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-ROBUST-03",
+  "category": "ROBUST",
+  "scope": [
+   "all"
+  ],
+  "claim": "A break in the running variable's density at the cutoff is a signature of sorting, so the paper must run a test for such a break.",
+  "observable": "Whether the paper reports a test (or diagnostic) of the running-variable density for a discontinuity at the cutoff.",
+  "pass_condition": "The paper reports a running-variable density / manipulation test (e.g. a McCrary-type test or an equivalent density-continuity diagnostic) at the cutoff.",
+  "flag_condition": "The paper never examines the running-variable density for a discontinuity at the cutoff.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Lemieux (2007) and Trounstine (2011): a continuous running-variable density is required for the design to be valid.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must test the running-variable density for a discontinuity at the cutoff.",
+  "contributing_sources": [
+   "Lemieux (2007)",
+   "Trounstine (2011)",
+   "Imbens (2007)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_lemieux_2007",
+    "short_cite": "Lemieux (2007)",
+    "source_lines": "L94",
+    "quote": "the idea is that the density of the treatment-determining variable (age in our case) should be continuous at the discontinuity point for the RD design to be valid.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     18
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_trounstine_2011",
+    "short_cite": "Trounstine (2011)",
+    "source_lines": "L44",
+    "quote": "for the RDD to work vote margin must have a continuous density at the threshold of 0.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     10
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_imbens_2007",
+    "short_cite": "Imbens (2007)",
+    "source_lines": "L388",
+    "quote": "whether the value of this covariate was manipulated by the individual agent",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     15
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_imbens_2007",
+    "cite": "Guido W. Imbens & Thomas Lemieux. (2007). Regression discontinuity designs: A guide to practice. Journal of Econometrics, 142(2), 615-635. https://doi.org/10.1016/j.jeconom.2007.05.001",
+    "short_cite": "Imbens (2007)",
+    "pages": "p. 629",
+    "pagination": "printed",
+    "pdf_pages": [
+     15
+    ]
+   },
+   {
+    "source_id": "rdd_lemieux_2007",
+    "cite": "Thomas Lemieux & Kevin Milligan. (2007). Incentive effects of social assistance: A regression discontinuity approach. Journal of Econometrics, 142(2), 807-828. https://doi.org/10.1016/j.jeconom.2007.05.014",
+    "short_cite": "Lemieux (2007)",
+    "pages": "p. 824",
+    "pagination": "printed",
+    "pdf_pages": [
+     18
+    ]
+   },
+   {
+    "source_id": "rdd_trounstine_2011",
+    "cite": "Jessica Trounstine. (2011). Evidence of a Local Incumbency Advantage. Legislative Studies Quarterly, 36(2), 255-280. https://doi.org/10.1111/j.1939-9162.2011.00013.x",
+    "short_cite": "Trounstine (2011)",
+    "pages": "p. 264",
+    "pagination": "printed",
+    "pdf_pages": [
+     10
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-ROBUST-04",
+  "category": "ROBUST",
+  "scope": [
+   "all"
+  ],
+  "claim": "A valid design implies predetermined characteristics are balanced at the cutoff, so the paper must test predetermined covariates for a discontinuity there.",
+  "observable": "Whether the paper reports balance / continuity tests on predetermined covariates at the cutoff (e.g. re-running the RD with covariates as outcomes).",
+  "pass_condition": "The paper reports covariate balance / continuity checks on predetermined characteristics at the cutoff.",
+  "flag_condition": "The paper reports no covariate balance or continuity check at the cutoff.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "HIGH",
+  "severity_basis": "Caughey (2011a): the testable implication of continuity is that pretreatment characteristics do not differ at the cutoff.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper must test predetermined covariates for balance / continuity at the cutoff.",
+  "contributing_sources": [
+   "Caughey (2011a)",
+   "Boas (2011)",
+   "DiNardo (2004)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_caughey_2011a",
+    "short_cite": "Caughey (2011a)",
+    "source_lines": "L29",
+    "quote": "While the continuity of the potential outcomes cannot be tested directly, an implication of random treatment assignment is that the treated and control groups should not differ systematically in their pretreatment characteristics.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     4
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_boas_2011",
+    "short_cite": "Boas (2011)",
+    "source_lines": "L84",
+    "quote": "An important implication of our identifying assumptions is that winners and losers in close elections will be similar on background characteristics.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     8
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_dinardo_2004",
+    "short_cite": "DiNardo (2004)",
+    "source_lines": "L200",
+    "quote": "if in a nearby neighborhood of 50 percent, winning the election is randomly assigned, then any predetermined characteristic should have the same distribution on either side of the cutoff.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     30
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_boas_2011",
+    "cite": "Taylor C. Boas & F. Daniel Hidalgo. (2011). Controlling the Airwaves: Incumbency Advantage and Community Radio in Brazil. American Journal of Political Science, 55(4), 869-885. https://doi.org/10.1111/j.1540-5907.2011.00532.x",
+    "short_cite": "Boas (2011)",
+    "pages": "p. 876",
+    "pagination": "printed",
+    "pdf_pages": [
+     8
+    ]
+   },
+   {
+    "source_id": "rdd_caughey_2011a",
+    "cite": "Devin Caughey & Jasjeet S. Sekhon. (2011). Elections and the Regression Discontinuity Design: Lessons from Close U.S. House Races, 1942–2008. Political Analysis, 19(4), 385-408. https://doi.org/10.1093/pan/mpr032",
+    "short_cite": "Caughey (2011a)",
+    "pages": "p. 388",
+    "pagination": "printed",
+    "pdf_pages": [
+     4
+    ]
+   },
+   {
+    "source_id": "rdd_dinardo_2004",
+    "cite": "John DiNardo & David Lee. (2004). Economic Impacts of New Unionization on Private Sector Employers: 1984-2001. The Quarterly Journal of Economics, 119(4), 1383-1441. https://doi.org/10.1162/0033553042476189",
+    "short_cite": "DiNardo (2004)",
+    "pages": "p. 1412",
+    "pagination": "printed",
+    "pdf_pages": [
+     30
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-ROBUST-05",
+  "category": "ROBUST",
+  "scope": [
+   "all"
+  ],
+  "claim": "Because a jump should appear only at the true cutoff, estimating at placebo cutoffs is a falsification aid; the paper should report such placebo-cutoff estimates, though this evidence is supportive rather than decisive for continuity at the cutoff.",
+  "observable": "Whether the paper reports RD estimates at artificial / placebo cutoff values away from the true cutoff.",
+  "pass_condition": "The paper reports estimates at one or more placebo cutoff values (or placebo points where no effect should appear).",
+  "flag_condition": "The paper reports no placebo-cutoff / placebo-point check.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Cattaneo (2019b): the design implies no significant effect at placebo cutoff values, and discontinuities away from the cutoff cast doubt on it -- though the source notes such evidence is neither necessary nor sufficient, so absence is a soft (MEDIUM) flag.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper should report a placebo-cutoff falsification check (RD estimates at cutoff values where no effect is expected).",
+  "contributing_sources": [
+   "Cattaneo (2019b)",
+   "Fujiwara (2015)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "short_cite": "Cattaneo (2019b)",
+    "source_lines": "L6975",
+    "quote": "The expectation is that no significant treatment effect will occur at placebo cutoffvalues.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     104
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "short_cite": "Cattaneo (2019b)",
+    "source_lines": "L6952",
+    "quote": "Evidence of continuity away from the cutoffis, of course, neither necessary nor sufficient for continuity at the cutoff, but the presence of discontinuities away from the cutoffcan be interpreted as potentially casting doubt on the RD design",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     103
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_fujiwara_2015",
+    "short_cite": "Fujiwara (2015)",
+    "source_lines": "L80",
+    "quote": "The fact that no discontinuity is visible for the elections held in 1994 (when all municipalities used paper ballots) and 2002 (when EV was completely phased in) provides a falsification test",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     12
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_cattaneo_2019b",
+    "cite": "Matias D. Cattaneo, Nicolás Idrobo, & Rocío Titiunik. (2019). A Practical Introduction to Regression Discontinuity Designs. Cambridge University Press eBooks. https://doi.org/10.1017/9781108684606",
+    "short_cite": "Cattaneo (2019b)",
+    "pages": "pp. 100-101",
+    "pagination": "printed",
+    "pdf_pages": [
+     103,
+     104
+    ]
+   },
+   {
+    "source_id": "rdd_fujiwara_2015",
+    "cite": "Thomas Fujiwara. (2015). Voting Technology, Political Responsiveness, and Infant Health: Evidence From Brazil. Econometrica, 83(2), 423-464. https://doi.org/10.3982/ecta11520",
+    "short_cite": "Fujiwara (2015)",
+    "pages": "p. 433",
+    "pagination": "printed",
+    "pdf_pages": [
+     12
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-ROBUST-06",
+  "category": "ROBUST",
+  "scope": [
+   "multiple_tests"
+  ],
+  "claim": "Running many balance, placebo, or outcome tests will turn up chance rejections, so a paper reporting a battery of such tests must correct for multiple comparisons.",
+  "observable": "For a paper reporting several covariate-balance, placebo, or multiple-outcome tests, whether it applies a multiple-comparisons correction (or a joint test) before reading individual rejections.",
+  "pass_condition": "The paper applies a multiple-testing correction or reports a joint test when interpreting its battery of tests.",
+  "flag_condition": "The paper reports many separate tests and reads individual significant results at face value without any multiplicity adjustment.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Eggers (2014) and Cuesta (2016): enough tests will yield chance rejections even when the design holds.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "When interpreting a battery of balance/placebo/outcome tests, the paper should apply a multiple-comparisons correction or report a joint/omnibus test rather than reading individual rejections at face value.",
+  "contributing_sources": [
+   "Eggers (2014)",
+   "Cuesta (2016)",
+   "Keele (2014)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_eggers_2014",
+    "short_cite": "Eggers (2014)",
+    "source_lines": "L66",
+    "quote": "If we test for differences between winners and losers in a large enough set of variables, we will eventually find it by chance even if the assumptions underlying RD are in fact met.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_cuesta_2016",
+    "short_cite": "Cuesta (2016)",
+    "source_lines": "L172",
+    "quote": "the more statistical tests one conducts, the more likely one is to discover false positives even when all the null hypotheses are true.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_keele_2014",
+    "short_cite": "Keele (2014)",
+    "source_lines": "L124",
+    "quote": "researchers may face a multiple testing problem when G is large. Even if the true effect is zero, we will expect to reject the null hypothesis",
+    "support_relation": "qualifies",
+    "pdf_pages": [
+     13
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_cuesta_2016",
+    "cite": "Brandon De La Cuesta & Kosuke Imai. (2016). Misunderstandings About the Regression Discontinuity Design in the Study of Close Elections. Annual Review of Political Science, 19(1), 375-396. https://doi.org/10.1146/annurev-polisci-032015-010115",
+    "short_cite": "Cuesta (2016)",
+    "pages": "p. 387",
+    "pagination": "printed",
+    "pdf_pages": [
+     13
+    ]
+   },
+   {
+    "source_id": "rdd_eggers_2014",
+    "cite": "Andrew C. Eggers, Anthony Fowler, Jens Hainmueller, Andrew B. Hall, & James M. Snyder. (2014). On the Validity of the Regression Discontinuity Design for Estimating Electoral Effects: New Evidence from Over 40,000 Close Races. American Journal of Political Science, 59(1), 259-274. https://doi.org/10.1111/ajps.12127",
+    "short_cite": "Eggers (2014)",
+    "pages": "p. 263",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   },
+   {
+    "source_id": "rdd_keele_2014",
+    "cite": "Luke Keele & Rocío Titiunik. (2014). Geographic Boundaries as Regression Discontinuities. Political Analysis, 23(1), 127-155. https://doi.org/10.1093/pan/mpu014",
+    "short_cite": "Keele (2014)",
+    "pages": "p. 139",
+    "pagination": "printed",
+    "pdf_pages": [
+     13
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 3,
+  "consensus_grade": "high",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-REPORT-01",
+  "category": "REPORT",
+  "scope": [
+   "all"
+  ],
+  "clarity_check": true,
+  "author_guidance": "State explicitly that the RD estimate is a local effect at the cutoff (for compliers, in a fuzzy design) and does not by itself identify a population-wide average effect; if you generalize beyond the cutoff, name the extra assumption you rely on.",
+  "claim": "The RD estimand is a local effect at the cutoff, so the paper should characterize it as such rather than as a population-wide average effect.",
+  "observable": "Whether the paper states that its estimate is local to the cutoff (and, if fuzzy, applies to compliers) rather than presenting it as a general population effect.",
+  "pass_condition": "The paper describes its estimand as local to the cutoff, or names the additional assumption it invokes to generalize.",
+  "flag_condition": "The paper presents its RD estimate as a population-wide/average effect without noting its locality or any extrapolation assumption.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Boas (2011) and Gerber (2011): the RD estimand is a local effect at the threshold, not the overall population effect.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "The paper should interpret its RD estimate as local to the cutoff, not as a population-wide effect.",
+  "contributing_sources": [
+   "Boas (2011)",
+   "Gerber (2011)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_boas_2011",
+    "short_cite": "Boas (2011)",
+    "source_lines": "L63",
+    "quote": "(LATE), since it only represents the effect among candidates who barely win or barely lose.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     6
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_gerber_2011",
+    "short_cite": "Gerber (2011)",
+    "source_lines": "L44",
+    "quote": "we are not estimating the overall impact of electing a Democrat, but instead the impact of a razor-tight Democratic victory",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     5
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_boas_2011",
+    "cite": "Taylor C. Boas & F. Daniel Hidalgo. (2011). Controlling the Airwaves: Incumbency Advantage and Community Radio in Brazil. American Journal of Political Science, 55(4), 869-885. https://doi.org/10.1111/j.1540-5907.2011.00532.x",
+    "short_cite": "Boas (2011)",
+    "pages": "p. 874",
+    "pagination": "printed",
+    "pdf_pages": [
+     6
+    ]
+   },
+   {
+    "source_id": "rdd_gerber_2011",
+    "cite": "Elisabeth R. Gerber & Daniel J. Hopkins. (2011). When Mayors Matter: Estimating the Impact of Mayoral Partisanship on City Policy. American Journal of Political Science, 55(2), 326-339. https://doi.org/10.1111/j.1540-5907.2010.00499.x",
+    "short_cite": "Gerber (2011)",
+    "pages": "p. 330",
+    "pagination": "printed",
+    "pdf_pages": [
+     5
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 2,
+  "consensus_grade": "medium",
+  "disputed": false,
+  "dispute_basis": ""
+ },
+ {
+  "check_id": "RDD-DATA-01",
+  "category": "DATA",
+  "scope": [
+   "heaped_rv"
+  ],
+  "claim": "When the running variable heaps and the heaping is related to outcomes, standard RD diagnostics miss the resulting bias, so a paper with a heaped running variable must run supplementary heaping checks.",
+  "observable": "For a paper whose running variable heaps, whether it reports checks aimed at heaping-induced composition bias (e.g. disaggregated heaped-vs-non-heaped plots, a donut estimate dropping heap points, or covariate tests at heaps).",
+  "pass_condition": "The paper reports a heaping-specific diagnostic or remedy beyond the standard density/balance checks.",
+  "flag_condition": "The paper's running variable heaps but it reports only standard diagnostics and no heaping-specific check.",
+  "requirement_type": "positive",
+  "verdict_when_silent": "FLAG",
+  "severity_if_flagged": "MEDIUM",
+  "severity_basis": "Barreca (2011): standard diagnostics miss heaping-induced composition bias, so supplementary checks are needed.",
+  "prevalence_aggravator": null,
+  "threshold": null,
+  "coder_decidable": true,
+  "requirement_statement": "A paper with a heaped running variable must run supplementary heaping-specific checks.",
+  "contributing_sources": [
+   "Barreca (2011)"
+  ],
+  "evidence": [
+   {
+    "source_id": "rdd_barreca_2011",
+    "short_cite": "Barreca (2011)",
+    "source_lines": "L12",
+    "quote": "regression-discontinuity designs arrive at biased estimates when attributes related to outcomes predict heaping in the running variable",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   },
+   {
+    "source_id": "rdd_barreca_2011",
+    "short_cite": "Barreca (2011)",
+    "source_lines": "L12",
+    "quote": "After showing that our usual diagnostics are poorly suited to identifying this type of problem, we provide alternatives.",
+    "support_relation": "establishes",
+    "pdf_pages": [
+     2
+    ],
+    "anchor_score": 1.0
+   }
+  ],
+  "further_reading": [
+   {
+    "source_id": "rdd_barreca_2011",
+    "cite": "Alan Barreca, Jason M. Lindo, & Glen R. Waddell. (2011). Heaping-Induced Bias in Regression-Discontinuity Designs. National Bureau of Economic Research. https://doi.org/10.3386/w17408",
+    "short_cite": "Barreca (2011)",
+    "pages": "p. 0",
+    "pagination": "printed",
+    "pdf_pages": [
+     2
+    ]
+   }
+  ],
+  "consensus_of": "draw3",
+  "n_contributing_sources": 1,
+  "consensus_grade": "low",
+  "disputed": false,
+  "dispute_basis": ""
+ }
+]

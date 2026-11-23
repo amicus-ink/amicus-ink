@@ -1,0 +1,312 @@
+{
+ "MEASUREMENT-IDENT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 5
+ },
+ "MEASUREMENT-IDENT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-IDENT-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-IDENT-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-IDENT-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-IDENT-06": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "MEASUREMENT-IDENT-07": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-IDENT-08": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-IDENT-09": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-IDENT-10": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-IDENT-11": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-IDENT-12": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-IDENT-13": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-IDENT-14": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "MEASUREMENT-IDENT-15": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-IDENT-16": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-EST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "MEASUREMENT-EST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "MEASUREMENT-EST-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "MEASUREMENT-EST-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-EST-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-EST-06": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 5
+ },
+ "MEASUREMENT-EST-07": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-EST-08": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-EST-09": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-EST-10": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-EST-11": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-EST-12": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-EST-13": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-EST-14": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "MEASUREMENT-INFER-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-INFER-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 4
+ },
+ "MEASUREMENT-INFER-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "MEASUREMENT-INFER-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-ROBUST-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-ROBUST-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-ROBUST-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-ROBUST-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-ROBUST-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-REPORT-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-REPORT-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-REPORT-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-REPORT-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-REPORT-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-REPORT-06": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-REPORT-07": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "MEASUREMENT-REPORT-08": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-REPORT-09": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 5
+ },
+ "MEASUREMENT-REPORT-10": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "MEASUREMENT-DATA-01": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-DATA-02": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 2
+ },
+ "MEASUREMENT-DATA-03": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "MEASUREMENT-DATA-04": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-DATA-05": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 3
+ },
+ "MEASUREMENT-DATA-06": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-DATA-07": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-DATA-08": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-DATA-09": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-DATA-10": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ },
+ "MEASUREMENT-DATA-11": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-DATA-12": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 0
+ },
+ "MEASUREMENT-DATA-13": {
+  "disputed": false,
+  "basis": "",
+  "n_attached": 1
+ }
+}

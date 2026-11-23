@@ -1,0 +1,148 @@
+{
+ "module": "rdd",
+ "run": "20260806_rdd_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-10-07",
+ "explainers": [
+  {
+   "check_id": "RDD-IDENT-01",
+   "plain": "The paper should explain how the score that decides treatment (the running variable) is produced and argue why units could not precisely control which side of the cutoff they land on.",
+   "why": "The design is credible only if units could not place themselves on the side of the cutoff they preferred.",
+   "done": "explains how the score is set and why units could not choose their side of the cutoff"
+  },
+  {
+   "check_id": "RDD-IDENT-02",
+   "plain": "The paper should control only for variables that were fixed or measured before treatment was assigned.",
+   "why": "A control that the treatment could have changed can distort the estimated effect at the cutoff.",
+   "done": "controls only for variables fixed before treatment was assigned"
+  },
+  {
+   "check_id": "RDD-IDENT-03",
+   "plain": "The paper should report, in a table or figure, at least one test showing that a variable set before treatment, such as a baseline characteristic or an earlier value of the outcome, score, or treatment, does not jump at the cutoff.",
+   "why": "If the design is valid, variables the treatment could not have affected should show no jump at the cutoff.",
+   "done": "shows that at least one variable set before treatment does not jump at the cutoff"
+  },
+  {
+   "check_id": "RDD-IDENT-04",
+   "plain": "The paper should say whether any other policy or change switches at the same cutoff, and either argue the estimate reflects its treatment or define the effect as the combined bundle.",
+   "why": "Anything else that changes at the same cutoff gets mixed into the estimate.",
+   "done": "addresses whether other policies or changes switch at the same cutoff"
+  },
+  {
+   "check_id": "RDD-IDENT-05",
+   "plain": "The paper should present adding control variables as a way to gain precision or check robustness, not as a fix for a failed balance or design assumption.",
+   "why": "Adding controls may sharpen the estimate, but it cannot repair a failed assumption that units just either side of the cutoff are comparable (balance or continuity).",
+   "done": "treats control variables as a precision or robustness step, not a fix for failed assumptions"
+  },
+  {
+   "check_id": "RDD-IDENT-06",
+   "plain": "In a fuzzy design, where crossing the cutoff raises the chance of treatment rather than fully deciding it, the paper should show the jump in treatment probability at the cutoff, as a figure, estimate, or first-stage coefficient.",
+   "why": "The design works only if the probability of receiving treatment actually jumps at the cutoff.",
+   "done": "shows that the chance of receiving treatment jumps at the cutoff"
+  },
+  {
+   "check_id": "RDD-IDENT-07",
+   "plain": "In a fuzzy design, where crossing the cutoff raises the chance of treatment rather than fully deciding it, the paper should state and defend monotonicity: crossing the cutoff never pushes any unit away from treatment.",
+   "why": "Reading the estimate as a causal effect requires that crossing the cutoff moves treatment in only one direction.",
+   "done": "states and defends that crossing the cutoff moves treatment in only one direction"
+  },
+  {
+   "check_id": "RDD-IDENT-08",
+   "plain": "In a fuzzy design, the paper should state and argue two assumptions: crossing the cutoff affects the outcome only through treatment (exclusion restriction), and it moves treatment in only one direction (monotonicity).",
+   "why": "A causal reading of the estimate requires both assumptions, so addressing only one is not enough.",
+   "done": "states and argues both the exclusion restriction and monotonicity"
+  },
+  {
+   "check_id": "RDD-IDENT-09",
+   "plain": "When the treatment is a trait of the winning politician, the paper should state the extra assumption that isolates that trait, or define the effect as a bundle, and say which related traits count as treatment.",
+   "why": "The trait exists before the election and can shape who wins close races, so winners with and without it may differ in other ways; an extra assumption is needed to isolate the trait.",
+   "done": "states the assumption isolating the politician's trait, or treats the effect as a bundle, and says which traits count"
+  },
+  {
+   "check_id": "RDD-IDENT-10",
+   "plain": "The paper should not limit its sample or define its outcome using something that happened after treatment, such as survival or running again, unless it shows treatment did not affect that variable.",
+   "why": "Selecting on something the treatment could have changed brings selection back into the comparison.",
+   "done": "avoids conditioning on post-treatment variables, or shows treatment did not affect them"
+  },
+  {
+   "check_id": "RDD-EST-01",
+   "plain": "The paper's main estimate should come from a local fit near the cutoff or from a curve of order two or lower fit across the whole score range, not from a high-order polynomial (order four or more); a lone third-order curve is borderline.",
+   "why": "Such curves fit poorly at the cutoff and give estimates that shift with the chosen order and have unreliable confidence intervals.",
+   "done": "bases its main estimate on a local fit near the cutoff or a low-order curve"
+  },
+  {
+   "check_id": "RDD-INFER-01",
+   "plain": "When the paper picks its bandwidth (the window around the cutoff) with a data-driven rule that balances bias and noise, it should report robust bias-corrected confidence intervals or use a narrower bandwidth, not conventional intervals.",
+   "why": "That data-driven bandwidth leaves bias in the estimate, so conventional confidence intervals at it are invalid.",
+   "done": "reports robust bias-corrected confidence intervals or uses a narrower bandwidth for inference"
+  },
+  {
+   "check_id": "RDD-INFER-02",
+   "plain": "When observations come in groups or repeat, the paper should report standard errors that allow for correlation within groups, for example by clustering at the group level.",
+   "why": "Treating related observations as independent overstates statistical significance.",
+   "done": "reports standard errors clustered at the grouping level"
+  },
+  {
+   "check_id": "RDD-INFER-03",
+   "plain": "When the score takes only a limited set of values (a discrete running variable), the paper should adjust its standard errors for errors in the assumed curve, or acknowledge its reliance on that curve.",
+   "why": "With a discrete score, the estimate leans on the assumed shape of the curve, so methods built for continuous scores do not simply carry over.",
+   "done": "adjusts its inference for the discrete score or acknowledges its reliance on the assumed curve"
+  },
+  {
+   "check_id": "RDD-INFER-04",
+   "plain": "In a design comparing places on either side of a geographic boundary, the paper's standard errors should account for nearby observations being correlated, for example through clustering or spatial standard errors.",
+   "why": "Nearby units tend to be alike, so inference that ignores this does not reflect the true uncertainty.",
+   "done": "accounts for spatial correlation among nearby units in its standard errors"
+  },
+  {
+   "check_id": "RDD-ROBUST-01",
+   "plain": "The paper should report its estimate using at least two different bandwidths, meaning windows of data around the cutoff.",
+   "why": "The bandwidth drives the estimate, so results at more than one show the finding is not an artifact of a single choice.",
+   "done": "reports its estimate at two or more bandwidths"
+  },
+  {
+   "check_id": "RDD-ROBUST-02",
+   "plain": "The paper should report its estimate under at least two shapes for the curve fit to the score, such as two polynomial orders or a local versus whole-range fit.",
+   "why": "The fitted shape drives the estimate, so the result should hold under more than one.",
+   "done": "reports its estimate under two or more curve shapes"
+  },
+  {
+   "check_id": "RDD-ROBUST-03",
+   "plain": "The paper should test whether units bunch on one side of the cutoff, using a density test such as a McCrary-type test.",
+   "why": "A sudden pile-up of units on one side of the cutoff is a sign that units sorted themselves around it.",
+   "done": "tests whether units bunch on one side of the cutoff"
+  },
+  {
+   "check_id": "RDD-ROBUST-04",
+   "plain": "The paper should test whether characteristics set before treatment jump at the cutoff, for example by rerunning the analysis with each characteristic as the outcome.",
+   "why": "If the design is valid, characteristics set before treatment should be balanced at the cutoff.",
+   "done": "tests characteristics set before treatment for jumps at the cutoff"
+  },
+  {
+   "check_id": "RDD-ROBUST-05",
+   "plain": "The paper should report estimates at fake (placebo) cutoff values, where no effect is expected.",
+   "why": "A jump should appear only at the true cutoff, so placebo cutoffs help test the design, though they support it rather than settle it.",
+   "done": "reports estimates at placebo cutoffs where no effect is expected"
+  },
+  {
+   "check_id": "RDD-ROBUST-06",
+   "plain": "When the paper interprets many balance, placebo, or outcome tests, it should correct for multiple comparisons or report a joint test, rather than reading each significant result on its own.",
+   "why": "Running many tests will turn up some significant results by chance.",
+   "done": "corrects for multiple testing or reports a joint test across its tests"
+  },
+  {
+   "check_id": "RDD-REPORT-01",
+   "plain": "The paper should describe its estimate as the effect for units near the cutoff (and, in a fuzzy design, for units whose treatment responds to the cutoff), or name the assumption it uses to generalize.",
+   "why": "The design measures an effect at the cutoff, not an average across the whole population.",
+   "done": "describes its estimate as local to the cutoff"
+  },
+  {
+   "check_id": "RDD-DATA-01",
+   "plain": "When many units share certain score values (heaping), the paper should run extra checks for heaping, such as dropping the heaped values or comparing heaped and other units.",
+   "why": "When heaping is related to outcomes, standard checks can miss the resulting bias.",
+   "done": "runs heaping-specific checks beyond the standard diagnostics"
+  }
+ ],
+ "reviewed": "2026-10-07: 4 field(s) revised after an Opus review against the check text"
+}

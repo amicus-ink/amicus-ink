@@ -1,0 +1,237 @@
+{
+ "module": "hte",
+ "instruction_version": "v0.15",
+ "model": "claude-opus-4-8",
+ "pipeline": "scripts/skillgen/run_skillgen.py",
+ "toolchain": {
+  "python": "3.9.6",
+  "pymupdf": "1.26.5",
+  "mupdf": "1.26.10",
+  "pythonhashseed": "0"
+ },
+ "corpus": [
+  {
+   "source_id": "hte_anderson_2008_multiple",
+   "sha256_text": "f374b97232e4970ebbdfbf34986ec9f8b5a22d9fabf07be1cec28c6ae818c140",
+   "text_only": true,
+   "claims": 28,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_imai_2010_estimation",
+   "sha256_text": "86a239b284d9aa9d7747bdefc9f874580ed03714490bc3c26bdded52fb817be5",
+   "text_only": true,
+   "claims": 21,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_imai_2013_estimating",
+   "sha256_text": "5202669f152f4779a50a9c91e39adf3eecec0258ed4899dcc1c07c35b599be0d",
+   "text_only": true,
+   "claims": 19,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_grimmer_2017_estimating",
+   "sha256_text": "680368afd6f99ea20ea801c3dc58b93f70228201a91122cf455a35a1e6bd8a0d",
+   "text_only": true,
+   "claims": 18,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_wager_2018_estimation",
+   "sha256_text": "489fa908a8f38d8deefa877ed190d00d9d7f59ed27aed891686632f7b7817fcb",
+   "text_only": true,
+   "claims": 23,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_athey_2021_policy",
+   "sha256_text": "a1edf272809910d457d563c3c23fa30f4cfd9fd2c34df48b7454dce0ebb2f2c3",
+   "text_only": true,
+   "claims": 18,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_bargagli_2022_heterogeneous",
+   "sha256_text": "1793cd4fc967a65115a438829fefe394c046762643f209f07f644b7511cf9492",
+   "text_only": true,
+   "claims": 17,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_brambor_2006_understanding",
+   "sha256_text": "df13b8ab956c803653a3803edd68cad296d53d4dd90783869db209cdff9a5e96",
+   "text_only": true,
+   "claims": 19,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_list_2019_multiple",
+   "sha256_text": "9ffd08dd4e54e8d68f01d4783b3dcfe656e533c487c58810dfc2e95b0efda7a6",
+   "text_only": true,
+   "claims": 15,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_crump_2009_dealing",
+   "sha256_text": "a6aa44664b74e57564854bbf33a6ac72f4e3bd4b82b80952e36c0863a5d75d3b",
+   "text_only": true,
+   "claims": 17,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_hainmueller_2018_how",
+   "sha256_text": "3483be4298b54a58858c17b76757b6814699d89af9744a8c3b711b7037fc3227",
+   "text_only": true,
+   "claims": 25,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_berry_2012_improving",
+   "sha256_text": "2342cc11a62f71b47dcaabf1c34057811b1d80923a47bcc0ac6e9a4395b32d07",
+   "text_only": true,
+   "claims": 20,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_esarey_2017_marginal",
+   "sha256_text": "3157586b36862e96d2219fc7e592138e54f9d1f40bd19c9a5b2339beda355da2",
+   "text_only": true,
+   "claims": 16,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_ai_2003_interaction",
+   "sha256_text": "0c33554957f53dc4cf671a1f0169b83161b00a6fe73f67e9be7ec44d101f72a7",
+   "text_only": true,
+   "claims": 12,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_norton_2004_computing",
+   "sha256_text": "2ca01f71ef0f49a1376ff11b488ed32cb323017bd3f1776186e41b10a49f3f06",
+   "text_only": true,
+   "claims": 15,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_mize_2019_best",
+   "sha256_text": "bdccd28a512fddebf1cf5f22f4654b89f354ee177dc5c3b5edb1520b283afd5a",
+   "text_only": true,
+   "claims": 30,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_ding_2015_randomization",
+   "sha256_text": "7f9bd60145cb698c42559b5c573483283a43eb0d00141395605b455251f00f9d",
+   "text_only": true,
+   "claims": 29,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_bitler_2006_what",
+   "sha256_text": "d2ba5ab42ab9598fa6a21b7314846fc0fba2c6e0aaad7781cd85bc12a3de7303",
+   "text_only": true,
+   "claims": 14,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_tipton_2012_improving",
+   "sha256_text": "7c6322fc287836fa97e83d82359991f8acf0c90252281acb10cd05fba1e1a638",
+   "text_only": true,
+   "claims": 24,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_manski_2004_statistical",
+   "sha256_text": "bddf0d37c69e744fdd995a8ebd0caa895b1987968463c9602c4b3240cdc0b805",
+   "text_only": true,
+   "claims": 15,
+   "source_type": "methodological",
+   "is_supplement": false
+  },
+  {
+   "source_id": "hte_kent_2019_the",
+   "sha256_text": "4e1c5d07f0e1a2bf1b7c7cc12190da4f3b6422ec93f2963f2b287db141a3bca5",
+   "text_only": true,
+   "claims": 34,
+   "source_type": "methodological",
+   "is_supplement": false
+  }
+ ],
+ "checks": 24,
+ "categories": {
+  "IDENT": 6,
+  "EST": 2,
+  "INFER": 8,
+  "ROBUST": 5,
+  "REPORT": 2,
+  "DATA": 1
+ },
+ "single_source_checks": 4,
+ "sha256_checklist": "10fd0583894b6fec408fefa1749e396eaedd12d33abb6cdcb0a7b75ac52aecd8",
+ "sha256_checklist_file": "checklists/verified.anchored.json",
+ "previous_descriptive": {
+  "date": "2026-11-20",
+  "checks": 24,
+  "categories": {
+   "IDENT": 6,
+   "EST": 2,
+   "INFER": 8,
+   "ROBUST": 5,
+   "REPORT": 2,
+   "DATA": 1
+  },
+  "single_source_checks": 8,
+  "sha256_checklist": "5b36ecb541fac6f29b23f6306462c4714c923df1061665b5da41481cfbe4d273"
+ },
+ "promotion": {
+  "status": "SHIPPED",
+  "release": "first public release, October 2026",
+  "recipe": "consensus",
+  "decidability": {
+   "diagnostic_core_stability_pct": 94.2,
+   "pilot_pairwise_agreement_pct": 95.8
+  },
+  "meets_95pct_diagnostic_bar": false,
+  "reason": "Shipped as the 14th module of the first public release. A language model proposed the sources and the authors approved them; the anchor-citation and syllabus rules did not admit them. Citations re-anchored to the admitted PDFs the text extracts were taken from; checks unchanged. The 95% diagnostic bar is a calibration target, not a hard filter; modules below it ship with their measured figures reported.",
+  "previous": {
+   "status": "NOT_PROMOTABLE",
+   "reason": "coder-decidability not yet measured on test papers (requires >=2 coders x >=1 political-science paper; N>=3 samples for the temp>0 diagnostic)"
+  }
+ },
+ "decidability": {
+  "pilot": {
+   "papers": 5,
+   "codings_per_paper": 2,
+   "core_stability": "115/120 = 95.8%",
+   "judgment_call_bucket": null
+  },
+  "diagnostic": {
+   "papers": 5,
+   "codings_per_paper": 5,
+   "core_stability": "113/120 = 94.2%",
+   "judgment_call_bucket": null
+  }
+ }
+}

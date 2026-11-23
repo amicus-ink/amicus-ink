@@ -1,0 +1,112 @@
+{
+ "module": "text",
+ "run": "20260806_text_v0_15_consensus",
+ "model": "claude-opus-5-5",
+ "prompt_sha256": "d08511df34ea2d7145c9c6728f4b4fef90bfbe1f3b935a6661defe3c7ca187a7",
+ "generated": "2026-11-11",
+ "explainers": [
+  {
+   "check_id": "TEXT-EST-01",
+   "plain": "A paper using a topic or clustering model, which sorts texts into groups on its own, should justify its number of topics and its chosen model on substantive grounds, such as interpretability or checks against labels, not a statistical fit score alone.",
+   "why": "A fit score alone does not show that the topics capture the meaningful content the paper's conclusions depend on.",
+   "done": "explains its topic count and model choice using interpretability, example documents, or validation"
+  },
+  {
+   "check_id": "TEXT-INFER-01",
+   "plain": "When the paper relates topic shares to other variables, its confidence intervals should include the uncertainty from estimating those topic shares, rather than treating the shares as known.",
+   "why": "Topic shares are estimated, not observed, so ignoring that step makes the results look more certain than they are.",
+   "done": "carries uncertainty in its estimated topic shares into its reported intervals"
+  },
+  {
+   "check_id": "TEXT-INFER-02",
+   "plain": "When the paper tests effects across many topics, it should guard against chance findings from running many tests, for example by controlling the false discovery rate (the expected share of false positives) or following a pre-analysis plan.",
+   "why": "Many tests do not by themselves give accurate p-values, so significant topics picked out without a safeguard are unreliable.",
+   "done": "corrects for multiple testing across topics or follows a pre-analysis plan"
+  },
+  {
+   "check_id": "TEXT-INFER-03",
+   "plain": "If the paper uses the treatment both to build its topics and to estimate the treatment's effect on them, it should report a safeguard, such as a permutation test that shuffles treatment labels and refits, showing the effect is not spurious.",
+   "why": "Using the treatment in both steps can build the conclusion into the measure itself and produce false positive findings.",
+   "done": "reports a permutation test or similar check showing the effect is not built into the topics"
+  },
+  {
+   "check_id": "TEXT-ROBUST-01",
+   "plain": "If the paper uses a supervised classifier, a model trained on hand-coded examples to label texts, it should report how well its labels match human coding on documents not used in training.",
+   "why": "The classifier's labels can be trusted only once the paper shows it reproduces human coding on documents it was not trained on.",
+   "done": "reports agreement between machine and human labels on held-out documents"
+  },
+  {
+   "check_id": "TEXT-ROBUST-02",
+   "plain": "If the paper reports cross-validated classifier accuracy, it should state that choosing predictors and tuning the model happened only within each training split, not on all labeled data beforehand.",
+   "why": "Cross-validated accuracy is a valid estimate of performance only when every modeling step stays inside the training data of each split.",
+   "done": "states that predictor selection and tuning were done within each training fold"
+  },
+  {
+   "check_id": "TEXT-ROBUST-03",
+   "plain": "If the paper uses a supervised classifier, it should show that its hand-coded training documents are a random or otherwise representative sample of the texts the classifier will label.",
+   "why": "Classifiers assume the training documents are a random sample of the full collection, so the paper needs to show this holds.",
+   "done": "states its training documents were randomly or representatively sampled from the texts to be coded"
+  },
+  {
+   "check_id": "TEXT-ROBUST-04",
+   "plain": "If the paper uses a dictionary, a word list that scores texts, it should show the list fits the texts it studies, for example by checking scored documents against hand coding, or build a list for those texts.",
+   "why": "A dictionary gives valid measures only when its word scores match how the words are actually used in the paper's texts.",
+   "done": "validates its dictionary scores against its own texts or builds a dictionary for them"
+  },
+  {
+   "check_id": "TEXT-ROBUST-05",
+   "plain": "If the paper uses a text scaling method, which places texts along a single dimension, it should show that the dimension is the concept it claims, such as by comparing to expert placements or reading texts at the extremes.",
+   "why": "Scaling picks up whatever variation dominates the language, which may be style or other content instead of the intended concept, such as ideology.",
+   "done": "validates its scaled dimension against an outside benchmark or a reading of the texts"
+  },
+  {
+   "check_id": "TEXT-ROBUST-06",
+   "plain": "If the paper uses topics or clusters as measures, it should show they capture the concepts claimed, for example by reading the most typical documents, comparing to outside labels or human coding, or combining other validity evidence.",
+   "why": "Models that find groups on their own are not guaranteed to produce meaningful categories, so the paper needs evidence beyond top-word lists.",
+   "done": "reads example documents or compares its topics to outside labels to validate them"
+  },
+  {
+   "check_id": "TEXT-ROBUST-07",
+   "plain": "If the paper fits a topic model or embeddings (numeric representations of word or document meaning), it should address how results can change with the random starting point, such as by using a fixed starting method, fitting from several starts, or averaging over runs.",
+   "why": "These models can settle on different solutions depending on where they start, so results from a single random run may not replicate.",
+   "done": "uses a fixed starting method, multiple starts, or averaging across runs"
+  },
+  {
+   "check_id": "TEXT-ROBUST-08",
+   "plain": "If the paper trains word embeddings, numeric representations of word meaning, on its own texts, it should fit them several times and combine or compare the results; using embeddings pretrained on a large outside corpus also satisfies this.",
+   "why": "Locally trained embeddings vary from run to run on the same texts, so conclusions from a single run may be mistaken and not replicable.",
+   "done": "averages across several embedding runs or uses embeddings pretrained on a large outside corpus"
+  },
+  {
+   "check_id": "TEXT-ROBUST-09",
+   "plain": "If the paper uses survey responses generated by a large language model (LLM) for inference, it should compare them with real human data on the relationships it studies, such as subgroup differences, not just on averages.",
+   "why": "LLM-generated responses are unreliable for inference and do worse on relationships between variables than on simple averages.",
+   "done": "compares its LLM-generated data with real human data on the relationships it studies"
+  },
+  {
+   "check_id": "TEXT-ROBUST-10",
+   "plain": "If the paper analyzes texts in several languages together, it should check that its topics or measures mean the same across languages, for example by confirming no topic belongs to one language or reading original-language documents.",
+   "why": "Standard methods assume a single language, so pooled results may reflect translation or writing style instead of shared meaning.",
+   "done": "checks that its topics or measures are comparable across languages"
+  },
+  {
+   "check_id": "TEXT-ROBUST-11",
+   "plain": "If the paper uses word or document embeddings to measure meaning or similarity, it should evaluate whether they work for that purpose, for example by comparing them with human judgments or checking nearest-neighbor rankings.",
+   "why": "Embeddings that work well as inputs to other models need not capture meaning, so off-the-shelf quality cannot be assumed.",
+   "done": "evaluates whether its embeddings fit its measurement task, such as against human judgments"
+  },
+  {
+   "check_id": "TEXT-ROBUST-12",
+   "plain": "If the paper uses any automated text method, it should report at least one check that the resulting measure works in its own application.",
+   "why": "Every automated text method is a simplified model of language, so how well it performs on a new set of texts cannot be assumed.",
+   "done": "reports a validation of its automated text measure in this application"
+  },
+  {
+   "check_id": "TEXT-REPORT-01",
+   "plain": "If the paper uses data generated by a large language model (LLM), it should report the exact prompts and the specific model version and date used, in the paper or its replication materials.",
+   "why": "LLM output changes with prompt wording and with model updates outside the researcher's control, so these details are needed to reproduce the analysis.",
+   "done": "reports its exact prompts and the model version and date"
+  }
+ ],
+ "reviewed": "2026-11-11: 2 field(s) revised after an Opus review against the check text"
+}
